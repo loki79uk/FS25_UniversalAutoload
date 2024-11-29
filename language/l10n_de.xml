@@ -7,7 +7,7 @@
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Automatischer Ballensammel-Modus"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Abladen"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Abladen erzwingen"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Aktive entladeseite umschalten"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Aktive Entladeseite umschalten"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Ladefilter umschalten"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Horizontales Laden umschalten"/>
 		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Materialtyp wechseln (vorwärts)"/>
@@ -17,17 +17,17 @@
 		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Containertyp wechseln (rückwärts)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Alle Containertypen auswählen"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Spanngurte anbringen/lösen"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Hintertür Öffnen/Schließen"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Hintertür öffnen/schließen"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Plane öffnen/schließen"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" text="Vollständiger Debug-Modus"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" text="Einfacher Debug-Modus"/>
 
-		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="Der Entladebereich ist blockiert. Bitte räumen Sie den Abladebereich."/>
+		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="Der Entladebereich ist blockiert. Bitte räumen Sie den Abladebereich frei."/>
 		<text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="Es sind keine kompatiblen Waren zum Be- oder Entladen vorhanden."/>
 		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT" text="Der Ladebereich ist voll. Es können keine weiteren Artikel dieser Größe geladen werden."/>
 		<text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY" text="Das Beladen ist nur im Stillstand erlaubt. Bitte halten Sie vor dem Beladen des Anhängers vollständig an."/>
 		
-		<text name="universalAutoload_tipside" text="Aktive entladeseite"/>
+		<text name="universalAutoload_tipside" text="Aktive Entladeseite"/>
 		<text name="universalAutoload_left" text="Links"/>
 		<text name="universalAutoload_right" text="Rechts"/>
 		<text name="universalAutoload_none" text="Keine"/>
