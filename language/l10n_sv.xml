@@ -1,63 +1,63 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
-	<texts>
-		<text name="shop_configuration_text" text="Autoload"/>
-		<text name="configuration_universalAutoload" text="Universal Autoload"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Toggle loading"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Automatic Bale Collection Mode"/>
-		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Unload"/>
-		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Force Unload"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Toggle unloading side"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Toggle loading filter"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Toggle horizontal loading"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Change selected material type (next)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Change selected material type (previous)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Select all material types"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Change selected container type (next)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Change selected container type (previous)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Select all container types"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Fasten/Unfasten tension belts"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Open/Close rear door"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Open/Close curtain side"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" text="Full debug mode"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" text="Simple debug mode"/>
+    <texts>
+        <text name="shop_configuration_text" text="Automatlastning"/>
+        <text name="configuration_universalAutoload" text="Universell Automatisk Lastning"/>
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Växla Lastning"/>
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Automatiskt Balinsamlingsläge"/>
+        <text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Lossa"/>
+        <text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Tvångsavlastning"/>
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Växla lossningssida"/>
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Växla Lastningsfilter"/>
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Växla horisontell Lastning"/>
+        <text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Byt vald materialtyp (nästa)"/>
+        <text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Byt vald materialtyp (föregående)"/>
+        <text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Välj alla materialtyper"/>
+        <text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Byt vald behållartyp (nästa)"/>
+        <text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Byt vald behållartyp (föregående)"/>
+        <text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Välj alla behållartyper"/>
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Spänn/Lossa spännband"/>
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Öppna/Stäng bakdörr"/>
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Öppna/Stäng sidogardin"/>
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" text="Fullt felsökningsläge"/>
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" text="Enkelt felsökningsläge"/>
 
-		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="Unloading area is blocked. Please clear the unloading area."/>
-		<text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="No compatible goods are available for loading or unloading."/>
-		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT" text="Loading area is full. Unable to load any more items of this size."/>
-		<text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY" text="No loading allowed unless stationary. Please come to a complete stop before loading the trailer."/>
-		
-		<text name="universalAutoload_tipside" text="Unloading side"/>
-		<text name="universalAutoload_left" text="Left"/>
-		<text name="universalAutoload_right" text="Right"/>
-		<text name="universalAutoload_none" text="None"/>
-		<text name="universalAutoload_loadingFilter" text="Loading filter"/>
-		<text name="universalAutoload_loadingMethod" text="Loading Method"/>
-		<text name="universalAutoload_layer" text="Layer"/>
-		<text name="universalAutoload_stack" text="Stack"/>
-		<text name="universalAutoload_fullOnly" text="Full only"/>
-		<text name="universalAutoload_loadAny" text="Any"/>
-		<text name="universalAutoload_startLoading" text="Start loading"/>
-		<text name="universalAutoload_stopLoading" text="Stop loading"/>
-		<text name="universalAutoload_unloadAll" text="Unload"/>
-		<text name="universalAutoload_unloadAllForce" text="Force Unload"/>
-		<text name="universalAutoload_baleMode" text="Auto-Bale Mode"/>
-		<text name="universalAutoload_enabled" text="Enabled"/>
-		<text name="universalAutoload_disabled" text="Disabled"/>
-		<text name="universalAutoload_activate" text="Activate"/>
-		<text name="universalAutoload_deactivate" text="Deactivate"/>
-		<text name="universalAutoload_materialType" text="Material type"/>
-		<text name="universalAutoload_containerType" text="Container type"/>
-		<text name="universalAutoload_ALL" text="All"/>
-		<text name="universalAutoload_LIQUID_TANK" text="IBC Tank"/>
-		<text name="universalAutoload_EURO_PALLET" text="Euro Pallet"/>
-		<text name="universalAutoload_PIONEER_PALLET" text="Pioneer Pallet"/>
-		<text name="universalAutoload_BIGBAG_PALLET" text="Bigbag Pallet"/>
-		<text name="universalAutoload_BIGBAG" text="Bigbag"/>
-		<text name="universalAutoload_POTATOBOX" text="Potato Box"/>
-		<text name="universalAutoload_BALE" text="Bale"/>
-		<text name="universalAutoload_ROUND_BALE" text="Round bale"/>
-		<text name="universalAutoload_SQUARE_BALE" text="Square bale"/>
-		<text name="universalAutoload_LOGS" text="Logs"/>
+        <text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="Lossningsområdet är blockerat. Vänligen rensa lossningsområdet."/>
+        <text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="Inga kompatibla varor finns tillgängliga för Lastning eller lossning."/>
+        <text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT" text="Lastningsområdet är fullt. Kan inte ladda fler föremål av denna storlek."/>
+        <text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY" text="Ingen Lastning tillåten om inte fordonet står stilla. Vänligen stanna helt innan du laddar trailern."/>
+
+        <text name="universalAutoload_tipside" text="Lossningssida"/>
+        <text name="universalAutoload_left" text="Vänster"/>
+        <text name="universalAutoload_right" text="Höger"/>
+        <text name="universalAutoload_none" text="Ingen"/>
+        <text name="universalAutoload_loadingFilter" text="Lastningsfilter"/>
+        <text name="universalAutoload_loadingMethod" text="Lastningsmetod"/>
+        <text name="universalAutoload_layer" text="Lager"/>
+        <text name="universalAutoload_stack" text="Stapel"/>
+        <text name="universalAutoload_fullOnly" text="Endast full"/>
+        <text name="universalAutoload_loadAny" text="Vilken som helst"/>
+        <text name="universalAutoload_startLoading" text="Starta Lastning"/>
+        <text name="universalAutoload_stopLoading" text="Stoppa Lastning"/>
+        <text name="universalAutoload_unloadAll" text="Lossa"/>
+        <text name="universalAutoload_unloadAllForce" text="Tvångsavlastning"/>
+        <text name="universalAutoload_baleMode" text="Automatisk bal-läge"/>
+        <text name="universalAutoload_enabled" text="Aktiverad"/>
+        <text name="universalAutoload_disabled" text="Avaktiverad"/>
+        <text name="universalAutoload_activate" text="Aktivera"/>
+        <text name="universalAutoload_deactivate" text="Avaktivera"/>
+        <text name="universalAutoload_materialType" text="Materialtyp"/>
+        <text name="universalAutoload_containerType" text="Behållartyp"/>
+        <text name="universalAutoload_ALL" text="Alla"/>
+        <text name="universalAutoload_LIQUID_TANK" text="IBC-tank"/>
+        <text name="universalAutoload_EURO_PALLET" text="Europapall"/>
+        <text name="universalAutoload_PIONEER_PALLET" text="Pioneer-pall"/>
+        <text name="universalAutoload_BIGBAG_PALLET" text="Bigbag-pall"/>
+        <text name="universalAutoload_BIGBAG" text="Bigbag"/>
+        <text name="universalAutoload_POTATOBOX" text="Potatislåda"/>
+        <text name="universalAutoload_BALE" text="Bal"/>
+        <text name="universalAutoload_ROUND_BALE" text="Rundbal"/>
+        <text name="universalAutoload_SQUARE_BALE" text="Fyrkantbal"/>
+        <text name="universalAutoload_LOGS" text="Stockar"/>
     </texts>
 </l10n>
