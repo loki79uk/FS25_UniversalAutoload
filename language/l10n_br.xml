@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
 	<texts>
-		<text name="shop_configuration_text" text="Autoload"/>
-		<text name="configuration_universalAutoload" text="Autoload Universal"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Carregar"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Modo de coleta automática de fardos"/>
+		<text name="shop_configuration_text" text="Carregamento Automático"/>
+		<text name="configuration_universalAutoload" text="Carregamento Automático Universal"/>
+		
+		<text name="ui_gloabl_settings_ual" text="Configurações Globais"/>
+		<text name="ui_setting_enable_ual" text="Carregamento Manual"/>
+		<text name="ui_toolTip_enable_ual" text="Se o recurso de carregamento manual estiver ativado"/>
+		
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Alternar carregamento"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Modo automático de coleta de fardos"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Descarregar"/>
-		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Descarregar à força"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Lado p/ descarregar"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Filtro de carregamento"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Forçar descarregamento"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Alternar lado de descarregamento"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Alternar filtro de carregamento"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Alternar carregamento horizontal"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Trocar tipo de material selecionado (prox.)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Trocar tipo de material selecionado (ant.)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Seleciona todos os tipos de materiais"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Trocar tipo de contêiner (prox.)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Trocar tipo de contêiner (ant.)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Marca todos os tipos de contêiners"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Apertar/Soltar cintos de tensão"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Alterar tipo de material selecionado (próximo)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Alterar tipo de material selecionado (anterior)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Selecionar todos os tipos de materiais"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Alterar tipo de contêiner selecionado (próximo)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Alterar tipo de contêiner selecionado (anterior)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Selecionar todos os tipos de contêiner"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Apertar/Soltar cintas tensoras"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Abrir/Fechar porta traseira"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Abrir/Fechar cortina lateral"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" text="Modo de depuração total"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" text="Modo de depuração completo"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" text="Modo de depuração simples"/>
-
-		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="Área de descarregamento bloqueada. Por favor, limpe a área de descarga."/>
-		<text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="Nenhum item compatível está disponível para cargarregar ou descarregar."/>
-		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT" text="A área de carregamento está cheia. Não foi possível carregar mais destes itens."/>
-		<text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY" text="Nenhum carregamento permitido apenas parado. Por favor, pare completamente antes de carregar o trailer."/>
+		
+		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="A área de descarregamento está bloqueada. Por favor, limpe a área de descarregamento."/>
+		<text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="Não há mercadorias compatíveis disponíveis para carregamento ou descarregamento."/>
+		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT" text="A área de carregamento está cheia. Não é possível carregar mais itens deste tamanho."/>
+		<text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY" text="Não é permitido carregar em movimento. Pare completamente antes de carregar o reboque."/>
 		
 		<text name="universalAutoload_tipside" text="Lado de descarregamento"/>
 		<text name="universalAutoload_left" text="Esquerda"/>
@@ -35,29 +40,29 @@
 		<text name="universalAutoload_loadingMethod" text="Método de carregamento"/>
 		<text name="universalAutoload_layer" text="Camada"/>
 		<text name="universalAutoload_stack" text="Pilha"/>
-		<text name="universalAutoload_fullOnly" text="Completo apenas"/>
-		<text name="universalAutoload_loadAny" text="Qualquer"/>
+		<text name="universalAutoload_fullOnly" text="Apenas completo"/>
+		<text name="universalAutoload_loadAny" text="Qualquer um"/>
 		<text name="universalAutoload_startLoading" text="Iniciar carregamento"/>
 		<text name="universalAutoload_stopLoading" text="Parar carregamento"/>
 		<text name="universalAutoload_unloadAll" text="Descarregar"/>
-		<text name="universalAutoload_unloadAllForce" text="Descarregar à força"/>
-		<text name="universalAutoload_baleMode" text="Modo Auto Fardo"/>
-		<text name="universalAutoload_enabled" text="Habilitado"/>
-		<text name="universalAutoload_disabled" text="Deficiente"/>
+		<text name="universalAutoload_unloadAllForce" text="Forçar descarregamento"/>
+		<text name="universalAutoload_baleMode" text="Modo automático de fardos"/>
+		<text name="universalAutoload_enabled" text="Ativado"/>
+		<text name="universalAutoload_disabled" text="Desativado"/>
 		<text name="universalAutoload_activate" text="Ativar"/>
 		<text name="universalAutoload_deactivate" text="Desativar"/>
 		<text name="universalAutoload_materialType" text="Tipo de material"/>
 		<text name="universalAutoload_containerType" text="Tipo de contêiner"/>
 		<text name="universalAutoload_ALL" text="Todos"/>
-		<text name="universalAutoload_LIQUID_TANK" text="Tanque líquido IBC"/>
-		<text name="universalAutoload_EURO_PALLET" text="Euro Pallet"/>
-		<text name="universalAutoload_PIONEER_PALLET" text="Pioneer Pallet"/>
-		<text name="universalAutoload_BIGBAG_PALLET" text="Bigbag Pallet"/>
+		<text name="universalAutoload_LIQUID_TANK" text="Tanque IBC"/>
+		<text name="universalAutoload_EURO_PALLET" text="Palete Euro"/>
+		<text name="universalAutoload_PIONEER_PALLET" text="Palete Pioneer"/>
+		<text name="universalAutoload_BIGBAG_PALLET" text="Palete de bigbag"/>
 		<text name="universalAutoload_BIGBAG" text="Bigbag"/>
 		<text name="universalAutoload_POTATOBOX" text="Caixa de batatas"/>
 		<text name="universalAutoload_BALE" text="Fardo"/>
-		<text name="universalAutoload_ROUND_BALE" text="Fardo redondo"/>
-		<text name="universalAutoload_SQUARE_BALE" text="fardo quadrado"/>
-		<text name="universalAutoload_LOGS" text="Toros"/>
+		<text name="universalAutoload_ROUND_BALE" text="Fardo cilíndrico"/>
+		<text name="universalAutoload_SQUARE_BALE" text="Fardo quadrado"/>
+		<text name="universalAutoload_LOGS" text="Toras de árvore"/>
     </texts>
 </l10n>
