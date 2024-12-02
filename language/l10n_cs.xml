@@ -10,11 +10,11 @@
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="切换卸载端"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="切换装载过滤器"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="切换水平装载"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="改变选定的材料类型（下一个）"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="改变选定的材料类型（上一个）"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="选择的材料（下一个）"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="选择的材料（上一个）"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="选择所有材料类型"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="改变选定的容器类型（下一个）"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="改变选定的容器类型（上一个）"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="选择的容器（下一个）"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="选择的容器（上一个）"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="选择所有容器类型"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="拉紧/松开张力带"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="打开/关闭后门"/>

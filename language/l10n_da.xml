@@ -10,11 +10,11 @@
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Skift aflæsnings side"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Skift læsnings type"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Skift horisontal læsning"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Skift valgt materiale type (næste)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Skift valgt materiale type (forrige)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Valgt materiale (næste)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Valgt materiale (forrige)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Vælg alle materiale typer"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Skift valgt container type (næste)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Skift valgr container type (forrige)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Valgt beholder (næste)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Valgt beholder (forrige)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Vælg alle container typer"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Spænd/frigør spænde stropper"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Åben/luk bag dør"/>

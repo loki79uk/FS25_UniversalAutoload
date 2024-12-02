@@ -10,11 +10,11 @@
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Choix du côté actif"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Sélection du chargement"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Basculement du chargement horizontal"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Sélection du type de marchandise (suivant)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Sélection du type de marchandise (précédent)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Matériau sélectionné (suivant)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Matériau sélectionné (précédent)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Sélectionner tous types de marchandises"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Sélection du type de conditionnement (suivant)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Sélection du type de conditionnement (précédent)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Contenant sélectionné (suivant)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Contenant sélectionné (précédent)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Sélectionner tous types de conditionnement"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Attacher/détacher les sangles de serrage"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Ouvrir/fermer la porte arrière"/>

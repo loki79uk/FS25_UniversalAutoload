@@ -15,11 +15,11 @@
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Przełącz stronę rozładunku"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Przełącz filtr ładowania"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Przełączanie ładowania poziomego"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Zmień wybrany typ produktu (następny)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Zmień wybrany typ produktu (poprzedni)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Wybrany typ produktu (następny)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Wybrany typ produktu (poprzedni)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Wybierz wszystkie typy produktów"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Zmień wybrany typ skrzyni (następny)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Zmień wybrany typ skrzyni (poprzedni)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Wybrany typ skrzyni (następny)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Wybrany typ skrzyni (poprzedni)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Wybierz wszystkie typy skrzyń"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Zapnij/odepnij pasy napinające"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Otwórz/zamknij tylne drzwi"/>

@@ -10,11 +10,11 @@
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Сменить сторону разгрузки"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Переключить фильтр загрузки"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Переключение горизонтальной загрузки"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Изменить выбранный тип материала (след.)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Изменить выбранный тип материала (пред.)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Тип материала (след.)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Тип материала (пред.)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Выбрать все типы материалов"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Изменить выбранный тип контейнера (след.)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Изменить выбранный тип контейнера (пред.)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Тип контейнера (след.)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Тип контейнера (пред.)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Выбрать все типы контейнеров"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Прикрепить/открепить ремни"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Открыть/Закрыть заднюю дверь"/>

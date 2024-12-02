@@ -10,11 +10,11 @@
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Alterna il lato di scarico"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Attiva/disattiva il filtro di caricamento"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Attiva/disattiva il caricamento orizzontale"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Cambia il tipo di materiale selezionato (successivo)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Cambia il tipo di materiale selezionato (precedente)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Materiale selezionato (successivo)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Materiale selezionato (precedente)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Seleziona tutti i tipi di materiale"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Modifica il tipo di contenitore selezionato (successivo)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Modifica il tipo di contenitore selezionato (precedente)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Contenitore selezionato (successivo)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Contenitore selezionato (precedente)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Seleziona tutti i tipi di contenitore"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Allacciare/sganciare le cinghie di tensione"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Aprire/chiudere il portellone posteriore"/>

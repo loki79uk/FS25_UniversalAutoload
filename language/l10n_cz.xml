@@ -10,11 +10,11 @@
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Přepnout stranu vykládky"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Přepnout filtr nakládky"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Přepínání horizontálního zatížení"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Změnit vybraný typ materiálu (další)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Změnit vybraný typ materiálu (předchozí)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Vybraný materiál (další)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Vybraný materiál (předchozí)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Vyberte všechny typy materiálů"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Změnit vybraný typ kontejneru (další)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Změnit vybraný typ kontejneru (předchozí)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Vybraný kontejner (další)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Vybraný kontejner (předchozí)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Vyberte všechny typy kontejnerů"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Zapnout/odepnout upínací pásy"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Otevřít/zavřít zadní dveře"/>

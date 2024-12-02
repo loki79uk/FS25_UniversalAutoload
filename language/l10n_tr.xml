@@ -10,11 +10,11 @@
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Boşaltma tarafını değiştir"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Yükleme filtresini değiştir"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Yatay yüklemeyi aç/kapat"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Seçilen malzeme türünü değiştir (sonraki)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Seçilen malzeme türünü değiştir (önceki)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Malzeme türünü değiştir (sonraki)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Malzeme türünü değiştir (önceki)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Tüm malzeme türlerini seç"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Seçili palet türünü değiştir (sonraki)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Seçili palet türünü değiştir (önceki)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Palet türünü değiştir (sonraki)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Palet türünü değiştir (önceki)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Tüm palet türlerini seç"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Gergi kayışlarını sabitleyin/açın"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Arka kapıyı aç/kapat"/>
