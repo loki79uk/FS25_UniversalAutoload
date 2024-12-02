@@ -6,16 +6,16 @@
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Přepnout nakládání"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Režim automatického sběru balíků"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Vyložit"/>
-		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Nucené Vyložit"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Nuceně vyložit"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Přepnout stranu vykládky"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Přepnout filtr nakládky"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Přepínání horizontálního zatížení"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Přepnout horizontální nakládku"/>
 		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Změnit vybraný typ materiálu (další)"/>
 		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Změnit vybraný typ materiálu (předchozí)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Vyberte všechny typy materiálů"/>
 		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Změnit vybraný typ kontejneru (další)"/>
 		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Změnit vybraný typ kontejneru (předchozí)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Vyberte všechny typy kontejnerů"/>
+		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Vyberat všechny typy kontejnerů"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Zapnout/odepnout upínací pásy"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Otevřít/zavřít zadní dveře"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Otevřít/zavřít boční závěs"/>
@@ -24,7 +24,7 @@
 
 		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="Oblast vykládky je blokována. Vyčistěte prosím oblast vykládky."/>
 		<text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="Žádné kompatibilní zboží není k dispozici pro nakládku nebo vykládku."/>
-		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT" text="Ložná plocha je plná. Nelze načíst další položky této velikosti."/>
+		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT" text="Ložná plocha je plná. Nelze naložit další položky této velikosti."/>
 		<text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY" text="Není povoleno nakládání za pohybu. Před naložením přívěsu se prosím úplně zastavte."/>
 		
 		<text name="universalAutoload_tipside" text="Vykládací strana"/>
@@ -40,10 +40,10 @@
 		<text name="universalAutoload_startLoading" text="Začít nakládku"/>
 		<text name="universalAutoload_stopLoading" text="Zastavit nakládku"/>
 		<text name="universalAutoload_unloadAll" text="Vyložit"/>
-		<text name="universalAutoload_unloadAllForce" text="Nucené Vyložit"/>
-		<text name="universalAutoload_baleMode" text="Sbírka Auto-Bale Režim"/>
-		<text name="universalAutoload_enabled" text="Povoleno"/>
-		<text name="universalAutoload_disabled" text="Zakázáno"/>
+		<text name="universalAutoload_unloadAllForce" text="Nuceně vyložit"/>
+		<text name="universalAutoload_baleMode" text="Automatický sběr balíků"/>
+		<text name="universalAutoload_enabled" text="Povolen"/>
+		<text name="universalAutoload_disabled" text="Zakázán"/>
 		<text name="universalAutoload_activate" text="Aktivace"/>
 		<text name="universalAutoload_deactivate" text="Deaktivace"/>
 		<text name="universalAutoload_materialType" text="Typ materiálu"/>
@@ -54,10 +54,10 @@
 		<text name="universalAutoload_PIONEER_PALLET" text="Pioneer paleta"/>
 		<text name="universalAutoload_BIGBAG_PALLET" text="Bigbag paleta"/>
 		<text name="universalAutoload_BIGBAG" text="Bigbag"/>
-		<text name="universalAutoload_POTATOBOX" text="Krabice brambor"/>
+		<text name="universalAutoload_POTATOBOX" text="Bedna brambor"/>
 		<text name="universalAutoload_BALE" text="Balík"/>
 		<text name="universalAutoload_ROUND_BALE" text="Kulatý balík"/>
 		<text name="universalAutoload_SQUARE_BALE" text="Hranatý balík"/>
-		<text name="universalAutoload_LOGS" text="Polena"/>
+		<text name="universalAutoload_LOGS" text="Klády"/>
     </texts>
 </l10n>
