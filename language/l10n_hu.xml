@@ -1,63 +1,67 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
-	<texts>
-		<text name="shop_configuration_text" text="Autoload"/>
-		<text name="configuration_universalAutoload" text="Universal Autoload"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Toggle loading"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Automatic Bale Collection Mode"/>
-		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Unload"/>
-		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Force Unload"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Toggle unloading side"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Toggle loading filter"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Toggle horizontal loading"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Change selected material type (next)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Change selected material type (previous)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Select all material types"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Change selected container type (next)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Change selected container type (previous)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Select all container types"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Fasten/Unfasten tension belts"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Open/Close rear door"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Open/Close curtain side"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" text="Full debug mode"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" text="Simple debug mode"/>
+    <texts>
+        <text name="shop_configuration_text" text="Autoload" />
+        <text name="configuration_universalAutoload" text="Universal Autoload" />
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Automatikus betöltés" />
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Automata bálagyűjtű mód" />
+        <text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Kitöltés" />
+        <text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Kényszerített kitöltés" />
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Oldal választása" />
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Töltési szűrő" />
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Horizontális töltés" />
+        <text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Kiválasztott tárgy módosítása (következő)" />
+        <text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Kiválasztott tárgy módosítása (előző)" />
+        <text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Minden tárgy kiválasztása" />
+        <text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Kiválasztott tároló módosítása (következő)" />
+        <text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Kiválasztott tároló módosítása (előző)" />
+        <text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Minden tároló kiválasztása" />
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Feszítőövek ki-/bekapcsolása" />
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Hátsó ajtó nyitása/zárása" />
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Függönyös oldal nyitása/zárása" />
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" text="Full debug mode" />
+        <text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" text="Simple debug mode" />
 
-		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="Unloading area is blocked. Please clear the unloading area."/>
-		<text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="No compatible goods are available for loading or unloading."/>
-		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT" text="Loading area is full. Unable to load any more items of this size."/>
-		<text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY" text="No loading allowed unless stationary. Please come to a complete stop before loading the trailer."/>
-		
-		<text name="universalAutoload_tipside" text="Unloading side"/>
-		<text name="universalAutoload_left" text="Left"/>
-		<text name="universalAutoload_right" text="Right"/>
-		<text name="universalAutoload_none" text="None"/>
-		<text name="universalAutoload_loadingFilter" text="Loading filter"/>
-		<text name="universalAutoload_loadingMethod" text="Loading Method"/>
-		<text name="universalAutoload_layer" text="Layer"/>
-		<text name="universalAutoload_stack" text="Stack"/>
-		<text name="universalAutoload_fullOnly" text="Full only"/>
-		<text name="universalAutoload_loadAny" text="Any"/>
-		<text name="universalAutoload_startLoading" text="Start loading"/>
-		<text name="universalAutoload_stopLoading" text="Stop loading"/>
-		<text name="universalAutoload_unloadAll" text="Unload"/>
-		<text name="universalAutoload_unloadAllForce" text="Force Unload"/>
-		<text name="universalAutoload_baleMode" text="Auto-Bale Mode"/>
-		<text name="universalAutoload_enabled" text="Enabled"/>
-		<text name="universalAutoload_disabled" text="Disabled"/>
-		<text name="universalAutoload_activate" text="Activate"/>
-		<text name="universalAutoload_deactivate" text="Deactivate"/>
-		<text name="universalAutoload_materialType" text="Material type"/>
-		<text name="universalAutoload_containerType" text="Container type"/>
-		<text name="universalAutoload_ALL" text="All"/>
-		<text name="universalAutoload_LIQUID_TANK" text="IBC Tank"/>
-		<text name="universalAutoload_EURO_PALLET" text="Euro Pallet"/>
-		<text name="universalAutoload_PIONEER_PALLET" text="Pioneer Pallet"/>
-		<text name="universalAutoload_BIGBAG_PALLET" text="Bigbag Pallet"/>
-		<text name="universalAutoload_BIGBAG" text="Bigbag"/>
-		<text name="universalAutoload_POTATOBOX" text="Potato Box"/>
-		<text name="universalAutoload_BALE" text="Bale"/>
-		<text name="universalAutoload_ROUND_BALE" text="Round bale"/>
-		<text name="universalAutoload_SQUARE_BALE" text="Square bale"/>
-		<text name="universalAutoload_LOGS" text="Logs"/>
+        <text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA"
+            text="A kitöltési terület nem üres. Tisztítsa ki a kitöltési területet." />
+        <text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND"
+            text="Nem találhatő kompatibilis tárgy a fel-/letöltéshez." />
+        <text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT"
+            text="A pakolási terület tele van. Nem lehet ebből a méretből többet betölteni." />
+        <text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY"
+            text="Nem lehet mozgás közben betölteni. Álljon meg teljes a betöltés megkezdéséhez." />
+
+        <text name="universalAutoload_tipside" text="Kitöltési oldal" />
+        <text name="universalAutoload_left" text="Bal" />
+        <text name="universalAutoload_right" text="Jobb" />
+        <text name="universalAutoload_none" text="Egyik sem" />
+        <text name="universalAutoload_loadingFilter" text="Pakolási szűrő" />
+        <text name="universalAutoload_loadingMethod" text="Pakolási metódus" />
+        <text name="universalAutoload_layer" text="Réteg" />
+        <text name="universalAutoload_stack" text="Halom" />
+        <text name="universalAutoload_fullOnly" text="Csak teli" />
+        <text name="universalAutoload_loadAny" text="Bármelyik" />
+        <text name="universalAutoload_startLoading" text="Pakolási kezdése" />
+        <text name="universalAutoload_stopLoading" text="Pakolás befejezése" />
+        <text name="universalAutoload_unloadAll" text="Kirakás" />
+        <text name="universalAutoload_unloadAllForce" text="Kirakás itt" />
+        <text name="universalAutoload_baleMode" text="Auto-Bála mód" />
+        <text name="universalAutoload_enabled" text="Engedélyezve" />
+        <text name="universalAutoload_disabled" text="Kikapcsolva" />
+        <text name="universalAutoload_activate" text="Aktiválás" />
+        <text name="universalAutoload_deactivate" text="Kikapcsolás" />
+        <text name="universalAutoload_materialType" text="Anyag típusa" />
+        <text name="universalAutoload_containerType" text="Tároló típusa" />
+        <text name="universalAutoload_ALL" text="Minden" />
+        <text name="universalAutoload_LIQUID_TANK" text="IBC Tartály" />
+        <text name="universalAutoload_EURO_PALLET" text="Euro Pallet" />
+        <text name="universalAutoload_PIONEER_PALLET" text="Pioneer Pallet" />
+        <text name="universalAutoload_BIGBAG_PALLET" text="Bigbag Pallet" />
+        <text name="universalAutoload_BIGBAG" text="Bigbag" />
+        <text name="universalAutoload_POTATOBOX" text="Krumplis Láda" />
+        <text name="universalAutoload_BALE" text="Bála" />
+        <text name="universalAutoload_ROUND_BALE" text="Körbála" />
+        <text name="universalAutoload_SQUARE_BALE" text="Kockabála" />
+        <text name="universalAutoload_LOGS" text="Rönkök" />
     </texts>
 </l10n>
