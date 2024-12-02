@@ -3,28 +3,33 @@
 	<texts>
 		<text name="shop_configuration_text" text="Autoload"/>
 		<text name="configuration_universalAutoload" text="Universalne Autoładowanie"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Przełącz ładowanie"/>
+		
+		<text name="ui_gloabl_settings_ual" text="Ustawienia globalne"/>
+		<text name="ui_setting_enable_ual" text="Ładowanie manualne"/>
+		<text name="ui_toolTip_enable_ual" text="Jeśli opcja manualnego ładowania jest aktywna"/>
+		
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Włącz/wyłącz ładowanie"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Tryb automatycznego zbierania beli"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Rozładuj"/>
-		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Wymusić Rozładuj"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Wymuś rozładowanie"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Przełącz stronę rozładunku"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Przełącz filtr ładowania"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Przełączanie ładowania poziomego"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Zmień wybrany typ materiału (następny)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Zmień wybrany typ materiału (poprzedni)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Wybierz wszystkie typy materiałów"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Zmień wybrany typ kontenera (następny)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Zmień wybrany typ kontenera (poprzedni)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Wybierz wszystkie typy kontenerów"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Zapinanie/Odpinanie pasów napinających"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Zmień wybrany typ produktu (następny)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Zmień wybrany typ produktu (poprzedni)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Wybierz wszystkie typy produktów"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Zmień wybrany typ skrzyni (następny)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Zmień wybrany typ skrzyni (poprzedni)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Wybierz wszystkie typy skrzyń"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Zapnij/odepnij pasy napinające"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Otwórz/zamknij tylne drzwi"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Otwórz/zamknij kurtyny"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" text="Pełny Tryb Debugu"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" text="Prosty Tryb Debugu"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" text="Wł/wył Pełny Tryb Debugu"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" text="Wł/wył Prosty Tryb Debugu"/>
 
-		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="Obszar rozładunku jest zablokowany. Oczyść obszar rozładunku."/>
-		<text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="Żadne zgodne towary nie są dostępne do załadunku lub rozładunku."/>
-		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT" text="Jesteś Zapchany. Niemożna więcej załadować."/>
+		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="Obszar rozładunku jest zajęty. Oczyść teren."/>
+		<text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="Żadne zgodne towary nie są dostępne do załadunku ani rozładunku."/>
+		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT" text="Obszar ładowania jest pełny, nie można załadować więcej!"/>
 		<text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY" text="Nie można załadować podczas jazdy. Zatrzymaj pojazd zanim załadujesz."/>
 		
 		<text name="universalAutoload_tipside" text="Strona rozładunku"/>
@@ -40,24 +45,24 @@
 		<text name="universalAutoload_startLoading" text="Rozpocznij ładowanie"/>
 		<text name="universalAutoload_stopLoading" text="Zatrzymaj ładowanie"/>
 		<text name="universalAutoload_unloadAll" text="Rozładuj"/>
-		<text name="universalAutoload_unloadAllForce" text="Wymusić Rozładuj"/>
-		<text name="universalAutoload_baleMode" text="Tryb Auto-Bale"/>
+		<text name="universalAutoload_unloadAllForce" text="Wymuś rozładowanie"/>
+		<text name="universalAutoload_baleMode" text="Tryb Auto-Bele"/>
 		<text name="universalAutoload_enabled" text="Włączone"/>
 		<text name="universalAutoload_disabled" text="Wyłączone"/>
 		<text name="universalAutoload_activate" text="Aktywuj"/>
 		<text name="universalAutoload_deactivate" text="Dezaktywuj"/>
-		<text name="universalAutoload_materialType" text="Typ materiału"/>
-		<text name="universalAutoload_containerType" text="Typ kontenera"/>
+		<text name="universalAutoload_materialType" text="Typ produktu"/>
+		<text name="universalAutoload_containerType" text="Typ skrzyń"/>
 		<text name="universalAutoload_ALL" text="Wszystko"/>
-		<text name="universalAutoload_LIQUID_TANK" text="Zbiornik Płynów"/>
-		<text name="universalAutoload_EURO_PALLET" text="Euro Paleta"/>
-		<text name="universalAutoload_PIONEER_PALLET" text="Pioneer Paleta"/>
-		<text name="universalAutoload_BIGBAG_PALLET" text="Bigbag Paleta"/>
-		<text name="universalAutoload_BIGBAG" text="Torba"/>
-		<text name="universalAutoload_POTATOBOX" text="Ziemnioki"/>
-		<text name="universalAutoload_BALE" text="Bele"/>
-		<text name="universalAutoload_ROUND_BALE" text="Okrągłe bele"/>
-		<text name="universalAutoload_SQUARE_BALE" text="Kańciaste bele"/>
+		<text name="universalAutoload_LIQUID_TANK" text="Zbiornik płynów"/>
+		<text name="universalAutoload_EURO_PALLET" text="Europaleta"/>
+		<text name="universalAutoload_PIONEER_PALLET" text="Paleta typu Pioneer"/>
+		<text name="universalAutoload_BIGBAG_PALLET" text="Bigbag na palecie"/>
+		<text name="universalAutoload_BIGBAG" text="Worek Bigbag"/>
+		<text name="universalAutoload_POTATOBOX" text="Ziemniaki"/>
+		<text name="universalAutoload_BALE" text="Bela"/>
+		<text name="universalAutoload_ROUND_BALE" text="Bela okrągła"/>
+		<text name="universalAutoload_SQUARE_BALE" text="Kostka"/>
 		<text name="universalAutoload_LOGS" text="Kłody"/>
     </texts>
 </l10n>
