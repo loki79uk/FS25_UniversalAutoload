@@ -3,61 +3,66 @@
 	<texts>
 		<text name="shop_configuration_text" text="Autoload"/>
 		<text name="configuration_universalAutoload" text="Universal Autoload"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Skift pålæsning"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Automatisk Balle Læsnings Mode"/>
-		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Aflæs"/>
-		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Tvungen aflæs"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Skift aflæsnings side"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Skift læsnings type"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Skift horisontal læsning"/>
+		
+		<text name="ui_gloabl_settings_ual" text="Globale indstillinger"/>
+		<text name="ui_setting_enable_ual" text="Manuel læsning"/>
+		<text name="ui_toolTip_enable_ual" text="Hvis manuel læsning er aktiveret"/>
+		
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Til/fra læsning"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Automatisk ballesamlingsmode"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Aflæsning"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Tving aflæsning"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Skift aflæsningsside"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Skift læssefilter"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Til/fra horisontal læsning"/>
 		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Valgt materiale (næste)"/>
 		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Valgt materiale (forrige)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Vælg alle materiale typer"/>
+		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Vælg alle materialetyper"/>
 		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Valgt beholder (næste)"/>
 		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Valgt beholder (forrige)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Vælg alle container typer"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Spænd/frigør spænde stropper"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Åben/luk bag dør"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Åben/luk side"/>
+		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Vælg alle beholdertyper"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Spænd/løsn båndstrammer"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Åbn/luk bagdør"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Åbn/luk gardinside"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" text="Fuld debug mode"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" text="Simpel debug mode"/>
 
-		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="Aflæsnings området er blokeret. Ryd venligst området."/>
-		<text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="Ingen kompitable typer er til rådighed for læsning eller aflæsning."/>
-		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT" text="Læsnings område er fuld. Kan ikke læsse flere i denne størrelse."/>
-		<text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY" text="Du kan ikke pålæsse. Du skal holde helt stille for at læsse."/>
+		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="Aflæsningsområde er blokeret. Ryd venligst aflæsningsområdet."/>
+		<text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="Ingen kompatible genstande tilgængelig for pålæsning eller aflæsning."/>
+		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT" text="Læsningsområdet er fyldt. Kunne ikke læsse flere genstande af denne størrelse."/>
+		<text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY" text="Ingen læsning tilladt ved kørsel. Hold venligst helt stille inden læsning påbegyndes."/>
 		
-		<text name="universalAutoload_tipside" text="Aflæsnings side"/>
+		<text name="universalAutoload_tipside" text="Aflæsningsside"/>
 		<text name="universalAutoload_left" text="Venstre"/>
 		<text name="universalAutoload_right" text="Højre"/>
-		<text name="universalAutoload_none" text="ingen"/>
-		<text name="universalAutoload_loadingFilter" text="Læsnings filter"/>
-		<text name="universalAutoload_loadingMethod" text="Læsnings Metode"/>
+		<text name="universalAutoload_none" text="Ingen"/>
+		<text name="universalAutoload_loadingFilter" text="Læssefilter"/>
+		<text name="universalAutoload_loadingMethod" text="Læssemetode"/>
 		<text name="universalAutoload_layer" text="Lag"/>
-		<text name="universalAutoload_stack" text="Stakke"/>
-		<text name="universalAutoload_fullOnly" text="Kun Fuld"/>
-		<text name="universalAutoload_loadAny" text="Alt"/>
+		<text name="universalAutoload_stack" text="Stabel"/>
+		<text name="universalAutoload_fullOnly" text="Kun fulde"/>
+		<text name="universalAutoload_loadAny" text="Alle"/>
 		<text name="universalAutoload_startLoading" text="Start læsning"/>
 		<text name="universalAutoload_stopLoading" text="Stop læsning"/>
-		<text name="universalAutoload_unloadAll" text="Aflæs"/>
-		<text name="universalAutoload_unloadAllForce" text="Tvungen aflæs"/>
-		<text name="universalAutoload_baleMode" text="Auto-Balle Mode"/>
+		<text name="universalAutoload_unloadAll" text="Aflæsning"/>
+		<text name="universalAutoload_unloadAllForce" text="Tving aflæsning"/>
+		<text name="universalAutoload_baleMode" text="Auto-ballemode"/>
 		<text name="universalAutoload_enabled" text="Til"/>
 		<text name="universalAutoload_disabled" text="Fra"/>
 		<text name="universalAutoload_activate" text="Aktiver"/>
 		<text name="universalAutoload_deactivate" text="Deaktiver"/>
-		<text name="universalAutoload_materialType" text="Materiale type"/>
-		<text name="universalAutoload_containerType" text="Container type"/>
+		<text name="universalAutoload_materialType" text="Materialetype"/>
+		<text name="universalAutoload_containerType" text="Beholdertype"/>
 		<text name="universalAutoload_ALL" text="Alle"/>
-		<text name="universalAutoload_LIQUID_TANK" text="IBC Tanke"/>
-		<text name="universalAutoload_EURO_PALLET" text="Euro Paller"/>
-		<text name="universalAutoload_PIONEER_PALLET" text="Pioneer Paller"/>
-		<text name="universalAutoload_BIGBAG_PALLET" text="Bigbag Paller"/>
+		<text name="universalAutoload_LIQUID_TANK" text="Palletank"/>
+		<text name="universalAutoload_EURO_PALLET" text="Europalle"/>
+		<text name="universalAutoload_PIONEER_PALLET" text="Pioneer-palle"/>
+		<text name="universalAutoload_BIGBAG_PALLET" text="Bigbag-palle"/>
 		<text name="universalAutoload_BIGBAG" text="Bigbag"/>
-		<text name="universalAutoload_POTATOBOX" text="Kartoffel Boks"/>
+		<text name="universalAutoload_POTATOBOX" text="Kartoffelkasse"/>
 		<text name="universalAutoload_BALE" text="Balle"/>
-		<text name="universalAutoload_ROUND_BALE" text="Rund balle"/>
-		<text name="universalAutoload_SQUARE_BALE" text="Firkantet balle"/>
-		<text name="universalAutoload_LOGS" text="Stammer"/>
+		<text name="universalAutoload_ROUND_BALE" text="Rundballe"/>
+		<text name="universalAutoload_SQUARE_BALE" text="Firkantballe"/>
+		<text name="universalAutoload_LOGS" text="Træstammer"/>
     </texts>
 </l10n>
