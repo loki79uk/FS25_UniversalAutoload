@@ -3,61 +3,66 @@
 	<texts>
 		<text name="shop_configuration_text" text="Autoload"/>
 		<text name="configuration_universalAutoload" text="Autoload Universel"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Activer le chargement"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Mode de collecte automatique des balles"/>
-		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Décharger tous"/>
-		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Décharger forcé"/>
+
+		<text name="ui_gloabl_settings_ual" text="Paramètres généraux"/>
+		<text name="ui_setting_enable_ual" text="Chargement manuel"/>
+		<text name="ui_toolTip_enable_ual" text="Si la fonctionnalité de chargement manuel est activée"/>
+		
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Activer/désactiver le chargement"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Activer/désactiver le mode de collecte automatique des balles"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Décharger"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Forcer le déchargement"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Choix du côté actif"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Sélection du chargement"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Choix du filtre"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Basculement du chargement horizontal"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Matériau sélectionné (suivant)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Matériau sélectionné (précédent)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Sélectionner tous types de marchandises"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Contenant sélectionné (suivant)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Contenant sélectionné (précédent)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Sélectionner tous types de conditionnement"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Marchandise sélectionnée (suivant)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Marchandise sélectionnée (précédent)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Sélectionner tous les types de marchandises"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Conditionnement sélectionné (suivant)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Conditionnement sélectionné (précédent)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Sélectionner tous les types de conditionnements"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Attacher/détacher les sangles de serrage"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Ouvrir/fermer la porte arrière"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Ouvrir/fermer la bâche"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Ouvrir/fermer le rideau latéral"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" text="Mode débogage complet"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" text="Mode débogage simple"/>
 
 		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="La zone de déchargement est bloquée. Veuillez libérer la zone de déchargement."/>
 		<text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="Aucune marchandise compatible n'est disponible pour le chargement ou le déchargement."/>
-		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT" text="La zone de chargement est pleine. Impossible de charger d'autres articles de cette taille."/>
-		<text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY" text="Le chargement est interdit à moins d'être à l'arrêt. Veuillez vous arrêter complètement avant de charger la remorque."/>
+		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT" text="La remorque est pleine. Impossible de charger d'autres articles de cette taille."/>
+		<text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY" text="Pour charger, vous devez être à l'arrêt. Veuillez vous arrêter complètement avant de charger la remorque."/>
 		
 		<text name="universalAutoload_tipside" text="Côté actif"/>
 		<text name="universalAutoload_left" text="Gauche"/>
-		<text name="universalAutoload_right" text="Droit"/>
+		<text name="universalAutoload_right" text="Droite"/>
 		<text name="universalAutoload_none" text="Aucun"/>
-		<text name="universalAutoload_loadingFilter" text="Choix du chargement"/>
+		<text name="universalAutoload_loadingFilter" text="Filtre de chargement"/>
 		<text name="universalAutoload_loadingMethod" text="Méthode de chargement"/>
 		<text name="universalAutoload_layer" text="Couche"/>
 		<text name="universalAutoload_stack" text="Pile"/>
 		<text name="universalAutoload_fullOnly" text="Complet uniquement"/>
 		<text name="universalAutoload_loadAny" text="Tout"/>
-		<text name="universalAutoload_startLoading" text="Démarrer chargement"/>
+		<text name="universalAutoload_startLoading" text="Démarrer le chargement"/>
 		<text name="universalAutoload_stopLoading" text="Arrêter le chargement"/>
 		<text name="universalAutoload_unloadAll" text="Décharger"/>
-		<text name="universalAutoload_unloadAllForce" text="Décharger forcé"/>
+		<text name="universalAutoload_unloadAllForce" text="Forcer le déchargement"/>
 		<text name="universalAutoload_baleMode" text="Mode Auto-Balles"/>
 		<text name="universalAutoload_enabled" text="Activé"/>
 		<text name="universalAutoload_disabled" text="Désactivé"/>
 		<text name="universalAutoload_activate" text="Activer"/>
 		<text name="universalAutoload_deactivate" text="Désactiver"/>
-		<text name="universalAutoload_materialType" text="Marchandise sélectionnée"/>
-		<text name="universalAutoload_containerType" text="Conditionnement sélectionné"/>
-		<text name="universalAutoload_ALL" text="Tous"/>
-		<text name="universalAutoload_LIQUID_TANK" text="Réservoir de liquide IBC"/>
-		<text name="universalAutoload_EURO_PALLET" text="Palette euro"/>
-		<text name="universalAutoload_PIONEER_PALLET" text="Palette pioneer"/>
+		<text name="universalAutoload_materialType" text="Marchandise"/>
+		<text name="universalAutoload_containerType" text="Conditionnement"/>
+		<text name="universalAutoload_ALL" text="Tout"/>
+		<text name="universalAutoload_LIQUID_TANK" text="Réservoir IBC"/>
+		<text name="universalAutoload_EURO_PALLET" text="Europalette"/>
+		<text name="universalAutoload_PIONEER_PALLET" text="Palette Pioneer"/>
 		<text name="universalAutoload_BIGBAG_PALLET" text="Palette de big bag"/>
 		<text name="universalAutoload_BIGBAG" text="Big bag"/>
-		<text name="universalAutoload_POTATOBOX" text="Palox pommes de terre"/>
+		<text name="universalAutoload_POTATOBOX" text="Palox de pommes de terre"/>
 		<text name="universalAutoload_BALE" text="Balle"/>
-		<text name="universalAutoload_ROUND_BALE" text="Balle Ronde"/>
+		<text name="universalAutoload_ROUND_BALE" text="Balle ronde"/>
 		<text name="universalAutoload_SQUARE_BALE" text="Balle carrée"/>
-		<text name="universalAutoload_LOGS" text="Grumes"/>
+		<text name="universalAutoload_LOGS" text="Grume"/>
     </texts>
 </l10n>
