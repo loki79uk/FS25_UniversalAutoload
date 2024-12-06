@@ -38,7 +38,7 @@
 		<text name="universalAutoload_stack" text="Halom" />
 		<text name="universalAutoload_fullOnly" text="Csak teli" />
 		<text name="universalAutoload_loadAny" text="Bármelyik" />
-		<text name="universalAutoload_startLoading" text="Pakolási kezdése" />
+		<text name="universalAutoload_startLoading" text="Pakolás kezdése" />
 		<text name="universalAutoload_stopLoading" text="Pakolás befejezése" />
 		<text name="universalAutoload_unloadAll" text="Kirakás" />
 		<text name="universalAutoload_unloadAllForce" text="Kirakás itt" />
@@ -51,9 +51,9 @@
 		<text name="universalAutoload_containerType" text="Tároló típusa" />
 		<text name="universalAutoload_ALL" text="Minden" />
 		<text name="universalAutoload_LIQUID_TANK" text="IBC Tartály" />
-		<text name="universalAutoload_EURO_PALLET" text="Euro Pallet" />
-		<text name="universalAutoload_PIONEER_PALLET" text="Pioneer Pallet" />
-		<text name="universalAutoload_BIGBAG_PALLET" text="Bigbag Pallet" />
+		<text name="universalAutoload_EURO_PALLET" text="Euro Raklap" />
+		<text name="universalAutoload_PIONEER_PALLET" text="Pioneer Raklap" />
+		<text name="universalAutoload_BIGBAG_PALLET" text="Bigbag Raklap" />
 		<text name="universalAutoload_BIGBAG" text="Bigbag" />
 		<text name="universalAutoload_POTATOBOX" text="Krumplis Láda" />
 		<text name="universalAutoload_BALE" text="Bála" />
