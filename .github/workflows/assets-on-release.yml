@@ -1,0 +1,47 @@
+name: Attach current mod asset to the release
+
+on:
+  release:
+      types:
+      - published
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Create archive of the release
+      uses: thedoctor0/zip-release@0.7.5
+      with:
+        type: 'zip'
+        filename: 'FS25_UniversalAutoload.zip'
+        exclusions: '*.git* README.md'
+
+    - name: Get latest release information
+      id: get_release
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const { data: releases } = await github.rest.repos.listReleases({
+            owner: context.repo.owner,
+            repo: context.repo.repo
+          });
+          const tagName = context.ref.replace('refs/tags/', '');
+          const release = releases.find(r => r.tag_name === tagName);
+          if (!release) {
+            throw new Error(`Release with tag ${tagName} not found.`);
+          }
+          core.setOutput('upload_url', release.upload_url);
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload the asset file to the release
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        upload_url: ${{ steps.get_release.outputs.upload_url }}
+        asset_path: FS25_UniversalAutoload.zip
+        asset_name: FS25_UniversalAutoload.zip
+        asset_content_type: application/zip
