@@ -5,127 +5,127 @@
 		<text name="configuration_universalAutoload" text="通用自动装载"/>
 		
 		<!-- TITLES -->
-		<text name="ui_global_settings_ual" text="Global Settings"/>
-		<text name="ui_config_settings_ual" text="Autoload Settings"/>
-		<text name="ui_vehicle_options_ual" text="Vehicle Options"/>
-		<text name="ui_loading_area_options_ual" text="Loading Area Options"/>
-		<text name="ui_button_save_config_ual" text="Save Vehicle Settings"/>
-		<text name="ui_confirm_save_config_ual" text="Do you want to overwrite the default autoload configuration for this vehicle?"/>
+		<text name="ui_global_settings_ual" text="全局设置"/>
+		<text name="ui_config_settings_ual" text="自动加载设置"/>
+		<text name="ui_vehicle_options_ual" text="车辆选项"/>
+		<text name="ui_loading_area_options_ual" text="加载区域选项"/>
+		<text name="ui_button_save_config_ual" text="保存车辆设置"/>
+		<text name="ui_confirm_save_config_ual" text="是否要覆盖此车辆的默认 autoload 配置？"/>
 		
 		<!-- GLOBAL -->
-		<text name="ui_global_showDebug" text="Show Debug"/>
-		<text name="ui_global_highPriority" text="High Priority"/>
-		<text name="ui_global_disableAutoStrap" text="Disable Auto-Strap"/>
-		<text name="ui_global_pricePerLog" text="Price Per Log"/>
-		<text name="ui_global_pricePerBale" text="Price Per Bale"/>
-		<text name="ui_global_pricePerPallet" text="Price Per Pallet"/>
-		<text name="ui_global_minLogLength" text="Min Log Length"/>
+		<text name="ui_global_showDebug" text="显示调试"/>
+		<text name="ui_global_highPriority" text="高优先级"/>
+		<text name="ui_global_disableAutoStrap" text="禁用张紧带"/>
+		<text name="ui_global_pricePerLog" text="每根原木的价格"/>
+		<text name="ui_global_pricePerBale" text="每个捆包价格"/>
+		<text name="ui_global_pricePerPallet" text="每个托盘价格"/>
+		<text name="ui_global_minLogLength" text="最小原木长度"/>
 		
-		<text name="ui_global_tooltip_showDebug" text="Show the full graphical debugging display for all vehicles in game"/>
-		<text name="ui_global_tooltip_highPriority" text="Apply high priority to all UAL key bindings in the F1 menu"/>
-		<text name="ui_global_tooltip_disableAutoStrap" text="Disable the automatic application of tension belts"/>
-		<text name="ui_global_tooltip_pricePerLog" text="The price charged for each auto-loaded log"/>
-		<text name="ui_global_tooltip_pricePerBale" text="The price charged for each auto-loaded bale"/>
-		<text name="ui_global_tooltip_pricePerPallet" text="The price charged for each auto-loaded pallet"/>
-		<text name="ui_global_tooltip_minLogLength" text="The global minimum length for logs that will be autoloaded"/>
+		<text name="ui_global_tooltip_showDebug" text="显示游戏中所有车辆的完整图形调试显示"/>
+		<text name="ui_global_tooltip_highPriority" text="对 F1 菜单中的所有 UAL 键绑定应用高优先级"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="禁用张紧带的自动应用"/>
+		<text name="ui_global_tooltip_pricePerLog" text="每条自动加载原木的收费"/>
+		<text name="ui_global_tooltip_pricePerBale" text="每捆包自动装载货物的收费"/>
+		<text name="ui_global_tooltip_pricePerPallet" text="每个自动装载托盘的收费"/>
+		<text name="ui_global_tooltip_minLogLength" text="自动加载原木的全局最小长度"/>
 
 		<!-- OPTIONS -->
-		<text name="ui_option_enableAutoload" text="Enable Autoload"/>
-		<text name="ui_option_trailerType" text="Trailer Type"/>
-		<text name="ui_option_unloadingType" text="Unloading Position"/>
-		<text name="ui_option_rearOnly" text="Rear Only"/>
-		<text name="ui_option_frontOnly" text="Front Only"/>
+		<text name="ui_option_enableAutoload" text="启用自动加载"/>
+		<text name="ui_option_trailerType" text="拖车类型"/>
+		<text name="ui_option_unloadingType" text="卸货位置"/>
+		<text name="ui_option_rearOnly" text="仅限后方"/>
+		<text name="ui_option_frontOnly" text="仅限前方"/>
 		
-		<text name="ui_option_noLoadingFolded" text="No Loading If Folded"/>
-		<text name="ui_option_folded" text="Folded"/>
-		<text name="ui_option_unfolded" text="Unfolded"/>
+		<text name="ui_option_noLoadingFolded" text="折叠后不装载"/>
+		<text name="ui_option_folded" text="折叠"/>
+		<text name="ui_option_unfolded" text="展开"/>
 		
-		<text name="ui_option_noLoadingCovered" text="No Loading If Covered"/>
-		<text name="ui_option_covered" text="Covered"/>
-		<text name="ui_option_uncovered" text="Uncovered"/>
+		<text name="ui_option_noLoadingCovered" text="有遮盖则禁止装载"/>
+		<text name="ui_option_covered" text="覆盖"/>
+		<text name="ui_option_uncovered" text="没有覆盖"/>
 
-		<text name="ui_option_isBoxTrailer" text="Box Trailer"/>
-		<text name="ui_option_isLogTrailer" text="Log Trailer"/>
-		<text name="ui_option_isBaleTrailer" text="Bale Trailer"/>
-		<text name="ui_option_isBaleProcessor" text="Bale Processor"/>
-		<text name="ui_option_isCurtainTrailer" text="Curtain Trailer"/>
-		<text name="ui_option_enableRearLoading" text="Enable Rear Loading"/>
-		<text name="ui_option_enableSideLoading" text="Enable Side Loading"/>
+		<text name="ui_option_isBoxTrailer" text="箱式拖车"/>
+		<text name="ui_option_isLogTrailer" text="原木拖车"/>
+		<text name="ui_option_isBaleTrailer" text="捆包拖车"/>
+		<text name="ui_option_isBaleProcessor" text="捆包处理机"/>
+		<text name="ui_option_isCurtainTrailer" text="帘式拖车"/>
+		<text name="ui_option_enableRearLoading" text="启用后方装载"/>
+		<text name="ui_option_enableSideLoading" text="启用前方装载"/>
 
-		<text name="ui_option_rearUnloadingOnly" text="Rear Unloading Only"/>
-		<text name="ui_option_frontUnloadingOnly" text="Front Unloading Only"/>
-		<text name="ui_option_horizontalLoading" text="Horizontal Loading"/>
-		<text name="ui_option_disableAutoStrap" text="Automatic Tension Belts"/>
-		<text name="ui_option_disableHeightLimit" text="Limit Stacking Height"/>
-		<text name="ui_option_zonesOverlap" text="Zones Overlap"/>
-		<text name="ui_option_offsetRoot" text="Offset Root"/>
-		<text name="ui_option_minLogLength" text="Min Log Length"/>
+		<text name="ui_option_rearUnloadingOnly" text="仅限后方装载"/>
+		<text name="ui_option_frontUnloadingOnly" text="仅限前方装载"/>
+		<text name="ui_option_horizontalLoading" text="水平装载"/>
+		<text name="ui_option_disableAutoStrap" text="自动张紧带"/>
+		<text name="ui_option_disableHeightLimit" text="限制堆叠高度"/>
+		<text name="ui_option_zonesOverlap" text="区域重叠"/>
+		<text name="ui_option_offsetRoot" text="偏移根"/>
+		<text name="ui_option_minLogLength" text="最小原木长度"/>
 		
-		<text name="ui_option_tooltip_enableAutoload" text="If Autoload is enabled or disabled for this vehicle"/>
-		<text name="ui_option_tooltip_trailerType" text="The special type of trailer, e.g. bale, log, curtain"/>
-		<text name="ui_option_tooltip_unloadingType" text="Use a special unloading position (front or rear)"/>
-		<text name="ui_option_tooltip_noLoadingFolded" text="Prevent loading when either folded or unfolded"/>
-		<text name="ui_option_tooltip_noLoadingCovered" text="Prevent loading when either covered or uncovered"/>
+		<text name="ui_option_tooltip_enableAutoload" text="如果此车辆的自动加载功能已启用或禁用"/>
+		<text name="ui_option_tooltip_trailerType" text="特殊类型的拖车，例如捆包、原木、帘式"/>
+		<text name="ui_option_tooltip_unloadingType" text="使用特殊的卸货位置(前方或后方)"/>
+		<text name="ui_option_tooltip_noLoadingFolded" text="防止折叠或展开时装载"/>
+		<text name="ui_option_tooltip_noLoadingCovered" text="防止在覆盖或未覆盖时装载"/>
 		
-		<text name="ui_option_tooltip_isBoxTrailer" text="If trailer is enclosed with a rear door"/>
-		<text name="ui_option_tooltip_isLogTrailer" text="If trailer is a logging trailer - will load only logs dropped from above"/>
-		<text name="ui_option_tooltip_isBaleTrailer" text="If trailer should use an automatic bale collection mode"/>	
-		<text name="ui_option_tooltip_isBaleProcessor" text="If trailer should consume bales (e.g. TMR Mixer or Straw Blower)"/>
-		<text name="ui_option_tooltip_isCurtainTrailer" text="Automatically detect the available load side (if the trailer has curtain sides)"/>
-		<text name="ui_option_tooltip_enableRearLoading" text="Use the automatic rear loading trigger"/>
-		<text name="ui_option_tooltip_enableSideLoading" text="Use the automatic side loading triggers"/>
+		<text name="ui_option_tooltip_isBoxTrailer" text="如果拖车有后门"/>
+		<text name="ui_option_tooltip_isLogTrailer" text="如果拖车是伐木拖车 - 将仅装载从上方掉落的原木"/>
+		<text name="ui_option_tooltip_isBaleTrailer" text="拖车是否应使用自动捆包收集模式"/>	
+		<text name="ui_option_tooltip_isBaleProcessor" text="如果拖车要消耗草捆(例如TMR搅拌机或秸秆吹送机)"/>
+		<text name="ui_option_tooltip_isCurtainTrailer" text="自动检测可用的负载侧(如果拖车有侧帘)"/>
+		<text name="ui_option_tooltip_enableRearLoading" text="使用自动后装载触发器"/>
+		<text name="ui_option_tooltip_enableSideLoading" text="使用自动侧面加载触发器"/>
 
-		<text name="ui_option_tooltip_rearUnloadingOnly" text="Use rear unloading zone only (no side zones)"/>
-		<text name="ui_option_tooltip_frontUnloadingOnly" text="Use front unloading zone only (no side zones)"/>
-		<text name="ui_option_tooltip_horizontalLoading" text="Start with horizontal loading enabled (can be toggled if key is bound)"/>
-		<text name="ui_option_tooltip_disableAutoStrap" text="Automatic application of tension belts after loading or unloading"/>
-		<text name="ui_option_tooltip_disableHeightLimit" text="Limit the height of pallet stacking based on density "/>
-		<text name="ui_option_tooltip_zonesOverlap" text="Flag to identify when the loading areas overlap each other"/>
-		<text name="ui_option_tooltip_offsetRoot" text="Vehicle i3d node that area offsets are relative to"/>
-		<text name="ui_option_tooltip_minLogLength" text="The minimum length for logs that will be autoloaded"/>
+		<text name="ui_option_tooltip_rearUnloadingOnly" text="仅使用后方卸货区(无侧面区域)"/>
+		<text name="ui_option_tooltip_frontUnloadingOnly" text="仅使用前方卸货区(无侧面区域)"/>
+		<text name="ui_option_tooltip_horizontalLoading" text="从启用水平加载开始(如果绑定了按键则可以切换)"/>
+		<text name="ui_option_tooltip_disableAutoStrap" text="装载或卸载后自动应用张紧带"/>
+		<text name="ui_option_tooltip_disableHeightLimit" text="根据密度限制托盘堆放高度"/>
+		<text name="ui_option_tooltip_zonesOverlap" text="用于识别装载区域何时相互重叠的标记"/>
+		<text name="ui_option_tooltip_offsetRoot" text="区域偏移相对于的车辆 i3d 节点"/>
+		<text name="ui_option_tooltip_minLogLength" text="自动加载原木的最小长度"/>
 
 		<!-- LOADING_AREA -->
-		<text name="ui_loadArea_offset" text="Offset"/>
-		<text name="ui_loadArea_offsetRoot" text="Offset Root"/>
-		<text name="ui_loadArea_width" text="Width"/>
-		<text name="ui_loadArea_length" text="Length"/>
-		<text name="ui_loadArea_height" text="Height"/>
-		<text name="ui_loadArea_baleHeight" text="Bale Height"/>
-		<text name="ui_loadArea_widthAxis" text="Width Axis"/>
-		<text name="ui_loadArea_lengthAxis" text="Length Axis"/>
-		<text name="ui_loadArea_heightAxis" text="Height Axis"/>
-		<text name="ui_loadArea_offsetFrontAxis" text="Offset Front Axis"/>
-		<text name="ui_loadArea_offsetRearAxis" text="Offset Rear Axis"/>
-		<text name="ui_loadArea_reverseWidthAxis" text="Reverse Width Axis"/>
-		<text name="ui_loadArea_reverseLengthAxis" text="Reverse Length Axis"/>
-		<text name="ui_loadArea_reverseHeightAxis" text="Reverse Height Axis"/>
-		<text name="ui_loadArea_noLoadingIfFolded" text="No Loading If Folded"/>
-		<text name="ui_loadArea_noLoadingIfUnfolded" text="No Loading If Unfolded"/>
-		<text name="ui_loadArea_noLoadingIfCovered" text="No Loading If Covered"/>
-		<text name="ui_loadArea_noLoadingIfUncovered" text="No Loading If Uncovered"/>
+		<text name="ui_loadArea_offset" text="偏移"/>
+		<text name="ui_loadArea_offsetRoot" text="偏移根"/>
+		<text name="ui_loadArea_width" text="宽度"/>
+		<text name="ui_loadArea_length" text="长度"/>
+		<text name="ui_loadArea_height" text="高度"/>
+		<text name="ui_loadArea_baleHeight" text="捆包宽度"/>
+		<text name="ui_loadArea_widthAxis" text="宽度轴"/>
+		<text name="ui_loadArea_lengthAxis" text="长度轴"/>
+		<text name="ui_loadArea_heightAxis" text="高度轴"/>
+		<text name="ui_loadArea_offsetFrontAxis" text="偏移前轴"/>
+		<text name="ui_loadArea_offsetRearAxis" text="偏移后轴"/>
+		<text name="ui_loadArea_reverseWidthAxis" text="反向宽度轴"/>
+		<text name="ui_loadArea_reverseLengthAxis" text="反向长度轴"/>
+		<text name="ui_loadArea_reverseHeightAxis" text="反向高度轴"/>
+		<text name="ui_loadArea_noLoadingIfFolded" text="折叠时不装载"/>
+		<text name="ui_loadArea_noLoadingIfUnfolded" text="展开时不装载"/>
+		<text name="ui_loadArea_noLoadingIfCovered" text="有遮盖则禁止装载"/>
+		<text name="ui_loadArea_noLoadingIfUncovered" text="未覆盖则不装载"/>
 		
-		<text name="ui_loadArea_tooltip_offset" text="Offset to the centre of the loading area"/>
-		<text name="ui_loadArea_tooltip_offsetRoot" text="Vehicle i3d node that this area offset is relative to"/>
-		<text name="ui_loadArea_tooltip_width" text="Width of the loading area"/>
-		<text name="ui_loadArea_tooltip_length" text="Length of the loading area"/>
-		<text name="ui_loadArea_tooltip_height" text="Height of the loading area"/>
-		<text name="ui_loadArea_tooltip_baleHeight" text="Height of the loading area for BALES only"/>
-		<text name="ui_loadArea_tooltip_widthAxis" text="Axis name to extend width of the loading area"/>
-		<text name="ui_loadArea_tooltip_lengthAxis" text="Axis name to extend length of the loading area"/>
-		<text name="ui_loadArea_tooltip_heightAxis" text="Axis name to extend height of the loading area"/>
-		<text name="ui_loadArea_tooltip_offsetFrontAxis" text="Axis name to adjust the front position of the loading area"/>
-		<text name="ui_loadArea_tooltip_offsetRearAxis" text="Axis name to adjust the rear position of the loading area"/>
-		<text name="ui_loadArea_tooltip_reverseWidthAxis" text="Reverses direction of width extension if true"/>
-		<text name="ui_loadArea_tooltip_reverseLengthAxis" text="Reverses direction of length extension if true"/>
-		<text name="ui_loadArea_tooltip_reverseHeightAxis" text="Reverses direction of height extension if true"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfFolded" text="Prevent loading when folded (for this area only)"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfUnfolded" text="Prevent loading when unfolded (for this area only)"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfCovered" text="Prevent loading when covered (for this area only)"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Prevent loading when uncovered (for this area only)"/>
+		<text name="ui_loadArea_tooltip_offset" text="偏移到装载区域的中心"/>
+		<text name="ui_loadArea_tooltip_offsetRoot" text="该区域偏移相对于的车辆i3d节点"/>
+		<text name="ui_loadArea_tooltip_width" text="装卸区宽度"/>
+		<text name="ui_loadArea_tooltip_length" text="装卸区长度"/>
+		<text name="ui_loadArea_tooltip_height" text="装卸区高度"/>
+		<text name="ui_loadArea_tooltip_baleHeight" text="仅适用于捆包装载区域的高度"/>
+		<text name="ui_loadArea_tooltip_widthAxis" text="扩展装载区域宽度的轴名称"/>
+		<text name="ui_loadArea_tooltip_lengthAxis" text="延伸加载区域长度的轴名称"/>
+		<text name="ui_loadArea_tooltip_heightAxis" text="延伸装载区高度的轴名称"/>
+		<text name="ui_loadArea_tooltip_offsetFrontAxis" text="调整装载区前方位置的轴名称"/>
+		<text name="ui_loadArea_tooltip_offsetRearAxis" text="调整装载区后方位置的轴名称"/>
+		<text name="ui_loadArea_tooltip_reverseWidthAxis" text="如果为 true，则反转宽度延伸的方向"/>
+		<text name="ui_loadArea_tooltip_reverseLengthAxis" text="如果为 true，则反转长度延伸的方向"/>
+		<text name="ui_loadArea_tooltip_reverseHeightAxis" text="如果为 true，则反转高度延伸的方向"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfFolded" text="折叠时防止装载(仅适用于该区域)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfUnfolded" text="防止展开时装载(仅适用于此区域)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfCovered" text="覆盖时防止装载(仅适用于该区域)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="防止未覆盖时装载(仅适用于此区域)"/>
 
 		<!-- KEY BINDINGS -->
-		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Open configuration settings menu (in shop)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Enable editing of loading volume (in shop)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="打开配置设置菜单(在商店内)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="启用装载量编辑(在商店中)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="切换装载"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="自动捡包模式"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="卸载"/>
@@ -175,7 +175,7 @@
 		<text name="universalAutoload_ALL" text="全部"/>
 		<text name="universalAutoload_LIQUID_TANK" text="IBC罐"/>
 		<text name="universalAutoload_EURO_PALLET" text="欧式托盘"/>
-		<text name="universalAutoload_PIONEER_PALLET" text="Pioneer Pallet"/>
+		<text name="universalAutoload_PIONEER_PALLET" text="Pioneer 托盘"/>
 		<text name="universalAutoload_BIGBAG_PALLET" text="大袋托盘"/>
 		<text name="universalAutoload_BIGBAG" text="大袋"/>
 		<text name="universalAutoload_POTATOBOX" text="马铃薯箱"/>
