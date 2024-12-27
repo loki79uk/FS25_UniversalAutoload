@@ -2,187 +2,185 @@
 <l10n>
 	<texts>
 		<text name="shop_configuration_text" text="Autoload"/>
-		<text name="configuration_universalAutoload" text="Universal Autoload"/>
+		<text name="configuration_universalAutoload" text="Універсальний Autoload"/>
 		
 		<!-- TITLES -->
-		<text name="ui_global_settings_ual" text="Global Settings"/>
-		<text name="ui_config_settings_ual" text="Autoload Settings"/>
-		<text name="ui_vehicle_options_ual" text="Vehicle Options"/>
-		<text name="ui_loading_area_options_ual" text="Loading Area Options"/>
-		<text name="ui_button_save_config_ual" text="Save Vehicle Settings"/>
-		<text name="ui_confirm_save_config_ual" text="Do you want to overwrite the default autoload configuration for this vehicle?"/>
-		
+		<text name="ui_global_settings_ual" text="Глобальні налаштування"/>
+		<text name="ui_config_settings_ual" text="Налаштування Autoload"/>
+		<text name="ui_vehicle_options_ual" text="Параметри Транспортного Засобу"/>
+		<text name="ui_loading_area_options_ual" text="Параметри Зони Завантаження"/>
+		<text name="ui_button_save_config_ual" text="Зберегти Налаштування Транспортного Засобу"/>
+		<text name="ui_confirm_save_config_ual" text="Ви хочете перезаписати конфігурацію автозавантаження за замовчуванням для цього транспортного засобу?"/>
+
 		<!-- GLOBAL -->
-		<text name="ui_global_showDebug" text="Show Debug"/>
-		<text name="ui_global_highPriority" text="High Priority"/>
-		<text name="ui_global_disableAutoStrap" text="Disable Auto-Strap"/>
-		<text name="ui_global_pricePerLog" text="Price Per Log"/>
-		<text name="ui_global_pricePerBale" text="Price Per Bale"/>
-		<text name="ui_global_pricePerPallet" text="Price Per Pallet"/>
-		<text name="ui_global_minLogLength" text="Min Log Length"/>
-		
-		<text name="ui_global_tooltip_showDebug" text="Show the full graphical debugging display for all vehicles in game"/>
-		<text name="ui_global_tooltip_highPriority" text="Apply high priority to all UAL key bindings in the F1 menu"/>
-		<text name="ui_global_tooltip_disableAutoStrap" text="Disable the automatic application of tension belts"/>
-		<text name="ui_global_tooltip_pricePerLog" text="The price charged for each auto-loaded log"/>
-		<text name="ui_global_tooltip_pricePerBale" text="The price charged for each auto-loaded bale"/>
-		<text name="ui_global_tooltip_pricePerPallet" text="The price charged for each auto-loaded pallet"/>
-		<text name="ui_global_tooltip_minLogLength" text="The global minimum length for logs that will be autoloaded"/>
+		<text name="ui_global_showDebug" text="Показати Налагодження"/>
+		<text name="ui_global_highPriority" text="Високий Пріоритет"/>
+		<text name="ui_global_disableAutoStrap" text="Вимкнути Автоматичні Ремені"/>
+		<text name="ui_global_pricePerLog" text="Ціна за Колоду"/>
+		<text name="ui_global_pricePerBale" text="Ціна за Тюк"/>
+		<text name="ui_global_pricePerPallet" text="Ціна за Піддон"/>
+		<text name="ui_global_minLogLength" text="Мінімальна Довжина Колоди"/>
+
+		<text name="ui_global_tooltip_showDebug" text="Показати повний графічний дисплей налагодження для всіх транспортних засобів у грі"/>
+		<text name="ui_global_tooltip_highPriority" text="Застосувати високий пріоритет до всіх прив'язок клавіш UAL у меню F1"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="Вимкнути автоматичне застосування натяжних ременів"/>
+		<text name="ui_global_tooltip_pricePerLog" text="Ціна, яка стягується за кожну автозавантажену колоду"/>
+		<text name="ui_global_tooltip_pricePerBale" text="Ціна, яка стягується за кожен автозавантажений тюк"/>
+		<text name="ui_global_tooltip_pricePerPallet" text="Ціна, яка стягується за кожен автозавантажений піддон"/>
+		<text name="ui_global_tooltip_minLogLength" text="Глобальна мінімальна довжина колод, які будуть автозавантажені"/>
 
 		<!-- OPTIONS -->
-		<text name="ui_option_enableAutoload" text="Enable Autoload"/>
-		<text name="ui_option_trailerType" text="Trailer Type"/>
-		<text name="ui_option_unloadingType" text="Unloading Position"/>
-		<text name="ui_option_rearOnly" text="Rear Only"/>
-		<text name="ui_option_frontOnly" text="Front Only"/>
-		
-		<text name="ui_option_noLoadingFolded" text="No Loading If Folded"/>
-		<text name="ui_option_folded" text="Folded"/>
-		<text name="ui_option_unfolded" text="Unfolded"/>
-		
-		<text name="ui_option_noLoadingCovered" text="No Loading If Covered"/>
-		<text name="ui_option_covered" text="Covered"/>
-		<text name="ui_option_uncovered" text="Uncovered"/>
+		<text name="ui_option_enableAutoload" text="Увімкнути Автозавантаження"/>
+		<text name="ui_option_trailerType" text="Тип Причепа"/>
+		<text name="ui_option_unloadingType" text="Позиція Розвантаження"/>
+		<text name="ui_option_rearOnly" text="Тільки Ззаду"/>
+		<text name="ui_option_frontOnly" text="Тільки Спереду"/>
 
-		<text name="ui_option_isBoxTrailer" text="Box Trailer"/>
-		<text name="ui_option_isLogTrailer" text="Log Trailer"/>
-		<text name="ui_option_isBaleTrailer" text="Bale Trailer"/>
-		<text name="ui_option_isBaleProcessor" text="Bale Processor"/>
-		<text name="ui_option_isCurtainTrailer" text="Curtain Trailer"/>
-		<text name="ui_option_enableRearLoading" text="Enable Rear Loading"/>
-		<text name="ui_option_enableSideLoading" text="Enable Side Loading"/>
+		<text name="ui_option_noLoadingFolded" text="Не Завантажувати у Складеному Стані"/>
+		<text name="ui_option_folded" text="Складений"/>
+		<text name="ui_option_unfolded" text="Розкладений"/>
 
-		<text name="ui_option_rearUnloadingOnly" text="Rear Unloading Only"/>
-		<text name="ui_option_frontUnloadingOnly" text="Front Unloading Only"/>
-		<text name="ui_option_horizontalLoading" text="Horizontal Loading"/>
-		<text name="ui_option_disableAutoStrap" text="Automatic Tension Belts"/>
-		<text name="ui_option_disableHeightLimit" text="Limit Stacking Height"/>
-		<text name="ui_option_zonesOverlap" text="Zones Overlap"/>
-		<text name="ui_option_offsetRoot" text="Offset Root"/>
-		<text name="ui_option_minLogLength" text="Min Log Length"/>
-		
-		<text name="ui_option_tooltip_enableAutoload" text="If Autoload is enabled or disabled for this vehicle"/>
-		<text name="ui_option_tooltip_trailerType" text="The special type of trailer, e.g. bale, log, curtain"/>
-		<text name="ui_option_tooltip_unloadingType" text="Use a special unloading position (front or rear)"/>
-		<text name="ui_option_tooltip_noLoadingFolded" text="Prevent loading when either folded or unfolded"/>
-		<text name="ui_option_tooltip_noLoadingCovered" text="Prevent loading when either covered or uncovered"/>
-		
-		<text name="ui_option_tooltip_isBoxTrailer" text="If trailer is enclosed with a rear door"/>
-		<text name="ui_option_tooltip_isLogTrailer" text="If trailer is a logging trailer - will load only logs dropped from above"/>
-		<text name="ui_option_tooltip_isBaleTrailer" text="If trailer should use an automatic bale collection mode"/>	
-		<text name="ui_option_tooltip_isBaleProcessor" text="If trailer should consume bales (e.g. TMR Mixer or Straw Blower)"/>
-		<text name="ui_option_tooltip_isCurtainTrailer" text="Automatically detect the available load side (if the trailer has curtain sides)"/>
-		<text name="ui_option_tooltip_enableRearLoading" text="Use the automatic rear loading trigger"/>
-		<text name="ui_option_tooltip_enableSideLoading" text="Use the automatic side loading triggers"/>
+		<text name="ui_option_noLoadingCovered" text="Не Завантажувати у Закритому Стані"/>
+		<text name="ui_option_covered" text="Закритий"/>
+		<text name="ui_option_uncovered" text="Відкритий"/>
 
-		<text name="ui_option_tooltip_rearUnloadingOnly" text="Use rear unloading zone only (no side zones)"/>
-		<text name="ui_option_tooltip_frontUnloadingOnly" text="Use front unloading zone only (no side zones)"/>
-		<text name="ui_option_tooltip_horizontalLoading" text="Start with horizontal loading enabled (can be toggled if key is bound)"/>
-		<text name="ui_option_tooltip_disableAutoStrap" text="Automatic application of tension belts after loading or unloading"/>
-		<text name="ui_option_tooltip_disableHeightLimit" text="Limit the height of pallet stacking based on density "/>
-		<text name="ui_option_tooltip_zonesOverlap" text="Flag to identify when the loading areas overlap each other"/>
-		<text name="ui_option_tooltip_offsetRoot" text="Vehicle i3d node that area offsets are relative to"/>
-		<text name="ui_option_tooltip_minLogLength" text="The minimum length for logs that will be autoloaded"/>
+		<text name="ui_option_isBoxTrailer" text="Закритий Причіп"/>
+		<text name="ui_option_isLogTrailer" text="Причіп для Колод"/>
+		<text name="ui_option_isBaleTrailer" text="Причіп для Тюків"/>
+		<text name="ui_option_isBaleProcessor" text="Обробник Тюків"/>
+		<text name="ui_option_isCurtainTrailer" text="Причіп з Шторками"/>
+		<text name="ui_option_enableRearLoading" text="Увімкнути Завантаження Ззаду"/>
+		<text name="ui_option_enableSideLoading" text="Увімкнути Завантаження Збоку"/>
+
+		<text name="ui_option_rearUnloadingOnly" text="Розвантаження Тільки Ззаду"/>
+		<text name="ui_option_frontUnloadingOnly" text="Розвантаження Тільки Спереду"/>
+		<text name="ui_option_horizontalLoading" text="Горизонтальне Завантаження"/>
+		<text name="ui_option_disableAutoStrap" text="Автоматичні Натяжні Ремені"/>
+		<text name="ui_option_disableHeightLimit" text="Обмежити Висоту Складання"/>
+		<text name="ui_option_zonesOverlap" text="Перекриття Зон"/>
+		<text name="ui_option_offsetRoot" text="Зсув Відносно Кореня"/>
+		<text name="ui_option_minLogLength" text="Мінімальна Довжина Колоди"/>
+
+		<text name="ui_option_tooltip_enableAutoload" text="Вказує, чи автозавантаження увімкнене або вимкнене для цього транспортного засобу"/>
+		<text name="ui_option_tooltip_trailerType" text="Спеціальний тип причепа, наприклад, для тюків, колод, або зі шторками"/>
+		<text name="ui_option_tooltip_unloadingType" text="Використовувати спеціальну позицію для розвантаження (спереду або ззаду)"/>
+		<text name="ui_option_tooltip_noLoadingFolded" text="Забороняє завантаження у складеному чи розкладеному стані"/>
+		<text name="ui_option_tooltip_noLoadingCovered" text="Забороняє завантаження у закритому чи відкритому стані"/>
+		<text name="ui_option_tooltip_isBoxTrailer" text="Чи є причіп закритим із задніми дверима"/>
+		<text name="ui_option_tooltip_isLogTrailer" text="Чи є причіп для колод — завантажує лише колоди, що скинуті зверху"/>
+		<text name="ui_option_tooltip_isBaleTrailer" text="Чи повинен причіп використовувати автоматичний режим збору тюків"/>	
+		<text name="ui_option_tooltip_isBaleProcessor" text="Чи повинен причіп споживати тюки (наприклад, змішувач TMR або подрібнювач соломи)"/>
+		<text name="ui_option_tooltip_isCurtainTrailer" text="Автоматично виявляє доступний бік завантаження (якщо у причепа є шторки)"/>
+		<text name="ui_option_tooltip_enableRearLoading" text="Використовувати автоматичний тригер завантаження ззаду"/>
+		<text name="ui_option_tooltip_enableSideLoading" text="Використовувати автоматичні тригери завантаження збоку"/>
+		<text name="ui_option_tooltip_rearUnloadingOnly" text="Використовувати лише зону розвантаження ззаду (без бокових зон)"/>
+		<text name="ui_option_tooltip_frontUnloadingOnly" text="Використовувати лише зону розвантаження спереду (без бокових зон)"/>
+		<text name="ui_option_tooltip_horizontalLoading" text="Почати із увімкненим горизонтальним завантаженням (можна перемикати, якщо прив'язана клавіша)"/>
+		<text name="ui_option_tooltip_disableAutoStrap" text="Автоматичне застосування натяжних ременів після завантаження чи розвантаження"/>
+		<text name="ui_option_tooltip_disableHeightLimit" text="Обмежити висоту складання піддонів залежно від щільності"/>
+		<text name="ui_option_tooltip_zonesOverlap" text="Позначка для виявлення перекриття зон завантаження"/>
+		<text name="ui_option_tooltip_offsetRoot" text="Вузол i3d транспортного засобу, відносно якого обчислюються зсуви зон"/>
+		<text name="ui_option_tooltip_minLogLength" text="Мінімальна довжина колод, які будуть автозавантажені"/>
 
 		<!-- LOADING_AREA -->
-		<text name="ui_loadArea_offset" text="Offset"/>
-		<text name="ui_loadArea_offsetRoot" text="Offset Root"/>
-		<text name="ui_loadArea_width" text="Width"/>
-		<text name="ui_loadArea_length" text="Length"/>
-		<text name="ui_loadArea_height" text="Height"/>
-		<text name="ui_loadArea_baleHeight" text="Bale Height"/>
-		<text name="ui_loadArea_widthAxis" text="Width Axis"/>
-		<text name="ui_loadArea_lengthAxis" text="Length Axis"/>
-		<text name="ui_loadArea_heightAxis" text="Height Axis"/>
-		<text name="ui_loadArea_offsetFrontAxis" text="Offset Front Axis"/>
-		<text name="ui_loadArea_offsetRearAxis" text="Offset Rear Axis"/>
-		<text name="ui_loadArea_reverseWidthAxis" text="Reverse Width Axis"/>
-		<text name="ui_loadArea_reverseLengthAxis" text="Reverse Length Axis"/>
-		<text name="ui_loadArea_reverseHeightAxis" text="Reverse Height Axis"/>
-		<text name="ui_loadArea_noLoadingIfFolded" text="No Loading If Folded"/>
-		<text name="ui_loadArea_noLoadingIfUnfolded" text="No Loading If Unfolded"/>
-		<text name="ui_loadArea_noLoadingIfCovered" text="No Loading If Covered"/>
-		<text name="ui_loadArea_noLoadingIfUncovered" text="No Loading If Uncovered"/>
-		
-		<text name="ui_loadArea_tooltip_offset" text="Offset to the centre of the loading area"/>
-		<text name="ui_loadArea_tooltip_offsetRoot" text="Vehicle i3d node that this area offset is relative to"/>
-		<text name="ui_loadArea_tooltip_width" text="Width of the loading area"/>
-		<text name="ui_loadArea_tooltip_length" text="Length of the loading area"/>
-		<text name="ui_loadArea_tooltip_height" text="Height of the loading area"/>
-		<text name="ui_loadArea_tooltip_baleHeight" text="Height of the loading area for BALES only"/>
-		<text name="ui_loadArea_tooltip_widthAxis" text="Axis name to extend width of the loading area"/>
-		<text name="ui_loadArea_tooltip_lengthAxis" text="Axis name to extend length of the loading area"/>
-		<text name="ui_loadArea_tooltip_heightAxis" text="Axis name to extend height of the loading area"/>
-		<text name="ui_loadArea_tooltip_offsetFrontAxis" text="Axis name to adjust the front position of the loading area"/>
-		<text name="ui_loadArea_tooltip_offsetRearAxis" text="Axis name to adjust the rear position of the loading area"/>
-		<text name="ui_loadArea_tooltip_reverseWidthAxis" text="Reverses direction of width extension if true"/>
-		<text name="ui_loadArea_tooltip_reverseLengthAxis" text="Reverses direction of length extension if true"/>
-		<text name="ui_loadArea_tooltip_reverseHeightAxis" text="Reverses direction of height extension if true"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfFolded" text="Prevent loading when folded (for this area only)"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfUnfolded" text="Prevent loading when unfolded (for this area only)"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfCovered" text="Prevent loading when covered (for this area only)"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Prevent loading when uncovered (for this area only)"/>
+		<text name="ui_loadArea_offset" text="Зсув"/>
+		<text name="ui_loadArea_offsetRoot" text="Кореневий Зсув"/>
+		<text name="ui_loadArea_width" text="Ширина"/>
+		<text name="ui_loadArea_length" text="Довжина"/>
+		<text name="ui_loadArea_height" text="Висота"/>
+		<text name="ui_loadArea_baleHeight" text="Висота для Тюків"/>
+		<text name="ui_loadArea_widthAxis" text="Вісь Ширини"/>
+		<text name="ui_loadArea_lengthAxis" text="Вісь Довжини"/>
+		<text name="ui_loadArea_heightAxis" text="Вісь Висоти"/>
+		<text name="ui_loadArea_offsetFrontAxis" text="Зсув Передньої Осі"/>
+		<text name="ui_loadArea_offsetRearAxis" text="Зсув Задньої Осі"/>
+		<text name="ui_loadArea_reverseWidthAxis" text="Реверс Ширини Осі"/>
+		<text name="ui_loadArea_reverseLengthAxis" text="Реверс Довжини Осі"/>
+		<text name="ui_loadArea_reverseHeightAxis" text="Реверс Висоти Осі"/>
+		<text name="ui_loadArea_noLoadingIfFolded" text="Не Завантажувати у Складеному Стані"/>
+		<text name="ui_loadArea_noLoadingIfUnfolded" text="Не Завантажувати у Розкладеному Стані"/>
+		<text name="ui_loadArea_noLoadingIfCovered" text="Не Завантажувати у Закритому Стані"/>
+		<text name="ui_loadArea_noLoadingIfUncovered" text="Не Завантажувати у Відкритому Стані"/>
+
+		<text name="ui_loadArea_tooltip_offset" text="Зсув відносно центру зони завантаження"/>
+		<text name="ui_loadArea_tooltip_offsetRoot" text="Вузол i3d транспортного засобу, відносно якого обчислюється зсув зони"/>
+		<text name="ui_loadArea_tooltip_width" text="Ширина зони завантаження"/>
+		<text name="ui_loadArea_tooltip_length" text="Довжина зони завантаження"/>
+		<text name="ui_loadArea_tooltip_height" text="Висота зони завантаження"/>
+		<text name="ui_loadArea_tooltip_baleHeight" text="Висота зони завантаження лише для ТЮКІВ"/>
+		<text name="ui_loadArea_tooltip_widthAxis" text="Назва осі для розширення ширини зони завантаження"/>
+		<text name="ui_loadArea_tooltip_lengthAxis" text="Назва осі для розширення довжини зони завантаження"/>
+		<text name="ui_loadArea_tooltip_heightAxis" text="Назва осі для розширення висоти зони завантаження"/>
+		<text name="ui_loadArea_tooltip_offsetFrontAxis" text="Назва осі для налаштування передньої позиції зони завантаження"/>
+		<text name="ui_loadArea_tooltip_offsetRearAxis" text="Назва осі для налаштування задньої позиції зони завантаження"/>
+		<text name="ui_loadArea_tooltip_reverseWidthAxis" text="Реверсує напрямок розширення ширини, якщо вибрано"/>
+		<text name="ui_loadArea_tooltip_reverseLengthAxis" text="Реверсує напрямок розширення довжини, якщо вибрано"/>
+		<text name="ui_loadArea_tooltip_reverseHeightAxis" text="Реверсує напрямок розширення висоти, якщо вибрано"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfFolded" text="Забороняє завантаження у складеному стані (лише для цієї зони)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfUnfolded" text="Забороняє завантаження у розкладеному стані (лише для цієї зони)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfCovered" text="Забороняє завантаження у закритому стані (лише для цієї зони)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Забороняє завантаження у відкритому стані (лише для цієї зони)"/>
 
 		<!-- KEY BINDINGS -->
-		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Open configuration settings menu (in shop)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Enable editing of loading volume (in shop)"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Toggle loading"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Automatic Bale Collection Mode"/>
-		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Unload"/>
-		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Force Unload"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Toggle unloading side"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Toggle loading filter"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Toggle horizontal loading"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Selected material (next)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Selected material (previous)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Select all material types"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Selected container (next)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Selected container (previous)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Select all container types"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Fasten/Unfasten tension belts"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Open/Close rear door"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Open/Close curtain side"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" text="Full debug mode"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" text="Simple debug mode"/>
+		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Відкрити меню налаштувань (у магазині)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Увімкнути редагування об'єму завантаження (у магазині)"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Перемикання завантаження"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Режим Автоматичного Збирання Тюків"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Вивантажити"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Примусове Вивантаження"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Перемикання сторони вивантаження"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Перемикання фільтра завантаження"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Перемикання горизонтального завантаження"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Вибір матеріалу (наступний)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Вибір матеріалу (попередній)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Вибрати всі типи матеріалів"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Вибір контейнера (наступний)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Вибір контейнера (попередній)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Вибрати всі типи контейнерів"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Закріпити/Розкріпити ремені натягу"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Відкрити/Закрити задні двері"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Відкрити/Закрити бокову штору"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" text="Повний режим налагодження"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" text="Простий режим налагодження"/>
 
-		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="Unloading area is blocked. Please clear the unloading area."/>
-		<text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="No compatible goods are available for loading or unloading."/>
-		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT_FULL" text="Unable to load any more items of this size."/>
-		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT_EMPTY" text="Item is too large for this vehicle."/>
-		<text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY" text="No loading allowed unless stationary."/>
-		
-		<text name="universalAutoload_tipside" text="Unloading side"/>
-		<text name="universalAutoload_left" text="Left"/>
-		<text name="universalAutoload_right" text="Right"/>
-		<text name="universalAutoload_none" text="None"/>
-		<text name="universalAutoload_loadingFilter" text="Loading filter"/>
-		<text name="universalAutoload_loadingMethod" text="Loading Method"/>
-		<text name="universalAutoload_layer" text="Layer"/>
-		<text name="universalAutoload_stack" text="Stack"/>
-		<text name="universalAutoload_fullOnly" text="Full only"/>
-		<text name="universalAutoload_loadAny" text="Any"/>
-		<text name="universalAutoload_startLoading" text="Start loading"/>
-		<text name="universalAutoload_stopLoading" text="Stop loading"/>
-		<text name="universalAutoload_unloadAll" text="Unload"/>
-		<text name="universalAutoload_unloadAllForce" text="Force Unload"/>
-		<text name="universalAutoload_baleMode" text="Auto-Bale Mode"/>
-		<text name="universalAutoload_enabled" text="Enabled"/>
-		<text name="universalAutoload_disabled" text="Disabled"/>
-		<text name="universalAutoload_activate" text="Activate"/>
-		<text name="universalAutoload_deactivate" text="Deactivate"/>
-		<text name="universalAutoload_materialType" text="Material type"/>
-		<text name="universalAutoload_containerType" text="Container type"/>
-		<text name="universalAutoload_ALL" text="All"/>
-		<text name="universalAutoload_LIQUID_TANK" text="IBC Tank"/>
-		<text name="universalAutoload_EURO_PALLET" text="Euro Pallet"/>
-		<text name="universalAutoload_PIONEER_PALLET" text="Pioneer Pallet"/>
-		<text name="universalAutoload_BIGBAG_PALLET" text="Bigbag Pallet"/>
+		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="Зона вивантаження заблокована. Будь ласка, очистіть зону вивантаження."/>
+		<text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="Немає сумісних товарів для завантаження або вивантаження."/>
+		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT_FULL" text="Неможливо завантажити більше елементів цього розміру."/>
+		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT_EMPTY" text="Об'єкт занадто великий для цього транспортного засобу."/>
+		<text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY" text="Завантаження можливе лише у стані зупинки."/>
+
+		<text name="universalAutoload_tipside" text="Сторона вивантаження"/>
+		<text name="universalAutoload_left" text="Ліва"/>
+		<text name="universalAutoload_right" text="Права"/>
+		<text name="universalAutoload_none" text="Відсутня"/>
+		<text name="universalAutoload_loadingFilter" text="Фільтр завантаження"/>
+		<text name="universalAutoload_loadingMethod" text="Метод завантаження"/>
+		<text name="universalAutoload_layer" text="Шар"/>
+		<text name="universalAutoload_stack" text="Стек"/>
+		<text name="universalAutoload_fullOnly" text="Тільки повний"/>
+		<text name="universalAutoload_loadAny" text="Будь-який"/>
+		<text name="universalAutoload_startLoading" text="Почати завантаження"/>
+		<text name="universalAutoload_stopLoading" text="Зупинити завантаження"/>
+		<text name="universalAutoload_unloadAll" text="Вивантажити"/>
+		<text name="universalAutoload_unloadAllForce" text="Примусове вивантаження"/>
+		<text name="universalAutoload_baleMode" text="Режим Авто-Тюків"/>
+		<text name="universalAutoload_enabled" text="Увімкнено"/>
+		<text name="universalAutoload_disabled" text="Вимкнено"/>
+		<text name="universalAutoload_activate" text="Активувати"/>
+		<text name="universalAutoload_deactivate" text="Деактивувати"/>
+		<text name="universalAutoload_materialType" text="Тип матеріалу"/>
+		<text name="universalAutoload_containerType" text="Тип контейнера"/>
+		<text name="universalAutoload_ALL" text="Всі"/>
+		<text name="universalAutoload_LIQUID_TANK" text="Резервуар IBC"/>
+		<text name="universalAutoload_EURO_PALLET" text="Євро Палета"/>
+		<text name="universalAutoload_PIONEER_PALLET" text="Палета Pioneer"/>
+		<text name="universalAutoload_BIGBAG_PALLET" text="Палета Bigbag"/>
 		<text name="universalAutoload_BIGBAG" text="Bigbag"/>
-		<text name="universalAutoload_POTATOBOX" text="Potato Box"/>
-		<text name="universalAutoload_BALE" text="Bale"/>
-		<text name="universalAutoload_ROUND_BALE" text="Round bale"/>
-		<text name="universalAutoload_SQUARE_BALE" text="Square bale"/>
-		<text name="universalAutoload_LOGS" text="Logs"/>
+		<text name="universalAutoload_POTATOBOX" text="Картопляний ящик"/>
+		<text name="universalAutoload_BALE" text="Тюк"/>
+		<text name="universalAutoload_ROUND_BALE" text="Круглий тюк"/>
+		<text name="universalAutoload_SQUARE_BALE" text="Квадратний тюк"/>
+		<text name="universalAutoload_LOGS" text="Колоди"/>
     </texts>
 </l10n>
 
