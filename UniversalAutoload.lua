@@ -1597,7 +1597,7 @@ function UniversalAutoload:onLoad(savegame)
 	spec.currentLoadside = "both"
 	spec.currentMaterialIndex = 1
 	spec.currentContainerIndex = 1
-	spec.currentLoadingFilter = true
+	spec.currentLoadingFilter = false
 	spec.baleCollectionMode = false
 	spec.useHorizontalLoading = spec.horizontalLoading or false
 	
@@ -1622,7 +1622,7 @@ function UniversalAutoload:onPostLoad(savegame)
 			spec.currentLoadside = "both"
 			spec.currentMaterialIndex = 1
 			spec.currentContainerIndex = 1
-			spec.currentLoadingFilter = true
+			spec.currentLoadingFilter = false
 			spec.baleCollectionMode = false
 			spec.useHorizontalLoading = spec.horizontalLoading or false
 			--server only
@@ -1646,7 +1646,7 @@ function UniversalAutoload:onPostLoad(savegame)
 			spec.currentLoadside = savegame.xmlFile:getValue(key.."#loadside", "both")
 			spec.currentMaterialIndex = savegame.xmlFile:getValue(key.."#materialIndex", 1)
 			spec.currentContainerIndex = savegame.xmlFile:getValue(key.."#containerIndex", 1)
-			spec.currentLoadingFilter = savegame.xmlFile:getValue(key.."#loadingFilter", true)
+			spec.currentLoadingFilter = savegame.xmlFile:getValue(key.."#loadingFilter", false)
 			spec.baleCollectionMode = savegame.xmlFile:getValue(key.."#baleCollectionMode", false)
 			spec.useHorizontalLoading = savegame.xmlFile:getValue(key.."#useHorizontalLoading", spec.horizontalLoading or false)
 			--server only
@@ -1720,7 +1720,7 @@ function UniversalAutoload:saveToXMLFile(xmlFile, key, usedModNames)
 	xmlFile:setValue(saveKey.."#loadside", spec.currentLoadside or "both")
 	xmlFile:setValue(saveKey.."#materialIndex", spec.currentMaterialIndex or 1)
 	xmlFile:setValue(saveKey.."#containerIndex", spec.currentContainerIndex or 1)
-	xmlFile:setValue(saveKey.."#loadingFilter", spec.currentLoadingFilter or true)
+	xmlFile:setValue(saveKey.."#loadingFilter", spec.currentLoadingFilter or false)
 	xmlFile:setValue(saveKey.."#baleCollectionMode", spec.baleCollectionMode or false)
 	xmlFile:setValue(saveKey.."#useHorizontalLoading", spec.useHorizontalLoading or false)
 	--server only
@@ -2095,7 +2095,7 @@ function UniversalAutoload:onWriteStream(streamId, connection)
 		spec.currentLoadside = spec.currentLoadside or "both"
 		spec.currentMaterialIndex = spec.currentMaterialIndex or 1
 		spec.currentContainerIndex = spec.currentContainerIndex or 1
-		spec.currentLoadingFilter = spec.currentLoadingFilter or true
+		spec.currentLoadingFilter = spec.currentLoadingFilter or false
 		spec.useHorizontalLoading = spec.useHorizontalLoading or false
 		spec.baleCollectionMode = spec.baleCollectionMode or false
 		spec.isLoading = spec.isLoading or false
