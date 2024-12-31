@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
+	<translationContributors>mowenxuan</translationContributors>
+
 	<texts>
 		<text name="shop_configuration_text" text="Autoload"/>
 		<text name="configuration_universalAutoload" text="通用自动装载"/>
