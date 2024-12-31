@@ -1604,6 +1604,7 @@ function UniversalAutoload:onLoad(savegame)
 	-- print("SPEC")
 	-- DebugUtil.printTableRecursively(spec, "--", 0, 1)
 
+	print("onLoad: " .. tostring(netGetTime()))
 end
 
 -- "ON POST LOAD" CALLED AFTER VEHICLE IS LOADED (not when buying)
@@ -1634,6 +1635,7 @@ function UniversalAutoload:onPostLoad(savegame)
 			spec.currentLayerCount = 0
 			spec.currentLayerHeight = 0
 			spec.nextLayerHeight = 0
+			spec.lastAddedLoadLength = 0
 			spec.currentLoadAreaIndex = 1
 			spec.resetLoadingLayer = false
 			spec.resetLoadingPattern = false
@@ -1658,6 +1660,7 @@ function UniversalAutoload:onPostLoad(savegame)
 			spec.currentLayerCount = savegame.xmlFile:getValue(key.."#layerCount", 0)
 			spec.currentLayerHeight = savegame.xmlFile:getValue(key.."#layerHeight", 0)
 			spec.nextLayerHeight = savegame.xmlFile:getValue(key.."#nextLayerHeight", 0)
+			spec.lastAddedLoadLength = savegame.xmlFile:getValue(key.."#lastLoadLength", 0)
 			spec.currentLoadAreaIndex = savegame.xmlFile:getValue(key.."#loadAreaIndex", 1)
 			spec.resetLoadingLayer = false
 			spec.resetLoadingPattern = false
@@ -1732,6 +1735,7 @@ function UniversalAutoload:saveToXMLFile(xmlFile, key, usedModNames)
 	xmlFile:setValue(saveKey.."#layerCount", spec.currentLayerCount or 0)
 	xmlFile:setValue(saveKey.."#layerHeight", spec.currentLayerHeight or 0)
 	xmlFile:setValue(saveKey.."#nextLayerHeight", spec.nextLayerHeight or 0)
+	xmlFile:setValue(saveKey.."#lastLoadLength", spec.lastAddedLoadLength or 0)
 	xmlFile:setValue(saveKey.."#loadAreaIndex", spec.currentLoadAreaIndex or 1)
 	
 end
@@ -2181,24 +2185,34 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 				spec.wasResetToDefault = true
 			end
 			
-			if spec.selectedConfigs and not spec.wasResetToDefault then
-				UniversalAutoloadManager.resetLoadingVolumeForShopEdit(self)
-			else
-				UniversalAutoloadManager.createLoadingVolumeInsideShop(self)
-				if spec.wasResetToDefault then
-					local configFileName = spec.configFileName
-					local selectedConfigs = spec.selectedConfigs
-					if configFileName and selectedConfigs and UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName] then
-						print("*** RESET TO DEFAULT CONFIG ***")
-						UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName][selectedConfigs] = nil
-						spec.selectedConfigs = nil
-						spec.wasResetToDefault = nil
+			if not spec.loadingVolume or spec.loadingVolume.state < LoadingVolume.STATE.SHOP_CONFIG then
+				print("doUpdate: " .. tostring(netGetTime()))
+				if spec.selectedConfigs and not spec.wasResetToDefault then
+					print("resetLoadingVolumeForShopEdit")
+					UniversalAutoloadManager.resetLoadingVolumeForShopEdit(self)
+				else
+					print("createLoadingVolumeInsideShop")
+					UniversalAutoloadManager.createLoadingVolumeInsideShop(self)
+					if spec.wasResetToDefault then
+						local configFileName = spec.configFileName
+						local selectedConfigs = spec.selectedConfigs
+						if configFileName and selectedConfigs and UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName] then
+							print("*** RESET TO DEFAULT CONFIG ***")
+							UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName][selectedConfigs] = nil
+							spec.selectedConfigs = nil
+							spec.wasResetToDefault = nil
+						end
 					end
 				end
-			end
+			end --else
 
 			if spec.loadingVolume then
 				spec.loadingVolume:draw(true)
+				if spec.loadingVolume.state == LoadingVolume.STATE.ERROR then
+					print("*** ERROR DETECTING LOADING AREA - ABORTING ***")
+					spec.isAutoloadAvailable = false
+					return
+				end
 				if spec.loadingVolume.state == LoadingVolume.STATE.SHOP_CONFIG then
 					UniversalAutoloadManager.editLoadingVolumeInsideShop(self)
 				end
@@ -3438,12 +3452,15 @@ function UniversalAutoload:createLoadingPlace(containerType)
 	else
 		spec.currentLoadWidth = spec.currentLoadWidth + addedLoadWidth
 		
-		if spec.lastAddedLoadLength and spec.lastAddedLoadLength < addedLoadLength and not containerType.isSplitShape then
-			print("EXCEEDED LAST ADDED LOAD LENGTH")
-			-- local difference = addedLoadLength - spec.lastAddedLoadLength
-			-- spec.currentLoadLength = spec.currentLoadLength + difference
-			-- spec.lastAddedLoadLength = addedLoadLength
-			return
+		if spec.lastAddedLoadLength and spec.lastAddedLoadLength < addedLoadLength then
+			if containerType.isSplitShape then
+				local difference = addedLoadLength - spec.lastAddedLoadLength
+				spec.currentLoadLength = spec.currentLoadLength + difference
+				spec.lastAddedLoadLength = addedLoadLength
+			else
+				print("EXCEEDED LAST ADDED LOAD LENGTH")
+				return
+			end
 		end
 	end
 
@@ -3573,6 +3590,7 @@ function UniversalAutoload:resetLoadingArea()
 	UniversalAutoload.resetLoadingPattern(self)
 	spec.trailerIsFull = false
 	-- spec.partiallyUnloaded = false
+	spec.lastAddedLoadLength = 0
 	spec.currentLoadAreaIndex = 1
 	spec.lastLoadAttempt = nil
 	spec.loadingAreaIsFull = nil
