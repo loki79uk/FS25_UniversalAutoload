@@ -1,6 +1,12 @@
 ShopConfigMenuUALSettings = {}
 local ShopConfigMenuUALSettings_mt = Class(ShopConfigMenuUALSettings, TabbedMenuFrameElement)
 
+function ShopConfigMenuUALSettings.register()
+	local shopCongfigMenu = ShopConfigMenuUALSettings.new()
+	g_gui:loadGui(UniversalAutoload.path .. "gui/ShopConfigMenuUALSettings.xml", "ShopConfigMenuUALSettings", shopCongfigMenu)
+	return shopCongfigMenu
+end
+
 function ShopConfigMenuUALSettings.new(vehicle, subclass_mt)
 	
 	local self = ShopConfigMenuUALSettings:superClass().new(nil, subclass_mt or ShopConfigMenuUALSettings_mt)
@@ -27,7 +33,7 @@ function ShopConfigMenuUALSettings:updateSettings()
 	local settings = self.ualShopConfigSettingsLayout
 	
 	local isValid = vehicle ~= nil
-	local isEnabled = vehicle and vehicle.isAutoloadAvailable == true
+	local isEnabled = vehicle and vehicle.autoloadDisabled ~= true
 	for _, item in pairs(settings.elements) do
 		if item.name ~= "enableAutoload" then
 			item:setVisible(isEnabled)
@@ -50,7 +56,7 @@ function ShopConfigMenuUALSettings:updateSettings()
 	
 	if isValid then
 		print("SET ALL")
-		setChecked('enableAutoloadCheckBox', vehicle.isAutoloadAvailable)
+		setChecked('enableAutoloadCheckBox', not vehicle.autoloadDisabled)
 		setChecked('horizontalLoadingCheckBox', vehicle.horizontalLoading)
 		setChecked('disableAutoStrapCheckBox', not vehicle.disableAutoStrap)
 		setChecked('disableHeightLimitCheckBox', not vehicle.disableHeightLimit)
@@ -157,8 +163,8 @@ function ShopConfigMenuUALSettings:onCreateNoLoadingCovered(control)
 	}
 end
 
-function ShopConfigMenuUALSettings:onClickMultiOption(id, control, state)
-	print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not state) .. " (" .. tostring(id) .. ")")
+function ShopConfigMenuUALSettings:onClickMultiOption(id, control, direction)
+	print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
 		
 	local vehicle = self.vehicle
 	if not vehicle then
@@ -213,8 +219,8 @@ function ShopConfigMenuUALSettings:onClickMultiOption(id, control, state)
 	
 end
 
-function ShopConfigMenuUALSettings:onClickBinaryOption(id, control, state)
-	print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not state) .. " (" .. tostring(id) .. ")")
+function ShopConfigMenuUALSettings:onClickBinaryOption(id, control, direction)
+	print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
 	
 	local vehicle = self.vehicle
 	if not vehicle then
@@ -222,20 +228,32 @@ function ShopConfigMenuUALSettings:onClickBinaryOption(id, control, state)
 	end
 	
 	if control == self.enableAutoloadCheckBox then
-		vehicle.isAutoloadAvailable = not state
+		vehicle.autoloadDisabled = direction
 		self:updateSettings()
 	elseif control == self.horizontalLoadingCheckBox then
-		vehicle.horizontalLoading = not state
+		vehicle.horizontalLoading = not direction
 	elseif control == self.enableSideLoadingCheckBox then
-		vehicle.enableSideLoading = not state
+		vehicle.enableSideLoading = not direction
 	elseif control == self.enableRearLoadingCheckBox then
-		vehicle.enableRearLoading = not state
+		vehicle.enableRearLoading = not direction
 	elseif control == self.disableAutoStrapCheckBox then
-		vehicle.disableAutoStrap = state
+		vehicle.disableAutoStrap = direction
 	elseif control == self.disableHeightLimitCheckBox then
-		vehicle.disableHeightLimit = state
+		vehicle.disableHeightLimit = direction
 	end
 
+end
+
+function ShopConfigMenuUALSettings.inputEvent(self, action, value, direction)
+	if action == InputAction.MENU_BACK then
+		self:onClickClose()
+		return true
+	end
+	if action == InputAction.MENU_ACCEPT then
+		self:onClickSave()
+		return true
+	end
+	print("action: " .. tostring(action))
 end
 
 function ShopConfigMenuUALSettings:onOpen()
@@ -247,6 +265,19 @@ end
 function ShopConfigMenuUALSettings:onClose()
 	print("ShopConfigMenu: onClose")
 	self.isActive = false
+end
+
+function ShopConfigMenuUALSettings:onClickSave()
+	print("CLICKED SAVE")
+	g_inputBinding:setShowMouseCursor(true)
+	self:playSample(GuiSoundPlayer.SOUND_SAMPLES.CLICK)
+	local text = g_i18n:getText("ui_confirm_save_config_ual")
+	local callback = function(self, yes)
+		if yes == true then
+			UniversalAutoloadManager.exportVehicleConfigToServer()
+		end
+	end
+	YesNoDialog.show(callback, self, text, nil, nil, nil, nil, nil, nil, nil, true)
 end
 
 function ShopConfigMenuUALSettings:onClickClose()

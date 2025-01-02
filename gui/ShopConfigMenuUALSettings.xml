@@ -114,6 +114,7 @@
 		</GuiElement>
 		
 		<BoxLayout profile="fs25_dialogButtonBox" id="buttonsPanel">
+			<Button profile="buttonBuy" id="menuButtonSave" text="$l10n_ui_button_save_config_ual" onClick="onClickSave"/>
 			<Button profile="buttonBack" id="menuButtonClose" text="$l10n_button_close" onClick="onClickClose"/>
 		</BoxLayout>
 	</GuiElement>

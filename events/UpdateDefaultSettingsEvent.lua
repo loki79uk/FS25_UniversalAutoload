@@ -1,23 +1,25 @@
-local ChangeSettingsEvent = {}
-UniversalAutoload.ChangeSettingsEvent = ChangeSettingsEvent
+local UpdateDefaultSettingsEvent = {}
+UniversalAutoload.UpdateDefaultSettingsEvent = UpdateDefaultSettingsEvent
 
-local ChangeSettingsEvent_mt = Class(ChangeSettingsEvent, Event)
-InitEventClass(ChangeSettingsEvent, "ChangeSettingsEvent")
--- print("  UniversalAutoload - ChangeSettingsEvent")
+local UpdateDefaultSettingsEvent_mt = Class(UpdateDefaultSettingsEvent, Event)
+InitEventClass(UpdateDefaultSettingsEvent, "UpdateDefaultSettingsEvent")
+-- print("  UniversalAutoload - UpdateDefaultSettingsEvent")
 
-function ChangeSettingsEvent.emptyNew()
-	local self = Event.new(ChangeSettingsEvent_mt)
+function UpdateDefaultSettingsEvent.emptyNew()
+	local self = Event.new(UpdateDefaultSettingsEvent_mt)
 	return self
 end
 
-function ChangeSettingsEvent.new(vehicle)
-	local self = ChangeSettingsEvent.emptyNew()
-	self.vehicle = vehicle
+function UpdateDefaultSettingsEvent.new(exportSpec, configFileName, selectedConfigs)
+	local self = UpdateDefaultSettingsEvent.emptyNew()
+	self.exportSpec = exportSpec
+	self.configFileName = configFileName
+	self.selectedConfigs = selectedConfigs
 	return self
 end
 
-function ChangeSettingsEvent:readStream(streamId, connection)
-	print("Change Settings Event - readStream")
+function UpdateDefaultSettingsEvent:readStream(streamId, connection)
+	print("Update Default Settings Event - readStream")
 
 	local function recieveValues(k, v, parentKey, currentKey, currentValue, finalValue)
 		if currentKey then
@@ -44,10 +46,16 @@ function ChangeSettingsEvent:readStream(streamId, connection)
 	end
 	
 	print("RECEIVE SETTINGS")
-	local vehicle = NetworkUtil.readNodeObject(streamId)
-	print("vehicle: " .. tostring(vehicle))
-	
+	local configFileName = streamReadString(streamId)
+	print("configFileName: " .. tostring(configFileName))
+	local selectedConfigs = streamReadString(streamId)
+	print("selectedConfigs: " .. tostring(selectedConfigs))
+	local useConfigName = streamReadString(streamId)
+	useConfigName = useConfigName ~= "" and useConfigName or nil
+	print("useConfigName: " .. tostring(useConfigName))
+
 	local config = {}
+	config.useConfigName = useConfigName
 	print("options:")
 	iterateDefaultsTable(UniversalAutoload.OPTIONS_DEFAULTS, "", ".options", config, recieveValues)
 
@@ -63,21 +71,12 @@ function ChangeSettingsEvent:readStream(streamId, connection)
 	print("CONFIG RECIEVED ON SERVER:")
 	DebugUtil.printTableRecursively(config, "--", 0, 2)
 	
-	for id, value in pairs(deepCopy(config)) do
-		vehicle.spec_universalAutoload[id] = value
-	end
-	vehicle.spec_universalAutoload.initialised = nil
-	vehicle.spec_universalAutoload.isAutoloadAvailable = true
-	
-	print("VEHICLE UPDATED ON SERVER:")
-	DebugUtil.printTableRecursively(vehicle.spec_universalAutoload, "--", 0, 2)
-
-	UniversalAutoloadManager.saveVehicleConfigurationToSettings(vehicle, noEventSend)
+	UniversalAutoloadManager.saveConfigurationToSettings(config, configFileName, selectedConfigs, noEventSend)
 	
 end
 
-function ChangeSettingsEvent:writeStream(streamId, connection)
-	print("Change Settings Event - writeStream")
+function UpdateDefaultSettingsEvent:writeStream(streamId, connection)
+	print("Update Default Settings Event - writeStream")
 
 	local function sendValues(k, v, parentKey, currentKey, currentValue, finalValue)
 		if currentKey then
@@ -105,11 +104,14 @@ function ChangeSettingsEvent:writeStream(streamId, connection)
 	end
 	
 	print("SEND VEHICLE CONFIG TO SERVER")
-	local spec = self.vehicle.spec_universalAutoload or {}
-	local _, configName, configId = UniversalAutoloadManager.getVehicleConfigNames(self.vehicle)
-	
-	print("vehicle: " .. tostring(self.vehicle))
-	NetworkUtil.writeNodeObject(streamId, self.vehicle)
+	local spec = self.exportSpec or {}
+
+	print("configFileName: " .. tostring(self.configFileName))
+	streamWriteString(streamId, self.configFileName)
+	print("selectedConfigs: " .. tostring(self.selectedConfigs))
+	streamWriteString(streamId, self.selectedConfigs)
+	print("useConfigName: " .. tostring(spec.useConfigName))
+	streamWriteString(streamId, spec.useConfigName or "")
 	
 	print("options:")
 	iterateDefaultsTable(UniversalAutoload.OPTIONS_DEFAULTS, "", ".options", spec, sendValues)
@@ -124,11 +126,11 @@ function ChangeSettingsEvent:writeStream(streamId, connection)
 
 end
 
-function ChangeSettingsEvent.sendEvent(vehicle, noEventSend)
+function UpdateDefaultSettingsEvent.sendEvent(exportSpec, configFileName, selectedConfigs, noEventSend)
 	if noEventSend == nil or noEventSend == false then
 		if g_server == nil then
 			print("client: Change Settings Event")
-			g_client:getServerConnection():sendEvent(ChangeSettingsEvent.new(vehicle))
+			g_client:getServerConnection():sendEvent(UpdateDefaultSettingsEvent.new(exportSpec, configFileName, selectedConfigs))
 		end
 	end
 end

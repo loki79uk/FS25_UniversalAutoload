@@ -151,7 +151,9 @@ function LoadingVolume:draw(drawAll)
 					
 					drawDebugPoint(p[1], p[2], p[3], r, g, b, a, solid)
 				end
-
+				
+				local size = bb:getSize()
+				renderText(0.4, 0.92-(n*0.035), 0.025, string.format("[%d] W, H, L = %.3f, %.3f, %.3f", n, size.x, size.y, size.z))
 			end
 		end
 	end

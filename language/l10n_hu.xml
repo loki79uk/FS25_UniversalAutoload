@@ -9,6 +9,8 @@
 		<text name="ui_config_settings_ual" text="Autoload beállítások"/>
 		<text name="ui_vehicle_options_ual" text="Jármű opciók"/>
 		<text name="ui_loading_area_options_ual" text="Rakodási terület opciók"/>
+		<text name="ui_button_save_config_ual" text="Jármű beállítások mentése"/>
+		<text name="ui_confirm_save_config_ual" text="Felülírod a jármű alapértelmezett autoload beállításait?"/>
 		
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Hibakeresési infók"/>

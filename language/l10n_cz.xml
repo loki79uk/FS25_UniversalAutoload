@@ -9,6 +9,8 @@
 		<text name="ui_config_settings_ual" text="Autoload Settings"/>
 		<text name="ui_vehicle_options_ual" text="Vehicle Options"/>
 		<text name="ui_loading_area_options_ual" text="Loading Area Options"/>
+		<text name="ui_button_save_config_ual" text="Save Vehicle Settings"/>
+		<text name="ui_confirm_save_config_ual" text="Do you want to overwrite the default autoload configuration for this vehicle?"/>
 		
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Show Debug"/>

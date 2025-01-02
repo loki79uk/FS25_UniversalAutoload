@@ -69,7 +69,7 @@ source(g_currentModDirectory.."events/StopLoadingEvent.lua")
 source(g_currentModDirectory.."events/UnloadingEvent.lua")
 source(g_currentModDirectory.."events/UpdateActionEvents.lua")
 source(g_currentModDirectory.."events/WarningMessageEvent.lua")
-source(g_currentModDirectory.."events/ChangeSettingsEvent.lua")
+source(g_currentModDirectory.."events/UpdateDefaultSettingsEvent.lua")
 
 
 -- REQUIRED SPECIALISATION FUNCTIONS
@@ -151,7 +151,7 @@ end
 
 -- function UniversalAutoload:getCanStartFieldWork(superFunc)
 	-- local spec = self.spec_universalAutoload
-	-- if spec and spec.isAutoloadAvailable and spec.baleCollectionMode then
+	-- if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled and spec.baleCollectionMode then
 		-- if debugSpecial then print("getCanStartFieldWork...") end
 		-- --return true
 	-- end
@@ -159,7 +159,7 @@ end
 -- end
 -- function UniversalAutoload:getCanImplementBeUsedForAI(superFunc)
 	-- local spec = self.spec_universalAutoload
-	-- if spec and spec.isAutoloadAvailable then
+	-- if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
 		-- if debugSpecial then print("*** getCanImplementBeUsedForAI ***") end
 		-- --DebugUtil.printTableRecursively(self.spec_aiImplement, "--", 0, 1)
 		-- --return true
@@ -169,7 +169,7 @@ end
 --
 function UniversalAutoload:getDynamicMountTimeToMount(superFunc)
 	local spec = self.spec_universalAutoload
-	if spec==nil or not spec.isAutoloadAvailable then
+	if spec==nil or not spec.isAutoloadAvailable or spec.autoloadDisabled then
 		return superFunc(self)
 	end
 	return UniversalAutoload.getIsLoadingVehicleAllowed(self) and -1 or math.huge
@@ -262,7 +262,7 @@ function UniversalAutoload:updateActionEventKeys()
 	if self.isClient and g_dedicatedServer==nil then
 		local spec = self.spec_universalAutoload
 
-		if spec and spec.isAutoloadAvailable and spec.actionEvents and next(spec.actionEvents) == nil then
+		if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled and spec.actionEvents and next(spec.actionEvents) == nil then
 			if debugKeys then print("updateActionEventKeys: "..self:getFullName()) end
 			local actions = UniversalAutoload.ACTIONS
 			local ignoreCollisions = true
@@ -934,7 +934,7 @@ end
 function UniversalAutoload:setBaleCollectionMode(baleCollectionMode, noEventSend)
 	-- print("setBaleCollectionMode: "..self:getFullName().." - "..tostring(baleCollectionMode))
 	local spec = self.spec_universalAutoload
-	if spec==nil or not spec.isAutoloadAvailable then
+	if spec==nil or not spec.isAutoloadAvailable or spec.autoloadDisabled then
 		if debugVehicles then print(self:getFullName() .. ": UAL DISABLED - setBaleCollectionMode") end
 		return
 	end
@@ -960,7 +960,7 @@ end
 --
 function UniversalAutoload:startLoading(force, noEventSend)
 	local spec = self.spec_universalAutoload
-	if spec==nil or not spec.isAutoloadAvailable then
+	if spec==nil or not spec.isAutoloadAvailable or spec.autoloadDisabled then
 		if debugVehicles then print(self:getFullName() .. ": UAL DISABLED - startLoading") end
 		return
 	end
@@ -992,8 +992,12 @@ end
 --
 function UniversalAutoload:createSortedObjectsToLoad(availableObjects)
 	local spec = self.spec_universalAutoload
-
+	
 	sortedObjectsToLoad = {}
+	if not spec.loadArea then
+		return sortedObjectsToLoad
+	end
+
 	for object, _ in pairs(availableObjects or {}) do
 	
 		local node = UniversalAutoload.getObjectPositionNode(object)
@@ -1292,7 +1296,7 @@ function UniversalAutoload:initialiseTransformGroups(actualRootNode)
 	local triggersRootNode, sharedLoadRequestId = g_i3DManager:loadSharedI3DFile(i3dFilename, false, false)
 
 	-- create triggers
-	local function doCreateTrigger(id, callback)
+	local function doCreateTrigger(id, callback, width, height, length, tx, ty, tz, rx, ry, rz)
 		local newTrigger = {}
 		newTrigger.name = id
 		newTrigger.node = I3DUtil.getChildByName(triggersRootNode, id)
@@ -1301,9 +1305,30 @@ function UniversalAutoload:initialiseTransformGroups(actualRootNode)
 			addTrigger(newTrigger.node, callback, self)
 			spec.triggers[id] = newTrigger
 			-- print("  created " .. newTrigger.name)
+			
+			if width and height and length then
+				local trigger = newTrigger
+				local d = 2*UniversalAutoload.TRIGGER_DELTA
+				setScale(trigger.node, width-d, height-d, length-d)
+				setRotation(trigger.node, rx or 0, ry or 0, rz or 0)
+				setTranslation(trigger.node, tx or 0, ty or 0, tz or 0)
+				
+				local sx, sy, sz = getScale(trigger.node)
+				trigger.width = width/sx
+				trigger.height = height/sy
+				trigger.length = length/sz
+			end
 		end
 	end
-	
+
+
+	-- local width = 1.66*self.size.width
+	-- local height = 1.66*self.size.height
+	-- local length = self.size.length+self.size.width/2
+	-- local tx, ty, tz = 1.1*(width+self.size.width)/2, 0, 0
+	-- doCreateTrigger("leftPickupTrigger", "ualLoadingTrigger_Callback", width, height, length, tx, ty, tz)
+	-- doCreateTrigger("rightPickupTrigger", "ualLoadingTrigger_Callback", width, height, length, -tx, ty, tz)
+
 	doCreateTrigger("unloadingTrigger", "ualUnloadingTrigger_Callback")
 	doCreateTrigger("playerTrigger", "ualPlayerTrigger_Callback")
 	doCreateTrigger("leftPickupTrigger", "ualLoadingTrigger_Callback")
@@ -1506,28 +1531,24 @@ function UniversalAutoload:onLoad(savegame)
 	self.spec_universalAutoload = self[UniversalAutoload.specName]
 	local spec = self.spec_universalAutoload
 
-	local isValidForAutoload = UniversalAutoloadManager.getIsValidForAutoload(self)
-	if not isValidForAutoload then
+	if UniversalAutoloadManager.getIsValidForAutoload(self) then
+		if UniversalAutoloadManager.handleNewVehicleCreation(self) then
+			print(self:getFullName() .. ": UAL ACTIVATED")
+		else
+			print(self:getFullName() .. ": UAL SETTINGS NOT ADDED")
+		end
+		spec.isAutoloadAvailable = true
+		UniversalAutoloadManager.onValidUalShopVehicle(self)
+	else	
 		print(self:getFullName() .. ": NOT VALID FOR UAL")
-		UniversalAutoload.removeEventListeners(self)
 		spec.isAutoloadAvailable = false
+		UniversalAutoload.removeEventListeners(self)
 		UniversalAutoloadManager.onInvalidUalShopVehicle(self)
 		return
 	end
 
-	spec.isAutoloadAvailable = true
-	UniversalAutoloadManager.onValidUalShopVehicle(self)
-	
-	local configurationAdded = UniversalAutoloadManager.handleNewVehicleCreation(self)
-	
-	if configurationAdded then
-		print(self:getFullName() .. ": UAL ACTIVATED")
-	else
-		print(self:getFullName() .. ": UAL SETTINGS WERE NOT ADDED")
-	end
-
 	if self.isServer and self.propertyState ~= VehiclePropertyState.SHOP_CONFIG then
-		print("INITIALISE UAL VEHICLE (ON LOAD) " ..tostring(self.rootNode))
+		print("SERVER - INITIALISE REAL UAL VEHICLE (ON LOAD) " ..tostring(self.rootNode))
 		
 		UniversalAutoload.VEHICLES[self] = self
 		if self.addDeleteListener then
@@ -1545,7 +1566,7 @@ function UniversalAutoload:onLoad(savegame)
 		
 		--update size and position
 		if spec.loadArea and #spec.loadArea > 0 then
-			print("INITIALISE UAL VEHICLE (ON LOAD 2) " ..tostring(self.rootNode))
+			print("SERVER - INITIALISE UAL VEHICLE (ON LOAD 2) " ..tostring(self.rootNode))
 			UniversalAutoload.updateLoadAreaTransformGroups(self)
 			UniversalAutoload.updateLoadingTriggers(self)
 			spec.initialised = true
@@ -1576,13 +1597,14 @@ function UniversalAutoload:onLoad(savegame)
 	spec.currentLoadside = "both"
 	spec.currentMaterialIndex = 1
 	spec.currentContainerIndex = 1
-	spec.currentLoadingFilter = true
+	spec.currentLoadingFilter = false
 	spec.baleCollectionMode = false
 	spec.useHorizontalLoading = spec.horizontalLoading or false
 	
 	-- print("SPEC")
 	-- DebugUtil.printTableRecursively(spec, "--", 0, 1)
 
+	print("onLoad: " .. tostring(netGetTime()))
 end
 
 -- "ON POST LOAD" CALLED AFTER VEHICLE IS LOADED (not when buying)
@@ -1601,7 +1623,7 @@ function UniversalAutoload:onPostLoad(savegame)
 			spec.currentLoadside = "both"
 			spec.currentMaterialIndex = 1
 			spec.currentContainerIndex = 1
-			spec.currentLoadingFilter = true
+			spec.currentLoadingFilter = false
 			spec.baleCollectionMode = false
 			spec.useHorizontalLoading = spec.horizontalLoading or false
 			--server only
@@ -1613,6 +1635,7 @@ function UniversalAutoload:onPostLoad(savegame)
 			spec.currentLayerCount = 0
 			spec.currentLayerHeight = 0
 			spec.nextLayerHeight = 0
+			spec.lastAddedLoadLength = 0
 			spec.currentLoadAreaIndex = 1
 			spec.resetLoadingLayer = false
 			spec.resetLoadingPattern = false
@@ -1625,7 +1648,7 @@ function UniversalAutoload:onPostLoad(savegame)
 			spec.currentLoadside = savegame.xmlFile:getValue(key.."#loadside", "both")
 			spec.currentMaterialIndex = savegame.xmlFile:getValue(key.."#materialIndex", 1)
 			spec.currentContainerIndex = savegame.xmlFile:getValue(key.."#containerIndex", 1)
-			spec.currentLoadingFilter = savegame.xmlFile:getValue(key.."#loadingFilter", true)
+			spec.currentLoadingFilter = savegame.xmlFile:getValue(key.."#loadingFilter", false)
 			spec.baleCollectionMode = savegame.xmlFile:getValue(key.."#baleCollectionMode", false)
 			spec.useHorizontalLoading = savegame.xmlFile:getValue(key.."#useHorizontalLoading", spec.horizontalLoading or false)
 			--server only
@@ -1637,6 +1660,7 @@ function UniversalAutoload:onPostLoad(savegame)
 			spec.currentLayerCount = savegame.xmlFile:getValue(key.."#layerCount", 0)
 			spec.currentLayerHeight = savegame.xmlFile:getValue(key.."#layerHeight", 0)
 			spec.nextLayerHeight = savegame.xmlFile:getValue(key.."#nextLayerHeight", 0)
+			spec.lastAddedLoadLength = savegame.xmlFile:getValue(key.."#lastLoadLength", 0)
 			spec.currentLoadAreaIndex = savegame.xmlFile:getValue(key.."#loadAreaIndex", 1)
 			spec.resetLoadingLayer = false
 			spec.resetLoadingPattern = false
@@ -1699,7 +1723,7 @@ function UniversalAutoload:saveToXMLFile(xmlFile, key, usedModNames)
 	xmlFile:setValue(saveKey.."#loadside", spec.currentLoadside or "both")
 	xmlFile:setValue(saveKey.."#materialIndex", spec.currentMaterialIndex or 1)
 	xmlFile:setValue(saveKey.."#containerIndex", spec.currentContainerIndex or 1)
-	xmlFile:setValue(saveKey.."#loadingFilter", spec.currentLoadingFilter or true)
+	xmlFile:setValue(saveKey.."#loadingFilter", spec.currentLoadingFilter or false)
 	xmlFile:setValue(saveKey.."#baleCollectionMode", spec.baleCollectionMode or false)
 	xmlFile:setValue(saveKey.."#useHorizontalLoading", spec.useHorizontalLoading or false)
 	--server only
@@ -1711,6 +1735,7 @@ function UniversalAutoload:saveToXMLFile(xmlFile, key, usedModNames)
 	xmlFile:setValue(saveKey.."#layerCount", spec.currentLayerCount or 0)
 	xmlFile:setValue(saveKey.."#layerHeight", spec.currentLayerHeight or 0)
 	xmlFile:setValue(saveKey.."#nextLayerHeight", spec.nextLayerHeight or 0)
+	xmlFile:setValue(saveKey.."#lastLoadLength", spec.lastAddedLoadLength or 0)
 	xmlFile:setValue(saveKey.."#loadAreaIndex", spec.currentLoadAreaIndex or 1)
 	
 end
@@ -1770,7 +1795,7 @@ end
 function UniversalAutoload:onFoldStateChanged(direction, moveToMiddle)
 	-- print("UniversalAutoload - onFoldStateChanged")
 	local spec = self.spec_universalAutoload
-	if spec==nil or not spec.isAutoloadAvailable then
+	if spec==nil or not spec.isAutoloadAvailable or spec.autoloadDisabled then
 		if debugVehicles then print(self:getFullName() .. ": UAL DISABLED - onFoldStateChanged") end
 		return
 	end
@@ -1785,7 +1810,7 @@ end
 function UniversalAutoload:onMovingToolChanged(tool, transSpeed, dt)
 	-- print("UniversalAutoload - onMovingToolChanged")
 	local spec = self.spec_universalAutoload
-	if spec==nil or not spec.isAutoloadAvailable then
+	if spec==nil or not spec.isAutoloadAvailable or spec.autoloadDisabled then
 		if debugVehicles then print(self:getFullName() .. ": UAL DISABLED - onMovingToolChanged") end
 		return
 	end
@@ -2074,7 +2099,7 @@ function UniversalAutoload:onWriteStream(streamId, connection)
 		spec.currentLoadside = spec.currentLoadside or "both"
 		spec.currentMaterialIndex = spec.currentMaterialIndex or 1
 		spec.currentContainerIndex = spec.currentContainerIndex or 1
-		spec.currentLoadingFilter = spec.currentLoadingFilter or true
+		spec.currentLoadingFilter = spec.currentLoadingFilter or false
 		spec.useHorizontalLoading = spec.useHorizontalLoading or false
 		spec.baleCollectionMode = spec.baleCollectionMode or false
 		spec.isLoading = spec.isLoading or false
@@ -2114,7 +2139,7 @@ end
 
 function UniversalAutoload:onDraw()
 	local spec = self.spec_universalAutoload
-	if spec==nil or not spec.isAutoloadAvailable then
+	if spec==nil or not spec.isAutoloadAvailable or spec.autoloadDisabled then
 		return
 	end
 
@@ -2160,24 +2185,34 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 				spec.wasResetToDefault = true
 			end
 			
-			if spec.selectedConfigs and not spec.wasResetToDefault then
-				UniversalAutoloadManager.resetLoadingVolumeForShopEdit(self)
-			else
-				UniversalAutoloadManager.createLoadingVolumeInsideShop(self)
-				if spec.wasResetToDefault then
-					local configFileName = spec.configFileName
-					local selectedConfigs = spec.selectedConfigs
-					if configFileName and selectedConfigs and UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName] then
-						print("*** RESET TO DEFAULT CONFIG ***")
-						UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName][selectedConfigs] = nil
-						spec.selectedConfigs = nil
-						spec.wasResetToDefault = nil
+			if not spec.loadingVolume or spec.loadingVolume.state < LoadingVolume.STATE.SHOP_CONFIG then
+				print("doUpdate: " .. tostring(netGetTime()))
+				if spec.selectedConfigs and not spec.wasResetToDefault then
+					print("resetLoadingVolumeForShopEdit")
+					UniversalAutoloadManager.resetLoadingVolumeForShopEdit(self)
+				else
+					print("createLoadingVolumeInsideShop")
+					UniversalAutoloadManager.createLoadingVolumeInsideShop(self)
+					if spec.wasResetToDefault then
+						local configFileName = spec.configFileName
+						local selectedConfigs = spec.selectedConfigs
+						if configFileName and selectedConfigs and UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName] then
+							print("*** RESET TO DEFAULT CONFIG ***")
+							UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName][selectedConfigs] = nil
+							spec.selectedConfigs = nil
+							spec.wasResetToDefault = nil
+						end
 					end
 				end
-			end
+			end --else
 
 			if spec.loadingVolume then
 				spec.loadingVolume:draw(true)
+				if spec.loadingVolume.state == LoadingVolume.STATE.ERROR then
+					print("*** ERROR DETECTING LOADING AREA - ABORTING ***")
+					spec.isAutoloadAvailable = false
+					return
+				end
 				if spec.loadingVolume.state == LoadingVolume.STATE.SHOP_CONFIG then
 					UniversalAutoloadManager.editLoadingVolumeInsideShop(self)
 				end
@@ -2330,12 +2365,23 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 			spec.spawnBalesDelayTime = spec.spawnBalesDelayTime or 0
 			if spec.spawnBalesDelayTime > UniversalAutoload.DELAY_TIME then
 				spec.spawnBalesDelayTime = 0
-				bale = spec.baleToSpawn
-				local baleObject = UniversalAutoload.createBale(self, bale.xmlFile, bale.fillTypeIndex, bale.wrapState)
-				if baleObject and not UniversalAutoload.loadObject(self, baleObject) then
-					baleObject:delete()
+				
+				local failedToLoad = false
+				local failedToCreate = false
+				if spec.spawnedBale then
+					-- print("LOAD SPAWNED BALE")
+					local baleObject = spec.spawnedBale
+					if entityExists(baleObject.nodeId) and not UniversalAutoload.loadObject(self, baleObject) then
+						baleObject:delete()
+						failedToLoad = true
+					end
+					spec.spawnedBale = nil
+				else
+					spec.spawnedBale = UniversalAutoload.createBale(self, bale.xmlFile, bale.fillTypeIndex, bale.wrapState)
+					failedToCreate = spec.spawnedBale == nil
 				end
-				if baleObject == nil or spec.currentLoadingPlace == nil then
+
+				if failedToCreate or failedToLoad then
 					spec.spawnBales = false
 					spec.doPostLoadDelay = true
 					spec.doSetTensionBelts = true
@@ -2355,7 +2401,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 				if spec.spawnedLogId == nil then
 					if not UniversalAutoload.spawningLog then
 						log = spec.logToSpawn
-						spec.spawnedLogId = UniversalAutoload.createLog(self, log.treeType, log.length)
+						spec.spawnedLogId = UniversalAutoload.createLog(self, log.length, log.treeType, log.growthState)
 						UniversalAutoload.createdLogId = nil
 						UniversalAutoload.createdTreeId = spec.spawnedLogId
 						if spec.spawnedLogId == nil then
@@ -2363,7 +2409,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 						end
 					end
 				else
-					if not g_treePlantManager.loadTreeTrunkData and UniversalAutoload.createdLogId then
+					if UniversalAutoload.createdLogId and #g_treePlantManager.loadTreeTrunkDatas == 0 then
 
 						local logId = UniversalAutoload.createdLogId
 						if entityExists(logId) then
@@ -2372,8 +2418,6 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 								if not UniversalAutoload.loadObject(self, logObject) then
 									delete(logId)
 									spec.currentLoadingPlace = nil
-								end
-								if spec.currentLoadingPlace == nil then
 									spec.spawnLogs = false
 									spec.doPostLoadDelay = true
 									spec.doSetTensionBelts = true
@@ -2411,7 +2455,6 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 				if spec.spawnedPallet then
 					-- print("LOAD SPAWNED PALLET")
 					local pallet = spec.spawnedPallet
-					-- print("updateLoopIndex: " .. pallet.updateLoopIndex)
 
 					if UniversalAutoload.loadObject(self, pallet) then
 						spec.spawnPalletsDelayTime = 0
@@ -2696,7 +2739,7 @@ end
 function UniversalAutoload:onUpdate(dt, isActiveForInput, isActiveForInputIgnoreSelection, isSelected)
 	local spec = self.spec_universalAutoload
 	
-	if spec==nil or not spec.isAutoloadAvailable then
+	if spec==nil or not spec.isAutoloadAvailable or spec.autoloadDisabled then
 		return
 	end
 
@@ -2727,7 +2770,7 @@ end
 function UniversalAutoload:onActivate(isControlling)
 	-- print("onActivate: "..self:getFullName())
 	local spec = self.spec_universalAutoload
-	if spec==nil or not spec.isAutoloadAvailable then
+	if spec==nil or not spec.isAutoloadAvailable or spec.autoloadDisabled then
 		if debugVehicles then print(self:getFullName() .. ": UAL DISABLED - onActivate") end
 		return
 	end
@@ -2743,7 +2786,7 @@ end
 function UniversalAutoload:onDeactivate()
 	-- print("onDeactivate: "..self:getFullName())
 	local spec = self.spec_universalAutoload
-	if spec==nil or not spec.isAutoloadAvailable then
+	if spec==nil or not spec.isAutoloadAvailable or spec.autoloadDisabled then
 		if debugVehicles then print(self:getFullName() .. ": UAL DISABLED - onDeactivate") end
 		return
 	end
@@ -2758,7 +2801,7 @@ end
 function UniversalAutoload:determineTipside()
 	-- currently only used for the KRONE Profi Liner Curtain Trailer
 	local spec = self.spec_universalAutoload
-	if spec==nil or not spec.isAutoloadAvailable then
+	if spec==nil or not spec.isAutoloadAvailable or spec.autoloadDisabled then
 		if debugVehicles then print(self:getFullName() .. ": UAL DISABLED - determineTipside") end
 		return
 	end
@@ -2799,7 +2842,7 @@ end
 --
 function UniversalAutoload:isValidForLoading(object)
 	local spec = self.spec_universalAutoload
-	local maxLength = spec.loadArea[spec.currentLoadAreaIndex or 1].length
+	local maxLength = spec.loadArea and spec.loadArea[spec.currentLoadAreaIndex or 1].length or 0
 	local minLength = spec.minLogLength or 0
 	if minLength > maxLength or not spec.isLogTrailer then
 		minLength = 0
@@ -3052,70 +3095,6 @@ function UniversalAutoload:countActivePallets()
 		end
 	end
 end
---
-function UniversalAutoload:createBoundingBox()
-	local spec = self.spec_universalAutoload
-
-	if next(spec.loadedObjects) then
-		spec.boundingBox = {}
-		
-		local x0, y0, z0 = math.huge, math.huge, math.huge
-		local x1, y1, z1 = -math.huge, -math.huge, -math.huge
-		for object, _ in pairs(spec.loadedObjects) do
-			-- print("  loaded object: " .. tostring(object.id).." ("..tostring(object.currentSavegameId or "BALE")..")")
-			
-			local node = UniversalAutoload.getObjectPositionNode(object)
-			if node then
-			
-				local containerType = UniversalAutoload.getContainerType(object)
-				local w, h, l = containerType.sizeX, containerType.sizeY, containerType.sizeZ
-				local xx,xy,xz = localDirectionToLocal(node, spec.loadVolume.rootNode, w,0,0)
-				local yx,yy,yz = localDirectionToLocal(node, spec.loadVolume.rootNode, 0,h,0)
-				local zx,zy,zz = localDirectionToLocal(node, spec.loadVolume.rootNode, 0,0,l)
-				
-				local W, H, L = math.abs(xx+yx+zx), math.abs(xy+yy+zy), math.abs(xz+yz+zz)
-				if containerType.flipYZ then
-					L, H = math.abs(xy+yy+zy), math.abs(xz+yz+zz)
-				end
-				
-				local X, Y, Z = localToLocal(node, spec.loadVolume.rootNode, 0, 0, 0)
-				if containerType.isBale then Y = Y-(H/2) end
-				
-				-- include object in bounding box
-				if x0 > X-(W/2) then x0 = X-(W/2) end
-				if x1 < X+(W/2) then x1 = X+(W/2) end
-				if y0 > Y then y0 = Y end
-				if y1 < Y+(H) then y1 = Y+(H) end
-				if z0 > Z-(L/2) then z0 = Z-(L/2) end
-				if z1 < Z+(L/2) then z1 = Z+(L/2) end
-				
-			end
-		end
-		
-		-- create bounding box for all objects
-		local width = x1-x0
-		local height = y1-y0
-		local length = z1-z0
-		
-		local offsetX, offsetY, offsetZ = (x0+x1)/2, y0, (z0+z1)/2
-		
-		if debugLoading then
-			print(string.format("(W,H,L) = (%f, %f, %f)", width, height, length))
-			print(string.format("(X,Y,Z) = (%f, %f, %f)", offsetX, offsetY, offsetZ))
-			print(string.format("(X0,Y0,Z0) = (%f, %f, %f)", localToWorld(spec.loadVolume.rootNode, 0, 0, 0)))
-		end
-
-		spec.boundingBox.rootNode = createTransformGroup("loadVolumeCentre")
-		link(spec.loadVolume.rootNode, spec.boundingBox.rootNode)
-		setTranslation(spec.boundingBox.rootNode, offsetX, offsetY, offsetZ)
-		
-		spec.boundingBox.width = x1-x0
-		spec.boundingBox.height = y1-y0
-		spec.boundingBox.length = z1-z0
-	else
-		spec.boundingBox = nil
-	end
-end
 
 -- LOADING AND UNLOADING FUNCTIONS
 function UniversalAutoload:loadObject(object, chargeForLoading)
@@ -3253,7 +3232,7 @@ function UniversalAutoload.buildObjectsToUnloadTable(vehicle, forceUnloadPositio
 		local thisAreaClear = false
 		local x, y, z = getTranslation(unloadPlace.node)
 		
-		if #spec.loadArea > 1 then
+		if spec.loadArea and #spec.loadArea > 1 then
 			local i = spec.loadedObjects[object] or 1
 			local _, offsetY, _ = localToLocal(spec.loadArea[i].rootNode, spec.loadVolume.rootNode, 0, 0, 0)
 			y = y - offsetY
@@ -3474,10 +3453,14 @@ function UniversalAutoload:createLoadingPlace(containerType)
 		spec.currentLoadWidth = spec.currentLoadWidth + addedLoadWidth
 		
 		if spec.lastAddedLoadLength and spec.lastAddedLoadLength < addedLoadLength then
-			-- local difference = addedLoadLength - spec.lastAddedLoadLength
-			-- spec.currentLoadLength = spec.currentLoadLength + difference
-			-- spec.lastAddedLoadLength = addedLoadLength
-			return
+			if containerType.isSplitShape then
+				local difference = addedLoadLength - spec.lastAddedLoadLength
+				spec.currentLoadLength = spec.currentLoadLength + difference
+				spec.lastAddedLoadLength = addedLoadLength
+			else
+				print("EXCEEDED LAST ADDED LOAD LENGTH")
+				return
+			end
 		end
 	end
 
@@ -3607,6 +3590,7 @@ function UniversalAutoload:resetLoadingArea()
 	UniversalAutoload.resetLoadingPattern(self)
 	spec.trailerIsFull = false
 	-- spec.partiallyUnloaded = false
+	spec.lastAddedLoadLength = 0
 	spec.currentLoadAreaIndex = 1
 	spec.lastLoadAttempt = nil
 	spec.loadingAreaIsFull = nil
@@ -3914,7 +3898,7 @@ end
 
 function UniversalAutoload:getIsLoadingKeyAllowed()
 	local spec = self.spec_universalAutoload
-	if spec==nil or not spec.isAutoloadAvailable then
+	if spec==nil or not spec.isAutoloadAvailable or spec.autoloadDisabled then
 		if debugVehicles then print(self:getFullName() .. ": UAL DISABLED - getIsLoadingKeyAllowed") end
 		return
 	end
@@ -3930,7 +3914,7 @@ end
 --
 function UniversalAutoload:getIsUnloadingKeyAllowed()
 	local spec = self.spec_universalAutoload
-	if spec==nil or not spec.isAutoloadAvailable then
+	if spec==nil or not spec.isAutoloadAvailable or spec.autoloadDisabled then
 		if debugVehicles then print(self:getFullName() .. ": UAL DISABLED - getIsUnloadingKeyAllowed") end
 		return
 	end
@@ -3959,7 +3943,7 @@ end
 --
 function UniversalAutoload:getIsLoadingVehicleAllowed(triggerId)
 	local spec = self.spec_universalAutoload
-	if spec==nil or not spec.isAutoloadAvailable then
+	if spec==nil or not spec.isAutoloadAvailable or spec.autoloadDisabled then
 		if debugVehicles then print(self:getFullName() .. ": UAL DISABLED - getIsLoadingVehicleAllowed") end
 		return false
 	end
@@ -4029,8 +4013,12 @@ end
 --
 function UniversalAutoload:getIsLoadingAreaAllowed(i)
 	local spec = self.spec_universalAutoload
-	if spec==nil or not spec.isAutoloadAvailable then
+	if spec==nil or not spec.isAutoloadAvailable or spec.autoloadDisabled then
 		if debugVehicles then print(self:getFullName() .. ": UAL DISABLED - getIsLoadingAreaAllowed") end
+		return false
+	end
+	
+	if not spec.loadArea then
 		return false
 	end
 	
@@ -4292,7 +4280,7 @@ end
 function UniversalAutoload.getSplitShapeObject( objectId )
 
 	if not entityExists(objectId) then
-		-- print("entity NOT exists")
+		print("entity NOT exists")
 		UniversalAutoload.SPLITSHAPES_LOOKUP[objectId] = nil
 		return
 	end
@@ -4849,9 +4837,9 @@ end
 function UniversalAutoload:createPallets(pallets)
 	local spec = self.spec_universalAutoload
 	
-	if spec and spec.isAutoloadAvailable then
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
 		if spec.isLogTrailer then
-			print("Log trailer - cannot load bales")
+			print("Log trailer - cannot load pallets")
 			return false
 		end
 		if debugConsole then print("ADD PALLETS: " .. self:getFullName()) end
@@ -4874,7 +4862,7 @@ function UniversalAutoload:createPallets(pallets)
 	end
 end
 --
-function UniversalAutoload:createLog(treeType, length)
+function UniversalAutoload:createLog(length, treeType, growthState)
 	local spec = self.spec_universalAutoload
 	
 	if UniversalAutoload.spawningLog then
@@ -4885,62 +4873,75 @@ function UniversalAutoload:createLog(treeType, length)
 
 	local x, y, z = getWorldTranslation(spec.loadVolume.rootNode)
 	dirX, dirY, dirZ = localDirectionToWorld(spec.loadVolume.rootNode, 0, 0, 1)
-	y = y + 50
-	
-	if treeType == 'SPRUCE' then
-		if math.random(1, 100) > 50 then treeType = 'SPRUCE1' else treeType = 'SPRUCE2' end
-	end
-	if treeType == 'WILLOW' then
-		if math.random(1, 100) > 50 then treeType = 'WILLOW1' else treeType = 'WILLOW2' end
-	end
+	y = y + 20
 
+	local length = tonumber(length)
+	local usage = "gsTreeAdd length [type (available: " .. table.concatKeys(g_treePlantManager.nameToTreeType, " ") .. ")] [growthState] [delimb true/false]"
+	if length == nil then
+		print("No length given")
+		return
+	end
+	if treeType == nil then
+		treeType = "beech"
+		growthState = 7
+	end
 	local treeTypeDesc = g_treePlantManager:getTreeTypeDescFromName(treeType)
-	local growthState = #treeTypeDesc.treeFilenames
-	local treeId, splitShapeFileId = g_treePlantManager:loadTreeNode(treeTypeDesc, x, y, z, 0, 0, 0, growthState)
-
+	if treeTypeDesc == nil then
+		print("Invalid tree type: " .. treeType)
+		return
+	end
+	local growthState = tonumber(growthState) or #treeTypeDesc.stages
+	local growthStateI = math.clamp(growthState, 1, #treeTypeDesc.stages)
+	local variationIndex = math.random(1, #treeTypeDesc.stages[growthStateI])
+	
+	local treeId, splitShapeFileId = g_treePlantManager:loadTreeNode(treeTypeDesc, x, y, z, 0, 0, 0, growthStateI, variationIndex)
 	if treeId ~= 0 then
 		if getFileIdHasSplitShapes(splitShapeFileId) then
 			local tree = {
-				node = treeId,
-				growthState = growthState,
-				z = z,
-				y = y,
-				x = x,
-				rz = 0,
-				ry = 0,
-				rx = 0,
-				treeType = treeTypeDesc.index,
-				splitShapeFileId = splitShapeFileId,
-				hasSplitShapes = true
+				["node"] = treeId,
+				["growthStateI"] = growthStateI,
+				["variationIndex"] = variationIndex,
+				["x"] = x,
+				["y"] = y,
+				["z"] = z,
+				["rx"] = 0,
+				["ry"] = 0,
+				["rz"] = 0,
+				["treeType"] = treeTypeDesc.index,
+				["splitShapeFileId"] = splitShapeFileId,
+				["hasSplitShapes"] = true
 			}
-
-			table.insert(g_treePlantManager.treesData.splitTrees, tree)
-
-			g_treePlantManager.loadTreeTrunkData = {
-				offset = 0.5,
-				framesLeft = 2,
-				shape = treeId + 2,
-				x = x,
-				y = y,
-				z = z,
-				length = length,
-				dirX = dirX,
-				dirY = dirY,
-				dirZ = dirZ,
-				delimb = true
+			local splitTrees = g_treePlantManager.treesData.splitTrees
+			table.insert(splitTrees, tree)
+			
+			local loadTreeTrunkData = {
+				["framesLeft"] = 2,
+				["shape"] = treeId + 2,
+				["x"] = x,
+				["y"] = y,
+				["z"] = z,
+				["length"] = length,
+				["offset"] = 0.5,
+				["dirX"] = dirX,
+				["dirY"] = dirY,
+				["dirZ"] = dirZ,
+				["delimb"] = true,
+				["useOnlyStump"] = nil,
+				["cutTreeTrunkCallback"] = TreePlantManager.cutTreeTrunkCallback
 			}
-		else
-			delete(treeId)
+			local loadTreeTrunkDatas = g_treePlantManager.loadTreeTrunkDatas
+			table.insert(loadTreeTrunkDatas, loadTreeTrunkData)
+			
+			return treeId + 2
 		end
+		delete(treeId)
 	end
-	
-	return treeId
 end
 --
-function UniversalAutoload:createLogs(treeType, length)
+function UniversalAutoload:createLogs(length, treeType, growthState)
 	local spec = self.spec_universalAutoload
 	
-	if spec and spec.isAutoloadAvailable then
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
 		if debugConsole then print("ADD LOGS: " .. self:getFullName()) end
 		UniversalAutoload.setMaterialTypeIndex(self, 1)
 		UniversalAutoload.setBaleCollectionMode(self, false)
@@ -4948,9 +4949,11 @@ function UniversalAutoload:createLogs(treeType, length)
 		UniversalAutoload.clearLoadedObjects(self)		
 		self:setAllTensionBeltsActive(false)
 		spec.spawnLogs = true
-		spec.logToSpawn = {}
-		spec.logToSpawn.treeType = treeType
-		spec.logToSpawn.length = length
+		spec.logToSpawn = {
+			length = length,
+			treeType = treeType,
+			growthState = growthState,
+		}
 		return true
 	end
 end
@@ -4970,15 +4973,14 @@ function UniversalAutoload:createBale(xmlFilename, fillTypeIndex, wrapState)
 		baleObject:setWrappingState(wrapState)
 		baleObject:setOwnerFarmId(farmId, true)
 		baleObject:register()
+		return baleObject
 	end
-	
-	return baleObject
 end
 --
 function UniversalAutoload:createBales(bale)
 	local spec = self.spec_universalAutoload
 	
-	if spec and spec.isAutoloadAvailable then
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
 		if spec.isLogTrailer then
 			print("Log trailer - cannot load bales")
 			return false
@@ -4998,7 +5000,7 @@ function UniversalAutoload:clearLoadedObjects()
 	local spec = self.spec_universalAutoload
 	local palletCount, balesCount, logCount = 0, 0, 0
 	
-	if spec and spec.isAutoloadAvailable and spec.loadedObjects then
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled and spec.loadedObjects then
 		if debugLoading or debugConsole then print("CLEAR OBJECTS: " .. self:getFullName()) end
 		self:setAllTensionBeltsActive(false)
 		for object, _ in pairs(spec.loadedObjects or {}) do
@@ -5484,7 +5486,7 @@ end
 function UniversalAutoload:drawDebugDisplay()
 	local spec = self.spec_universalAutoload
 
-	if (UniversalAutoload.showLoading or UniversalAutoload.showDebug or spec.showDebug) and not g_gui:getIsGuiVisible() then
+	if (UniversalAutoload.showLoading or UniversalAutoload.showDebug) and not g_gui:getIsGuiVisible() then
 		
 		local RED     = { 1.0, 0.1, 0.1 }
 		local GREEN   = { 0.1, 1.0, 0.1 }
@@ -5515,7 +5517,7 @@ function UniversalAutoload:drawDebugDisplay()
 			-- UniversalAutoload.DrawDebugPallet( place.node, place.sizeX, place.sizeY, place.sizeZ, true, false, WHITE)
 		end
 
-		if UniversalAutoload.showDebug or spec.showDebug then
+		if UniversalAutoload.showDebug then
 			for _, trigger in pairs(spec.triggers or {}) do
 				local w, h, l = trigger.width or 1, trigger.height or 1, trigger.length or 1
 				if trigger.name == "rearAutoTrigger" or trigger.name == "leftAutoTrigger" or trigger.name == "rightAutoTrigger" then
@@ -5585,7 +5587,7 @@ function UniversalAutoload:drawDebugDisplay()
 				end
 			end
 			
-			if UniversalAutoload.showDebug or spec.showDebug then
+			if UniversalAutoload.showDebug then
 				local W, H, L = spec.loadVolume.width, spec.loadVolume.height, spec.loadVolume.length
 				UniversalAutoload.DrawDebugPallet( spec.loadVolume.rootNode, W, H, L, true, false, MAGENTA )
 				
@@ -5597,20 +5599,20 @@ function UniversalAutoload:drawDebugDisplay()
 			
 			for i, loadArea in pairs(spec.loadArea or {}) do
 				local W, H, L = loadArea.width, loadArea.height, loadArea.length
-				if not (UniversalAutoload.showDebug or spec.showDebug) then H = 0 end
+				if not UniversalAutoload.showDebug then H = 0 end
 				
 				if UniversalAutoload.getIsLoadingAreaAllowed(self, i) then
 					UniversalAutoload.DrawDebugPallet( loadArea.rootNode,  W, H, L, true, false, WHITE )
 					UniversalAutoload.DrawDebugPallet( loadArea.startNode, W, 0, 0, true, false, GREEN )
 					UniversalAutoload.DrawDebugPallet( loadArea.endNode,   W, 0, 0, true, false, RED )
 					
-					if (UniversalAutoload.showDebug or spec.showDebug) and loadArea.baleHeight then
+					if UniversalAutoload.showDebug and loadArea.baleHeight then
 						H = loadArea.baleHeight
 						UniversalAutoload.DrawDebugPallet( loadArea.rootNode, W, H, L, true, false, YELLOW )
 					end
 				else
 					UniversalAutoload.DrawDebugPallet( loadArea.rootNode,  W, H, L, true, false, GREY )
-					if (UniversalAutoload.showDebug or spec.showDebug) and loadArea.baleHeight then
+					if UniversalAutoload.showDebug and loadArea.baleHeight then
 						H = loadArea.baleHeight
 						UniversalAutoload.DrawDebugPallet( loadArea.rootNode, W, H, L, true, false, GREY )
 					end
@@ -5708,21 +5710,6 @@ function UniversalAutoload.DrawDebugPallet( node, w, h, l, showCube, showAxis, c
 
 end
 
--- DETECT SPAWNED LOGS
-local oldAddToPhysics = getmetatable(_G).__index.addToPhysics
-getmetatable(_G).__index.addToPhysics = function(node, ...)
-
-	oldAddToPhysics(node, ...)
-	
-	if node ~= 0 and node then
-		if getRigidBodyType(node) == RigidBodyType.DYNAMIC and getSplitType(node) ~= 0 then
-			if not UniversalAutoload.createdLogId and UniversalAutoload.createdTreeId and node > UniversalAutoload.createdTreeId then
-				UniversalAutoload.createdLogId = node
-			end
-		end
-	end
-end
-
 -- ADD CUSTOM STRINGS FROM ModDesc.xml TO GLOBAL g_i18n
 function UniversalAutoload.AddCustomStrings()
 	-- print("  ADD custom strings from ModDesc.xml to g_i18n")
@@ -5752,7 +5739,7 @@ UniversalAutoload.AddCustomStrings()
 function UniversalAutoload:onAIImplementStart()
 	--- TODO: Unfolding or opening cover, if needed!
 	local spec = self.spec_universalAutoload
-	if spec and spec.isAutoloadAvailable then
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
 		print("["..self.rootNode.."] UAL/CP - ACTIVATE BALE COLLECTION MODE (onAIImplementStart)")
 		UniversalAutoload.setBaleCollectionMode(self, true)
 		spec.aiLoadingActive = true
@@ -5762,7 +5749,7 @@ end
 function UniversalAutoload:onAIImplementEnd()
 	--- TODO: Folding or closing cover, if needed!
 	local spec = self.spec_universalAutoload
-	if spec and spec.isAutoloadAvailable and spec.aiLoadingActive then
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled and spec.aiLoadingActive then
 		print("["..self.rootNode.."] UAL/CP - DEACTIVATE BALE COLLECTION MODE (onAIImplementEnd)")
 		UniversalAutoload.setBaleCollectionMode(self, false)
 		spec.aiLoadingActive = false
@@ -5772,7 +5759,7 @@ end
 function UniversalAutoload:onAIFieldWorkerStart()
 	--- TODO: Unfolding or opening cover, if needed!
 	local spec = self.spec_universalAutoload
-	if spec and spec.isAutoloadAvailable then
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
 		print("["..self.rootNode.."] UAL/CP - ACTIVATE BALE COLLECTION MODE (onAIFieldWorkerStart)")
 		UniversalAutoload.setBaleCollectionMode(self, true)
 		spec.aiLoadingActive = true
@@ -5782,7 +5769,7 @@ end
 function UniversalAutoload:onAIFieldWorkerEnd()
 	--- TODO: Folding or closing cover, if needed!
 	local spec = self.spec_universalAutoload
-	if spec and spec.isAutoloadAvailable and spec.aiLoadingActive then
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled and spec.aiLoadingActive then
 		print("["..self.rootNode.."] UAL/CP - DEACTIVATE BALE COLLECTION MODE (onAIFieldWorkerEnd)")
 		UniversalAutoload.setBaleCollectionMode(self, false)
 		spec.aiLoadingActive = false
@@ -5792,18 +5779,18 @@ end
 -- CoursePlay interface functions.
 function UniversalAutoload:ualIsFull()
 	local spec = self.spec_universalAutoload
-	return (spec and spec.isAutoloadAvailable) and spec.trailerIsFull
+	return (spec and spec.isAutoloadAvailable and not spec.autoloadDisabled) and spec.trailerIsFull
 end
 --
 function UniversalAutoload:ualGetLoadedBales()
 	local spec = self.spec_universalAutoload
-	return (spec and spec.isAutoloadAvailable) and spec.loadedObjects
+	return (spec and spec.isAutoloadAvailable and not spec.autoloadDisabled) and spec.loadedObjects
 end
 --
 function UniversalAutoload:ualHasLoadedBales()
 	print("["..self.rootNode.."] UAL/CP - ualHasLoadedBales")
 	local spec = self.spec_universalAutoload
-	return (spec and spec.isAutoloadAvailable) and spec.totalUnloadCount > 0
+	return (spec and spec.isAutoloadAvailable and not spec.autoloadDisabled) and spec.totalUnloadCount > 0
 end
 --
 function UniversalAutoload:ualIsObjectLoadable(object)
@@ -5811,7 +5798,7 @@ function UniversalAutoload:ualIsObjectLoadable(object)
 	print("["..self.rootNode.."] UAL/CP - ualIsObjectLoadable")
 	--- TODO: Returns true, if the given object is loadable.
 	--- For CP, the given object is of the class Bale.
-	if spec and spec.isAutoloadAvailable then
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
 		print("["..self.rootNode.."] UAL/CP - IS BALE = ".. tostring(UniversalAutoload.getContainerTypeName(object) == "BALE"))
 		print("["..self.rootNode.."] UAL/CP - IS VALID = ".. tostring(UniversalAutoload.isValidForLoading(self, object)))
 		return UniversalAutoload.getContainerTypeName(object) == "BALE" and UniversalAutoload.isValidForLoading(self, object)
@@ -5822,14 +5809,14 @@ end
 -- AutoDrive interface functions.
 function UniversalAutoload:ualStartLoad()
 	local spec = self.spec_universalAutoload
-	if spec and spec.isAutoloadAvailable then
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
 		-- print("UAL/AD - START AUTOLOAD")
 		UniversalAutoload.startLoading(self, true)
 	end
 end
 function UniversalAutoload:ualStopLoad()
 	local spec = self.spec_universalAutoload
-	if spec and spec.isAutoloadAvailable then
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
 		-- print("UAL/AD - STOP AUTOLOAD")
 		UniversalAutoload.stopLoading(self, true)
 	end
@@ -5837,7 +5824,7 @@ end
 
 function UniversalAutoload:ualUnload()
 	local spec = self.spec_universalAutoload
-	if spec and spec.isAutoloadAvailable then
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
 		-- print("UAL/AD - UNLOAD")
 		UniversalAutoload.startUnloading(self, true)
 	end
@@ -5845,7 +5832,7 @@ end
 
 function UniversalAutoload:ualSetUnloadPosition(unloadPosition)
 	local spec = self.spec_universalAutoload
-	if spec and spec.isAutoloadAvailable then
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
 		-- print("UAL/AD - SET UNLOAD POSITION: " .. tostring(unloadPosition))
 		spec.forceUnloadPosition = unloadPosition
 	end
@@ -5863,7 +5850,7 @@ end
 ]]
 function UniversalAutoload:ualGetFillUnitCapacity(fillUnitIndex)
 	local spec = self.spec_universalAutoload
-	if spec and spec.isAutoloadAvailable then
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
 		return (spec.validUnloadCount and (spec.validUnloadCount + 1)) or 0
 	else
 		return 0
@@ -5872,7 +5859,7 @@ end
 
 function UniversalAutoload:ualGetFillUnitFillLevel(fillUnitIndex)
 	local spec = self.spec_universalAutoload
-	if spec and spec.isAutoloadAvailable then
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
 		return (spec.validUnloadCount and spec.validUnloadCount) or 0
 	else
 		return 0
@@ -5882,7 +5869,7 @@ end
 -- return 0 if trailer is fully loaded / no capacity left
 function UniversalAutoload:ualGetFillUnitFreeCapacity(fillUnitIndex)
 	local spec = self.spec_universalAutoload
-	if spec and spec.isAutoloadAvailable then
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
 		if spec.trailerIsFull then
 			return 0
 		else

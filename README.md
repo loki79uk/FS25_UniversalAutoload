@@ -14,12 +14,13 @@ _I have asked them to remove my mods but have not had a single response.._
 
 There seems to be a lot of confusion around how the settings are saved and loaded:
 - If you already have a vehicle on a savegame before adding UAL, then you ned to purchase another copy of the same vehicle to create the setting, and then restart the save game you want to use. You can buy it in any savegame, just the act of buying it will create a global default for that vehicle.
-- At the moment the configuration file is updated/saved (in mod settings) when you BUY a vehicle **or** when you apply changes to a vehicle in the workshop (e.g. just change the number plate).  This is a temprary workaround until I add a proper button to "apply" the new settings.
-- In multiplayer games all clients can edit vehicles when they buy one, but the configuration is saved ON THE SERVER only.  So the server default will be set by the last player to adjust it.  Invividual vehicle settings should persist for the rest of that game until the server is restarted, after that the default is applied to all.  I need to design a better system with permissions and a proper GUI menu.
+- The configuration file is updated/saved (in mod settings) when you BUY a vehicle **or** when you apply changes to a vehicle in the workshop. I have now enabled the "apply" config button for all UAL vehicles in the workshop, so other changes are no longer necessary BUT changing other options will still reset the autoload settings.  I am open to suggestions if this automatic behaviour is better or worse than adding a button to "apply" the new settings (we might forget to press that).
+- In multiplayer games all clients can edit vehicles when they buy one, but the configuration is saved ON THE SERVER only.  So the server default will be set by the last player to adjust it.  Invividual vehicle settings should persist for the rest of that game until the server is restarted, after that the default is applied to all.  I need to design a better system with permissions or possibly an option to load from your own local settings, although it could get really confusing if you share vehicles on a server.
 
 If you are having issues with a vehicle not loading pallets at all then there are a few things to check
+- If you cant load LOGS then the chances are the logs are too long for you trailer.  Make the zone longer or cut the logs shorter.
 - If you do not see a loading zone with the debug display (shift-ctrl-F12) then the most likely thing is that the entry for that vehicle is corrupted in your mod settings file.  Try deleting the file completely, or look for the vehicle you are having trouble with and delete the entry for that one.
-- There is an issue saving configurations when the game installation path has wide chars in the path (unicode/non-ascii) e.g. Russian or chinese characters.  When this happens, you will get the issue of loading volume not showing up at all.  I don't fuly understnad the cause, but I will work out a solution.
+- There is an issue saving configurations when the game installation path has wide chars in the path (unicode/non-ascii) e.g. Russian or chinese characters.  When this happens, you will get the issue of loading volume not showing up at all.  I don't fuly understand the cause, but I will work out a solution.
 - It is also possible you simply don't have the trailer selected/active in game.  Press "G" to cycle the selected implement from your tractor/truck.
 
 ---------------------------------------------------
@@ -48,13 +49,9 @@ TO CONFIGURE LOADING ZONES:
 
 ---------------------------------------------------
 PLANNED FEATURES:
-- Menu for global settings (in shop)
-- Set vehicle options in the shop before purchase
-- Multiplayer synchronisation of ALL settings
+- Menu for global settings
 - Show debugging display in multiplayer
 
 ---------------------------------------------------
 KNOWN ISSUES:
 - Existing trailers on a savegame will not get autoload added (until restart with valid settings)
-- New trailers bought in MULTIPLAYER require a server restart to properly configure (see bug #69)
-- Trigger detection of objects is poor in multiplayer
