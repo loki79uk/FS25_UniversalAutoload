@@ -2,151 +2,151 @@
 <l10n>
 	<texts>
 		<text name="shop_configuration_text" text="Autoload"/>
-		<text name="configuration_universalAutoload" text="Univerzální Autoload"/>
+		<text name="configuration_universalAutoload" text="Univerzální nakládka"/>
 		
 		<!-- TITLES -->
-		<text name="ui_global_settings_ual" text="Global Settings"/>
-		<text name="ui_config_settings_ual" text="Autoload Settings"/>
-		<text name="ui_vehicle_options_ual" text="Vehicle Options"/>
-		<text name="ui_loading_area_options_ual" text="Loading Area Options"/>
-		<text name="ui_button_save_config_ual" text="Save Vehicle Settings"/>
-		<text name="ui_confirm_save_config_ual" text="Do you want to overwrite the default autoload configuration for this vehicle?"/>
+		<text name="ui_global_settings_ual" text="Globální nastavení"/>
+		<text name="ui_config_settings_ual" text="Nastavení autoload"/>
+		<text name="ui_vehicle_options_ual" text="Nastavení vozidla"/>
+		<text name="ui_loading_area_options_ual" text="Nastavení ložné plochy"/>
+		<text name="ui_button_save_config_ual" text="Uložit nastavení vozidla"/>
+		<text name="ui_confirm_save_config_ual" text="Chcete přepsat výchozí konfiguraci automatické nakládky pro toto vozidlo?"/>
 		
 		<!-- GLOBAL -->
-		<text name="ui_global_showDebug" text="Show Debug"/>
-		<text name="ui_global_highPriority" text="High Priority"/>
-		<text name="ui_global_disableAutoStrap" text="Disable Auto-Strap"/>
-		<text name="ui_global_pricePerLog" text="Price Per Log"/>
-		<text name="ui_global_pricePerBale" text="Price Per Bale"/>
-		<text name="ui_global_pricePerPallet" text="Price Per Pallet"/>
-		<text name="ui_global_minLogLength" text="Min Log Length"/>
+		<text name="ui_global_showDebug" text="Zobrazit ladění"/>
+		<text name="ui_global_highPriority" text="Vysoká priorita"/>
+		<text name="ui_global_disableAutoStrap" text="Zakázat automatické kurtování"/>
+		<text name="ui_global_pricePerLog" text="Cena za kmen"/>
+		<text name="ui_global_pricePerBale" text="Cena za balík"/>
+		<text name="ui_global_pricePerPallet" text="Cena za paletu"/>
+		<text name="ui_global_minLogLength" text="Minimální délka kmene"/>
 		
-		<text name="ui_global_tooltip_showDebug" text="Show the full graphical debugging display for all vehicles in game"/>
-		<text name="ui_global_tooltip_highPriority" text="Apply high priority to all UAL key bindings in the F1 menu"/>
-		<text name="ui_global_tooltip_disableAutoStrap" text="Disable the automatic application of tension belts"/>
-		<text name="ui_global_tooltip_pricePerLog" text="The price charged for each auto-loaded log"/>
-		<text name="ui_global_tooltip_pricePerBale" text="The price charged for each auto-loaded bale"/>
-		<text name="ui_global_tooltip_pricePerPallet" text="The price charged for each auto-loaded pallet"/>
-		<text name="ui_global_tooltip_minLogLength" text="The global minimum length for logs that will be autoloaded"/>
+		<text name="ui_global_tooltip_showDebug" text="Zobrazí úplné grafické zobrazení ladění pro všechna vozidla ve hře"/>
+		<text name="ui_global_tooltip_highPriority" text="Použití vysoké priority pro všechny vazby kláves UAL v nabídce F1"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="Zakázat automatické použití upínacích řemenů"/>
+		<text name="ui_global_tooltip_pricePerLog" text="Cena účtovaná za každý automaticky naložený kmen"/>
+		<text name="ui_global_tooltip_pricePerBale" text="Cena účtovaná za každý automaticky naložený balík"/>
+		<text name="ui_global_tooltip_pricePerPallet" text="Cena účtovaná za každou automaticky naloženou paletu"/>
+		<text name="ui_global_tooltip_minLogLength" text="Globální minimální délka kmenů, které budou automaticky nakládány"/>
 
 		<!-- OPTIONS -->
-		<text name="ui_option_enableAutoload" text="Enable Autoload"/>
-		<text name="ui_option_trailerType" text="Trailer Type"/>
-		<text name="ui_option_unloadingType" text="Unloading Position"/>
-		<text name="ui_option_rearOnly" text="Rear Only"/>
-		<text name="ui_option_frontOnly" text="Front Only"/>
+		<text name="ui_option_enableAutoload" text="Povolit automatickou nakládku"/>
+		<text name="ui_option_trailerType" text="Typ přívěsu"/>
+		<text name="ui_option_unloadingType" text="Pozice vykládky"/>
+		<text name="ui_option_rearOnly" text="Pouze vzadu"/>
+		<text name="ui_option_frontOnly" text="Pouze vpředu"/>
 		
-		<text name="ui_option_noLoadingFolded" text="No Loading If Folded"/>
-		<text name="ui_option_folded" text="Folded"/>
-		<text name="ui_option_unfolded" text="Unfolded"/>
+		<text name="ui_option_noLoadingFolded" text="Nenakládat ve složeném stavu"/>
+		<text name="ui_option_folded" text="Složený"/>
+		<text name="ui_option_unfolded" text="Rozložený"/>
 		
-		<text name="ui_option_noLoadingCovered" text="No Loading If Covered"/>
-		<text name="ui_option_covered" text="Covered"/>
-		<text name="ui_option_uncovered" text="Uncovered"/>
+		<text name="ui_option_noLoadingCovered" text="Nenakládat zakrytý"/>
+		<text name="ui_option_covered" text="Zakrytý"/>
+		<text name="ui_option_uncovered" text="Nezakrytý"/>
 
-		<text name="ui_option_isBoxTrailer" text="Box Trailer"/>
-		<text name="ui_option_isLogTrailer" text="Log Trailer"/>
-		<text name="ui_option_isBaleTrailer" text="Bale Trailer"/>
-		<text name="ui_option_isBaleProcessor" text="Bale Processor"/>
-		<text name="ui_option_isCurtainTrailer" text="Curtain Trailer"/>
-		<text name="ui_option_enableRearLoading" text="Enable Rear Loading"/>
-		<text name="ui_option_enableSideLoading" text="Enable Side Loading"/>
+		<text name="ui_option_isBoxTrailer" text="Skříňový přívěs"/>
+		<text name="ui_option_isLogTrailer" text="Přívěs na klády"/>
+		<text name="ui_option_isBaleTrailer" text="Balíkový přívěs"/>
+		<text name="ui_option_isBaleProcessor" text="Zpracování balíků"/>
+		<text name="ui_option_isCurtainTrailer" text="Přívěs s boční plachtou"/>
+		<text name="ui_option_enableRearLoading" text="Povolit zadní nakládku"/>
+		<text name="ui_option_enableSideLoading" text="Povolit boční nakládku"/>
 
-		<text name="ui_option_rearUnloadingOnly" text="Rear Unloading Only"/>
-		<text name="ui_option_frontUnloadingOnly" text="Front Unloading Only"/>
-		<text name="ui_option_horizontalLoading" text="Horizontal Loading"/>
-		<text name="ui_option_disableAutoStrap" text="Automatic Tension Belts"/>
-		<text name="ui_option_disableHeightLimit" text="Limit Stacking Height"/>
-		<text name="ui_option_zonesOverlap" text="Zones Overlap"/>
-		<text name="ui_option_offsetRoot" text="Offset Root"/>
-		<text name="ui_option_minLogLength" text="Min Log Length"/>
+		<text name="ui_option_rearUnloadingOnly" text="Pouze zadní vykládka"/>
+		<text name="ui_option_frontUnloadingOnly" text="Pouze přední vykládka"/>
+		<text name="ui_option_horizontalLoading" text="Horizontální nakládání"/>
+		<text name="ui_option_disableAutoStrap" text="Automatické upínací řemeny"/>
+		<text name="ui_option_disableHeightLimit" text="Omezit výšku stohování"/>
+		<text name="ui_option_zonesOverlap" text="Překrývání zón"/>
+		<text name="ui_option_offsetRoot" text="Posunutí kořene"/>
+		<text name="ui_option_minLogLength" text="Minimální délka kmene"/>
 		
-		<text name="ui_option_tooltip_enableAutoload" text="If Autoload is enabled or disabled for this vehicle"/>
-		<text name="ui_option_tooltip_trailerType" text="The special type of trailer, e.g. bale, log, curtain"/>
-		<text name="ui_option_tooltip_unloadingType" text="Use a special unloading position (front or rear)"/>
-		<text name="ui_option_tooltip_noLoadingFolded" text="Prevent loading when either folded or unfolded"/>
-		<text name="ui_option_tooltip_noLoadingCovered" text="Prevent loading when either covered or uncovered"/>
+		<text name="ui_option_tooltip_enableAutoload" text="Zda je funkce Autoload pro toto vozidlo povolena nebo zakázána"/>
+		<text name="ui_option_tooltip_trailerType" text="Speciální typ přívěsu, např. na balíky, klády, plachta"/>
+		<text name="ui_option_tooltip_unloadingType" text="Použití speciální vykládací pozice (vpředu nebo vzadu)"/>
+		<text name="ui_option_tooltip_noLoadingFolded" text="Zabránit nakládání ve složeném nebo rozloženém stavu"/>
+		<text name="ui_option_tooltip_noLoadingCovered" text="Zabránit nakládání, když je zakrytý nebo nezakrytý"/>
 		
-		<text name="ui_option_tooltip_isBoxTrailer" text="If trailer is enclosed with a rear door"/>
-		<text name="ui_option_tooltip_isLogTrailer" text="If trailer is a logging trailer - will load only logs dropped from above"/>
-		<text name="ui_option_tooltip_isBaleTrailer" text="If trailer should use an automatic bale collection mode"/>	
-		<text name="ui_option_tooltip_isBaleProcessor" text="If trailer should consume bales (e.g. TMR Mixer or Straw Blower)"/>
-		<text name="ui_option_tooltip_isCurtainTrailer" text="Automatically detect the available load side (if the trailer has curtain sides)"/>
-		<text name="ui_option_tooltip_enableRearLoading" text="Use the automatic rear loading trigger"/>
-		<text name="ui_option_tooltip_enableSideLoading" text="Use the automatic side loading triggers"/>
+		<text name="ui_option_tooltip_isBoxTrailer" text="Zda je přívěs uzavřen zadními dveřmi"/>
+		<text name="ui_option_tooltip_isLogTrailer" text="Zda je přívěs pro těžbu dřeva - naloží pouze klády shozené shora"/>
+		<text name="ui_option_tooltip_isBaleTrailer" text="Zda má přívěs používat automatický režim sběru balíků"/>	
+		<text name="ui_option_tooltip_isBaleProcessor" text="Zda má přívěs spotřebovávat balíky (např. míchačka TMR nebo foukač slámy)"/>
+		<text name="ui_option_tooltip_isCurtainTrailer" text="Automatická detekce dostupné strany nakládky (pokud má přívěs boční plachtu)"/>
+		<text name="ui_option_tooltip_enableRearLoading" text="Použití automatického trigeru pro zadní nakládku"/>
+		<text name="ui_option_tooltip_enableSideLoading" text="Použití automatických trigerů pro boční nakládku"/>
 
-		<text name="ui_option_tooltip_rearUnloadingOnly" text="Use rear unloading zone only (no side zones)"/>
-		<text name="ui_option_tooltip_frontUnloadingOnly" text="Use front unloading zone only (no side zones)"/>
-		<text name="ui_option_tooltip_horizontalLoading" text="Start with horizontal loading enabled (can be toggled if key is bound)"/>
-		<text name="ui_option_tooltip_disableAutoStrap" text="Automatic application of tension belts after loading or unloading"/>
-		<text name="ui_option_tooltip_disableHeightLimit" text="Limit the height of pallet stacking based on density "/>
-		<text name="ui_option_tooltip_zonesOverlap" text="Flag to identify when the loading areas overlap each other"/>
-		<text name="ui_option_tooltip_offsetRoot" text="Vehicle i3d node that area offsets are relative to"/>
-		<text name="ui_option_tooltip_minLogLength" text="The minimum length for logs that will be autoloaded"/>
+		<text name="ui_option_tooltip_rearUnloadingOnly" text="Použití pouze zadní vykládací zóny (žádné boční zóny)"/>
+		<text name="ui_option_tooltip_frontUnloadingOnly" text="Použití pouze přední vykládací zóny (žádné boční zóny)"/>
+		<text name="ui_option_tooltip_horizontalLoading" text="Začít se zapnutou horizontální nakládkou (lze přepnout, pokud je nastavena klávesa)"/>
+		<text name="ui_option_tooltip_disableAutoStrap" text="Automatické nasazení upínacích řemenů po nakládce nebo vykládce"/>
+		<text name="ui_option_tooltip_disableHeightLimit" text="Omezení výšky stohování palet na základě hustoty"/>
+		<text name="ui_option_tooltip_zonesOverlap" text="Povoluje vzájemné překrývání nakládacích zón"/>
+		<text name="ui_option_tooltip_offsetRoot" text="Bod i3d vozidla, ke kterému se vztahují posuny plochy"/>
+		<text name="ui_option_tooltip_minLogLength" text="Minimální délka kmenů, které se budou automaticky nakládat"/>
 
 		<!-- LOADING_AREA -->
-		<text name="ui_loadArea_offset" text="Offset"/>
-		<text name="ui_loadArea_offsetRoot" text="Offset Root"/>
-		<text name="ui_loadArea_width" text="Width"/>
-		<text name="ui_loadArea_length" text="Length"/>
-		<text name="ui_loadArea_height" text="Height"/>
-		<text name="ui_loadArea_baleHeight" text="Bale Height"/>
-		<text name="ui_loadArea_widthAxis" text="Width Axis"/>
-		<text name="ui_loadArea_lengthAxis" text="Length Axis"/>
-		<text name="ui_loadArea_heightAxis" text="Height Axis"/>
-		<text name="ui_loadArea_offsetFrontAxis" text="Offset Front Axis"/>
-		<text name="ui_loadArea_offsetRearAxis" text="Offset Rear Axis"/>
-		<text name="ui_loadArea_reverseWidthAxis" text="Reverse Width Axis"/>
-		<text name="ui_loadArea_reverseLengthAxis" text="Reverse Length Axis"/>
-		<text name="ui_loadArea_reverseHeightAxis" text="Reverse Height Axis"/>
-		<text name="ui_loadArea_noLoadingIfFolded" text="No Loading If Folded"/>
-		<text name="ui_loadArea_noLoadingIfUnfolded" text="No Loading If Unfolded"/>
-		<text name="ui_loadArea_noLoadingIfCovered" text="No Loading If Covered"/>
-		<text name="ui_loadArea_noLoadingIfUncovered" text="No Loading If Uncovered"/>
+		<text name="ui_loadArea_offset" text="Posun"/>
+		<text name="ui_loadArea_offsetRoot" text="Posun kořene"/>
+		<text name="ui_loadArea_width" text="Šířka"/>
+		<text name="ui_loadArea_length" text="Délka"/>
+		<text name="ui_loadArea_height" text="Výška"/>
+		<text name="ui_loadArea_baleHeight" text="Výška balíků"/>
+		<text name="ui_loadArea_widthAxis" text="Osa šířky"/>
+		<text name="ui_loadArea_lengthAxis" text="Osa délky"/>
+		<text name="ui_loadArea_heightAxis" text="Osa výšky"/>
+		<text name="ui_loadArea_offsetFrontAxis" text="Posun přední osy"/>
+		<text name="ui_loadArea_offsetRearAxis" text="Posun zadní osy"/>
+		<text name="ui_loadArea_reverseWidthAxis" text="Obrácená osa šířky"/>
+		<text name="ui_loadArea_reverseLengthAxis" text="Obrácená osa délky"/>
+		<text name="ui_loadArea_reverseHeightAxis" text="Obrácená osa výšky"/>
+		<text name="ui_loadArea_noLoadingIfFolded" text="Nenakládat složený"/>
+		<text name="ui_loadArea_noLoadingIfUnfolded" text="Nenakládat rozložený"/>
+		<text name="ui_loadArea_noLoadingIfCovered" text="Nenakládat zakrytý"/>
+		<text name="ui_loadArea_noLoadingIfUncovered" text="Nenakládat odkrytý"/>
 		
-		<text name="ui_loadArea_tooltip_offset" text="Offset to the centre of the loading area"/>
-		<text name="ui_loadArea_tooltip_offsetRoot" text="Vehicle i3d node that this area offset is relative to"/>
-		<text name="ui_loadArea_tooltip_width" text="Width of the loading area"/>
-		<text name="ui_loadArea_tooltip_length" text="Length of the loading area"/>
-		<text name="ui_loadArea_tooltip_height" text="Height of the loading area"/>
-		<text name="ui_loadArea_tooltip_baleHeight" text="Height of the loading area for BALES only"/>
-		<text name="ui_loadArea_tooltip_widthAxis" text="Axis name to extend width of the loading area"/>
-		<text name="ui_loadArea_tooltip_lengthAxis" text="Axis name to extend length of the loading area"/>
-		<text name="ui_loadArea_tooltip_heightAxis" text="Axis name to extend height of the loading area"/>
-		<text name="ui_loadArea_tooltip_offsetFrontAxis" text="Axis name to adjust the front position of the loading area"/>
-		<text name="ui_loadArea_tooltip_offsetRearAxis" text="Axis name to adjust the rear position of the loading area"/>
-		<text name="ui_loadArea_tooltip_reverseWidthAxis" text="Reverses direction of width extension if true"/>
-		<text name="ui_loadArea_tooltip_reverseLengthAxis" text="Reverses direction of length extension if true"/>
-		<text name="ui_loadArea_tooltip_reverseHeightAxis" text="Reverses direction of height extension if true"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfFolded" text="Prevent loading when folded (for this area only)"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfUnfolded" text="Prevent loading when unfolded (for this area only)"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfCovered" text="Prevent loading when covered (for this area only)"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Prevent loading when uncovered (for this area only)"/>
+		<text name="ui_loadArea_tooltip_offset" text="Posunutí ke středu ložné plochy"/>
+		<text name="ui_loadArea_tooltip_offsetRoot" text="Bod i3d vozidla, ke kterému se tento posun oblasti vztahuje"/>
+		<text name="ui_loadArea_tooltip_width" text="Šířka ložné plochy"/>
+		<text name="ui_loadArea_tooltip_length" text="Délka ložné plochy"/>
+		<text name="ui_loadArea_tooltip_height" text="Výška ložné plochy"/>
+		<text name="ui_loadArea_tooltip_baleHeight" text="Výška ložné plochy pouze pro balíky"/>
+		<text name="ui_loadArea_tooltip_widthAxis" text="Název osy pro rozšíření šířky ložné plochy"/>
+		<text name="ui_loadArea_tooltip_lengthAxis" text="Název osy pro prodloužení délky ložné plochy"/>
+		<text name="ui_loadArea_tooltip_heightAxis" text="Název osy pro zvýšení výšky ložné plochy"/>
+		<text name="ui_loadArea_tooltip_offsetFrontAxis" text="Název osy pro nastavení přední polohy ložné plochy"/>
+		<text name="ui_loadArea_tooltip_offsetRearAxis" text="Název osy pro nastavení zadní polohy ložné plochy"/>
+		<text name="ui_loadArea_tooltip_reverseWidthAxis" text="Obrátí směr rozšíření šířky, pokud je platné"/>
+		<text name="ui_loadArea_tooltip_reverseLengthAxis" text="Obrátí směr prodloužení délky, pokud je platné"/>
+		<text name="ui_loadArea_tooltip_reverseHeightAxis" text="Obrátí směr zvýšení výšky, pokud je platné"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfFolded" text="Zabránění nakládání ve složeném stavu (pouze pro tuto oblast)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfUnfolded" text="Zabránit nakládání v rozloženém stavu (pouze pro tuto oblast)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfCovered" text="Zabránění nakládání při zakrytí (pouze pro tuto oblast)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Zabránit nakládání při odkrytí (pouze pro tuto oblast)"/>
 
 		<!-- KEY BINDINGS -->
-		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Open configuration settings menu (in shop)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Enable editing of loading volume (in shop)"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Přepnout nakládání"/>
+		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Otevřít nabídku nastavení konfigurace (v obchodě)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Povolit úpravy objemu nákladu (v obchodě)"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Přepnout nakládku"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Režim automatického sběru balíků"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Vyložit"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Nuceně vyložit"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Přepnout stranu vykládky"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Přepnout filtr nakládky"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Přepínání horizontálního zatížení"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Přepnout horizontální nakládku"/>
 		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Vybraný materiál (další)"/>
 		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Vybraný materiál (předchozí)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Vyberte všechny typy materiálů"/>
+		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Vybrat všechny typy materiálů"/>
 		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Vybraný kontejner (další)"/>
 		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Vybraný kontejner (předchozí)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Vyberte všechny typy kontejnerů"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Zapnout/odepnout upínací pásy"/>
+		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Vybrat všechny typy kontejnerů"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Zapnout/odepnout upínací řemeny"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Otevřít/zavřít zadní dveře"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Otevřít/zavřít boční závěs"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Otevřít/zavřít boční plachtu"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" text="Úplný režim ladění"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" text="Jednoduchý režim ladění"/>
 
 		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="Oblast vykládky je blokována. Vyčistěte prosím oblast vykládky."/>
-		<text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="Žádné kompatibilní zboží není k dispozici pro nakládku nebo vykládku."/>
+		<text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="Pro nakládku nebo vykládku není k dispozici žádné kompatibilní zboží."/>
 		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT_FULL" text="Nelze naložit více položek této velikosti."/>
 		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT_EMPTY" text="Položka je pro toto vozidlo příliš velká."/>
 		<text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY" text="Není povoleno nakládání za pohybu."/>
@@ -154,7 +154,7 @@
 		<text name="universalAutoload_tipside" text="Vykládací strana"/>
 		<text name="universalAutoload_left" text="Vlevo"/>
 		<text name="universalAutoload_right" text="Vpravo"/>
-		<text name="universalAutoload_none" text="Nic"/>
+		<text name="universalAutoload_none" text="Žádná"/>
 		<text name="universalAutoload_loadingFilter" text="Filtr nakládky"/>
 		<text name="universalAutoload_loadingMethod" text="Způsob nakládky"/>
 		<text name="universalAutoload_layer" text="Vrstva"/>
@@ -182,6 +182,6 @@
 		<text name="universalAutoload_BALE" text="Balík"/>
 		<text name="universalAutoload_ROUND_BALE" text="Kulatý balík"/>
 		<text name="universalAutoload_SQUARE_BALE" text="Hranatý balík"/>
-		<text name="universalAutoload_LOGS" text="Klády"/>
+		<text name="universalAutoload_LOGS" text="Kmeny"/>
     </texts>
 </l10n>
