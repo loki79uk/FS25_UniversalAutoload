@@ -127,7 +127,7 @@
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Open configuration settings menu (in shop)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Enable editing of loading volume (in shop)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Til/fra læsning"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Automatisk ballesamlingsmode"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" text="Automatisk samlemodus"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Aflæsning"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Tving aflæsning"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Skift aflæsningsside"/>
@@ -165,7 +165,9 @@
 		<text name="universalAutoload_stopLoading" text="Stop læsning"/>
 		<text name="universalAutoload_unloadAll" text="Aflæsning"/>
 		<text name="universalAutoload_unloadAllForce" text="Tving aflæsning"/>
-		<text name="universalAutoload_baleMode" text="Auto-ballemode"/>
+		<text name="universalAutoload_baleMode" text="Ballelåg"/>
+		<text name="universalAutoload_palletMode" text="Pallereg"/>
+		<text name="universalAutoload_collectionMode" text="Indsamlingsmode"/>
 		<text name="universalAutoload_enabled" text="Til"/>
 		<text name="universalAutoload_disabled" text="Fra"/>
 		<text name="universalAutoload_activate" text="Aktiver"/>

@@ -126,7 +126,11 @@ function LoadingVolume:draw(drawAll)
 	
 	if self.bbs then
 		for _, bb in ipairs(self.bbs) do
-			bb:draw(0, 1, 0)
+			if bb:isEmpty(0, false) then
+				bb:draw(0, 1, 0)
+			else
+				bb:draw(1, 0, 0)
+			end
 		end
 	end
 
@@ -526,6 +530,12 @@ function LoadingVolume:expandLoadingSurface()
 		end
 		
 		bb:evaluate()
+		
+		if not bb:isEmpty() then
+			print("TRY TO RAISE BASE")
+			bb:adjustBoundingBox(offset.y, 0.5, 1, function(original, value) offset.y = original + value end)
+			original_dy = offset.y
+		end
 
 	end
 	

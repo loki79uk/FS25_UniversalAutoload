@@ -2,7 +2,7 @@
 <modDesc descVersion="92">
 
     <author>loki_79</author>
-    <version>0.3.2.6</version>
+    <version>0.4.2.4</version>
     
     <title>
         <en>Universal Autoload</en>
@@ -88,7 +88,7 @@ Sonderfunktionen für den Anhänger 'KRONE Trailer Profi Liner'
         <action name="UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
         <action name="UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
         <action name="UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
-        <action name="UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
+        <action name="UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
     </actions>
     
     <inputBinding>
@@ -146,7 +146,7 @@ Sonderfunktionen für den Anhänger 'KRONE Trailer Profi Liner'
         <actionBinding action="UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" >
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lshift KEY_f12" />
         </actionBinding>
-        <actionBinding action="UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" >
+        <actionBinding action="UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" >
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lshift KEY_r" />
         </actionBinding>
     </inputBinding>

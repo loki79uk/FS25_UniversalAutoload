@@ -127,7 +127,7 @@
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Beállítási menü megnyitása (a boltban)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Rakodási terület szerkesztésének engedélyezése (a boltban)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Automatikus rakodás" />
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Automata bálagyűjtű mód" />
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" text="Automata bálagyűjtű mód" />
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Kirakodás" />
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Kényszerített kirakodás" />
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Oldal választása" />
@@ -165,7 +165,9 @@
 		<text name="universalAutoload_stopLoading" text="Rakodás befejezése" />
 		<text name="universalAutoload_unloadAll" text="Kirakás" />
 		<text name="universalAutoload_unloadAllForce" text="Kirakás itt" />
-		<text name="universalAutoload_baleMode" text="Auto-Bála mód" />
+		<text name="universalAutoload_baleMode" text="Bálamód"/>
+		<text name="universalAutoload_palletMode" text="Raklapmód"/>
+		<text name="universalAutoload_collectionMode" text="Gyűjtő mód"/>
 		<text name="universalAutoload_enabled" text="Engedélyezve" />
 		<text name="universalAutoload_disabled" text="Kikapcsolva" />
 		<text name="universalAutoload_activate" text="Aktiválás" />

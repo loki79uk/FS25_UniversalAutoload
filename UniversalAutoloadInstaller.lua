@@ -77,7 +77,7 @@ UniversalAutoload.ACTIONS = {
 	-- ["TOGGLE_CURTAIN"]		   = "UNIVERSALAUTOLOAD_TOGGLE_CURTAIN",
 	["TOGGLE_SHOW_DEBUG"]	   = "UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG",
 	["TOGGLE_SHOW_LOADING"]	   = "UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING",
-	["TOGGLE_BALE_COLLECTION"] = "UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION",
+	["TOGGLE_COLLECTION"]	   = "UNIVERSALAUTOLOAD_TOGGLE_COLLECTION",
 }
 
 UniversalAutoload.WARNINGS = {
@@ -212,7 +212,7 @@ UniversalAutoload.SAVEGAME_STATE_DEFAULTS = {
 	{id="containerIndex", default=1, valueType="INT", key="#containerIndex"}, --Last used container type
 	{id="loadingFilter", default=false, valueType="BOOL", key="#loadingFilter"}, --TRUE=Load full pallets only; FALSE=Load any pallets
 	{id="useHorizontalLoading", default=false, valueType="BOOL", key="#useHorizontalLoading"}, --Last used horizontal loading state
-	{id="baleCollectionMode", default=false, valueType="BOOL", key="#baleCollectionMode"}, --Enable manual toggling of the automatic bale collection mode
+	{id="autoCollectionMode", default=false, valueType="BOOL", key="#autoCollectionMode"}, --Enable manual toggling of the automatic collection mode
 }
 
 function iterateDefaultsTable(tbl, parentKey, currentKey, currentValue, action)
@@ -929,14 +929,14 @@ function UniversalAutoloadManager.onSetStoreItem()
 end
 ShopConfigScreen.setStoreItem = Utils.prependedFunction(ShopConfigScreen.setStoreItem, UniversalAutoloadManager.onSetStoreItem)
 
-function UniversalAutoloadManager.onInputEvent(self, action, value, eventUsed)
+function UniversalAutoloadManager.onInputEvent(self, superFunc, action, value, eventUsed)
 	if not eventUsed and action == InputAction.UNIVERSALAUTOLOAD_SHOP_CONFIG then
 		UniversalAutoloadManager:ualInputCallback(target)
 		eventUsed = true
 	end
-	return eventUsed
+	return superFunc(self, action, value, eventUsed)
 end
-ShopConfigScreen.inputEvent = Utils.appendedFunction(ShopConfigScreen.inputEvent, UniversalAutoloadManager.onInputEvent)
+ShopConfigScreen.inputEvent = Utils.overwrittenFunction(ShopConfigScreen.inputEvent, UniversalAutoloadManager.onInputEvent)
 
 function UniversalAutoloadManager.onBuyEvent(self, yes)
 	if yes == true then
@@ -947,16 +947,19 @@ ShopConfigScreen.onYesNoBuy = Utils.prependedFunction(ShopConfigScreen.onYesNoBu
 ShopConfigScreen.onYesNoLease = Utils.prependedFunction(ShopConfigScreen.onYesNoLease, UniversalAutoloadManager.onBuyEvent)
 
 -- ENABLE WORKSHOP CONFIG BUTTON FOR AUTOLOAD VEHICLES
-ShopConfigScreen.getConfigurationCostsAndChanges = Utils.overwrittenFunction(ShopConfigScreen.getConfigurationCostsAndChanges,
-function(self, superFunc, storeItem, vehicle, saleItem)
-	local basePrice, upgradePrice, hasChanges = superFunc(self, storeItem, vehicle, saleItem)
+-- ShopConfigScreen.getConfigurationCostsAndChanges = Utils.overwrittenFunction(ShopConfigScreen.getConfigurationCostsAndChanges,
+-- function(self, superFunc, storeItem, vehicle, saleItem)
+	-- local basePrice, upgradePrice, hasChanges = superFunc(self, storeItem, vehicle, saleItem)
 	
-	local spec = vehicle and vehicle.spec_universalAutoload
-	if spec and spec.isAutoloadAvailable then
-		hasChanges = true
-	end
-	return basePrice, upgradePrice, hasChanges
-end)
+	-- if hasChanges == false then
+		-- local spec = vehicle and vehicle.spec_universalAutoload
+		-- if spec and spec.isAutoloadAvailable then
+			-- hasChanges = true
+			-- UniversalAutoloadManager.resetNewVehicle = vehicle
+		-- end
+	-- end
+	-- return basePrice, upgradePrice, hasChanges
+-- end)
 
 function UniversalAutoloadManager.injectGlobalMenu()
 	print("UAL - injectGlobalMenu")
@@ -2003,7 +2006,6 @@ function UniversalAutoloadManager.resetVehicle(vehicle)
 	UniversalAutoload.clearLoadedObjects(vehicle)
 
 	local xmlFile = Vehicle.getReloadXML(vehicle)
-	local key = "vehicles.vehicle(0)"
 
 	if xmlFile ~= nil and xmlFile ~= 0 then
 		local function asyncCallbackFunction(_, newVehicle, vehicleLoadState, arguments)
@@ -2037,8 +2039,8 @@ function UniversalAutoloadManager.resetVehicle(vehicle)
 			UniversalAutoloadManager.resetNextVehicle()
 		end
 		
-		VehicleLoadingUtil.loadVehicleFromSavegameXML(xmlFile, key, true, true, nil, true, asyncCallbackFunction, nil, {})
-		--(xmlFile, key, resetVehicle, allowDelayed, xmlFilename, keepPosition, asyncCallbackFunction, asyncCallbackObject, asyncCallbackArguments)
+		local vehicleSystem = g_currentMission.vehicleSystem
+		vehicleSystem:loadFromXMLFile(xmlFile, asyncCallbackFunction, nil, {}, true, true)
 
 	end
 	return true

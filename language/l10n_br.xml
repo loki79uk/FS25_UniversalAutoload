@@ -127,7 +127,7 @@
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Open configuration settings menu (in shop)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Enable editing of loading volume (in shop)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Alternar carregamento"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Modo automático de coleta de fardos"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" text="Modo automático de coleta"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Descarregar"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Forçar descarregamento"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Alternar lado de descarregamento"/>
@@ -165,7 +165,9 @@
 		<text name="universalAutoload_stopLoading" text="Parar carregamento"/>
 		<text name="universalAutoload_unloadAll" text="Descarregar"/>
 		<text name="universalAutoload_unloadAllForce" text="Forçar descarregamento"/>
-		<text name="universalAutoload_baleMode" text="Modo automático de fardos"/>
+		<text name="universalAutoload_baleMode" text="Modo de fardos"/>
+		<text name="universalAutoload_palletMode" text="Modo de paletes"/>
+		<text name="universalAutoload_collectionMode" text="Modo de coleta"/>
 		<text name="universalAutoload_enabled" text="Ativado"/>
 		<text name="universalAutoload_disabled" text="Desativado"/>
 		<text name="universalAutoload_activate" text="Ativar"/>

@@ -9,8 +9,8 @@
 		<text name="ui_config_settings_ual" text="Ustawienia autoload"/>
 		<text name="ui_vehicle_options_ual" text="Opcje pojazdu"/>
 		<text name="ui_loading_area_options_ual" text="Opcje obszaru ładowania"/>
-		<text name="ui_button_save_config_ual" text="Save Vehicle Settings"/>
-		<text name="ui_confirm_save_config_ual" text="Do you want to overwrite the default autoload configuration for this vehicle?"/>
+		<text name="ui_button_save_config_ual" text="Zapisz ustawienia pojazdu"/>
+		<text name="ui_confirm_save_config_ual" text="Czy chcesz nadpisać domyślną konfigurację autoload dla tego pojazdu?"/>
 		
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Pokaż debugowanie"/>
@@ -127,7 +127,7 @@
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Otwórz menu ustawień konfiguracji (w sklepie)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Włącz edycję strefy załadunku (w sklepie)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Wł/wył ładowanie"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Tryb automatycznego zbierania beli"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" text="Tryb automatycznego zbierania"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Wyładuj"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Wymuś wyładunek"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Przełącz stronę wyładunku"/>
@@ -165,7 +165,9 @@
 		<text name="universalAutoload_stopLoading" text="Zatrzymaj ładowanie"/>
 		<text name="universalAutoload_unloadAll" text="Wyładuj"/>
 		<text name="universalAutoload_unloadAllForce" text="Wymuś wyładunek"/>
-		<text name="universalAutoload_baleMode" text="Tryb Auto-Bele"/>
+		<text name="universalAutoload_baleMode" text="Tryb beli"/>
+		<text name="universalAutoload_palletMode" text="Tryb palet"/>
+		<text name="universalAutoload_collectionMode" text="Tryb zbierania"/>
 		<text name="universalAutoload_enabled" text="Wł."/>
 		<text name="universalAutoload_disabled" text="Wył."/>
 		<text name="universalAutoload_activate" text="Aktywuj"/>
