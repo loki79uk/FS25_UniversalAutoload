@@ -127,7 +127,7 @@
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Open configuration settings menu (in shop)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Enable editing of loading volume (in shop)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Activer le chargement"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Mode de collecte automatique des balles"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" text="Mode de collecte automatique"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Décharger"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Forcer le déchargement"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Choix du côté actif"/>
@@ -166,7 +166,9 @@
 		<text name="universalAutoload_stopLoading" text="Arrêter le chargement"/>
 		<text name="universalAutoload_unloadAll" text="Décharger"/>
 		<text name="universalAutoload_unloadAllForce" text="Forcer le déchargement"/>
-		<text name="universalAutoload_baleMode" text="Mode Auto-Balles"/>
+		<text name="universalAutoload_baleMode" text="Mode Balles"/>
+		<text name="universalAutoload_palletMode" text="Mode Palette"/>
+		<text name="universalAutoload_collectionMode" text="Mode Collecte"/>
 		<text name="universalAutoload_enabled" text="Activé"/>
 		<text name="universalAutoload_disabled" text="Désactivé"/>
 		<text name="universalAutoload_activate" text="Activer"/>

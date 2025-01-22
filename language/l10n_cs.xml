@@ -127,7 +127,7 @@
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Open configuration settings menu (in shop)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Enable editing of loading volume (in shop)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="切换装载"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="自动捡包模式"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" text="自动收集模式"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="卸载"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="强制卸货"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="切换卸载端"/>
@@ -165,7 +165,9 @@
 		<text name="universalAutoload_stopLoading" text="停止装载"/>
 		<text name="universalAutoload_unloadAll" text="卸载"/>
 		<text name="universalAutoload_unloadAllForce" text="强制卸货"/>
-		<text name="universalAutoload_baleMode" text="自动打包模式"/>
+		<text name="universalAutoload_baleMode" text="捡包模式"/>
+		<text name="universalAutoload_palletMode" text="托盘模式"/>
+		<text name="universalAutoload_collectionMode" text="收集模式"/>
 		<text name="universalAutoload_enabled" text="已启用"/>
 		<text name="universalAutoload_disabled" text="已停用"/>
 		<text name="universalAutoload_activate" text="激活"/>

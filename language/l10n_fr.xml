@@ -5,129 +5,129 @@
 		<text name="configuration_universalAutoload" text="Autoload Universel"/>
 		
 		<!-- TITLES -->
-		<text name="ui_global_settings_ual" text="Global Settings"/>
-		<text name="ui_config_settings_ual" text="Autoload Settings"/>
-		<text name="ui_vehicle_options_ual" text="Vehicle Options"/>
-		<text name="ui_loading_area_options_ual" text="Loading Area Options"/>
-		<text name="ui_button_save_config_ual" text="Save Vehicle Settings"/>
-		<text name="ui_confirm_save_config_ual" text="Do you want to overwrite the default autoload configuration for this vehicle?"/>
+		<text name="ui_global_settings_ual" text="Paramètres généraux"/>
+		<text name="ui_config_settings_ual" text="Paramètres de chargement automatique"/>
+		<text name="ui_vehicle_options_ual" text="Options du véhicule"/>
+		<text name="ui_loading_area_options_ual" text="Options de la zone de chargement"/>
+		<text name="ui_button_save_config_ual" text="Sauvegarder les paramètres du véhicule"/>
+		<text name="ui_confirm_save_config_ual" text="Voulez-vous modifier les paramètres de chargement automatique par défaut pour ce véhicule ?"/>
 		
 		<!-- GLOBAL -->
-		<text name="ui_global_showDebug" text="Show Debug"/>
-		<text name="ui_global_highPriority" text="High Priority"/>
-		<text name="ui_global_disableAutoStrap" text="Disable Auto-Strap"/>
-		<text name="ui_global_pricePerLog" text="Price Per Log"/>
-		<text name="ui_global_pricePerBale" text="Price Per Bale"/>
-		<text name="ui_global_pricePerPallet" text="Price Per Pallet"/>
-		<text name="ui_global_minLogLength" text="Min Log Length"/>
+		<text name="ui_global_showDebug" text="Montrer débogage"/>
+		<text name="ui_global_highPriority" text="Priorité élevée"/>
+		<text name="ui_global_disableAutoStrap" text="Désactiver sangles auto."/>
+		<text name="ui_global_pricePerLog" text="Tarif par grume"/>
+		<text name="ui_global_pricePerBale" text="Tarif par balle"/>
+		<text name="ui_global_pricePerPallet" text="Tarif par palette"/>
+		<text name="ui_global_minLogLength" text="Longueur min. des grumes"/>
 		
-		<text name="ui_global_tooltip_showDebug" text="Show the full graphical debugging display for all vehicles in game"/>
-		<text name="ui_global_tooltip_highPriority" text="Apply high priority to all UAL key bindings in the F1 menu"/>
-		<text name="ui_global_tooltip_disableAutoStrap" text="Disable the automatic application of tension belts"/>
-		<text name="ui_global_tooltip_pricePerLog" text="The price charged for each auto-loaded log"/>
-		<text name="ui_global_tooltip_pricePerBale" text="The price charged for each auto-loaded bale"/>
-		<text name="ui_global_tooltip_pricePerPallet" text="The price charged for each auto-loaded pallet"/>
-		<text name="ui_global_tooltip_minLogLength" text="The global minimum length for logs that will be autoloaded"/>
+		<text name="ui_global_tooltip_showDebug" text="Afficher les infos complètes de débogage pour tous les véhicules du jeu"/>
+		<text name="ui_global_tooltip_highPriority" text="Appliquer une priorité élevée à toutes les combinaisons de touches du mod dans le menu F1"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="Ne pas mettre les sangles automatiquement sur la cargaison"/>
+		<text name="ui_global_tooltip_pricePerLog" text="Le montant facturé pour chaque grume chargée automatiquement"/>
+		<text name="ui_global_tooltip_pricePerBale" text="Le montant facturé pour chaque balle chargée automatiquement"/>
+		<text name="ui_global_tooltip_pricePerPallet" text="Le montant facturé pour chaque palette chargée automatiquement"/>
+		<text name="ui_global_tooltip_minLogLength" text="La longueur minimale des grumes qui seront chargées automatiquement"/>
 
 		<!-- OPTIONS -->
-		<text name="ui_option_enableAutoload" text="Enable Autoload"/>
-		<text name="ui_option_trailerType" text="Trailer Type"/>
-		<text name="ui_option_unloadingType" text="Unloading Position"/>
-		<text name="ui_option_rearOnly" text="Rear Only"/>
-		<text name="ui_option_frontOnly" text="Front Only"/>
+		<text name="ui_option_enableAutoload" text="Autoriser le chargement automatique"/>
+		<text name="ui_option_trailerType" text="Type de remorque"/>
+		<text name="ui_option_unloadingType" text="Position de déchargement"/>
+		<text name="ui_option_rearOnly" text="Arrière seulement"/>
+		<text name="ui_option_frontOnly" text="Avant seulement"/>
 		
-		<text name="ui_option_noLoadingFolded" text="No Loading If Folded"/>
-		<text name="ui_option_folded" text="Folded"/>
-		<text name="ui_option_unfolded" text="Unfolded"/>
+		<text name="ui_option_noLoadingFolded" text="Pas de chargement si replié"/>
+		<text name="ui_option_folded" text="Replié"/>
+		<text name="ui_option_unfolded" text="Déployé"/>
 		
-		<text name="ui_option_noLoadingCovered" text="No Loading If Covered"/>
-		<text name="ui_option_covered" text="Covered"/>
-		<text name="ui_option_uncovered" text="Uncovered"/>
+		<text name="ui_option_noLoadingCovered" text="Pas de chargement si bâché"/>
+		<text name="ui_option_covered" text="Bâché"/>
+		<text name="ui_option_uncovered" text="Bâche retirée"/>
 
-		<text name="ui_option_isBoxTrailer" text="Box Trailer"/>
-		<text name="ui_option_isLogTrailer" text="Log Trailer"/>
-		<text name="ui_option_isBaleTrailer" text="Bale Trailer"/>
-		<text name="ui_option_isBaleProcessor" text="Bale Processor"/>
-		<text name="ui_option_isCurtainTrailer" text="Curtain Trailer"/>
-		<text name="ui_option_enableRearLoading" text="Enable Rear Loading"/>
-		<text name="ui_option_enableSideLoading" text="Enable Side Loading"/>
+		<text name="ui_option_isBoxTrailer" text="Remorque à marchandises"/>
+		<text name="ui_option_isLogTrailer" text="Remorque à bois"/>
+		<text name="ui_option_isBaleTrailer" text="Remorque à balles"/>
+		<text name="ui_option_isBaleProcessor" text="Processeur à balles"/>
+		<text name="ui_option_isCurtainTrailer" text="Remorque à rideaux"/>
+		<text name="ui_option_enableRearLoading" text="Autoriser le chargement par l'arrière"/>
+		<text name="ui_option_enableSideLoading" text="Autoriser le chargement par les côtés"/>
 
-		<text name="ui_option_rearUnloadingOnly" text="Rear Unloading Only"/>
-		<text name="ui_option_frontUnloadingOnly" text="Front Unloading Only"/>
-		<text name="ui_option_horizontalLoading" text="Horizontal Loading"/>
-		<text name="ui_option_disableAutoStrap" text="Automatic Tension Belts"/>
-		<text name="ui_option_disableHeightLimit" text="Limit Stacking Height"/>
-		<text name="ui_option_zonesOverlap" text="Zones Overlap"/>
-		<text name="ui_option_offsetRoot" text="Offset Root"/>
-		<text name="ui_option_minLogLength" text="Min Log Length"/>
+		<text name="ui_option_rearUnloadingOnly" text="Déchargement arrière seulement"/>
+		<text name="ui_option_frontUnloadingOnly" text="Déchargement avant seulement"/>
+		<text name="ui_option_horizontalLoading" text="Chargement horizontal"/>
+		<text name="ui_option_disableAutoStrap" text="Sangles de serrage automatiques"/>
+		<text name="ui_option_disableHeightLimit" text="Hauteur limite d'empilement"/>
+		<text name="ui_option_zonesOverlap" text="Chevauchement des zones"/>
+		<text name="ui_option_offsetRoot" text="Noeud de décalage"/>
+		<text name="ui_option_minLogLength" text="Long. min. des grumes"/>
 		
-		<text name="ui_option_tooltip_enableAutoload" text="If Autoload is enabled or disabled for this vehicle"/>
-		<text name="ui_option_tooltip_trailerType" text="The special type of trailer, e.g. bale, log, curtain"/>
-		<text name="ui_option_tooltip_unloadingType" text="Use a special unloading position (front or rear)"/>
-		<text name="ui_option_tooltip_noLoadingFolded" text="Prevent loading when either folded or unfolded"/>
-		<text name="ui_option_tooltip_noLoadingCovered" text="Prevent loading when either covered or uncovered"/>
+		<text name="ui_option_tooltip_enableAutoload" text="Si l'autochargement est activé ou désactivé pour ce véhicule"/>
+		<text name="ui_option_tooltip_trailerType" text="Le type spécial de remorque, ex : à balles, à bois, à rideaux"/>
+		<text name="ui_option_tooltip_unloadingType" text="Utilise une position spéciale pour décharger (avant ou arrière)"/>
+		<text name="ui_option_tooltip_noLoadingFolded" text="Empêche le chargement si l'équipement est replié ou déployé"/>
+		<text name="ui_option_tooltip_noLoadingCovered" text="Empêche le chargement si l'équipement est bâché ou si la bâche est retirée"/>
 		
-		<text name="ui_option_tooltip_isBoxTrailer" text="If trailer is enclosed with a rear door"/>
-		<text name="ui_option_tooltip_isLogTrailer" text="If trailer is a logging trailer - will load only logs dropped from above"/>
-		<text name="ui_option_tooltip_isBaleTrailer" text="If trailer should use an automatic bale collection mode"/>	
-		<text name="ui_option_tooltip_isBaleProcessor" text="If trailer should consume bales (e.g. TMR Mixer or Straw Blower)"/>
-		<text name="ui_option_tooltip_isCurtainTrailer" text="Automatically detect the available load side (if the trailer has curtain sides)"/>
-		<text name="ui_option_tooltip_enableRearLoading" text="Use the automatic rear loading trigger"/>
-		<text name="ui_option_tooltip_enableSideLoading" text="Use the automatic side loading triggers"/>
+		<text name="ui_option_tooltip_isBoxTrailer" text="Si la remorque possède une porte arrière"/>
+		<text name="ui_option_tooltip_isLogTrailer" text="S'il s'agit d'une remorque à bois - chargera les grumes par le dessus uniquement"/>
+		<text name="ui_option_tooltip_isBaleTrailer" text="Si la remorque devrait comporter un mode de ramassage automatique des balles"/>	
+		<text name="ui_option_tooltip_isBaleProcessor" text="Si la remorque devrait consommer des balles (ex : pailleuse ou mélangeuse à RTM)"/>
+		<text name="ui_option_tooltip_isCurtainTrailer" text="Détecte automatiquement les côtés de chargement disponibles (si la remorque est munie de rideaux latéraux)"/>
+		<text name="ui_option_tooltip_enableRearLoading" text="Utilise la trigger arrière de chargement automatique"/>
+		<text name="ui_option_tooltip_enableSideLoading" text="Utilise les triggers latérales de chargement automatique"/>
 
-		<text name="ui_option_tooltip_rearUnloadingOnly" text="Use rear unloading zone only (no side zones)"/>
-		<text name="ui_option_tooltip_frontUnloadingOnly" text="Use front unloading zone only (no side zones)"/>
-		<text name="ui_option_tooltip_horizontalLoading" text="Start with horizontal loading enabled (can be toggled if key is bound)"/>
-		<text name="ui_option_tooltip_disableAutoStrap" text="Automatic application of tension belts after loading or unloading"/>
-		<text name="ui_option_tooltip_disableHeightLimit" text="Limit the height of pallet stacking based on density "/>
-		<text name="ui_option_tooltip_zonesOverlap" text="Flag to identify when the loading areas overlap each other"/>
-		<text name="ui_option_tooltip_offsetRoot" text="Vehicle i3d node that area offsets are relative to"/>
-		<text name="ui_option_tooltip_minLogLength" text="The minimum length for logs that will be autoloaded"/>
+		<text name="ui_option_tooltip_rearUnloadingOnly" text="Utilise uniquement la zone de déchargement arrière (pas de zones latérales)"/>
+		<text name="ui_option_tooltip_frontUnloadingOnly" text="Utilise uniquement la zone de déchargement avant (pas de zones latérales)"/>
+		<text name="ui_option_tooltip_horizontalLoading" text="Démarre avec le chargement horizontal activé (peut être modifié si une touche lui a été assignée)"/>
+		<text name="ui_option_tooltip_disableAutoStrap" text="Désactive l'attachement/désatachement automatique des sangles de serrage"/>
+		<text name="ui_option_tooltip_disableHeightLimit" text="Désactive la limite de hauteur d'empilement basée sur la densité"/>
+		<text name="ui_option_tooltip_zonesOverlap" text="Avertissement pour identifier lorsque les zones de chargement se chevauchent"/>
+		<text name="ui_option_tooltip_offsetRoot" text="Noeud i3d du véhicule auquel les décalages de zone sont relatifs"/>
+		<text name="ui_option_tooltip_minLogLength" text="La longueur minimale des grumes qui seront chargées automatiquement"/>
 
 		<!-- LOADING_AREA -->
-		<text name="ui_loadArea_offset" text="Offset"/>
-		<text name="ui_loadArea_offsetRoot" text="Offset Root"/>
-		<text name="ui_loadArea_width" text="Width"/>
-		<text name="ui_loadArea_length" text="Length"/>
-		<text name="ui_loadArea_height" text="Height"/>
-		<text name="ui_loadArea_baleHeight" text="Bale Height"/>
-		<text name="ui_loadArea_widthAxis" text="Width Axis"/>
-		<text name="ui_loadArea_lengthAxis" text="Length Axis"/>
-		<text name="ui_loadArea_heightAxis" text="Height Axis"/>
-		<text name="ui_loadArea_offsetFrontAxis" text="Offset Front Axis"/>
-		<text name="ui_loadArea_offsetRearAxis" text="Offset Rear Axis"/>
-		<text name="ui_loadArea_reverseWidthAxis" text="Reverse Width Axis"/>
-		<text name="ui_loadArea_reverseLengthAxis" text="Reverse Length Axis"/>
-		<text name="ui_loadArea_reverseHeightAxis" text="Reverse Height Axis"/>
-		<text name="ui_loadArea_noLoadingIfFolded" text="No Loading If Folded"/>
-		<text name="ui_loadArea_noLoadingIfUnfolded" text="No Loading If Unfolded"/>
-		<text name="ui_loadArea_noLoadingIfCovered" text="No Loading If Covered"/>
-		<text name="ui_loadArea_noLoadingIfUncovered" text="No Loading If Uncovered"/>
+		<text name="ui_loadArea_offset" text="Décalage"/>
+		<text name="ui_loadArea_offsetRoot" text="Noeud de décalage"/>
+		<text name="ui_loadArea_width" text="Largeur"/>
+		<text name="ui_loadArea_length" text="Longueur"/>
+		<text name="ui_loadArea_height" text="Hauteur"/>
+		<text name="ui_loadArea_baleHeight" text="Hauteur des balles"/>
+		<text name="ui_loadArea_widthAxis" text="Axe transversal"/>
+		<text name="ui_loadArea_lengthAxis" text="Axe longitudinal"/>
+		<text name="ui_loadArea_heightAxis" text="Axe vertical"/>
+		<text name="ui_loadArea_offsetFrontAxis" text="Axe de décalage avant"/>
+		<text name="ui_loadArea_offsetRearAxis" text="Axe de décalage arrière"/>
+		<text name="ui_loadArea_reverseWidthAxis" text="Inverser l'axe transversal"/>
+		<text name="ui_loadArea_reverseLengthAxis" text="Inverser l'axe longitudinal"/>
+		<text name="ui_loadArea_reverseHeightAxis" text="Inverser l'axe vertical"/>
+		<text name="ui_loadArea_noLoadingIfFolded" text="Pas de chargement si replié"/>
+		<text name="ui_loadArea_noLoadingIfUnfolded" text="Pas de chargement si déployé"/>
+		<text name="ui_loadArea_noLoadingIfCovered" text="Pas de chargement si bâché"/>
+		<text name="ui_loadArea_noLoadingIfUncovered" text="Pas de chargement si bâche retirée"/>
 		
-		<text name="ui_loadArea_tooltip_offset" text="Offset to the centre of the loading area"/>
-		<text name="ui_loadArea_tooltip_offsetRoot" text="Vehicle i3d node that this area offset is relative to"/>
-		<text name="ui_loadArea_tooltip_width" text="Width of the loading area"/>
-		<text name="ui_loadArea_tooltip_length" text="Length of the loading area"/>
-		<text name="ui_loadArea_tooltip_height" text="Height of the loading area"/>
-		<text name="ui_loadArea_tooltip_baleHeight" text="Height of the loading area for BALES only"/>
-		<text name="ui_loadArea_tooltip_widthAxis" text="Axis name to extend width of the loading area"/>
-		<text name="ui_loadArea_tooltip_lengthAxis" text="Axis name to extend length of the loading area"/>
-		<text name="ui_loadArea_tooltip_heightAxis" text="Axis name to extend height of the loading area"/>
-		<text name="ui_loadArea_tooltip_offsetFrontAxis" text="Axis name to adjust the front position of the loading area"/>
-		<text name="ui_loadArea_tooltip_offsetRearAxis" text="Axis name to adjust the rear position of the loading area"/>
-		<text name="ui_loadArea_tooltip_reverseWidthAxis" text="Reverses direction of width extension if true"/>
-		<text name="ui_loadArea_tooltip_reverseLengthAxis" text="Reverses direction of length extension if true"/>
-		<text name="ui_loadArea_tooltip_reverseHeightAxis" text="Reverses direction of height extension if true"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfFolded" text="Prevent loading when folded (for this area only)"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfUnfolded" text="Prevent loading when unfolded (for this area only)"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfCovered" text="Prevent loading when covered (for this area only)"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Prevent loading when uncovered (for this area only)"/>
+		<text name="ui_loadArea_tooltip_offset" text="Décalage par rapport au centre de la zone de chargement"/>
+		<text name="ui_loadArea_tooltip_offsetRoot" text="Noeud i3d du véhicule auquel ce décalage de zone est relatif"/>
+		<text name="ui_loadArea_tooltip_width" text="Largeur de la zone de chargement"/>
+		<text name="ui_loadArea_tooltip_length" text="Longueur de la zone de chargement"/>
+		<text name="ui_loadArea_tooltip_height" text="Hauteur de la zone de chargement"/>
+		<text name="ui_loadArea_tooltip_baleHeight" text="Hauteur de la zone de chargement pour BALLES uniquement"/>
+		<text name="ui_loadArea_tooltip_widthAxis" text="Nom de l'axe pour étendre la largeur de la zone de chargement"/>
+		<text name="ui_loadArea_tooltip_lengthAxis" text="Nom de l'axe pour étendre la longueur de la zone de chargement"/>
+		<text name="ui_loadArea_tooltip_heightAxis" text="Nom de l'axe pour étendre la hauteur de la zone de chargement"/>
+		<text name="ui_loadArea_tooltip_offsetFrontAxis" text="Nom de l'axe pour ajuster la position avant de la zone de chargement"/>
+		<text name="ui_loadArea_tooltip_offsetRearAxis" text="Nom de l'axe pour ajuster la position arrière de la zone de chargement"/>
+		<text name="ui_loadArea_tooltip_reverseWidthAxis" text="Inverse le sens de l'extension de la largeur si c'est vrai"/>
+		<text name="ui_loadArea_tooltip_reverseLengthAxis" text="Inverse le sens de l'extension de la longueur si c'est vrai"/>
+		<text name="ui_loadArea_tooltip_reverseHeightAxis" text="Inverse le sens de l'extension de la hauteur si c'est vrai"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfFolded" text="Empêche le chargement si replié (pour cette zone uniquement)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfUnfolded" text="Empêche le chargement si déployé (pour cette zone uniquement)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfCovered" text="Empêche le chargement si bâché (pour cette zone uniquement)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Empêche le chargement si bâche retirée (pour cette zone uniquement)"/>
 
 		<!-- KEY BINDINGS -->
-		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Open configuration settings menu (in shop)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Enable editing of loading volume (in shop)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Ouvrir le menu des paramètres de configuration (dans la boutique)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Activer la modification du volume de chargement (dans la boutique)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Activer/désactiver le chargement"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Activer/désactiver le mode de collecte automatique des balles"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" text="Activer/désactiver le mode de collecte automatique"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Décharger"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Forcer le déchargement"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Choix du côté actif"/>
@@ -155,7 +155,7 @@
 		<text name="universalAutoload_left" text="Gauche"/>
 		<text name="universalAutoload_right" text="Droite"/>
 		<text name="universalAutoload_none" text="Aucun"/>
-		<text name="universalAutoload_loadingFilter" text="Filtre de chargement"/>
+		<text name="universalAutoload_loadingFilter" text="Filtre"/>
 		<text name="universalAutoload_loadingMethod" text="Méthode de chargement"/>
 		<text name="universalAutoload_layer" text="Couche"/>
 		<text name="universalAutoload_stack" text="Pile"/>
@@ -165,7 +165,9 @@
 		<text name="universalAutoload_stopLoading" text="Arrêter le chargement"/>
 		<text name="universalAutoload_unloadAll" text="Décharger"/>
 		<text name="universalAutoload_unloadAllForce" text="Forcer le déchargement"/>
-		<text name="universalAutoload_baleMode" text="Mode Auto-Balles"/>
+		<text name="universalAutoload_baleMode" text="Mode Balles"/>
+		<text name="universalAutoload_palletMode" text="Mode Palette"/>
+		<text name="universalAutoload_collectionMode" text="Mode Collecte"/>
 		<text name="universalAutoload_enabled" text="Activé"/>
 		<text name="universalAutoload_disabled" text="Désactivé"/>
 		<text name="universalAutoload_activate" text="Activer"/>

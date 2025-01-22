@@ -127,7 +127,7 @@
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Otevřít nabídku nastavení konfigurace (v obchodě)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Povolit úpravy objemu nákladu (v obchodě)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Přepnout nakládku"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Režim automatického sběru balíků"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" text="Režim automatického sběru"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Vyložit"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Nuceně vyložit"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Přepnout stranu vykládky"/>
@@ -165,7 +165,9 @@
 		<text name="universalAutoload_stopLoading" text="Zastavit nakládku"/>
 		<text name="universalAutoload_unloadAll" text="Vyložit"/>
 		<text name="universalAutoload_unloadAllForce" text="Nuceně vyložit"/>
-		<text name="universalAutoload_baleMode" text="Automatický sběr balíků"/>
+		<text name="universalAutoload_baleMode" text="Režim balíků"/>
+		<text name="universalAutoload_palletMode" text="Režim palet"/>
+		<text name="universalAutoload_collectionMode" text="Režim sběru"/>
 		<text name="universalAutoload_enabled" text="Povolen"/>
 		<text name="universalAutoload_disabled" text="Zakázán"/>
 		<text name="universalAutoload_activate" text="Aktivace"/>

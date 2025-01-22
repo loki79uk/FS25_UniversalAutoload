@@ -127,7 +127,7 @@
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Open configuration settings menu (in shop)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Enable editing of loading volume (in shop)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Laden umschalten"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Automatischer Ballensammel-Modus"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" text="Automatischer Sammelmodus"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Abladen"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Abladen erzwingen"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Aktive Entladeseite umschalten"/>
@@ -165,7 +165,9 @@
 		<text name="universalAutoload_stopLoading" text="Laden stoppen"/>
 		<text name="universalAutoload_unloadAll" text="Abladen"/>
 		<text name="universalAutoload_unloadAllForce" text="Abladen erzwingen"/>
-		<text name="universalAutoload_baleMode" text="Auto-Ballen-Modus"/>
+		<text name="universalAutoload_baleMode" text="Ballen-Modus"/>
+		<text name="universalAutoload_palletMode" text="Pallet-Modus"/>
+		<text name="universalAutoload_collectionMode" text="Sammel-Modus"/>
 		<text name="universalAutoload_enabled" text="Aktiviert"/>
 		<text name="universalAutoload_disabled" text="Deaktiviert"/>
 		<text name="universalAutoload_activate" text="Aktivieren"/>

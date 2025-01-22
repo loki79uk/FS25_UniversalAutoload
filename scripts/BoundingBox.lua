@@ -165,7 +165,7 @@ function BoundingBox:isEmpty(delta, drawAll)
 				local object = g_currentMission:getNodeObject(nodeId)
 				if object ~= nil then
 					print("--- testLocationOverlap - OTHER ---")
-					DebugUtil.drawDebugNode(nodeId, getName(nodeId))
+					-- DebugUtil.drawDebugNode(nodeId, getName(nodeId))
 					target.isVolumeEmpty = false
 				end
 			end
@@ -185,7 +185,7 @@ function BoundingBox:isEmpty(delta, drawAll)
 
 	local collisionMask = CollisionFlag.VEHICLE + CollisionFlag.DYNAMIC_OBJECT + CollisionFlag.TREE + CollisionFlag.PLAYER
 	
-	overlapBox(x+dx, y+dy, z+dz, rx, ry, rz, sizeX, sizeY, sizeZ, "testLocationOverlap_Callback", callbackTarget, collisionMask, true, false, true)
+	overlapBox(x+dx, y+dy, z+dz, rx, ry, rz, sizeX, sizeY, sizeZ, "testLocationOverlap_Callback", callbackTarget, collisionMask, true, true, true, true)
 
 	if drawAll then
 		local node, w, h, l, showCube, showAxis = rootNode, size.x, size.y, size.z, true, true
@@ -794,6 +794,23 @@ function BoundingBox:moveFace(pointIndex, delta)
 		local otherPointIndexes = shiftLookup[axis]
 		for _, otherPointIndex in pairs(otherPointIndexes) do
 			self.points[otherPointIndex][axisIndex] = self.points[otherPointIndex][axisIndex] + delta/2
+		end
+	end
+end
+
+function BoundingBox:adjustBoundingBox(original, range, sign, updateFn, delta, sigma)
+	local delta = delta or 0.005
+	local sigma = sigma or 0.001
+	for i = 1, range/delta do
+		local value = sign*i*delta
+		-- print(value)
+		updateFn(original, value)
+		if self:isEmpty() then
+			updateFn(original, value - sigma)
+			print(" ADJUSTED BY " .. value - sigma)
+			break
+		else
+			updateFn(original, 0)
 		end
 	end
 end

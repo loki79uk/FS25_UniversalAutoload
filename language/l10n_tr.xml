@@ -127,7 +127,7 @@
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Open configuration settings menu (in shop)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Enable editing of loading volume (in shop)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Yüklemeyi aç / kapat"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Otomatik Balya Toplama Modu"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" text="Otomatik Toplama Modu"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Boşalt"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Boşalt zorla"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Boşaltma tarafını değiştir"/>
@@ -165,7 +165,9 @@
 		<text name="universalAutoload_stopLoading" text="Yüklemeyi durdur"/>
 		<text name="universalAutoload_unloadAll" text="Boşalt"/>
 		<text name="universalAutoload_unloadAllForce" text="Boşalt zorla"/>
-		<text name="universalAutoload_baleMode" text="Otomatik Balya Modu"/>
+		<text name="universalAutoload_baleMode" text="Bale Modu"/>
+		<text name="universalAutoload_palletMode" text="Palet Modu"/>
+		<text name="universalAutoload_collectionMode" text="Toplama Modu"/>
 		<text name="universalAutoload_enabled" text="Etkin"/>
 		<text name="universalAutoload_disabled" text="Etkin değil"/>
 		<text name="universalAutoload_activate" text="Etkinleştir"/>
