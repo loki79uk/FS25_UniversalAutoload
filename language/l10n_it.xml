@@ -165,6 +165,7 @@
 		<text name="universalAutoload_stopLoading" text="IFerma il caricamento"/>
 		<text name="universalAutoload_unloadAll" text="Scarico"/>
 		<text name="universalAutoload_unloadAllForce" text="Scarico forzato"/>
+		<text name="universalAutoload_logMode" text="Modo Tronchi"/>
 		<text name="universalAutoload_baleMode" text="Modo Balle"/>
 		<text name="universalAutoload_palletMode" text="Modo Pallet"/>
 		<text name="universalAutoload_collectionMode" text="Modo Raccolta"/>

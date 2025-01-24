@@ -165,6 +165,7 @@
 		<text name="universalAutoload_stopLoading" text="Stop loading"/>
 		<text name="universalAutoload_unloadAll" text="Unload"/>
 		<text name="universalAutoload_unloadAllForce" text="Force Unload"/>
+		<text name="universalAutoload_logMode" text="Log Mode"/>
 		<text name="universalAutoload_baleMode" text="Bale Mode"/>
 		<text name="universalAutoload_palletMode" text="Pallet Mode"/>
 		<text name="universalAutoload_collectionMode" text="Collection Mode"/>

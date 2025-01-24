@@ -165,6 +165,7 @@
 		<text name="universalAutoload_stopLoading" text="Arrêter le chargement"/>
 		<text name="universalAutoload_unloadAll" text="Décharger"/>
 		<text name="universalAutoload_unloadAllForce" text="Forcer le déchargement"/>
+		<text name="universalAutoload_logMode" text="Mode Tronc"/>
 		<text name="universalAutoload_baleMode" text="Mode Balles"/>
 		<text name="universalAutoload_palletMode" text="Mode Palette"/>
 		<text name="universalAutoload_collectionMode" text="Mode Collecte"/>

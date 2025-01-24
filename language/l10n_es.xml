@@ -165,9 +165,10 @@
 		<text name="universalAutoload_stopLoading" text="Detener carga"/>
 		<text name="universalAutoload_unloadAll" text="Descargar"/>
 		<text name="universalAutoload_unloadAllForce" text="Descargar forzada"/>
-		<text name="universalAutoload_baleMode" text="Modo de fardos"/>
-		<text name="universalAutoload_palletMode" text="Modo de palets"/>
-		<text name="universalAutoload_collectionMode" text="Modo de recolección"/>
+		<text name="universalAutoload_logMode" text="Modo Tronco"/>
+		<text name="universalAutoload_baleMode" text="Modo fardos"/>
+		<text name="universalAutoload_palletMode" text="Modo palets"/>
+		<text name="universalAutoload_collectionMode" text="Modo recolección"/>
 		<text name="universalAutoload_enabled" text="Activado"/>
 		<text name="universalAutoload_disabled" text="Desactivado"/>
 		<text name="universalAutoload_activate" text="Activar"/>

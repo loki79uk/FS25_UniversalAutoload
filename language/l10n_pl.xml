@@ -165,6 +165,7 @@
 		<text name="universalAutoload_stopLoading" text="Zatrzymaj ładowanie"/>
 		<text name="universalAutoload_unloadAll" text="Wyładuj"/>
 		<text name="universalAutoload_unloadAllForce" text="Wymuś wyładunek"/>
+		<text name="universalAutoload_logMode" text="Tryb kłody"/>
 		<text name="universalAutoload_baleMode" text="Tryb beli"/>
 		<text name="universalAutoload_palletMode" text="Tryb palet"/>
 		<text name="universalAutoload_collectionMode" text="Tryb zbierania"/>

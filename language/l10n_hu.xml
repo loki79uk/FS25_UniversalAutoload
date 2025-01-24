@@ -165,6 +165,7 @@
 		<text name="universalAutoload_stopLoading" text="Rakodás befejezése" />
 		<text name="universalAutoload_unloadAll" text="Kirakás" />
 		<text name="universalAutoload_unloadAllForce" text="Kirakás itt" />
+		<text name="universalAutoload_logMode" text="Rönkmód"/>
 		<text name="universalAutoload_baleMode" text="Bálamód"/>
 		<text name="universalAutoload_palletMode" text="Raklapmód"/>
 		<text name="universalAutoload_collectionMode" text="Gyűjtő mód"/>

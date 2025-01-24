@@ -557,7 +557,11 @@ function UniversalAutoload:updateToggleLoadingActionEvent()
 				if spec.baleCollectionActive == true then
 					autoCollectionModeText = g_i18n:getText("universalAutoload_baleMode")
 				elseif spec.baleCollectionActive == false then
-					autoCollectionModeText = g_i18n:getText("universalAutoload_palletMode")
+					if spec.isLogTrailer then
+						autoCollectionModeText = g_i18n:getText("universalAutoload_logMode")
+					else
+						autoCollectionModeText = g_i18n:getText("universalAutoload_palletMode")
+					end
 				end
 				autoCollectionModeText = autoCollectionModeText..": "..g_i18n:getText("universalAutoload_enabled")
 			else
@@ -948,11 +952,11 @@ function UniversalAutoload:setAutoCollectionMode(autoCollectionMode, noEventSend
 			if not spec.trailerIsFull then
 				local balesAvailable = spec.availableBaleCount and spec.availableBaleCount > 0
 				local palletsAvailable = spec.totalAvailableCount and spec.totalAvailableCount > 0
-				if balesAvailable then
+				if balesAvailable and not spec.isLogTrailer then
 					if debugSpecial then print("autoCollectionMode: startLoading (bales)") end
 					spec.baleCollectionActive = true
 				elseif palletsAvailable then
-					if debugSpecial then print("autoCollectionMode: startLoading (pallets)") end
+					if debugSpecial then print("autoCollectionMode: startLoading (pallets/logs)") end
 					spec.baleCollectionActive = false
 				else
 					if debugSpecial then print("autoCollectionMode: startLoading (unknown)") end
@@ -1179,7 +1183,9 @@ function UniversalAutoload:resetLoadingState(noEventSend)
 	
 	if self.isServer then
 		if spec.doSetTensionBelts and not spec.baleCollectionActive and UniversalAutoload.isUsingAutoStrap(self) then
-			self:setAllTensionBeltsActive(true)
+			if spec.totalUnloadCount > 0 then
+				self:setAllTensionBeltsActive(true)
+			end
 		end
 		spec.postLoadDelayTime = 0
 	end
@@ -2656,8 +2662,10 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 				end
 				if UniversalAutoload.isUsingAutoStrap(self) then
 					self:setAllTensionBeltsActive(false)
-					spec.doSetTensionBelts = true
-					spec.doPostLoadDelay = true
+					if spec.totalUnloadCount > 0 then
+						spec.doSetTensionBelts = true
+						spec.doPostLoadDelay = true
+					end
 				end
 				UniversalAutoload.updateActionEventText(self)
 			end
@@ -3963,8 +3971,9 @@ function UniversalAutoload:getIsUnloadingKeyAllowed()
 		return
 	end
 	
-	if spec.doPostLoadDelay or spec.isLoading or spec.isUnloading
-	or spec.validUnloadCount == 0 or spec.currentTipside == "none" then
+	if (spec.doPostLoadDelay or spec.isLoading or spec.isUnloading
+	or spec.validUnloadCount == 0 or spec.currentTipside == "none")
+	and not spec.autoCollectionMode == true	then
 		return false
 	end
 	if spec.isBoxTrailer and spec.noLoadingIfFolded and (self:ualGetIsFolding() or not self:getIsUnfolded()) then
@@ -4746,11 +4755,11 @@ function UniversalAutoload:addAvailableObject(object)
 		end
 				
 		if spec.autoCollectionMode and spec.baleCollectionActive == nil then
-			if object.isRoundbale ~= nil then
+			if object.isRoundbale ~= nil and not spec.isLogTrailer then
 				print("FOUND A BALE - set bale collection mode")
 				spec.baleCollectionActive = true
 			else
-				print("FOUND A PALLET - set pallet collection mode")
+				print("FOUND A PALLET/LOG - set collection mode")
 				spec.baleCollectionActive = false
 			end
 		end

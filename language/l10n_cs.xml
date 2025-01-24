@@ -167,6 +167,7 @@
 		<text name="universalAutoload_stopLoading" text="停止装载"/>
 		<text name="universalAutoload_unloadAll" text="卸载"/>
 		<text name="universalAutoload_unloadAllForce" text="强制卸货"/>
+		<text name="universalAutoload_logMode" text="原木模式"/>
 		<text name="universalAutoload_baleMode" text="捡包模式"/>
 		<text name="universalAutoload_palletMode" text="托盘模式"/>
 		<text name="universalAutoload_collectionMode" text="收集模式"/>

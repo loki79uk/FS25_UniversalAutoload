@@ -165,6 +165,7 @@
 		<text name="universalAutoload_stopLoading" text="Zastavit nakládku"/>
 		<text name="universalAutoload_unloadAll" text="Vyložit"/>
 		<text name="universalAutoload_unloadAllForce" text="Nuceně vyložit"/>
+		<text name="universalAutoload_logMode" text="Režim klád"/>
 		<text name="universalAutoload_baleMode" text="Režim balíků"/>
 		<text name="universalAutoload_palletMode" text="Režim palet"/>
 		<text name="universalAutoload_collectionMode" text="Režim sběru"/>

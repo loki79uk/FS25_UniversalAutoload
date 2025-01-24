@@ -165,6 +165,7 @@
 		<text name="universalAutoload_stopLoading" text="Stop læsning"/>
 		<text name="universalAutoload_unloadAll" text="Aflæsning"/>
 		<text name="universalAutoload_unloadAllForce" text="Tving aflæsning"/>
+		<text name="universalAutoload_logMode" text="Træstammemodus"/>
 		<text name="universalAutoload_baleMode" text="Ballelåg"/>
 		<text name="universalAutoload_palletMode" text="Pallereg"/>
 		<text name="universalAutoload_collectionMode" text="Indsamlingsmode"/>

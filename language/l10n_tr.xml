@@ -165,6 +165,7 @@
 		<text name="universalAutoload_stopLoading" text="Yüklemeyi durdur"/>
 		<text name="universalAutoload_unloadAll" text="Boşalt"/>
 		<text name="universalAutoload_unloadAllForce" text="Boşalt zorla"/>
+		<text name="universalAutoload_logMode" text="Kütük Modu"/>
 		<text name="universalAutoload_baleMode" text="Bale Modu"/>
 		<text name="universalAutoload_palletMode" text="Palet Modu"/>
 		<text name="universalAutoload_collectionMode" text="Toplama Modu"/>

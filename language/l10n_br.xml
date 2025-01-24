@@ -165,6 +165,7 @@
 		<text name="universalAutoload_stopLoading" text="Parar carregamento"/>
 		<text name="universalAutoload_unloadAll" text="Descarregar"/>
 		<text name="universalAutoload_unloadAllForce" text="Forçar descarregamento"/>
+		<text name="universalAutoload_logMode" text="Modo de toras"/>
 		<text name="universalAutoload_baleMode" text="Modo de fardos"/>
 		<text name="universalAutoload_palletMode" text="Modo de paletes"/>
 		<text name="universalAutoload_collectionMode" text="Modo de coleta"/>

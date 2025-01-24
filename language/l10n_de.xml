@@ -165,6 +165,7 @@
 		<text name="universalAutoload_stopLoading" text="Laden stoppen"/>
 		<text name="universalAutoload_unloadAll" text="Abladen"/>
 		<text name="universalAutoload_unloadAllForce" text="Abladen erzwingen"/>
+		<text name="universalAutoload_logMode" text="Stämme-Modus"/>
 		<text name="universalAutoload_baleMode" text="Ballen-Modus"/>
 		<text name="universalAutoload_palletMode" text="Pallet-Modus"/>
 		<text name="universalAutoload_collectionMode" text="Sammel-Modus"/>

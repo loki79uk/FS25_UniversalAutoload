@@ -165,6 +165,7 @@
 		<text name="universalAutoload_stopLoading" text="Зупинити завантаження"/>
 		<text name="universalAutoload_unloadAll" text="Вивантажити"/>
 		<text name="universalAutoload_unloadAllForce" text="Примусове вивантаження"/>
+		<text name="universalAutoload_logMode" text="Режим колод"/>
 		<text name="universalAutoload_baleMode" text="Режим Тюків"/>
 		<text name="universalAutoload_palletMode" text="Режим Піддонів"/>
 		<text name="universalAutoload_collectionMode" text="Режим Збирання"/>

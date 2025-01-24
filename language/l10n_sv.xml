@@ -165,6 +165,7 @@
 		<text name="universalAutoload_stopLoading" text="Stoppa Lastning"/>
 		<text name="universalAutoload_unloadAll" text="Lossa"/>
 		<text name="universalAutoload_unloadAllForce" text="Tvångsavlastning"/>
+		<text name="universalAutoload_logMode" text="Trästocksläge"/>
 		<text name="universalAutoload_baleMode" text="Balleläge"/>
 		<text name="universalAutoload_palletMode" text="Pallläge"/>
 		<text name="universalAutoload_collectionMode" text="Insamlingsläge"/>
