@@ -1014,7 +1014,7 @@ function UniversalAutoload:createSortedObjectsToLoad(availableObjects)
 	local spec = self.spec_universalAutoload
 	
 	sortedObjectsToLoad = {}
-	if not spec.loadArea then
+	if not spec.loadArea or #spec.loadArea == 0 then
 		return sortedObjectsToLoad
 	end
 	
@@ -1556,8 +1556,10 @@ function UniversalAutoload:onLoad(savegame)
 	if UniversalAutoloadManager.getIsValidForAutoload(self) then
 		if UniversalAutoloadManager.handleNewVehicleCreation(self) then
 			print(self:getFullName() .. ": UAL ACTIVATED")
+			spec.autoloadDisabled = false
 		else
 			print(self:getFullName() .. ": UAL SETTINGS NOT ADDED")
+			spec.autoloadDisabled = true
 		end
 		spec.isAutoloadAvailable = true
 		UniversalAutoloadManager.onValidUalShopVehicle(self)
@@ -4070,8 +4072,8 @@ function UniversalAutoload:getIsLoadingAreaAllowed(i)
 		if debugVehicles then print(self:getFullName() .. ": UAL DISABLED - getIsLoadingAreaAllowed") end
 		return false
 	end
-	
-	if not spec.loadArea then
+
+	if not spec.loadArea or #spec.loadArea == 0 then
 		return false
 	end
 	
@@ -4183,6 +4185,10 @@ function UniversalAutoload:testLoadAreaIsEmpty()
 	local spec = self.spec_universalAutoload
 	local i = spec.currentLoadAreaIndex or 1
 	
+	if not spec.loadArea or #spec.loadArea == 0 then
+		return false
+	end
+	
 	local sizeX, sizeY, sizeZ = spec.loadArea[i].width/2, spec.loadArea[i].height/2, spec.loadArea[i].length/2
 	local x, y, z = localToWorld(spec.loadArea[i].rootNode, 0, 0, 0)
 	local rx, ry, rz = getWorldRotation(spec.loadArea[i].rootNode)
@@ -4255,6 +4261,9 @@ function UniversalAutoload:testLocation(loadPlace)
 	local rx, ry, rz
 	local dx, dy, dz
 	if loadPlace == nil then
+		if not spec.loadArea or #spec.loadArea == 0 then
+			return
+		end
 		sizeX, sizeY, sizeZ = spec.loadArea[i].width/2, spec.loadArea[i].height/2, spec.loadArea[i].length/2
 		x, y, z = localToWorld(spec.loadArea[i].rootNode, 0, 0, 0)
 		rx, ry, rz = getWorldRotation(spec.loadArea[i].rootNode)
