@@ -1574,7 +1574,8 @@ function UniversalAutoloadManager.handleNewVehicleCreation(vehicle)
 		return configurationAdded
 		
 	elseif vehicle.propertyState == VehiclePropertyState.OWNED
-		or vehicle.propertyState == VehiclePropertyState.LEASED then
+		or vehicle.propertyState == VehiclePropertyState.LEASED
+		or vehicle.propertyState == VehiclePropertyState.MISSION then
 		print("CREATE REAL VEHICLE: " .. vehicle:getFullName())
 		spec.isInsideShop = false
 		return configurationAdded
