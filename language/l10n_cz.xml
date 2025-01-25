@@ -15,7 +15,7 @@
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Zobrazit ladění"/>
 		<text name="ui_global_highPriority" text="Vysoká priorita"/>
-		<text name="ui_global_disableAutoStrap" text="Zakázat automatické kurtování"/>
+		<text name="ui_global_disableAutoStrap" text="Automatické upínací řemeny"/>
 		<text name="ui_global_pricePerLog" text="Cena za kmen"/>
 		<text name="ui_global_pricePerBale" text="Cena za balík"/>
 		<text name="ui_global_pricePerPallet" text="Cena za paletu"/>
@@ -23,7 +23,7 @@
 		
 		<text name="ui_global_tooltip_showDebug" text="Zobrazí úplné grafické zobrazení ladění pro všechna vozidla ve hře"/>
 		<text name="ui_global_tooltip_highPriority" text="Použití vysoké priority pro všechny vazby kláves UAL v nabídce F1"/>
-		<text name="ui_global_tooltip_disableAutoStrap" text="Zakázat automatické použití upínacích řemenů"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="Automatické nasazení upínacích řemenů po nakládce nebo vykládce"/>
 		<text name="ui_global_tooltip_pricePerLog" text="Cena účtovaná za každý automaticky naložený kmen"/>
 		<text name="ui_global_tooltip_pricePerBale" text="Cena účtovaná za každý automaticky naložený balík"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Cena účtovaná za každou automaticky naloženou paletu"/>
@@ -124,6 +124,7 @@
 		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Zabránit nakládání při odkrytí (pouze pro tuto oblast)"/>
 
 		<!-- KEY BINDINGS -->
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Open global settings menu"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Otevřít nabídku nastavení konfigurace (v obchodě)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Povolit úpravy objemu nákladu (v obchodě)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Přepnout nakládku"/>

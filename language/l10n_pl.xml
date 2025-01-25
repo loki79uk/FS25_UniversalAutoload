@@ -124,6 +124,7 @@
 		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Zapobiega ładowaniu, gdy odkryta (tylko dla tego obszaru)"/>
 
 		<!-- KEY BINDINGS -->
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Open global settings menu"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Otwórz menu ustawień konfiguracji (w sklepie)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Włącz edycję strefy załadunku (w sklepie)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Wł/wył ładowanie"/>

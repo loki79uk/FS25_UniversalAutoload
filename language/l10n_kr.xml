@@ -15,7 +15,7 @@
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Show Debug"/>
 		<text name="ui_global_highPriority" text="High Priority"/>
-		<text name="ui_global_disableAutoStrap" text="Disable Auto-Strap"/>
+		<text name="ui_global_disableAutoStrap" text="Automatic Tension Belts"/>
 		<text name="ui_global_pricePerLog" text="Price Per Log"/>
 		<text name="ui_global_pricePerBale" text="Price Per Bale"/>
 		<text name="ui_global_pricePerPallet" text="Price Per Pallet"/>
@@ -23,7 +23,7 @@
 		
 		<text name="ui_global_tooltip_showDebug" text="Show the full graphical debugging display for all vehicles in game"/>
 		<text name="ui_global_tooltip_highPriority" text="Apply high priority to all UAL key bindings in the F1 menu"/>
-		<text name="ui_global_tooltip_disableAutoStrap" text="Disable the automatic application of tension belts"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="Automatic application of tension belts after loading or unloading"/>
 		<text name="ui_global_tooltip_pricePerLog" text="The price charged for each auto-loaded log"/>
 		<text name="ui_global_tooltip_pricePerBale" text="The price charged for each auto-loaded bale"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="The price charged for each auto-loaded pallet"/>
@@ -124,6 +124,7 @@
 		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Prevent loading when uncovered (for this area only)"/>
 
 		<!-- KEY BINDINGS -->
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Open global settings menu"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Open configuration settings menu (in shop)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Enable editing of loading volume (in shop)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Toggle loading"/>

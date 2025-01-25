@@ -15,7 +15,7 @@
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Hibakeresési infók"/>
 		<text name="ui_global_highPriority" text="Magas prioritás"/>
-		<text name="ui_global_disableAutoStrap" text="Automata feszítőövek kikapcsolása"/>
+		<text name="ui_global_disableAutoStrap" text="Automata feszítőövek"/>
 		<text name="ui_global_pricePerLog" text="Ár rönkönként"/>
 		<text name="ui_global_pricePerBale" text="Ár bálánként"/>
 		<text name="ui_global_pricePerPallet" text="Ár raklaponként"/>
@@ -23,7 +23,7 @@
 		
 		<text name="ui_global_tooltip_showDebug" text="Hibakeresési információk megjelenítése az összes járműre"/>
 		<text name="ui_global_tooltip_highPriority" text="Magas prioritás alkalmazása az összes UAL billentyűkombinációra az F1 menüben"/>
-		<text name="ui_global_tooltip_disableAutoStrap" text="Feszítőövek automatikus használatának kikapcsolása"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="Feszítőövek automatikus használata rakodás vagy kirakodás után"/>
 		<text name="ui_global_tooltip_pricePerLog" text="Az automata rakodás ára rönkönként"/>
 		<text name="ui_global_tooltip_pricePerBale" text="Az automata rakodás ára bálánként"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Az automata rakodás ára raklaponként"/>
@@ -124,6 +124,7 @@
 		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Nyitott állapotban nincs rakodás ezen a területen"/>
 
 		<!-- KEY BINDINGS -->
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Open global settings menu"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Beállítási menü megnyitása (a boltban)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Rakodási terület szerkesztésének engedélyezése (a boltban)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Automatikus rakodás" />

@@ -50,7 +50,8 @@ UniversalAutoload.MASK = {}
 UniversalAutoload.MASK.object = CollisionFlag.VEHICLE + CollisionFlag.DYNAMIC_OBJECT + CollisionFlag.TREE
 UniversalAutoload.MASK.everything = UniversalAutoload.MASK.object + CollisionFlag.STATIC_OBJECT + CollisionFlag.PLAYER
 
-InputHelpDisplay.MAX_NUM_ELEMENTS = InputHelpDisplay.MAX_NUM_ELEMENTS_HIGH_PRIORITY
+UniversalAutoload.MAX_NUM_ELEMENTS = InputHelpDisplay.MAX_NUM_ELEMENTS
+UniversalAutoload.MAX_NUM_ELEMENTS_HIGH_PRIORITY = InputHelpDisplay.MAX_NUM_ELEMENTS_HIGH_PRIORITY
 
 -- EVENTS
 source(g_currentModDirectory.."events/CycleContainerEvent.lua")
@@ -273,13 +274,17 @@ function UniversalAutoload:updateActionEventKeys()
 			local triggerAlways = false
 			local startActive = true
 			
-			local topPriority = GS_PRIO_HIGH
-			local midPriority = GS_PRIO_NORMAL
-			local lowPriority = GS_PRIO_LOW
+			local topPriority, midPriority, lowPriority
 			if UniversalAutoload.highPriority == true then
 				topPriority = GS_PRIO_VERY_HIGH
 				midPriority = GS_PRIO_HIGH
 				lowPriority = GS_PRIO_NORMAL
+				InputHelpDisplay.MAX_NUM_ELEMENTS = UniversalAutoload.MAX_NUM_ELEMENTS_HIGH_PRIORITY
+			else
+				topPriority = GS_PRIO_HIGH
+				midPriority = GS_PRIO_NORMAL
+				lowPriority = GS_PRIO_LOW
+				InputHelpDisplay.MAX_NUM_ELEMENTS = UniversalAutoload.MAX_NUM_ELEMENTS
 			end
 
 			local function registerActionEvent(id, event, callback, priority, visible)
@@ -333,6 +338,10 @@ function UniversalAutoload:updateActionEventKeys()
 					end
 				end
 			end
+
+			registerActionEvent('GLOBAL_MENU', 'globalMenuActionEventId', 'actionEventGlobalMenu', lowPriority)
+			globalMenuText = "UAL " .. g_i18n:getText("ui_global_settings_ual")
+			g_inputBinding:setActionEventText(spec.globalMenuActionEventId, globalMenuText)
 			
 			spec.updateToggleLoading = true
 			registerActionEvent('UNLOAD_ALL', 'unloadAllActionEventId', 'actionEventUnloadAll', topPriority, true)
@@ -752,6 +761,14 @@ function UniversalAutoload.actionEventUnloadAll(self, actionName, inputValue, ca
 	local spec = self.spec_universalAutoload
 	print("UNLOAD ALL: "..self:getFullName() .. " (" .. tostring(spec.totalUnloadCount) .. ")")
 	UniversalAutoload.startUnloading(self)
+end
+--
+function UniversalAutoload.actionEventGlobalMenu(self, actionName, inputValue, callbackState, isAnalog)
+	-- print("CALLBACK actionEventGlobalMenu: "..self:getFullName())
+	local spec = self.spec_universalAutoload
+	print("GLOBAL MENU: " .. self:getFullName())
+	UniversalAutoloadManager.globalSettingsMenu:setNewVehicle(self)
+	UniversalAutoloadManager:onOpenGlobalSettingsEvent('UNIVERSALAUTOLOAD_GLOBAL_CONFIG', 1)
 end
 
 -- EVENT FUNCTIONS
@@ -1556,7 +1573,6 @@ function UniversalAutoload:onLoad(savegame)
 	if UniversalAutoloadManager.getIsValidForAutoload(self) then
 		if UniversalAutoloadManager.handleNewVehicleCreation(self) then
 			print(self:getFullName() .. ": UAL ACTIVATED")
-			spec.autoloadDisabled = false
 		else
 			print(self:getFullName() .. ": UAL SETTINGS NOT ADDED")
 			spec.autoloadDisabled = true

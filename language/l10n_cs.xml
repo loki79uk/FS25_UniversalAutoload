@@ -17,7 +17,7 @@
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="显示调试"/>
 		<text name="ui_global_highPriority" text="高优先级"/>
-		<text name="ui_global_disableAutoStrap" text="禁用张紧带"/>
+		<text name="ui_global_disableAutoStrap" text="自动张紧带"/>
 		<text name="ui_global_pricePerLog" text="每根原木的价格"/>
 		<text name="ui_global_pricePerBale" text="每个捆包价格"/>
 		<text name="ui_global_pricePerPallet" text="每个托盘价格"/>
@@ -25,7 +25,7 @@
 		
 		<text name="ui_global_tooltip_showDebug" text="显示游戏中所有车辆的完整图形调试显示"/>
 		<text name="ui_global_tooltip_highPriority" text="对 F1 菜单中的所有 UAL 键绑定应用高优先级"/>
-		<text name="ui_global_tooltip_disableAutoStrap" text="禁用张紧带的自动应用"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="装载或卸载后自动应用张紧带"/>
 		<text name="ui_global_tooltip_pricePerLog" text="每条自动加载原木的收费"/>
 		<text name="ui_global_tooltip_pricePerBale" text="每捆包自动装载货物的收费"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="每个自动装载托盘的收费"/>
@@ -126,6 +126,7 @@
 		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="防止未覆盖时装载(仅适用于此区域)"/>
 
 		<!-- KEY BINDINGS -->
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Open global settings menu"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="打开配置设置菜单(在商店内)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="启用装载量编辑(在商店中)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="切换装载"/>

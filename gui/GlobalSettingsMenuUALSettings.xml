@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<GUI name="globalSettingsUALSettingsFrame" onOpen="onOpen" onClose="onClose" onCreate="onCreate">
+    <GuiElement profile="newLayer"/>
+	<Bitmap profile="dialogFullscreenBg"/>
+
+	<GuiElement profile="fs25_dialogBg" id="dialogElement" size="1600px 900px">
+		<ThreePartBitmap profile="fs25_dialogBgMiddleSmall"/>
+		<ThreePartBitmap profile="fs25_dialogBgTopSmall"/>
+		<ThreePartBitmap profile="fs25_dialogBgBottom"/>
+		<GuiElement profile="fs25_dialogContentContainer">
+			
+			<GuiElement profile="fs25_shopHeaderPanel" position="30px -35px">
+				<Bitmap profile="fs25_menuHeaderIconBg">
+					<Bitmap profile="fs25_menuHeaderIcon" imageSliceId="gui.icon_options_generalSettings2"/>
+				</Bitmap>
+				<Text profile="fs25_menuHeaderTitle" id="guiTitle" text="$l10n_configuration_universalAutoload"/>
+			</GuiElement>
+			
+			<GuiElement profile="fs25_menuContainer">
+				<ScrollingLayout profile="fs25_settingsLayout" id="ualGlobalSettingsLayout">
+				
+					<Text profile="fs25_settingsSectionHeader" name="sectionHeader" text="$l10n_ui_global_settings_ual"/>
+					
+					<!-- ENABLE/DISABLE AutoStrap -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickBinaryOption" id="disableAutoStrapCheckBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_global_tooltip_disableAutoStrap"/>
+						</BinaryOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_global_disableAutoStrap"/>
+					</Bitmap>
+					
+					<!-- ENABLE/DISABLE HighPriority -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickBinaryOption" id="highPriorityCheckBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_global_tooltip_highPriority"/>
+						</BinaryOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_global_highPriority"/>
+					</Bitmap>
+					
+					<!-- ENABLE/DISABLE ShowDebug -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickBinaryOption" id="showDebugCheckBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_global_tooltip_showDebug"/>
+						</BinaryOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_global_showDebug"/>
+					</Bitmap>
+					
+					<!-- <Text profile="fs25_settingsSectionHeader" name="sectionHeader" text="$l10n_ui_vehicle_options_ual"/> -->
+
+				</ScrollingLayout>
+				<Bitmap profile="fs25_settingsTooltipSeparator"/>
+			</GuiElement>
+			
+			<!-- <ThreePartBitmap profile="fs25_sliderDockedBg"> -->
+				<!-- <ThreePartBitmap profile="fs25_sliderDockedBox"> -->
+					<!-- <Slider profile="fs25_sliderDocked" dataElementId="ualGlobalSettingsLayout"/> -->
+				<!-- </ThreePartBitmap> -->
+			<!-- </ThreePartBitmap> -->
+		</GuiElement>
+		
+		<BoxLayout profile="fs25_dialogButtonBox" id="buttonsPanel">
+			<Button profile="buttonBack" id="menuButtonClose" text="$l10n_button_close" onClick="onClickClose"/>
+		</BoxLayout>
+	</GuiElement>
+</GUI>

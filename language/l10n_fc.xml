@@ -15,7 +15,7 @@
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Montrer débogage"/>
 		<text name="ui_global_highPriority" text="Priorité élevée"/>
-		<text name="ui_global_disableAutoStrap" text="Désactiver sangles auto."/>
+		<text name="ui_global_disableAutoStrap" text="Sangles de serrage automatiques"/>
 		<text name="ui_global_pricePerLog" text="Tarif par grume"/>
 		<text name="ui_global_pricePerBale" text="Tarif par balle"/>
 		<text name="ui_global_pricePerPallet" text="Tarif par palette"/>
@@ -23,7 +23,7 @@
 		
 		<text name="ui_global_tooltip_showDebug" text="Afficher les infos complètes de débogage pour tous les véhicules du jeu"/>
 		<text name="ui_global_tooltip_highPriority" text="Appliquer une priorité élevée à toutes les combinaisons de touches du mod dans le menu F1"/>
-		<text name="ui_global_tooltip_disableAutoStrap" text="Ne pas mettre les sangles automatiquement sur la cargaison"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="Désactive l'attachement/désatachement automatique des sangles de serrage"/>
 		<text name="ui_global_tooltip_pricePerLog" text="Le montant facturé pour chaque grume chargée automatiquement"/>
 		<text name="ui_global_tooltip_pricePerBale" text="Le montant facturé pour chaque balle chargée automatiquement"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Le montant facturé pour chaque palette chargée automatiquement"/>
@@ -124,6 +124,7 @@
 		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Empêche le chargement si bâche retirée (pour cette zone uniquement)"/>
 
 		<!-- KEY BINDINGS -->
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Open global settings menu"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Ouvrir le menu des paramètres de configuration (dans la boutique)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Activer la modification du volume de chargement (dans la boutique)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Activer le chargement"/>

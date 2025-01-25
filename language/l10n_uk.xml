@@ -15,7 +15,7 @@
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Показати Налагодження"/>
 		<text name="ui_global_highPriority" text="Високий Пріоритет"/>
-		<text name="ui_global_disableAutoStrap" text="Вимкнути Автоматичні Ремені"/>
+		<text name="ui_global_disableAutoStrap" text="Автоматичні Натяжні Ремені"/>
 		<text name="ui_global_pricePerLog" text="Ціна за Колоду"/>
 		<text name="ui_global_pricePerBale" text="Ціна за Тюк"/>
 		<text name="ui_global_pricePerPallet" text="Ціна за Піддон"/>
@@ -23,7 +23,7 @@
 		
 		<text name="ui_global_tooltip_showDebug" text="Показати повний графічний дисплей налагодження для всіх транспортних засобів у грі"/>
 		<text name="ui_global_tooltip_highPriority" text="Застосувати високий пріоритет до всіх прив'язок клавіш UAL у меню F1"/>
-		<text name="ui_global_tooltip_disableAutoStrap" text="Вимкнути автоматичне застосування натяжних ременів"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="Автоматичне застосування натяжних ременів після завантаження чи розвантаження"/>
 		<text name="ui_global_tooltip_pricePerLog" text="Ціна, яка стягується за кожну автозавантажену колоду"/>
 		<text name="ui_global_tooltip_pricePerBale" text="Ціна, яка стягується за кожен автозавантажений тюк"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Ціна, яка стягується за кожен автозавантажений піддон"/>
@@ -124,6 +124,7 @@
 		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Забороняє завантаження у відкритому стані (лише для цієї зони)"/>
 
 		<!-- KEY BINDINGS -->
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Open global settings menu"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Відкрити меню налаштувань (у магазині)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Увімкнути редагування об'єму завантаження (у магазині)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Перемикання завантаження"/>

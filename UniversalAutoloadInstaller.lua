@@ -54,6 +54,7 @@ source(UniversalAutoload.path .. "scripts/BoundingBox.lua")
 source(UniversalAutoload.path .. "scripts/LoadingVolume.lua")
 source(UniversalAutoload.path .. "gui/ModSettingsMenu.lua")
 source(UniversalAutoload.path .. "gui/ShopConfigMenuUALSettings.lua")
+source(UniversalAutoload.path .. "gui/GlobalSettingsMenuUALSettings.lua")
 
 -- class variables
 UniversalAutoload.userSettingsFile = "modSettings/UniversalAutoload.xml"
@@ -61,6 +62,7 @@ UniversalAutoload.SHOP_ICON = UniversalAutoload.path .. "icons/shop_icon.dds"
 
 -- class tables
 UniversalAutoload.ACTIONS = {
+	["GLOBAL_MENU"]          = "UNIVERSALAUTOLOAD_GLOBAL_MENU",
 	["TOGGLE_LOADING"]		 = "UNIVERSALAUTOLOAD_TOGGLE_LOADING",
 	["UNLOAD_ALL"]			 = "UNIVERSALAUTOLOAD_UNLOAD_ALL",
 	["TOGGLE_TIPSIDE"]		 = "UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE",
@@ -898,6 +900,13 @@ function UniversalAutoloadManager:onOpenSettingsEvent(actionName, inputValue, ca
 	end
 end
 
+function UniversalAutoloadManager:onOpenGlobalSettingsEvent(actionName, inputValue, callbackState, isAnalog)
+	-- print("onOpenGlobalSettingsEvent")
+	if UniversalAutoloadManager.globalSettingsMenu then
+		g_gui:showDialog("GlobalSettingsMenuUALSettings")
+	end
+end
+
 function UniversalAutoloadManager:onEditLoadingAreaEvent(actionName, inputValue, callbackState, isAnalog)
 	-- print("onEditLoadingAreaEvent")
 	if UniversalAutoloadManager.shopVehicle then
@@ -961,105 +970,33 @@ ShopConfigScreen.onYesNoLease = Utils.prependedFunction(ShopConfigScreen.onYesNo
 	-- return basePrice, upgradePrice, hasChanges
 -- end)
 
-function UniversalAutoloadManager.injectGlobalMenu()
-	print("UAL - injectGlobalMenu")
-	
-	local function fixInGameMenu(frame, pageName, position, predicateFunc)
-		local inGameMenu = g_gui.screenControllers[InGameMenu] --g_inGameMenu
-		local aboveSettings = nil;
-
-		--DebugUtil.printTableRecursively(inGameMenu.pagingElement)
-
-		-- remove all to avoid warnings
-		for k, v in pairs({pageName}) do
-			inGameMenu.controlIDs[v] = nil
-		end
-
-		for i = 1, #inGameMenu.pagingElement.elements do
-			local child = inGameMenu.pagingElement.elements[i]
-			if child == inGameMenu["pageSettings"] then
-				aboveSettings = i;
-				print("--- found Settings position - "..tostring(i))
-			end
-		end
-		aboveSettings = aboveSettings or position
-		
-		inGameMenu[pageName] = frame
-		inGameMenu.pagingElement:addElement(inGameMenu[pageName])
-
-		inGameMenu:exposeControlsAsFields(pageName)
-
-		for i = 1, #inGameMenu.pagingElement.elements do
-			local child = inGameMenu.pagingElement.elements[i]
-			if child == inGameMenu[pageName] then
-				table.remove(inGameMenu.pagingElement.elements, i)
-				table.insert(inGameMenu.pagingElement.elements, aboveSettings, child)
-				break
-			end
-		end
-
-		for i = 1, #inGameMenu.pagingElement.pages do
-			local child = inGameMenu.pagingElement.pages[i]
-			if child.element == inGameMenu[pageName] then
-				table.remove(inGameMenu.pagingElement.pages, i)
-				table.insert(inGameMenu.pagingElement.pages, aboveSettings, child)
-				break
-			end
-		end
-
-		inGameMenu.pagingElement:updateAbsolutePosition()
-		inGameMenu.pagingElement:updatePageMapping()
-		
-		inGameMenu:registerPage(inGameMenu[pageName], position, predicateFunc)
-		local iconFileName = Utils.getFilename('gui/menu_modSettings.dds', UniversalAutoload.path)
-		inGameMenu:addPageTab(inGameMenu[pageName], iconFileName, GuiUtils.getUVs({0,0,1024,1024}))
-
-		for i = 1, #inGameMenu.pageFrames do
-			local child = inGameMenu.pageFrames[i]
-			if child == inGameMenu[pageName] then
-				table.remove(inGameMenu.pageFrames, i)
-				table.insert(inGameMenu.pageFrames, aboveSettings, child)
-				break
-			end
-		end
-
-		inGameMenu:rebuildTabList()
-	end
-
-	local modSettings = ModSettingsMenu.register()
-	
-	-- local function isEnabledPredicate()
-		-- return function () return true end
-	-- end
-	-- fixInGameMenu(modSettings,"ModSettingsMenu", 2, isEnabledPredicate())
-
-end
-
 -- InGameMenuSettingsFrame.initializeSubCategoryPages = Utils.prependedFunction(InGameMenuSettingsFrame.initializeSubCategoryPages,
--- function(self) 
-	-- print("initializeSubCategoryPages")
-	-- local N = 1
-	-- for _ in pairs(InGameMenuSettingsFrame.SUB_CATEGORY) do
-		-- N = N + 1
+-- function(self)
+	-- if not InGameMenuSettingsFrame.SUB_CATEGORY["MOD_SETTINGS"] then
+		-- print("initializeSubCategoryPages")
+		-- print("g_inGameMenu: " .. tostring(g_inGameMenu))
+		-- local N = 1
+		-- for _ in pairs(InGameMenuSettingsFrame.SUB_CATEGORY) do
+			-- N = N + 1
+		-- end
+		-- InGameMenuSettingsFrame.SUB_CATEGORY["MOD_SETTINGS"] = N
+		-- InGameMenuSettingsFrame.HEADER_TITLES[N] = "MOD SETTINGS"
+		-- InGameMenuSettingsFrame.HEADER_SLICES[N] = "gui.icon_options_device"
+		-- local other = g_inGameMenu.subCategoryBox.elements[2]
+		-- local modSettingsMenu = other:clone(other.parent)
+		-- modSettingsMenu.id = string.format("subCategoryTabs[%d]", N)
+		-- modSettingsMenu.text = InGameMenuSettingsFrame.HEADER_TITLES[N]
+		-- modSettingsMenu.sourceText = InGameMenuSettingsFrame.HEADER_TITLES[N]
+		-- modSettingsMenu.focusId = FocusManager:serveAutoFocusId()
+		-- g_inGameMenu.subCategoryBox.elements[N] = modSettingsMenu
+		-- g_inGameMenu.subCategoryBox:invalidateLayout()
+		-- -- print("*******subCategoryBox.elements[2]*******")
+		-- -- DebugUtil.printTableRecursively(g_inGameMenu.subCategoryBox.elements[2], "--", 0, 1)
+		-- -- print("*******subCategoryBox.elements[N]*******")
+		-- -- DebugUtil.printTableRecursively(g_inGameMenu.subCategoryBox.elements[N], "--", 0, 1)
+		-- -- print("******* g_inGameMenu *******")
+		-- -- DebugUtil.printTableRecursively(g_inGameMenu, "--", 0, 2)
 	-- end
-	-- InGameMenuSettingsFrame.SUB_CATEGORY["AUTOLOAD_SETTINGS"] = N
-	-- InGameMenuSettingsFrame.HEADER_TITLES[N] = "AUTOLOAD SETTINGS"
-	-- InGameMenuSettingsFrame.HEADER_SLICES[N] = "gui.icon_options_device"
-	
-	-- local other = g_inGameMenu.subCategoryBox.elements[2]
-	-- local ualMenu = other:clone(other.parent)
-	
-	-- --subCategoryTabs[N] = deepCopy(subCategoryTabs[2])
-	-- ualMenu.id = string.format("subCategoryTabs[%d]", N)
-	-- ualMenu.text = "MOD SETTINGS"
-	
-	-- g_inGameMenu.subCategoryBox.elements[N] = ualMenu
-	
-	-- -- print("*******subCategoryBox.elements[2]*******")
-	-- -- DebugUtil.printTableRecursively(g_inGameMenu.subCategoryBox.elements[2], "--", 0, 1)
-	-- -- print("*******subCategoryBox.elements[N]*******")
-	-- -- DebugUtil.printTableRecursively(g_inGameMenu.subCategoryBox.elements[N], "--", 0, 1)
-	
 -- end)
 
 
@@ -1139,6 +1076,21 @@ function UniversalAutoloadManager:keyEvent(unicode, sym, modifier, isDown)
 		end
 	end
 
+end
+
+function UniversalAutoloadManager.createGlobalGui()
+	-- print("UAL - createGlobalGui")
+	if not UniversalAutoloadManager.globalSettingsMenu then
+		UniversalAutoloadManager.globalSettingsMenu = GlobalSettingsMenuUALSettings.register()
+	end
+end
+function UniversalAutoloadManager.deleteGlobalGui()
+	-- print("UAL - deleteGlobalGui")
+	if UniversalAutoloadManager.globalSettingsMenu then
+		-- print("UAL - DELETE GLOBAL MENU")
+		UniversalAutoloadManager.globalSettingsMenu:delete()
+		UniversalAutoloadManager.globalSettingsMenu = nil
+	end
 end
 
 function UniversalAutoloadManager.createShopGui()
@@ -2058,7 +2010,7 @@ end
 function UniversalAutoloadManager:loadMap(name)
 	-- print("UAL - LOADMAP")
 	UniversalAutoloadManager.createShopGui()
-	-- UniversalAutoloadManager.injectGlobalMenu()
+	UniversalAutoloadManager.createGlobalGui()
 	UniversalAutoloadManager.injectSpecialisation()
 	
 	g_messageCenter:subscribe(BuyVehicleEvent, UniversalAutoloadManager.onVehicleBuyEvent, UniversalAutoloadManager)
@@ -2129,6 +2081,7 @@ function UniversalAutoloadManager:deleteMap()
 	-- removeConsoleCommand("ualFullTest")
 	
 	UniversalAutoloadManager.deleteShopGui()
+	UniversalAutoloadManager.deleteGlobalGui()
 end
 
 -- SYNC SETTINGS:

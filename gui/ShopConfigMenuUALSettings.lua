@@ -12,7 +12,7 @@ function ShopConfigMenuUALSettings.new(vehicle, subclass_mt)
 	local self = ShopConfigMenuUALSettings:superClass().new(nil, subclass_mt or ShopConfigMenuUALSettings_mt)
 
     self.name = "ShopConfigMenuUALSettings"
-	self.vehicle = vehicle and vehicle.spec_universalAutoload
+	self.vehicle = vehicle
     self.i18n = l18n or g_i18n
     self.inputBinding = inputBinding or g_inputBinding
     self.messageCenter = messageCenter or g_messageCenter
@@ -21,7 +21,7 @@ function ShopConfigMenuUALSettings.new(vehicle, subclass_mt)
 end
 
 function ShopConfigMenuUALSettings:setNewVehicle(vehicle)
-	self.vehicle = vehicle and vehicle.spec_universalAutoload
+	self.vehicle = vehicle
 	local name = vehicle and ("  -  " .. vehicle:getFullName()) or ""
 	self.guiTitle:setText(g_i18n:getText("ui_config_settings_ual") .. name)
 	self:updateSettings()
@@ -29,7 +29,7 @@ end
 
 function ShopConfigMenuUALSettings:updateSettings()
 	
-	local vehicle = self.vehicle
+	local vehicle = self.vehicle and vehicle.spec_universalAutoload
 	local settings = self.ualShopConfigSettingsLayout
 	
 	local isValid = vehicle ~= nil
@@ -166,7 +166,7 @@ end
 function ShopConfigMenuUALSettings:onClickMultiOption(id, control, direction)
 	print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
 		
-	local vehicle = self.vehicle
+	local vehicle = self.vehicle and vehicle.spec_universalAutoload
 	if not vehicle then
 		return
 	end
@@ -222,7 +222,7 @@ end
 function ShopConfigMenuUALSettings:onClickBinaryOption(id, control, direction)
 	print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
 	
-	local vehicle = self.vehicle
+	local vehicle = self.vehicle and vehicle.spec_universalAutoload
 	if not vehicle then
 		return
 	end
@@ -253,7 +253,7 @@ function ShopConfigMenuUALSettings.inputEvent(self, action, value, direction)
 		self:onClickSave()
 		return true
 	end
-	print("action: " .. tostring(action))
+	-- print("action: " .. tostring(action))
 end
 
 function ShopConfigMenuUALSettings:onOpen()

@@ -15,7 +15,7 @@
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Показать отладку"/>
 		<text name="ui_global_highPriority" text="Высокий приоритет"/>
-		<text name="ui_global_disableAutoStrap" text="Отключить автоматическую привязку"/>
+		<text name="ui_global_disableAutoStrap" text="Автоматические натяжные ремни"/>
 		<text name="ui_global_pricePerLog" text="Цена за бревно"/>
 		<text name="ui_global_pricePerBale" text="Цена за тюк"/>
 		<text name="ui_global_pricePerPallet" text="Цена за поддон"/>
@@ -23,7 +23,7 @@
 		
 		<text name="ui_global_tooltip_showDebug" text="Отображение полного графического отображения отладки для всех транспортных средств в игре"/>
 		<text name="ui_global_tooltip_highPriority" text="Примените высокий приоритет ко всем привязкам клавиш UAL в меню F1"/>
-		<text name="ui_global_tooltip_disableAutoStrap" text="Отключите автоматическое включение натяжных ремней"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="Автоматическое применение натяжных лент после погрузки или разгрузки"/>
 		<text name="ui_global_tooltip_pricePerLog" text="Цена, взимаемая за каждый автоматически загружаемое бревно"/>
 		<text name="ui_global_tooltip_pricePerBale" text="Цена, взимаемая за каждый автоматически загружаемый тюк"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Цена, взимаемая за каждый автоматически загружаемый поддон"/>
@@ -124,6 +124,7 @@
 		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Предотвращать загрузку в открытом виде (только для этой области)"/>
 
 		<!-- KEY BINDINGS -->
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Open global settings menu"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Откройте меню настроек конфигурации (в магазине)."/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Включить редактирование объема загрузки (в магазине)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Переключить загрузку"/>
