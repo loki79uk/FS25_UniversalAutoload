@@ -2121,6 +2121,7 @@ function UniversalAutoload:onReadStream(streamId, connection)
 		spec.isCurtainTrailer = streamReadBool(streamId)
 		spec.rearUnloadingOnly = streamReadBool(streamId)
 		spec.frontUnloadingOnly = streamReadBool(streamId)
+		spec.autoloadDisabled = streamReadBool(streamId)
 		
 		print("currentTipside: " .. tostring(spec.currentTipside))
 		print("currentLoadside: " .. tostring(spec.currentLoadside))
@@ -2140,6 +2141,7 @@ function UniversalAutoload:onReadStream(streamId, connection)
 		print("isCurtainTrailer: " .. tostring(spec.isCurtainTrailer))
 		print("rearUnloadingOnly: " .. tostring(spec.rearUnloadingOnly))
 		print("frontUnloadingOnly: " .. tostring(spec.frontUnloadingOnly))
+		print("autoloadDisabled: " .. tostring(spec.autoloadDisabled))
 		
 		if self.propertyState ~= VehiclePropertyState.SHOP_CONFIG then
 			UniversalAutoload.VEHICLES[self] = self
@@ -2175,6 +2177,7 @@ function UniversalAutoload:onWriteStream(streamId, connection)
 		spec.isCurtainTrailer = spec.isCurtainTrailer or false
 		spec.rearUnloadingOnly = spec.rearUnloadingOnly or false
 		spec.frontUnloadingOnly = spec.frontUnloadingOnly or false
+		spec.autoloadDisabled = spec.autoloadDisabled or false
 		
 		streamWriteString(streamId, spec.currentTipside)
 		streamWriteString(streamId, spec.currentLoadside)
@@ -2194,6 +2197,7 @@ function UniversalAutoload:onWriteStream(streamId, connection)
 		streamWriteBool(streamId, spec.isCurtainTrailer)
 		streamWriteBool(streamId, spec.rearUnloadingOnly)
 		streamWriteBool(streamId, spec.frontUnloadingOnly)
+		streamWriteBool(streamId, spec.autoloadDisabled)
 	else
 		streamWriteBool(streamId, false)
 	end
