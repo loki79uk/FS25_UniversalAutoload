@@ -124,7 +124,7 @@
 		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Предотвращать загрузку в открытом виде (только для этой области)"/>
 
 		<!-- KEY BINDINGS -->
-		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Open global settings menu"/>
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Открыть меню глобальных настроек"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Откройте меню настроек конфигурации (в магазине)."/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Включить редактирование объема загрузки (в магазине)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Переключить загрузку"/>
