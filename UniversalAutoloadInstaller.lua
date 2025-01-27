@@ -756,18 +756,20 @@ function UniversalAutoloadManager.getValidConfigurationId(vehicle)
 end
 
 function UniversalAutoloadManager.saveConfigurationToSettings(exportSpec, configFileName, configId, noEventSend)
-	print("UAL - SAVE CONFIGURATION TO SETTINGS")
+	local serverOrClient = g_currentMission:getIsServer() and "SERVER" or "CLIENT"
+	print(serverOrClient .. ": SAVE UAL CONFIGURATION for " .. tostring(configFileName))
+	
 	if not exportSpec or not configFileName then
 		print("valid UAL spec is required to save settings")
 		return
 	end
 	
-	if g_currentMission:getIsServer() then
-		print("EXPORT VEHICLE SETTINGS: " .. configFileName)
-		UniversalAutoloadManager.saveVehicleConfigToSettingsXML(exportSpec, configFileName, configId)
+	UniversalAutoloadManager.saveVehicleConfigToSettingsXML(exportSpec, configFileName, configId)
+
+	if g_currentMission:getIsClient() and not g_currentMission:getIsServer() then
+		UniversalAutoload.UpdateDefaultSettingsEvent.sendEvent(exportSpec, configFileName, configId, noEventSend)
 	end
-	
-	UniversalAutoload.UpdateDefaultSettingsEvent.sendEvent(exportSpec, configFileName, configId, noEventSend)
+
 end
 
 function UniversalAutoloadManager.exportVehicleConfigToServer()
