@@ -1573,8 +1573,8 @@ function UniversalAutoload:onLoad(savegame)
 	if UniversalAutoloadManager.getIsValidForAutoload(self) then
 		if UniversalAutoloadManager.handleNewVehicleCreation(self) then
 			print(self:getFullName() .. ": UAL ACTIVATED")
-		else
-			print(self:getFullName() .. ": UAL SETTINGS NOT ADDED")
+		elseif self.propertyState ~= VehiclePropertyState.SHOP_CONFIG then
+			print(self:getFullName() .. ": SETTINGS NOT AVAILABLE - autoloadDisabled")
 			spec.autoloadDisabled = true
 		end
 		spec.isAutoloadAvailable = true
@@ -1614,6 +1614,16 @@ function UniversalAutoload:onLoad(savegame)
 			if not spec.loadAreaMissing then
 				spec.loadAreaMissing = true
 				print("WARNING: load area missing - check settings file")
+				
+				local configFileName = UniversalAutoloadManager.cleanConfigFileName(self.configFileName)
+				print("  clean name: " .. tostring(configFileName))
+				print("  configFileName: " .. tostring(spec.configFileName))
+				print("  selectedConfigs: " .. tostring(spec.selectedConfigs))
+				print("  useConfigName: " .. tostring(spec.useConfigName))
+				
+				local configGroup = UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName]
+				print("  VEHICLE_CONFIGURATIONS:")
+				DebugUtil.printTableRecursively(configGroup, "--", 0, 1)
 			end
 		end
 	
@@ -1819,7 +1829,6 @@ function UniversalAutoload:onDelete()
 			-- UniversalAutoloadManager.resetNewVehicle = nil
 		-- end
 		
-		UniversalAutoloadManager.lastShopVehicle = shopVehicle
 		UniversalAutoloadManager.shopVehicle = nil
 	end
 	
@@ -2236,12 +2245,8 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 
 	if spec.isInsideShop then
 		local shopVehicle = UniversalAutoloadManager.shopVehicle
-		local lastShopVehicle = UniversalAutoloadManager.lastShopVehicle
 		
-		if lastShopVehicle and self == lastShopVehicle then
-			-- IS THE LAST SHOP VEHICLE
-		
-		elseif shopVehicle and self == shopVehicle then
+		if shopVehicle and self == shopVehicle then
 			-- IS THE CURRENT SHOP VEHICLE
 			
 			if spec.resetToDefault then

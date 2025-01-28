@@ -787,10 +787,6 @@ function UniversalAutoloadManager.exportVehicleConfigToServer()
 		if UniversalAutoloadManager.shopVehicle then
 			print("SHOP VEHICLE STILL EXISTS " .. UniversalAutoloadManager.shopVehicle.rootNode )
 			exportVehicle = UniversalAutoloadManager.shopVehicle
-		elseif UniversalAutoloadManager.lastShopVehicle then
-			print("WORKSHOP VEHICLE STILL EXISTS " .. UniversalAutoloadManager.lastShopVehicle.rootNode )
-			exportVehicle = UniversalAutoloadManager.lastShopVehicle
-			UniversalAutoloadManager.lastShopVehicle = nil
 		end
 
 		if exportVehicle and exportVehicle.configFileName then
