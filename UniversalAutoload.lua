@@ -1290,12 +1290,17 @@ function UniversalAutoload:initialiseTransformGroups(actualRootNode)
 
 	local actualRootNode = actualRootNode or self.rootNode
 	
+	if not actualRootNode then
+		print("*** Root Node is UNDEFINED ***")
+		return
+	end
+	
 	if self.spec_tensionBelts and self.spec_tensionBelts.rootNode then
 		local tensionBeltNode = self.spec_tensionBelts.rootNode
 		local x0, y0, z0 = getTranslation(actualRootNode)
 		local x1, y1, z1 = getTranslation(tensionBeltNode)
 		if math.abs(x0-x1) > 0.0001 or math.abs(y0-y1) > 0.0001 or math.abs(z0-z1) > 0.0001 then
-			print("COULD USE TENSION BELT ROOT NODE #" .. self.rootNode)
+			print("COULD USE TENSION BELT ROOT NODE")
 			-- actualRootNode = tensionBeltNode
 		end
 	end
@@ -1622,8 +1627,12 @@ function UniversalAutoload:onLoad(savegame)
 				print("  useConfigName: " .. tostring(spec.useConfigName))
 				
 				local configGroup = UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName]
-				print("  VEHICLE_CONFIGURATIONS:")
-				DebugUtil.printTableRecursively(configGroup, "--", 0, 1)
+				if configGroup then 
+					print("  VEHICLE_CONFIGURATIONS:")
+					DebugUtil.printTableRecursively(configGroup, "--", 0, 1)
+				else
+					print("  VEHICLE_CONFIGURATION group is NIL")
+				end
 			end
 		end
 	
@@ -2107,7 +2116,6 @@ end
 -- NETWORKING FUNCTIONS
 function UniversalAutoload:onReadStream(streamId, connection)
 	local spec = self.spec_universalAutoload
-	print("UAL - ON READ STREAM " .. self.rootNode)
 	
 	if streamReadBool(streamId) then
 		print("Universal Autoload Enabled: " .. self:getFullName())
@@ -2164,7 +2172,6 @@ end
 --
 function UniversalAutoload:onWriteStream(streamId, connection)
 	local spec = self.spec_universalAutoload
-	print("UAL - ON WRITE STREAM " .. self.rootNode)
 	
 	if spec and spec.isAutoloadAvailable then
 		streamWriteBool(streamId, true)
@@ -4653,7 +4660,7 @@ end
 
 -- TRIGGER CALLBACK FUNCTIONS
 function UniversalAutoload:ualPlayerTrigger_Callback(triggerId, otherActorId, onEnter, onLeave, onStay, otherShapeId)
-	if self and otherActorId ~= 0 and otherActorId ~= self.rootNode then
+	if self and self.rootNode and otherActorId ~= 0 and otherActorId ~= self.rootNode then
 		for _, player in pairs(g_currentMission.players) do
 			if otherActorId == player.rootNode then
 				
@@ -4678,7 +4685,7 @@ function UniversalAutoload:ualPlayerTrigger_Callback(triggerId, otherActorId, on
 end
 
 function UniversalAutoload:ualLoadingTrigger_Callback(triggerId, otherActorId, onEnter, onLeave, onStay, otherShapeId)
-	if self and otherActorId ~= 0 and otherActorId ~= self.rootNode then
+	if self and self.rootNode and otherActorId ~= 0 and otherActorId ~= self.rootNode then
 		local spec = self.spec_universalAutoload
 		local object = UniversalAutoload.getNodeObject(otherActorId)
 		if object then
@@ -4694,7 +4701,7 @@ function UniversalAutoload:ualLoadingTrigger_Callback(triggerId, otherActorId, o
 end
 --
 function UniversalAutoload:ualUnloadingTrigger_Callback(triggerId, otherActorId, onEnter, onLeave, onStay, otherShapeId)
-	if self and otherActorId ~= 0 and otherActorId ~= self.rootNode then
+	if self and self.rootNode and otherActorId ~= 0 and otherActorId ~= self.rootNode then
 		local spec = self.spec_universalAutoload
 		local object = UniversalAutoload.getNodeObject(otherActorId)
 		if object then
@@ -4716,7 +4723,7 @@ function UniversalAutoload:ualUnloadingTrigger_Callback(triggerId, otherActorId,
 end
 --
 function UniversalAutoload:ualAutoLoadingTrigger_Callback(triggerId, otherActorId, onEnter, onLeave, onStay, otherShapeId)
-	if self and otherActorId ~= 0 and otherActorId ~= self.rootNode then
+	if self and self.rootNode and otherActorId ~= 0 and otherActorId ~= self.rootNode then
 		local spec = self.spec_universalAutoload
 		local object = UniversalAutoload.getNodeObject(otherActorId)
 		if object then
@@ -4744,7 +4751,7 @@ function UniversalAutoload:addLoadedObject(object)
 			object:addDeleteListener(self, "ualOnDeleteLoadedObject_Callback")
 		end
 		if debugLoading then
-			print("["..self.rootNode.."] ADD Loaded Object: " .. tostring(object.id))
+			print("ADD Loaded Object: " .. tostring(object.id))
 		end
 		return true
 	end
@@ -4759,13 +4766,13 @@ function UniversalAutoload:removeLoadedObject(object)
 			object:removeDeleteListener(self, "ualOnDeleteLoadedObject_Callback")
 		end
 		if next(spec.loadedObjects) == nil then
-			print(self.rootNode .. " FULLY UNLOADED - RESET LOADING AREA")
+			print("FULLY UNLOADED - RESET LOADING AREA")
 			UniversalAutoload.resetLoadingArea(self)
 		else
 			spec.partiallyUnloaded = true
 		end
 		if debugLoading then
-			print("["..self.rootNode.."] REMOVE Loaded Object: " .. tostring(object.id))
+			print("REMOVE Loaded Object: " .. tostring(object.id))
 		end
 		return true
 	end
@@ -4822,7 +4829,7 @@ function UniversalAutoload:removeAvailableObject(object)
 		end
 		
 		if spec.totalAvailableCount == 0 and not isActiveForLoading then
-			-- print("["..self.rootNode.."] RESETTING MATERIAL AND CONTAINER SELECTIONS")
+			-- print("RESETTING MATERIAL AND CONTAINER SELECTIONS")
 			if spec.currentMaterialIndex ~= 1 then
 				UniversalAutoload.setMaterialTypeIndex(self, 1)
 			end
@@ -5527,7 +5534,7 @@ function UniversalAutoload:getPalletIsSelectedLoadside(object)
 		return false
 	end
 	
-	if g_currentMission.nodeToObject[self.rootNode]==nil then
+	if self.rootNode==nil or g_currentMission.nodeToObject[self.rootNode]==nil then
 		return false
 	end
 	
@@ -5877,7 +5884,7 @@ function UniversalAutoload:onAIImplementStart()
 	--- TODO: Unfolding or opening cover, if needed!
 	local spec = self.spec_universalAutoload
 	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
-		print("["..self.rootNode.."] UAL/CP - ACTIVATE BALE COLLECTION MODE (onAIImplementStart)")
+		print("UAL/CP - ACTIVATE BALE COLLECTION MODE (onAIImplementStart)")
 		UniversalAutoload.setAutoCollectionMode(self, true)
 		spec.aiLoadingActive = true
 	end
@@ -5887,7 +5894,7 @@ function UniversalAutoload:onAIImplementEnd()
 	--- TODO: Folding or closing cover, if needed!
 	local spec = self.spec_universalAutoload
 	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled and spec.aiLoadingActive then
-		print("["..self.rootNode.."] UAL/CP - DEACTIVATE BALE COLLECTION MODE (onAIImplementEnd)")
+		print("UAL/CP - DEACTIVATE BALE COLLECTION MODE (onAIImplementEnd)")
 		UniversalAutoload.setAutoCollectionMode(self, false)
 		spec.aiLoadingActive = false
 	end
@@ -5897,7 +5904,7 @@ function UniversalAutoload:onAIFieldWorkerStart()
 	--- TODO: Unfolding or opening cover, if needed!
 	local spec = self.spec_universalAutoload
 	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
-		print("["..self.rootNode.."] UAL/CP - ACTIVATE BALE COLLECTION MODE (onAIFieldWorkerStart)")
+		print("UAL/CP - ACTIVATE BALE COLLECTION MODE (onAIFieldWorkerStart)")
 		UniversalAutoload.setAutoCollectionMode(self, true)
 		spec.aiLoadingActive = true
 	end
@@ -5907,7 +5914,7 @@ function UniversalAutoload:onAIFieldWorkerEnd()
 	--- TODO: Folding or closing cover, if needed!
 	local spec = self.spec_universalAutoload
 	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled and spec.aiLoadingActive then
-		print("["..self.rootNode.."] UAL/CP - DEACTIVATE BALE COLLECTION MODE (onAIFieldWorkerEnd)")
+		print("UAL/CP - DEACTIVATE BALE COLLECTION MODE (onAIFieldWorkerEnd)")
 		UniversalAutoload.setAutoCollectionMode(self, false)
 		spec.aiLoadingActive = false
 	end
@@ -5925,19 +5932,19 @@ function UniversalAutoload:ualGetLoadedBales()
 end
 --
 function UniversalAutoload:ualHasLoadedBales()
-	print("["..self.rootNode.."] UAL/CP - ualHasLoadedBales")
+	print("UAL/CP - ualHasLoadedBales")
 	local spec = self.spec_universalAutoload
 	return (spec and spec.isAutoloadAvailable and not spec.autoloadDisabled) and spec.totalUnloadCount > 0
 end
 --
 function UniversalAutoload:ualIsObjectLoadable(object)
 	local spec = self.spec_universalAutoload
-	print("["..self.rootNode.."] UAL/CP - ualIsObjectLoadable")
+	print("UAL/CP - ualIsObjectLoadable")
 	--- TODO: Returns true, if the given object is loadable.
 	--- For CP, the given object is of the class Bale.
 	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
-		print("["..self.rootNode.."] UAL/CP - IS BALE = ".. tostring(UniversalAutoload.getContainerTypeName(object) == "BALE"))
-		print("["..self.rootNode.."] UAL/CP - IS VALID = ".. tostring(UniversalAutoload.isValidForLoading(self, object)))
+		print("UAL/CP - IS BALE = ".. tostring(UniversalAutoload.getContainerTypeName(object) == "BALE"))
+		print("UAL/CP - IS VALID = ".. tostring(UniversalAutoload.isValidForLoading(self, object)))
 		return UniversalAutoload.getContainerTypeName(object) == "BALE" and UniversalAutoload.isValidForLoading(self, object)
 	end
 	return false

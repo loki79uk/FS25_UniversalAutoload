@@ -785,7 +785,6 @@ function UniversalAutoloadManager.exportVehicleConfigToServer()
 		
 		local exportVehicle = nil
 		if UniversalAutoloadManager.shopVehicle then
-			print("SHOP VEHICLE STILL EXISTS " .. UniversalAutoloadManager.shopVehicle.rootNode )
 			exportVehicle = UniversalAutoloadManager.shopVehicle
 		end
 
@@ -1335,6 +1334,11 @@ function UniversalAutoloadManager.resetLoadingVolumeForShopEdit(vehicle)
 	
 	if not spec.skipFirstUpdate then
 		spec.skipFirstUpdate = true
+		return
+	end
+	
+	if not vehicle.rootNode then
+		print("*** Vehicle Root Node is UNDEFINED ***")
 		return
 	end
 	
