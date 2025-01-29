@@ -499,7 +499,7 @@ function UniversalAutoloadManager.getVehicleConfigNames(vehicle)
 end
 --
 function UniversalAutoloadManager.saveVehicleConfigToSettingsXML(exportSpec, configFileName, configId)
-	if not exportSpec or not configFileName then
+	if not exportSpec or not configFileName or not configId then
 		print("Invalid vehicle spec supplied: " .. tostring(configFileName))
 		return
 	end
@@ -552,6 +552,8 @@ function UniversalAutoloadManager.saveVehicleConfigToSettingsXML(exportSpec, con
 			
 			print("UPDATE CONFIG IN MEMORY - " .. configId)
 			local CONFIGS = UniversalAutoload.VEHICLE_CONFIGURATIONS
+			CONFIGS[configFileName] = CONFIGS[configFileName] or {}
+			CONFIGS[configFileName][configId] = CONFIGS[configFileName][configId] or {}
 			local config = CONFIGS[configFileName][configId]
 			for k, v in pairs(UniversalAutoload.OPTIONS_DEFAULTS) do
 				local id = v.id
