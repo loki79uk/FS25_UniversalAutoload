@@ -15,7 +15,7 @@
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="mostra Debug"/>
 		<text name="ui_global_highPriority" text="Alta priorità"/>
-		<text name="ui_global_disableAutoStrap" text="Cinghie di tensione automatica"/>
+		<text name="ui_global_disableAutoStrap" text="Disattiva la cinghia automatica"/>
 		<text name="ui_global_pricePerLog" text="Prezzo per tronco"/>
 		<text name="ui_global_pricePerBale" text="Prezzo per balla"/>
 		<text name="ui_global_pricePerPallet" text="Prezzo per pallet"/>
@@ -23,7 +23,7 @@
 		
 		<text name="ui_global_tooltip_showDebug" text="Mostra la visualizzazione completa del debug grafico per tutti i veicoli nel gioco"/>
 		<text name="ui_global_tooltip_highPriority" text="Applica alta priorità a tutti i tasti di scelta rapida UAL nel menu F1"/>
-		<text name="ui_global_tooltip_disableAutoStrap" text="Applicazione automatica delle cinghie di tensione dopo il carico o lo scarico"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="Disattivare l'applicazione automatica delle cinghie"/>
 		<text name="ui_global_tooltip_pricePerLog" text="Il prezzo addebitato per ogni tronco caricato automaticamente"/>
 		<text name="ui_global_tooltip_pricePerBale" text="Il prezzo addebitato per ogni balla caricata automaticamente"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Il prezzo addebitato per ogni pallet caricato automaticamente"/>
@@ -37,12 +37,12 @@
 		<text name="ui_option_frontOnly" text="Solo anteriore"/>
 		
 		<text name="ui_option_noLoadingFolded" text="Nessun caricamento se piegato"/>
-		<text name="ui_option_folded" text="Piegato"/>
-		<text name="ui_option_unfolded" text="Dispiegato"/>
+		<text name="ui_option_folded" text="Si"/>
+		<text name="ui_option_unfolded" text="No"/>
 
 		<text name="ui_option_noLoadingCovered" text="Nessun carico se coperto"/>
-		<text name="ui_option_covered" text="Coperto"/>
-		<text name="ui_option_uncovered" text="Scoperto"/>
+		<text name="ui_option_covered" text="Si"/>
+		<text name="ui_option_uncovered" text="No"/>
 
 		<text name="ui_option_isBoxTrailer" text="Rimorchio con cassone"/>
 		<text name="ui_option_isLogTrailer" text="Rimorchio per tronchi"/>
@@ -55,10 +55,10 @@
 		<text name="ui_option_rearUnloadingOnly" text="Solo scarico posteriore"/>
 		<text name="ui_option_frontUnloadingOnly" text="Solo scarico frontale"/>
 		<text name="ui_option_horizontalLoading" text="Caricamento orizzontale"/>
-		<text name="ui_option_disableAutoStrap" text="Cinghie di tensione automatica"/>
+		<text name="ui_option_disableAutoStrap" text="Disattiva la cinghia automatica"/>
 		<text name="ui_option_disableHeightLimit" text="Disabilita limite altezza"/>
 		<text name="ui_option_zonesOverlap" text="Le zone si sovrappongono"/>
-		<text name="ui_option_offsetRoot" text="Radice spostata"/>
+		<text name="ui_option_offsetRoot" text="Compensazione Fissa"/>
 		<text name="ui_option_minLogLength" text="Lunghezza minima del tronco"/>
 
 		<text name="ui_option_tooltip_enableAutoload" text="Se il caricamento automatico è abilitato o disabilitato per questo veicolo"/>
@@ -78,15 +78,15 @@
 		<text name="ui_option_tooltip_rearUnloadingOnly" text="Utilizzare solo la zona di scarico posteriore (nessuna zona laterale)"/>
 		<text name="ui_option_tooltip_frontUnloadingOnly" text="Utilizzare solo la zona di scarico frontale (nessuna zona laterale)"/>
 		<text name="ui_option_tooltip_horizontalLoading" text="Inizia con il caricamento orizzontale abilitato (può essere attivato se il tasto è associato)"/>
-		<text name="ui_option_tooltip_disableAutoStrap" text="Applicazione automatica delle cinghie di tensione dopo il carico o lo scarico"/>
+		<text name="ui_option_tooltip_disableAutoStrap" text="Disattivare l'applicazione automatica delle cinghie"/>
 		<text name="ui_option_tooltip_disableHeightLimit" text="Disattiva il limite di altezza di impilamento basato sulla densità"/>
 		<text name="ui_option_tooltip_zonesOverlap" text="Segnala quando le aree di carico si sovrappongono"/>
-		<text name="ui_option_tooltip_offsetRoot" text="Nodo i3d del veicolo a cui sono relativi gli offset dell'area"/>
+		<text name="ui_option_tooltip_offsetRoot" text="Nodo i3d del veicolo a cui sono relativi le Compensazioni dell'area"/>
 		<text name="ui_option_tooltip_minLogLength" text="La lunghezza minima per i tronchi che verranno caricati automaticamente"/>
 
 		<!-- LOADING_AREA -->
-		<text name="ui_loadArea_offset" text="Offset"/>
-		<text name="ui_loadArea_offsetRoot" text="Offset Root"/>
+		<text name="ui_loadArea_offset" text="Compensazione"/>
+		<text name="ui_loadArea_offsetRoot" text="Compensazione Fissa"/>
 		<text name="ui_loadArea_width" text="Larghezza"/>
 		<text name="ui_loadArea_length" text="Lunghezza"/>
 		<text name="ui_loadArea_height" text="Altezza"/>
@@ -94,8 +94,8 @@
 		<text name="ui_loadArea_widthAxis" text="Larghezza asse"/>
 		<text name="ui_loadArea_lengthAxis" text="Lunghezza asse"/>
 		<text name="ui_loadArea_heightAxis" text="Altezza asse"/>
-		<text name="ui_loadArea_offsetFrontAxis" text="Offset asse anteriore"/>
-		<text name="ui_loadArea_offsetRearAxis" text="Offset Asse posteriore"/>
+		<text name="ui_loadArea_offsetFrontAxis" text="Compensazione asse anteriore"/>
+		<text name="ui_loadArea_offsetRearAxis" text="Compensazione Asse posteriore"/>
 		<text name="ui_loadArea_reverseWidthAxis" text="Asse larghezza inversa"/>
 		<text name="ui_loadArea_reverseLengthAxis" text="Asse di lunghezza inversa"/>
 		<text name="ui_loadArea_reverseHeightAxis" text="Asse di altezza inversa"/>
@@ -104,8 +104,8 @@
 		<text name="ui_loadArea_noLoadingIfCovered" text="Nessun carico se coperto"/>
 		<text name="ui_loadArea_noLoadingIfUncovered" text="Nessun caricamento se scoperto"/>
 		
-		<text name="ui_loadArea_tooltip_offset" text="Offset al centro dell'area di carico"/>
-		<text name="ui_loadArea_tooltip_offsetRoot" text="Nodo i3d del veicolo a cui è relativo questo offset dell'area"/>
+		<text name="ui_loadArea_tooltip_offset" text="Compensazione al centro dell'area di carico"/>
+		<text name="ui_loadArea_tooltip_offsetRoot" text="Nodo i3d del veicolo a cui è relativa questa Compensazione dell'area"/>
 		<text name="ui_loadArea_tooltip_width" text="Larghezza della zona di carico"/>
 		<text name="ui_loadArea_tooltip_length" text="Lunghezza della zona di carico"/>
 		<text name="ui_loadArea_tooltip_height" text="Altezza della zona di carico"/>
@@ -124,7 +124,7 @@
 		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Impedire il caricamento quando non è coperto (solo per questa area)"/>
 
 		<!-- KEY BINDINGS -->
-		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Open global settings menu"/>
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Apri menu impostazioni generali"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Aprire il menu delle impostazioni di configurazione (in negozio)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Abilita la modifica del volume di caricamento (in negozio)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Attiva/disattiva il caricamento"/>
@@ -163,7 +163,7 @@
 		<text name="universalAutoload_fullOnly" text="Solo caricabile"/>
 		<text name="universalAutoload_loadAny" text="Tutto"/>
 		<text name="universalAutoload_startLoading" text="Inizia a caricare"/>
-		<text name="universalAutoload_stopLoading" text="IFerma il caricamento"/>
+		<text name="universalAutoload_stopLoading" text="Ferma il caricamento"/>
 		<text name="universalAutoload_unloadAll" text="Scarico"/>
 		<text name="universalAutoload_unloadAllForce" text="Scarico forzato"/>
 		<text name="universalAutoload_logMode" text="Modo Tronchi"/>
