@@ -3854,19 +3854,22 @@ function UniversalAutoload:getLoadPlace(containerType, object)
 							else
 								
 								if not self:ualGetIsMoving() then
-
+									
+									local increment = 0.1
 									if spec.useHorizontalLoading then
 										local thisLoadHeight = spec.currentLayerHeight
-										spec.currentLoadHeight = spec.currentLayerHeight
-										setTranslation(thisLoadPlace.node, x0, thisLoadHeight+offset.y, z0)
-										local placeEmpty = UniversalAutoload.testLocationIsEmpty(self, thisLoadPlace, object)
-										local placeBelowFull = UniversalAutoload.testLocationIsFull(self, thisLoadPlace, -containerSizeY)
-										if placeEmpty and (thisLoadHeight<=0 or placeBelowFull) then
-											spec.currentLoadHeight = thisLoadHeight
-											useThisLoadSpace = true
+										while thisLoadHeight+offset.y <= maxLoadAreaHeight - containerSizeY do
+											setTranslation(thisLoadPlace.node, x0, thisLoadHeight+offset.y, z0)
+											local placeEmpty = UniversalAutoload.testLocationIsEmpty(self, thisLoadPlace, object)
+											local placeBelowFull = UniversalAutoload.testLocationIsFull(self, thisLoadPlace, -containerSizeY)
+											if placeEmpty and (thisLoadHeight<=0 or placeBelowFull) then
+												spec.currentLoadHeight = thisLoadHeight
+												useThisLoadSpace = true
+												break
+											end
+											thisLoadHeight = thisLoadHeight + increment
 										end
 									else
-										local increment = 0.1
 										local thisLoadHeight = spec.currentLoadHeight
 										while thisLoadHeight+offset.y >= -increment do
 											setTranslation(thisLoadPlace.node, x0, thisLoadHeight+offset.y, z0)
