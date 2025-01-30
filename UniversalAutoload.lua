@@ -1621,10 +1621,8 @@ function UniversalAutoload:onLoad(savegame)
 				print("WARNING: load area missing - check settings file")
 				
 				local configFileName = UniversalAutoloadManager.cleanConfigFileName(self.configFileName)
-				print("  clean name: " .. tostring(configFileName))
-				print("  configFileName: " .. tostring(spec.configFileName))
-				print("  selectedConfigs: " .. tostring(spec.selectedConfigs))
-				print("  useConfigName: " .. tostring(spec.useConfigName))
+				print("  g_modsDirectory: " .. tostring(g_modsDirectory))
+				print("  cleanConfigFileName: " .. tostring(configFileName))
 				
 				local configGroup = UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName]
 				if configGroup then 
@@ -5160,14 +5158,14 @@ function UniversalAutoload.getEnvironmentNameFromPath(i3d_path)
 	end
 	
 	local customEnvironment = nil
-	if i3d_path:find(g_modsDirectory) then
-		local temp = i3d_path:gsub(g_modsDirectory, "")
+	if i3d_path:find(g_modsDirectory, 1, true) then
+		local temp = i3d_path:sub(#g_modsDirectory + 1)
 		customEnvironment, _ = temp:match( "^(.-)/(.+)$" )
 	else
 		for i = 1, #g_dlcsDirectories do
 			local dlcsDirectory = g_dlcsDirectories[i].path
-			if dlcsDirectory:find(":") and i3d_path:find(dlcsDirectory) then
-				local temp = i3d_path:gsub(dlcsDirectory, "")
+			if dlcsDirectory:find(":") and i3d_path:find(dlcsDirectory, 1, true) then
+				local temp = i3d_path:sub(#dlcsDirectory + 1)
 				customEnvironment, _ = "pdlc_"..temp:match( "^(.-)/(.+)$" )
 			end
 		end

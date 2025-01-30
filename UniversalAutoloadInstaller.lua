@@ -558,10 +558,13 @@ function UniversalAutoloadManager.saveVehicleConfigToSettingsXML(exportSpec, con
 			for k, v in pairs(UniversalAutoload.OPTIONS_DEFAULTS) do
 				local id = v.id
 				config[id] = exportSpec[id] or v.default
+				print(" " .. tostring(id) .. " = " .. tostring(config[id]))
 			end
 			config.loadArea = {}
 			for i, loadArea in (exportSpec.loadArea) do
 				config.loadArea[i] = deepCopy(exportSpec.loadArea[i])
+				print(" [" .. i .. "]")
+				DebugUtil.printTableRecursively(config.loadArea[i] or {}, "--", 0, 1)
 			end
 			config.configFileName = configFileName
 			config.selectedConfigs = configId
@@ -858,17 +861,17 @@ function UniversalAutoloadManager.cleanConfigFileName(configFileName)
 		return
 	end
 
-	if configFileName:find(g_modsDirectory) then
+	if configFileName:find(g_modsDirectory, 1, true) then
 		-- print("CLEANED MOD FILE NAME")
-		return configFileName:gsub(g_modsDirectory, ""), g_modsDirectory
+		return configFileName:sub(#g_modsDirectory + 1), g_modsDirectory
 	end
 	
 	for i = 1, #g_dlcsDirectories do
 		local dlcsDir = g_dlcsDirectories[i].path
 		
-		if configFileName:find(dlcsDir) then
+		if configFileName:find(dlcsDir, 1, true) then
 			-- print("CLEANED DLC FILE NAME")
-			return configFileName:gsub(dlcsDir, ""), dlcsDir
+			return configFileName:sub(#dlcsDir + 1), dlcsDir
 		end
 	end
 	
