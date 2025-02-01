@@ -3711,6 +3711,7 @@ function UniversalAutoload:evaluateLoadPlace(containerType, object, thisLoadPlac
 			setTranslation(thisLoadPlace.node, x0, logLoadHeight+offset.y, z0)
 			if UniversalAutoload.testLocationIsEmpty(self, thisLoadPlace, object, heightOffset, CollisionFlag.TREE) then
 				spec.currentLoadHeight = spec.currentLayerHeight
+				local mass = UniversalAutoload.getContainerMass(object)
 				local massFactor = math.clamp((1/mass)/2, 0.2, 1)
 				local heightFactor = maxLoadAreaHeight/(maxLoadAreaHeight+spec.currentLoadHeight)
 				spec.loadSpeedFactor = math.clamp(heightFactor*massFactor, 0.1, 0.5)
