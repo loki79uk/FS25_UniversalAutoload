@@ -30,7 +30,7 @@ UniversalAutoload.DELAY_TIME = 150
 UniversalAutoload.MP_DELAY = 1000
 UniversalAutoload.LOG_DELAY = 1000
 UniversalAutoload.TRIGGER_DELTA = 0.1
-UniversalAutoload.MAX_LAYER_COUNT = 20
+UniversalAutoload.MAX_LAYER_COUNT = 10
 UniversalAutoload.ROTATED_BALE_FACTOR = 0.80
 -- 0.85355339
 
@@ -560,7 +560,7 @@ function UniversalAutoload:updateToggleLoadingActionEvent()
 	
 	if spec and spec.isAutoloadAvailable and spec.toggleCollectionModeEventId then
 		-- Activate/Deactivate the AUTO-BALE key binding
-		if spec.autoCollectionMode==true or spec.validUnloadCount==0 then
+		if spec.autoCollectionMode or spec.validUnloadCount==0 then
 			local autoCollectionModeText = g_i18n:getText("universalAutoload_collectionMode")
 			if spec.autoCollectionMode then
 				if spec.baleCollectionActive == true then
@@ -587,7 +587,7 @@ function UniversalAutoload:updateToggleLoadingActionEvent()
 	
 	if spec and spec.isAutoloadAvailable and spec.toggleLoadingActionEventId then
 		-- Activate/Deactivate the LOAD key binding
-		if spec.isLoading and not spec.autoCollectionMode==true then
+		if spec.isLoading and not spec.autoCollectionMode then
 			local stopLoadingText = g_i18n:getText("universalAutoload_stopLoading")
 			g_inputBinding:setActionEventText(spec.toggleLoadingActionEventId, stopLoadingText)
 			if debugKeys then print("   >> " .. stopLoadingText) end
@@ -3068,7 +3068,7 @@ function UniversalAutoload:isUsingLayerLoading()
 	-- print("SHOULD USE LAYER LOADING?")
 	local spec = self.spec_universalAutoload
 	
-	if (spec.isLogTrailer and spec.currentLayerCount < UniversalAutoload.MAX_LAYER_COUNT)
+	if (spec.isLogTrailer and spec.currentLayerCount < 2*UniversalAutoload.MAX_LAYER_COUNT)
 	or (spec.useHorizontalLoading and spec.currentLayerCount < UniversalAutoload.MAX_LAYER_COUNT) then
 		return true
 	end	
@@ -3690,6 +3690,7 @@ end
 --
 function UniversalAutoload:evaluateLoadPlace(containerType, object, thisLoadPlace)
 	local spec = self.spec_universalAutoload
+	local i = spec.currentLoadAreaIndex or 1
 	local maxLoadAreaHeight = spec.maxLoadAreaHeight or spec.loadArea[i].height
 
 	spec.loadSpeedFactor = 1
@@ -3740,7 +3741,7 @@ function UniversalAutoload:evaluateLoadPlace(containerType, object, thisLoadPlac
 		if not self:ualGetIsMoving() then
 			
 			local increment = 0.1
-			if spec.useHorizontalLoading then
+			if spec.useHorizontalLoading and not spec.partiallyUnloaded then
 				local thisLoadHeight = spec.currentLayerHeight
 				while thisLoadHeight+offset.y <= maxLoadAreaHeight - thisLoadPlace.newLoadHeight do
 					setTranslation(thisLoadPlace.node, x0, thisLoadHeight+offset.y, z0)
@@ -3903,16 +3904,12 @@ function UniversalAutoload:getLoadPlace(containerType, object)
 							end
 						end
 
-						-- if spec.currentLoadLength + 0.025 < spec.loadArea[i].length and spec.nextLayerHeight == 0 then
-							-- if debugLoading then print("SHIFT POSITION") end
-							-- spec.currentLoadLength = spec.currentLoadLength + 0.025
-							-- -- if debugLoading then
-								-- -- print(" currentLoadLength" .. tostring(spec.currentLoadLength))
-								-- -- print(" currentLayerHeight " .. tostring(spec.currentLayerHeight))
-							-- -- end
-							-- spec.currentLoadingPlace = nil
-							-- return UniversalAutoload.getLoadPlace(self, containerType, object)
-						-- end
+						if spec.useHorizontalLoading and spec.nextLayerHeight == 0 then
+							if debugLoading then print("SHIFT POSITION " .. tostring(spec.currentLoadLength)) end
+							spec.currentLoadLength = spec.currentLoadLength + UniversalAutoload.DELTA
+							spec.currentLoadingPlace = nil
+							return UniversalAutoload.getLoadPlace(self, containerType, object)
+						end
 
 						if debugLoading then print("DID NOT FIT HERE...") end
 						spec.currentLoadingPlace = nil
@@ -3934,7 +3931,7 @@ function UniversalAutoload:getLoadPlace(containerType, object)
 		end
 		spec.currentLoadAreaIndex = 1
 		if UniversalAutoload.isUsingLayerLoading(self) and
-		not (spec.autoCollectionMode and spec.nextLayerHeight == 0) then
+		not (spec.baleCollectionActive and spec.nextLayerHeight == 0) then
 			spec.currentLayerCount = spec.currentLayerCount + 1
 			spec.currentLoadingPlace = nil
 			if not spec.isLogTrailer or (spec.isLogTrailer and spec.nextLayerHeight > 0) then
@@ -3948,9 +3945,9 @@ function UniversalAutoload:getLoadPlace(containerType, object)
 			end
 			return UniversalAutoload.getLoadPlace(self, containerType, object)
 		else
-			print("FULL - NO MORE ROOM")
+			if debugLoading then print("FULL - NO MORE ROOM") end
 			spec.trailerIsFull = true
-			if spec.autoCollectionMode == true then
+			if spec.autoCollectionMode then
 				if debugSpecial then print("autoCollectionMode: trailerIsFull") end
 				UniversalAutoload.setAutoCollectionMode(self, false)
 			end
@@ -4017,7 +4014,7 @@ function UniversalAutoload:getIsUnloadingKeyAllowed()
 	
 	if (spec.doPostLoadDelay or spec.isLoading or spec.isUnloading
 	or spec.validUnloadCount == 0 or spec.currentTipside == "none")
-	and not spec.autoCollectionMode == true	then
+	and not spec.autoCollectionMode	then
 		return false
 	end
 	if spec.isBoxTrailer and spec.noLoadingIfFolded and (self:ualGetIsFolding() or not self:getIsUnfolded()) then
@@ -4658,7 +4655,7 @@ function UniversalAutoload:moveObjectNodes( object, position, isLoading, rotateL
 
 		end
 
-		if spec.autoCollectionMode==true and spec.baleCollectionActive and object.isRoundbale~=nil then
+		if spec.autoCollectionMode and spec.baleCollectionActive and object.isRoundbale~=nil then
 			UniversalAutoload.addBaleModeBale(self, node)
 		else
 			UniversalAutoload.addToPhysics(self, object)
