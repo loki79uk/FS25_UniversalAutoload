@@ -578,6 +578,7 @@ function UniversalAutoload:updateToggleLoadingActionEvent()
 			end
 				
 			g_inputBinding:setActionEventText(spec.toggleCollectionModeEventId, autoCollectionModeText)
+			g_inputBinding:setActionEventActive(spec.toggleCollectionModeEventId, true)
 			g_inputBinding:setActionEventTextVisibility(spec.toggleCollectionModeEventId, true)
 			if debugKeys then print("   >> " .. autoCollectionModeText) end
 		else
@@ -2327,7 +2328,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 	spec.countedPallets = false
 	-- local playerActive = (spec.playerInTrigger and (spec.playerInTrigger[g_localPlayer.userId] == true)) or false
 	
-	if self.isClient and isActiveForInputIgnoreSelection or playerActive then
+	if self.isClient and not g_gui:getIsGuiVisible() and isActiveForInputIgnoreSelection or playerActive then
 		spec.menuDelayTime = spec.menuDelayTime or 0
 		if spec.menuDelayTime > UniversalAutoload.DELAY_TIME/2 then
 			spec.menuDelayTime = 0
