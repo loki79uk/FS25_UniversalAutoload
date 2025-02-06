@@ -985,8 +985,10 @@ function UniversalAutoload:setAutoCollectionMode(autoCollectionMode, noEventSend
 		else
 			if debugSpecial then print("autoCollectionMode: stopLoading") end
 			UniversalAutoload.stopLoading(self)
+			if spec.baleCollectionActive then
+				spec.baleCollectionModeDeactivated = true
+			end
 			spec.baleCollectionActive = nil
-			spec.autoCollectionModeDeactivated = true
 		end
 	end
 	
@@ -2675,7 +2677,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 		-- end
 		
 		local isActiveForLoading = spec.isLoading or spec.isUnloading or spec.doPostLoadDelay
-		if isActiveForInputIgnoreSelection or isActiveForLoading or spec.autoCollectionMode or spec.autoCollectionModeDeactivated or spec.aiLoadingActive then
+		if isActiveForInputIgnoreSelection or isActiveForLoading or spec.autoCollectionMode or spec.baleCollectionModeDeactivated or spec.aiLoadingActive then
 		
 			if spec.autoCollectionMode and not isActiveForLoading or spec.aiLoadingActive then
 				if spec.totalAvailableCount > 0 and not spec.trailerIsFull then
@@ -2684,9 +2686,9 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 			end
 			
 			-- RETURN BALES TO PHYSICS WHEN NOT MOVING
-			if spec.autoCollectionModeDeactivated and not self:ualGetIsMoving() then
+			if spec.baleCollectionModeDeactivated and not self:ualGetIsMoving() then
 				-- print("ADDING BALES BACK TO PHYSICS")
-				spec.autoCollectionModeDeactivated = false
+				spec.baleCollectionModeDeactivated = false
 				for object, _ in pairs(spec.loadedObjects) do
 					if object and object.isRoundbale ~= nil then
 						UniversalAutoload.unlinkObject(object)
@@ -4030,7 +4032,7 @@ function UniversalAutoload:getIsUnloadingKeyAllowed()
 	if spec.noLoadingIfUncovered and not self:ualGetIsCovered() then
 		return false
 	end
-	if spec.baleCollectionActive then
+	if spec.baleCollectionActive or spec.baleCollectionModeDeactivated then
 		return false
 	end
 	return true
