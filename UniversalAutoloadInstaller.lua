@@ -19,9 +19,13 @@ TypeManager.validateTypes = Utils.appendedFunction(TypeManager.validateTypes, fu
 end)
 
 local ROOT = getmetatable(_G).__index
--- DETECT SOLD LOGS
+-- DETECT SOLD LOGS/OBJECTS
 ROOT.delete = Utils.appendedFunction(ROOT.delete, function(nodeId)
-	if UniversalAutoload.SPLITSHAPES_LOOKUP[nodeId] then
+	if UniversalAutoload.OBJECTS_LOOKUP[nodeId] then
+		local object = UniversalAutoload.OBJECTS_LOOKUP[nodeId] 
+		UniversalAutoload.clearPalletFromAllVehicles(nil, object)
+		UniversalAutoload.OBJECTS_LOOKUP[nodeId] = nil
+	elseif UniversalAutoload.SPLITSHAPES_LOOKUP[nodeId] then
 		local object = UniversalAutoload.SPLITSHAPES_LOOKUP[nodeId] 
 		UniversalAutoload.clearPalletFromAllVehicles(nil, object)
 		UniversalAutoload.SPLITSHAPES_LOOKUP[nodeId] = nil

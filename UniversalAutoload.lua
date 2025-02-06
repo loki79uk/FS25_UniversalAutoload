@@ -19,6 +19,7 @@ UniversalAutoload.containerKey = "universalAutoload.containerConfigurations.cont
 UniversalAutoload.containerSchemaKey = "universalAutoload.containerConfigurations.container(?)"
 
 UniversalAutoload.SPLITSHAPES_LOOKUP = {}
+UniversalAutoload.OBJECTS_LOOKUP = {}
 
 UniversalAutoload.ALL = "ALL"
 UniversalAutoload.DELTA = 0.005
@@ -3350,9 +3351,9 @@ function UniversalAutoload.clearPalletFromAllVehicles(self, object)
 				if not self or self ~= vehicle then
 					local SPEC = vehicle.spec_universalAutoload
 					if SPEC.totalUnloadCount == 0 then
-						if debugLoading then
-							print(" Clear Pallet from " .. vehicle:getFullName())
-						end
+						-- if debugLoading then
+							print(" Cleared ALL Pallets from " .. vehicle:getFullName())
+						-- end
 						UniversalAutoload.resetLoadingArea(vehicle)
 						vehicle:setAllTensionBeltsActive(false)
 					elseif loadedObjectRemoved then
@@ -4377,6 +4378,13 @@ end
 
 -- -- OBJECT MOVEMENT FUNCTIONS
 function UniversalAutoload.getNodeObject( objectId )
+	
+	if not entityExists(objectId) then
+		print("object entity NOT exists")
+		UniversalAutoload.OBJECTS_LOOKUP[objectId] = nil
+		UniversalAutoload.SPLITSHAPES_LOOKUP[objectId] = nil
+		return
+	end
 
 	return g_currentMission:getNodeObject(objectId) or UniversalAutoload.getSplitShapeObject(objectId)
 end
@@ -4384,7 +4392,7 @@ end
 function UniversalAutoload.getSplitShapeObject( objectId )
 
 	if not entityExists(objectId) then
-		print("entity NOT exists")
+		print("splitshape entity NOT exists")
 		UniversalAutoload.SPLITSHAPES_LOOKUP[objectId] = nil
 		return
 	end
@@ -5262,6 +5270,7 @@ function UniversalAutoload.getContainerType(object)
 	end
 
 	local objectType = UniversalAutoload.LOADING_TYPES[name]
+	UniversalAutoload.OBJECTS_LOOKUP = UniversalAutoload.OBJECTS_LOOKUP or {}
 	UniversalAutoload.INVALID_OBJECTS = UniversalAutoload.INVALID_OBJECTS or {}
 
 	local itemIsFull = UniversalAutoload.getPalletIsFull(object)
@@ -5420,6 +5429,7 @@ function UniversalAutoload.getContainerType(object)
 				if itemIsFull == false then
 					UniversalAutoload.PARTIAL_OBJECTS[object] = newType
 				end
+				UniversalAutoload.OBJECTS_LOOKUP[object] = newType
 				return newType
 			end
 			
@@ -5804,7 +5814,8 @@ function UniversalAutoload:drawDebugDisplay()
 			-- DebugUtil.drawDebugNode(object.positionNodeId, getName(object.positionNodeId))
 		-- end
 	
-		g_currentMission:addExtraPrintText(tostring(self:getName() .. " # " .. (spec.validUnloadCount or "-") .. " / " .. (spec.totalAvailableCount or "-")))
+		g_currentMission:addExtraPrintText(tostring(self:getName() .. " # " .. (spec.validUnloadCount or "-") .. " / " .. (spec.totalAvailableCount or "-")
+			.. ((spec.useHorizontalLoading and " : L" .. spec.currentLayerCount  .. "") or "" )))
 		
 		if self.isServer then
 			-- UniversalAutoload.testLoadAreaIsEmpty(self)
