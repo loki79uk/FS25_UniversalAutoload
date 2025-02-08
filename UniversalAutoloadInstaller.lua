@@ -935,6 +935,24 @@ function UniversalAutoloadManager:onEditLoadingAreaEvent(actionName, inputValue,
 end
 
 function UniversalAutoloadManager.onSetStoreItem()
+	
+	local buyButton = g_shopConfigScreen.buyButton
+	local buyButtonCloned = buyButton and buyButton == UniversalAutoloadManager.buyButton
+	if not UniversalAutoloadManager.configButton or not buyButtonCloned then
+		print("INJECT UAL configButton")
+		local function cloneButton(original, title, callback)
+			local button = original:clone(original.parent)
+			button:setText(title)
+			button:setVisible(false)
+			button:setCallback("onClickCallback", callback)
+			button:setInputAction(InputAction.UNIVERSALAUTOLOAD_SHOP_CONFIG)
+			button.parent:invalidateLayout()
+			return button
+		end
+		local button = cloneButton(buyButton, g_i18n:getText("shop_configuration_text"), "ualInputCallback");
+		UniversalAutoloadManager.configButton = button
+		UniversalAutoloadManager.buyButton = buyButton
+	end
 	if UniversalAutoloadManager.configButton then
 		UniversalAutoloadManager.configButton:setVisible(false)
 	end
@@ -1101,22 +1119,6 @@ end
 
 function UniversalAutoloadManager.createShopGui()
 	-- print("UAL - createShopGui")
-	if not UniversalAutoloadManager.configButton then
-		local function cloneButton(original, title, callback)
-			local button = original:clone(original.parent)
-			button:setText(title)
-			button:setVisible(false)
-			button:setCallback("onClickCallback", callback)
-			button:setInputAction(InputAction.UNIVERSALAUTOLOAD_SHOP_CONFIG)
-			button.parent:invalidateLayout()
-			return button
-		end
-		
-		local buyButton = g_shopConfigScreen.buyButton
-		local button = cloneButton(buyButton, g_i18n:getText("shop_configuration_text"), "ualInputCallback");
-		UniversalAutoloadManager.configButton = button
-	end
-
 	if not UniversalAutoloadManager.shopCongfigMenu then
 		UniversalAutoloadManager.shopCongfigMenu = ShopConfigMenuUALSettings.register()
 	end
@@ -1166,17 +1168,27 @@ end
 function UniversalAutoloadManager.onValidUalShopVehicle(vehicle)
 	if vehicle.propertyState == VehiclePropertyState.SHOP_CONFIG then
 		UniversalAutoloadManager:registerShopActionEvents()
-		UniversalAutoloadManager.configButton:setVisible(true)
-		UniversalAutoloadManager.configButton.parent:invalidateLayout()
-		UniversalAutoloadManager.shopCongfigMenu:setNewVehicle(vehicle)
+		if UniversalAutoloadManager.configButton then
+			UniversalAutoloadManager.configButton:setVisible(true)
+			if UniversalAutoloadManager.configButton.parent then
+				UniversalAutoloadManager.configButton.parent:invalidateLayout()
+			end
+		end
+		if UniversalAutoloadManager.shopCongfigMenu then
+			UniversalAutoloadManager.shopCongfigMenu:setNewVehicle(vehicle)
+		end
 	end
 end
 
 function UniversalAutoloadManager.onInvalidUalShopVehicle(vehicle)
 	if vehicle.propertyState == VehiclePropertyState.SHOP_CONFIG then
 		UniversalAutoloadManager:removeShopActionEvents()
-		UniversalAutoloadManager.configButton:setVisible(false)
-		UniversalAutoloadManager.shopCongfigMenu:setNewVehicle(nil)
+		if UniversalAutoloadManager.configButton then
+			UniversalAutoloadManager.configButton:setVisible(false)
+		end
+		if UniversalAutoloadManager.shopCongfigMenu then
+			UniversalAutoloadManager.shopCongfigMenu:setNewVehicle(nil)
+		end
 	end
 end
 
