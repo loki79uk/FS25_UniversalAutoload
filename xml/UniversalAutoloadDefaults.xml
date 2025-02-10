@@ -3,7 +3,7 @@
     <vehicleConfigurations>
         <vehicle configFileName="data/vehicles/krone/profiLiner/profiLiner.xml">
             <configuration selectedConfigs="ALL">
-                <options isCurtainTrailer="true"/>
+                <options isCurtainTrailer="true" enableRearLoading="true" enableSideLoading="true"/>
                 <loadingArea offset="0 1.188 -0.123" width="2.44" height="2.50" length="13.4"/>
             </configuration>
         </vehicle>
