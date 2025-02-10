@@ -932,6 +932,12 @@ function UniversalAutoload:setHorizontalLoading(state, noEventSend)
 	UniversalAutoload.SetHorizontalLoadingEvent.sendEvent(self, state, noEventSend)
 	
 	spec.updateHorizontalLoading = true
+	
+	if self.isServer then
+		if UniversalAutoload.testLoadAreaIsEmpty(self) then
+			UniversalAutoload.resetLoadingArea(self)
+		end
+	end
 end
 --
 function UniversalAutoload:setCurrentTipside(tipside, noEventSend)
@@ -3827,6 +3833,9 @@ function UniversalAutoload:getLoadPlace(containerType, object)
 				local volume = containerSizeX * containerSizeY * containerSizeZ
 				local density = math.min(mass/volume, 1.5)
 			
+				local isFirstLayer = (spec.isLogTrailer or spec.useHorizontalLoading) and spec.currentLayerCount == 0
+				local ignoreHeightForContainer = isFirstLayer and not (spec.isCurtainTrailer or spec.isBoxTrailer)
+					
 				while spec.currentLoadLength <= spec.loadArea[i].length do
 
 					local maxLoadAreaHeight = spec.loadArea[i].height
@@ -3834,21 +3843,25 @@ function UniversalAutoload:getLoadPlace(containerType, object)
 						maxLoadAreaHeight = spec.loadArea[i].baleHeight
 					end
 					
-					if (spec.currentLoadHeight > 0 or spec.useHorizontalLoading) and maxLoadAreaHeight > containerSizeY
-					and not spec.disableHeightLimit and not spec.isLogTrailer then
-						if density > 0.5 then
-							maxLoadAreaHeight = maxLoadAreaHeight * (7-(2*density))/6
-						end
-						if maxLoadAreaHeight > UniversalAutoload.MAX_STACK * containerSizeY then
-							maxLoadAreaHeight = UniversalAutoload.MAX_STACK * containerSizeY
+					if ignoreHeightForContainer then
+						if debugLoading then print("ignoreHeightForContainer") end
+						maxLoadAreaHeight = math.max(maxLoadAreaHeight, containerSizeY + 0.1)
+					else
+						if (spec.currentLoadHeight > 0 or spec.useHorizontalLoading) and maxLoadAreaHeight > containerSizeY
+						and not spec.disableHeightLimit and not spec.isLogTrailer then
+							if density > 0.5 then
+								maxLoadAreaHeight = maxLoadAreaHeight * (7-(2*density))/6
+							end
+							if maxLoadAreaHeight > UniversalAutoload.MAX_STACK * containerSizeY then
+								maxLoadAreaHeight = UniversalAutoload.MAX_STACK * containerSizeY
+							end
 						end
 					end
 					spec.maxLoadAreaHeight = maxLoadAreaHeight
 					
 					local loadOverMaxHeight = spec.currentLoadHeight + containerSizeY > maxLoadAreaHeight
 					local layerOverMaxHeight = spec.currentLayerHeight + containerSizeY > maxLoadAreaHeight
-					local isFirstLayer = (spec.isLogTrailer or spec.useHorizontalLoading) and spec.currentLayerCount == 0
-					local ignoreHeightForContainer = isFirstLayer and not (spec.isCurtainTrailer or spec.isBoxTrailer)
+					
 					if spec.currentLoadingPlace and spec.currentLoadHeight==0 and loadOverMaxHeight and not ignoreHeightForContainer then
 						if debugLoading then print("CONTAINER IS TOO TALL FOR THIS AREA") end
 						return
@@ -3954,6 +3967,10 @@ function UniversalAutoload:getLoadPlace(containerType, object)
 			if spec.autoCollectionMode then
 				if debugSpecial then print("autoCollectionMode: trailerIsFull") end
 				UniversalAutoload.setAutoCollectionMode(self, false)
+			end
+			if UniversalAutoload.testLoadAreaIsEmpty(self) then
+				print("*** FAILED TO LOAD - BUT LOAD AREA WAS EMPTY ***")
+				UniversalAutoload.resetLoadingArea(self)
 			end
 		end
 		if debugLoading then print("===============================") end
