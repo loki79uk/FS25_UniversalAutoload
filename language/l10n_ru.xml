@@ -84,10 +84,10 @@
 		<text name="ui_option_tooltip_offsetRoot" text="Узел i3d транспортного средства, относительно которого смещены области"/>
 		<text name="ui_option_tooltip_minLogLength" text="Минимальная длина бревна, которые будут загружаться автоматически"/>
 
-		<text name="ui_option_addRemoveAreas" text="Number of Loading Areas"/>
-		<text name="ui_option_selectedArea" text="Selected Area"/>
-		<text name="ui_option_tooltip_addRemoveAreas" text="Adjust value here to add or remove loading areas"/>
-		<text name="ui_option_tooltip_selectedArea" text="The area selected (to modify in the settings below)"/>
+		<text name="ui_option_addRemoveAreas" text="Количество погрузочных площадок"/>
+		<text name="ui_option_selectedArea" text="Выбранная область"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="Измените значение здесь, чтобы добавить или удалить области загрузки"/>
+		<text name="ui_option_tooltip_selectedArea" text="Выбранная область (для изменения в настройках ниже)"/>
 		
 		<!-- LOADING_AREA -->
 		<text name="ui_loadArea_offset" text="Смещение"/>
