@@ -5,7 +5,7 @@
 		<text name="configuration_universalAutoload" text="Autoload Universale"/>
 		
 		<!-- TITLES -->
-		<text name="ui_global_settings_ual" text="Impostazioni Globali"/>
+		<text name="ui_global_settings_ual" text="Impostazioni Generali"/>
 		<text name="ui_config_settings_ual" text="impostazioni Autoload"/>
 		<text name="ui_vehicle_options_ual" text="Opzioni veicoli"/>
 		<text name="ui_loading_area_options_ual" text="Opzioni area di carico"/>
@@ -13,7 +13,7 @@
 		<text name="ui_confirm_save_config_ual" text="Vuoi sovrascrivere la configurazione di caricamento automatico predefinita per questo veicolo?"/>
 		
 		<!-- GLOBAL -->
-		<text name="ui_global_showDebug" text="mostra Debug"/>
+		<text name="ui_global_showDebug" text="Mostra Debug"/>
 		<text name="ui_global_highPriority" text="Alta priorità"/>
 		<text name="ui_global_disableAutoStrap" text="Cinghie di tensione automatica"/>
 		<text name="ui_global_pricePerLog" text="Prezzo per tronco"/>
@@ -58,7 +58,7 @@
 		<text name="ui_option_disableAutoStrap" text="Cinghie di tensione automatica"/>
 		<text name="ui_option_disableHeightLimit" text="Disabilita limite altezza"/>
 		<text name="ui_option_zonesOverlap" text="Le zone si sovrappongono"/>
-		<text name="ui_option_offsetRoot" text="Radice spostata"/>
+		<text name="ui_option_offsetRoot" text="Compensazione origine"/>
 		<text name="ui_option_minLogLength" text="Lunghezza minima del tronco"/>
 
 		<text name="ui_option_tooltip_enableAutoload" text="Se il caricamento automatico è abilitato o disabilitato per questo veicolo"/>
@@ -81,17 +81,17 @@
 		<text name="ui_option_tooltip_disableAutoStrap" text="Applicazione automatica delle cinghie di tensione dopo il carico o lo scarico"/>
 		<text name="ui_option_tooltip_disableHeightLimit" text="Disattiva il limite di altezza di impilamento basato sulla densità"/>
 		<text name="ui_option_tooltip_zonesOverlap" text="Segnala quando le aree di carico si sovrappongono"/>
-		<text name="ui_option_tooltip_offsetRoot" text="Nodo i3d del veicolo a cui sono relativi gli offset dell'area"/>
+		<text name="ui_option_tooltip_offsetRoot" text="Nodo i3d del veicolo a cui sono relative le compensazioni dell'area"/>
 		<text name="ui_option_tooltip_minLogLength" text="La lunghezza minima per i tronchi che verranno caricati automaticamente"/>
 
-		<text name="ui_option_addRemoveAreas" text="Number of Loading Areas"/>
-		<text name="ui_option_selectedArea" text="Selected Area"/>
-		<text name="ui_option_tooltip_addRemoveAreas" text="Adjust value here to add or remove loading areas"/>
-		<text name="ui_option_tooltip_selectedArea" text="The area selected (to modify in the settings below)"/>
+		<text name="ui_option_addRemoveAreas" text="Numero di aree di carico"/>
+		<text name="ui_option_selectedArea" text="Area selezionata"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="Regola il valore qui per aggiungere o rimuovere aree di carico"/>
+		<text name="ui_option_tooltip_selectedArea" text="L'area selezionata (da modificare nelle impostazioni sottostanti)"/>
 		
 		<!-- LOADING_AREA -->
-		<text name="ui_loadArea_offset" text="Offset"/>
-		<text name="ui_loadArea_offsetRoot" text="Offset Root"/>
+		<text name="ui_loadArea_offset" text="Compensazione"/>
+		<text name="ui_loadArea_offsetRoot" text="Compensazione origine"/>
 		<text name="ui_loadArea_width" text="Larghezza"/>
 		<text name="ui_loadArea_length" text="Lunghezza"/>
 		<text name="ui_loadArea_height" text="Altezza"/>
@@ -99,8 +99,8 @@
 		<text name="ui_loadArea_widthAxis" text="Larghezza asse"/>
 		<text name="ui_loadArea_lengthAxis" text="Lunghezza asse"/>
 		<text name="ui_loadArea_heightAxis" text="Altezza asse"/>
-		<text name="ui_loadArea_offsetFrontAxis" text="Offset asse anteriore"/>
-		<text name="ui_loadArea_offsetRearAxis" text="Offset Asse posteriore"/>
+		<text name="ui_loadArea_offsetFrontAxis" text="Compensazione asse anteriore"/>
+		<text name="ui_loadArea_offsetRearAxis" text="Compensazione Asse posteriore"/>
 		<text name="ui_loadArea_reverseWidthAxis" text="Asse larghezza inversa"/>
 		<text name="ui_loadArea_reverseLengthAxis" text="Asse di lunghezza inversa"/>
 		<text name="ui_loadArea_reverseHeightAxis" text="Asse di altezza inversa"/>
@@ -109,8 +109,8 @@
 		<text name="ui_loadArea_noLoadingIfCovered" text="Nessun carico se coperto"/>
 		<text name="ui_loadArea_noLoadingIfUncovered" text="Nessun caricamento se scoperto"/>
 		
-		<text name="ui_loadArea_tooltip_offset" text="Offset al centro dell'area di carico"/>
-		<text name="ui_loadArea_tooltip_offsetRoot" text="Nodo i3d del veicolo a cui è relativo questo offset dell'area"/>
+		<text name="ui_loadArea_tooltip_offset" text="Compensazione al centro dell'area di carico"/>
+		<text name="ui_loadArea_tooltip_offsetRoot" text="Nodo i3d del veicolo a cui è relativo questo Compensazione dell'area"/>
 		<text name="ui_loadArea_tooltip_width" text="Larghezza della zona di carico"/>
 		<text name="ui_loadArea_tooltip_length" text="Lunghezza della zona di carico"/>
 		<text name="ui_loadArea_tooltip_height" text="Altezza della zona di carico"/>
@@ -129,7 +129,7 @@
 		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Impedire il caricamento quando non è coperto (solo per questa area)"/>
 
 		<!-- KEY BINDINGS -->
-		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Open global settings menu"/>
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Apri il menu delle impostazioni generali"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Aprire il menu delle impostazioni di configurazione (in negozio)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Abilita la modifica del volume di caricamento (in negozio)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Attiva/disattiva il caricamento"/>
@@ -171,10 +171,10 @@
 		<text name="universalAutoload_stopLoading" text="IFerma il caricamento"/>
 		<text name="universalAutoload_unloadAll" text="Scarico"/>
 		<text name="universalAutoload_unloadAllForce" text="Scarico forzato"/>
-		<text name="universalAutoload_logMode" text="Modo Tronchi"/>
-		<text name="universalAutoload_baleMode" text="Modo Balle"/>
-		<text name="universalAutoload_palletMode" text="Modo Pallet"/>
-		<text name="universalAutoload_collectionMode" text="Modo Raccolta"/>
+		<text name="universalAutoload_logMode" text="Modalità Tronchi"/>
+		<text name="universalAutoload_baleMode" text="Modalità Balle"/>
+		<text name="universalAutoload_palletMode" text="Modalità Pallet"/>
+		<text name="universalAutoload_collectionMode" text="Modalità Raccolta"/>
 		<text name="universalAutoload_enabled" text="Abilitato"/>
 		<text name="universalAutoload_disabled" text="Disabilitato"/>
 		<text name="universalAutoload_activate" text="Attiva"/>
