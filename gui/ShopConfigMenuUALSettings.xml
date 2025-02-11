@@ -101,6 +101,22 @@
 					</Bitmap>
 					
 					<Text profile="fs25_settingsSectionHeader" name="sectionHeader" text="$l10n_ui_loading_area_options_ual"/>
+					
+					<!-- NUMBER OF LOADING AREAS -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickAreaMultiOption" onCreate="onCreateAddRemoveAreas" id="addRemoveAreasListBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_addRemoveAreas"/>
+						</MultiTextOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_addRemoveAreas"/>
+					</Bitmap>
+					
+					<!-- SELECT LOADING AREA -->
+					<!-- <Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox"> -->
+						<!-- <MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickAreaMultiOption" onCreate="onCreateSelectedArea" id="selectedAreaListBox"> -->
+							<!-- <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_selectedArea"/> -->
+						<!-- </MultiTextOption> -->
+						<!-- <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_selectedArea"/> -->
+					<!-- </Bitmap> -->
 
 				</ScrollingLayout>
 				<Bitmap profile="fs25_settingsTooltipSeparator"/>

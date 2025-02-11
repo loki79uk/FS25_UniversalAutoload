@@ -84,6 +84,11 @@
 		<text name="ui_option_tooltip_offsetRoot" text="Noeud i3d du véhicule auquel les décalages de zone sont relatifs"/>
 		<text name="ui_option_tooltip_minLogLength" text="La longueur minimale des grumes qui seront chargées automatiquement"/>
 
+		<text name="ui_option_addRemoveAreas" text="Number of Loading Areas"/>
+		<text name="ui_option_selectedArea" text="Selected Area"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="Adjust value here to add or remove loading areas"/>
+		<text name="ui_option_tooltip_selectedArea" text="The area selected (to modify in the settings below)"/>
+		
 		<!-- LOADING_AREA -->
 		<text name="ui_loadArea_offset" text="Décalage"/>
 		<text name="ui_loadArea_offsetRoot" text="Noeud de décalage"/>

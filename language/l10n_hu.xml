@@ -84,6 +84,11 @@
 		<text name="ui_option_tooltip_offsetRoot" text="Jármű i3d csomópontja, amihez képest az eltolások értelmezettek"/>
 		<text name="ui_option_tooltip_minLogLength" text="Az automatikusan rakodható rönkök minimális hosszúsága"/>
 
+		<text name="ui_option_addRemoveAreas" text="Number of Loading Areas"/>
+		<text name="ui_option_selectedArea" text="Selected Area"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="Adjust value here to add or remove loading areas"/>
+		<text name="ui_option_tooltip_selectedArea" text="The area selected (to modify in the settings below)"/>
+		
 		<!-- LOADING_AREA -->
 		<text name="ui_loadArea_offset" text="Eltolás"/>
 		<text name="ui_loadArea_offsetRoot" text="Referencia pont"/>

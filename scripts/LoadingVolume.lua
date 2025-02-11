@@ -55,6 +55,36 @@ function LoadingVolume:getVerticalAxis()
 	end
 end
 
+function LoadingVolume:addBoundingBox()
+	if self.bbs and #self.bbs > 0 then
+		local bb0 = self.bbs[#self.bbs]
+		local centre, points, names = bb0:getCubeFaces()
+		
+		local bb1 = BoundingBox.new(self.rootNode)
+		bb1:addPoints(points, true)
+		bb1:getCubeFaces()
+		table.insert(self.bbs, bb1)
+		
+		local size = bb0:getSize()
+		local delta = size.z
+		bb0:moveFace(6, delta/2)
+		bb1:moveFace(5, -delta/2)
+	end
+end
+
+function LoadingVolume:removeBoundingBox()
+	if self.bbs and #self.bbs > 1 then
+		local bb0 = self.bbs[#self.bbs]
+		local bb1 = self.bbs[#self.bbs-1]
+		
+		local size = bb0:getSize()
+		local delta = size.z
+		bb1:moveFace(6, -delta)
+		
+		self.bbs[#self.bbs] = nil
+	end
+end
+
 function LoadingVolume:clearDebug()
 	if #self.debug.raycasts > 0 then
 		-- print("CLEARING RAYCASTS")
@@ -140,7 +170,7 @@ function LoadingVolume:draw(drawAll)
 		if shopConfig and shopConfig.enableEditing then
 	
 			local hovered = shopConfig.hovered
-			local selected = shopConfig.selected	
+			local selected = shopConfig.selected
 			for n, bb in pairs(self.bbs) do
 				local centre, points, names = bb:getCubeFaces()
 				for i, p in pairs(points or {}) do
@@ -156,8 +186,11 @@ function LoadingVolume:draw(drawAll)
 					drawDebugPoint(p[1], p[2], p[3], r, g, b, a, solid)
 				end
 				
+				local c = centre
+				Utils.renderTextAtWorldPosition(c[1], c[2], c[3], string.format("#%d", n), getCorrectTextSize(0.015), 0, {0,1,1})
+				
 				local size = bb:getSize()
-				renderText(0.4, 0.92-(n*0.035), 0.025, string.format("[%d] W, H, L = %.3f, %.3f, %.3f", n, size.x, size.y, size.z))
+				renderText(0.4, 0.92-(n*0.035), 0.025, string.format("[#%d] W, H, L = %.3f, %.3f, %.3f", n, size.x, size.y, size.z))
 			end
 		end
 	end

@@ -44,7 +44,7 @@
 		<text name="ui_option_noLoadingCovered" text="Не Завантажувати Якщо"/>
 		<text name="ui_option_covered" text="Затеноване"/>
 		<text name="ui_option_uncovered" text="Розтентоване"/>
-		
+
 		<text name="ui_option_isBoxTrailer" text="Причіп Контейнер"/>
 		<text name="ui_option_isLogTrailer" text="Причіп Лісовоз"/>
 		<text name="ui_option_isBaleTrailer" text="Причіп Платформа"/>
@@ -52,7 +52,7 @@
 		<text name="ui_option_isCurtainTrailer" text="Причіп Тентований"/>
 		<text name="ui_option_enableRearLoading" text="Заднє Завантаження"/>
 		<text name="ui_option_enableSideLoading" text="Бокове Завантаження"/>
-		
+
 		<text name="ui_option_rearUnloadingOnly" text="Тільки Заднє Розвантаження"/>
 		<text name="ui_option_frontUnloadingOnly" text="Тільки Переднє Розвантаження"/>
 		<text name="ui_option_horizontalLoading" text="Горизонтальне Завантаження"/>
@@ -62,7 +62,7 @@
 		<text name="ui_option_offsetRoot" text="Зміщення Центра"/>
 		<text name="ui_option_minLogLength" text="Мін Довжина Колоди"/>
 		
-        <text name="ui_option_tooltip_enableAutoload" text="Вимкнене або ввімкнуте автозавантаження для цього транспортного засобу"/>
+		<text name="ui_option_tooltip_enableAutoload" text="Вимкнене або ввімкнуте автозавантаження для цього транспортного засобу"/>
 		<text name="ui_option_tooltip_trailerType" text="Спеціальний тип причепа, напр. платформа, лісовоз, тентований"/>
 		<text name="ui_option_tooltip_unloadingType" text="Використовувати спеціальну позицію розвантаження (перед або зад)"/>
 		<text name="ui_option_tooltip_noLoadingFolded" text="Запобігає завантаженню в складеному або розкладеному стані"/>
@@ -75,7 +75,7 @@
 		<text name="ui_option_tooltip_isCurtainTrailer" text="Автоматичне визначення доступної сторони завантаження (якщо у причепа є бокові штори)"/>
 		<text name="ui_option_tooltip_enableRearLoading" text="Використовувати задній тригер автозавантаження"/>
 		<text name="ui_option_tooltip_enableSideLoading" text="Використовувати бокові тригери автозавантаження"/>
-		
+
 		<text name="ui_option_tooltip_rearUnloadingOnly" text="Використовувати тільки задню зону розвантаження(немає бокових)"/>
 		<text name="ui_option_tooltip_frontUnloadingOnly" text="Використовувати тільки передню зону розвантаження(немає бокових)"/>
 		<text name="ui_option_tooltip_horizontalLoading" text="Починає з горизонтального завантаження(можна перемкнути, якщо призначена клавіша)"/>
@@ -84,6 +84,11 @@
 		<text name="ui_option_tooltip_zonesOverlap" text="Прапор, щоб визначити, коли області завантаження накладаються одна на одну"/>
 		<text name="ui_option_tooltip_offsetRoot" text="Вузол i3d транспортного засобу, відносно якого є зміщення площі"/>
 		<text name="ui_option_tooltip_minLogLength" text="Мінімальна довжина для колод які будуть автозавантажені"/>
+
+		<text name="ui_option_addRemoveAreas" text="Number of Loading Areas"/>
+		<text name="ui_option_selectedArea" text="Selected Area"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="Adjust value here to add or remove loading areas"/>
+		<text name="ui_option_tooltip_selectedArea" text="The area selected (to modify in the settings below)"/>
 
 		<!-- LOADING_AREA -->
 		<text name="ui_loadArea_offset" text="Зміщення"/>

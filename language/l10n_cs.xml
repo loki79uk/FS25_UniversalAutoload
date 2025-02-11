@@ -86,6 +86,11 @@
 		<text name="ui_option_tooltip_offsetRoot" text="区域偏移相对于的车辆 i3d 节点"/>
 		<text name="ui_option_tooltip_minLogLength" text="自动加载原木的最小长度"/>
 
+		<text name="ui_option_addRemoveAreas" text="Number of Loading Areas"/>
+		<text name="ui_option_selectedArea" text="Selected Area"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="Adjust value here to add or remove loading areas"/>
+		<text name="ui_option_tooltip_selectedArea" text="The area selected (to modify in the settings below)"/>
+		
 		<!-- LOADING_AREA -->
 		<text name="ui_loadArea_offset" text="偏移"/>
 		<text name="ui_loadArea_offsetRoot" text="偏移根"/>

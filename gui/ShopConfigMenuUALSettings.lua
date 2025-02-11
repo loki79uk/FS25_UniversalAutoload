@@ -104,6 +104,10 @@ function ShopConfigMenuUALSettings:updateSettings()
 	--zonesOverlap
 	--offsetRoot
 	
+		local spec = vehicle.spec_universalAutoload
+		local numberAreas = spec.loadingVolume and #spec.loadingVolume.bbs or 1
+		setValue('addRemoveAreasListBox', numberAreas)
+	
 	end
 	
 end
@@ -163,6 +167,13 @@ function ShopConfigMenuUALSettings:onCreateNoLoadingCovered(control)
 	}
 end
 
+function ShopConfigMenuUALSettings:onCreateAddRemoveAreas(control)
+	control.texts = {"1", "2", "3"}
+end
+function ShopConfigMenuUALSettings:onCreateSelectedArea(control)
+	control.texts = {g_i18n:getText("universalAutoload_ALL")}
+end
+
 function ShopConfigMenuUALSettings:onClickMultiOption(id, control, direction)
 	print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
 		
@@ -215,6 +226,49 @@ function ShopConfigMenuUALSettings:onClickMultiOption(id, control, direction)
 		elseif id == 3 then
 			vehicle.noLoadingIfUncovered = true
 		end
+	end
+	
+end
+
+function ShopConfigMenuUALSettings:onClickAreaMultiOption(id, control, direction)
+	print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
+		
+	local vehicle = self.vehicle and self.vehicle.spec_universalAutoload
+	if not vehicle then
+		return
+	end
+
+	if control == self.addRemoveAreasListBox then
+		local spec = vehicle.spec_universalAutoload
+		local numberAreas = spec.loadingVolume and #spec.loadingVolume.bbs or 1
+		local newNumberAreas = self.addRemoveAreasListBox.state or 1
+		
+		if numberAreas ~= newNumberAreas then
+			if UniversalAutoloadManager.shopConfig then
+				UniversalAutoloadManager.shopConfig.enableEditing = true
+			end
+			
+			if newNumberAreas < numberAreas then
+				print("REMOVE LOAD AREA #" .. numberAreas)
+				spec.loadingVolume:removeBoundingBox()
+			else
+				print("ADD LOAD AREA #" .. newNumberAreas)
+				spec.loadingVolume:addBoundingBox()
+			end
+
+		end
+	
+	
+		-- local texts = {g_i18n:getText("universalAutoload_ALL")}
+		-- if id > 1 then
+			-- for i = 1, id do
+				-- table.insert(texts, "#" .. tostring(i))
+			-- end
+		-- end
+		-- self.selectedAreaListBox:setTexts(texts)
+	end
+	
+	if control == self.selectedAreaListBox then
 	end
 	
 end
@@ -277,7 +331,7 @@ function ShopConfigMenuUALSettings:onClickSave()
 			UniversalAutoloadManager.exportVehicleConfigToServer()
 		end
 	end
-	YesNoDialog.show(callback, self, text, nil, nil, nil, nil, nil, nil, nil, true)
+	YesNoDialog.show(callback, self, text)
 end
 
 function ShopConfigMenuUALSettings:onClickClose()

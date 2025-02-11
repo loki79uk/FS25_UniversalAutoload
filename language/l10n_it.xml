@@ -84,6 +84,11 @@
 		<text name="ui_option_tooltip_offsetRoot" text="Nodo i3d del veicolo a cui sono relativi gli offset dell'area"/>
 		<text name="ui_option_tooltip_minLogLength" text="La lunghezza minima per i tronchi che verranno caricati automaticamente"/>
 
+		<text name="ui_option_addRemoveAreas" text="Number of Loading Areas"/>
+		<text name="ui_option_selectedArea" text="Selected Area"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="Adjust value here to add or remove loading areas"/>
+		<text name="ui_option_tooltip_selectedArea" text="The area selected (to modify in the settings below)"/>
+		
 		<!-- LOADING_AREA -->
 		<text name="ui_loadArea_offset" text="Offset"/>
 		<text name="ui_loadArea_offsetRoot" text="Offset Root"/>

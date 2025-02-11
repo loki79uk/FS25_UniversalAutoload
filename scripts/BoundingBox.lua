@@ -777,23 +777,30 @@ function BoundingBox:moveFace(pointIndex, delta)
 		
 		size[axis] = size[axis] + sign*delta
 		offset[axis] = offset[axis] + delta/2
+		
+		local rootNode = self:getRootNode()
+		local sx, sy, sz = offset.x, offset.y, offset.z
+		local x, y, z = localToWorld(rootNode, sx, sy, sz)
+		self.centre = {x, y, z}
 
-		local pointLookup = {
-			x = 1,
-			y = 2,
-			z = 3,
-		}
-		local axisIndex = pointLookup[axis]
-		self.points[pointIndex][axisIndex] = self.points[pointIndex][axisIndex] + delta
+		if self.points then
+			local pointLookup = {
+				x = 1,
+				y = 2,
+				z = 3,
+			}
+			local axisIndex = pointLookup[axis]
+			self.points[pointIndex][axisIndex] = self.points[pointIndex][axisIndex] + delta
 
-		local shiftLookup = {
-			x = {3,4,5,6},
-			y = {1,2,5,6},
-			z = {1,2,3,4},
-		}
-		local otherPointIndexes = shiftLookup[axis]
-		for _, otherPointIndex in pairs(otherPointIndexes) do
-			self.points[otherPointIndex][axisIndex] = self.points[otherPointIndex][axisIndex] + delta/2
+			local shiftLookup = {
+				x = {3,4,5,6},
+				y = {1,2,5,6},
+				z = {1,2,3,4},
+			}
+			local otherPointIndexes = shiftLookup[axis]
+			for _, otherPointIndex in pairs(otherPointIndexes) do
+				self.points[otherPointIndex][axisIndex] = self.points[otherPointIndex][axisIndex] + delta/2
+			end
 		end
 	end
 end
