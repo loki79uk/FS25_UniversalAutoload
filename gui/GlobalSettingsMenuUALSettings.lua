@@ -59,6 +59,10 @@ function GlobalSettingsMenuUALSettings:updateSettings()
 	setChecked('highPriorityCheckBox', UniversalAutoload.highPriority)
 	setChecked('disableAutoStrapCheckBox', not UniversalAutoload.disableAutoStrap)
 	
+	self.pricePerLogTextInput:setText(tostring(UniversalAutoload.pricePerLog))
+	self.pricePerBaleTextInput:setText(tostring(UniversalAutoload.pricePerBale))
+	self.pricePerPalletTextInput:setText(tostring(UniversalAutoload.pricePerPallet))
+
 end
 
 function GlobalSettingsMenuUALSettings:onCreate()
@@ -82,6 +86,30 @@ function GlobalSettingsMenuUALSettings:onCreate()
 			toggle = not toggle
 		end
 	end
+	
+	if g_currentMission.missionDynamicInfo.isMultiplayer then
+		self.disableAutoStrapCheckBox:setDisabled(true)
+		self.pricePerLogTextInput:setDisabled(true)
+		self.pricePerBaleTextInput:setDisabled(true)
+		self.pricePerPalletTextInput:setDisabled(true)
+	end
+	
+	
+	local function getIsUnicodeAllowed(self, unicode)
+		if self:getText() == "0" then
+			self:setText("")
+		end
+		if unicode == 13 or unicode == 10 then
+			return false
+		elseif getCanRenderUnicode(unicode) and ((unicode >= 48 and unicode <= 57) or (unicode >= 256 and unicode <= 265)) then
+			return Utils.getNoNil(self:raiseCallback("onIsUnicodeAllowedCallback", unicode), true)
+		else
+			return false
+		end
+	end
+	self.pricePerLogTextInput.getIsUnicodeAllowed = getIsUnicodeAllowed
+	self.pricePerBaleTextInput.getIsUnicodeAllowed = getIsUnicodeAllowed
+	self.pricePerPalletTextInput.getIsUnicodeAllowed = getIsUnicodeAllowed
 
 end
 
@@ -99,6 +127,33 @@ function GlobalSettingsMenuUALSettings:onClickBinaryOption(id, control, directio
 		print(" disableAutoStrap: " .. tostring(UniversalAutoload.disableAutoStrap))
 	end
 
+end
+
+
+function GlobalSettingsMenuUALSettings:onClickTextInputOption(id)
+	print("CLICKED GLOBAL VALUE " .. tostring(id) .. " = " .. tostring(id.text))
+	local focusedElement = FocusManager:getFocusedElement()
+end
+
+function GlobalSettingsMenuUALSettings:onEnterTextInputOption(id)
+	print("ENTERED GLOBAL VALUE " .. tostring(id) .. " = " .. tostring(id.text))
+	local numericValue = tonumber(id.text)
+	if not numericValue or type(numericValue) ~= "number" then
+		id:setText("0")
+		numericValue = 0
+	end
+	if id == self.pricePerLogTextInput then
+		UniversalAutoload.pricePerLog = numericValue
+		print(" pricePerLog: " .. tostring(UniversalAutoload.pricePerLog))	
+	end
+	if id == self.pricePerBaleTextInput then
+		UniversalAutoload.pricePerBale = numericValue
+		print(" pricePerBale: " .. tostring(UniversalAutoload.pricePerBale))	
+	end
+	if id == self.pricePerPalletTextInput then
+		UniversalAutoload.pricePerPallet = numericValue
+		print(" pricePerPallet: " .. tostring(UniversalAutoload.pricePerPallet))	
+	end
 end
 
 function GlobalSettingsMenuUALSettings.inputEvent(self, action, value, direction)

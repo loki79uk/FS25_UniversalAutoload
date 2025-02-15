@@ -111,14 +111,6 @@ UniversalAutoload.CONTAINERS = {
 	[7] = "LOGS",
 }
 
--- DEFINE DEFAULTS FOR CONTAINER TYPES
--- UniversalAutoload.ALL			= { sizeX = 1.250, sizeY = 0.850, sizeZ = 0.850 }
--- UniversalAutoload.EURO_PALLET	= { sizeX = 1.250, sizeY = 0.790, sizeZ = 0.850 }
--- UniversalAutoload.BIGBAG_PALLET  = { sizeX = 1.525, sizeY = 1.075, sizeZ = 1.200 }
--- UniversalAutoload.LIQUID_TANK	= { sizeX = 1.433, sizeY = 1.500, sizeZ = 1.415 }
--- UniversalAutoload.BIGBAG		 = { sizeX = 1.050, sizeY = 1.666, sizeZ = 0.866, neverStack=true }
--- UniversalAutoload.BALE		   = { isBale=true }
-
 UniversalAutoload.VEHICLES = {} -- actual vehicles currently in game
 UniversalAutoload.VEHICLE_TYPES = {} -- vehicleTypes with autoload spec
 UniversalAutoload.LOADING_TYPES = {} -- known container object types
@@ -285,7 +277,7 @@ function UniversalAutoloadManager.getVehicleConfigFromSettingsXML(configKey, xml
 		end
 
 		local config = {}
-		config.selectedConfigs = xmlFile:getValue(configKey.."#selectedConfigs", "ALL")
+		config.selectedConfigs = xmlFile:getValue(configKey.."#selectedConfigs", UniversalAutoload.ALL)
 		config.useConfigName = xmlFile:getValue(configKey.."#useConfigName", nil)
 		iterateDefaultsTable(UniversalAutoload.OPTIONS_DEFAULTS, "", configKey..".options", config, readSettingFromFile)
 
@@ -1459,6 +1451,7 @@ function UniversalAutoloadManager.addLocalConfigIfAvailable(vehicle)
 	if configId then
 		
 		print("UniversalAutoload - supported vehicle: "..vehicle:getFullName().." #"..configId.." ("..description..")" )
+		spec.configId = configId  -- used for shop config setting
 
 		if configFileName == "data/vehicles/krone/profiLiner/profiLiner.xml" then
 			spec.isCurtainTrailer = true
@@ -2113,6 +2106,9 @@ Player.readStream = Utils.overwrittenFunction(Player.readStream,
 		superFunc(self, streamId, connection, objectId)
 		print("UAL Player.readStream")
 		UniversalAutoload.disableAutoStrap = streamReadBool(streamId)
+		UniversalAutoload.pricePerLog = streamReadInt32(streamId)
+		UniversalAutoload.pricePerBale = streamReadInt32(streamId)
+		UniversalAutoload.pricePerPallet = streamReadInt32(streamId)
 	end
 )
 Player.writeStream = Utils.overwrittenFunction(Player.writeStream,
@@ -2120,6 +2116,9 @@ Player.writeStream = Utils.overwrittenFunction(Player.writeStream,
 		superFunc(self, streamId, connection)
 		print("UAL Player.writeStream")
 		streamWriteBool(streamId, UniversalAutoload.disableAutoStrap or false)
+		streamWriteInt32(streamId, UniversalAutoload.pricePerLog or 0)
+		streamWriteInt32(streamId, UniversalAutoload.pricePerBale or 0)
+		streamWriteInt32(streamId, UniversalAutoload.pricePerPallet or 0)
 	end
 )
 
