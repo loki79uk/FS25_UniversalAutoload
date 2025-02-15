@@ -118,6 +118,32 @@
 						<!-- <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_selectedArea"/> -->
 					<!-- </Bitmap> -->
 
+					<Text profile="fs25_settingsSectionHeader" name="sectionHeader" text="$l10n_ui_save_options_ual"/>
+					
+					<!-- SELECTED CONFIG -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickSelectedConfigs" onCreate="onCreateSelectedConfigSet" id="selectedConfigsListBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_selectedConfigSet"/>
+						</MultiTextOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_selectedConfigSet"/>
+					</Bitmap>
+					
+					<!-- USE CONFIG NAME -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickSelectedConfigs" onCreate="onCreateUseConfigName" id="useConfigNameListBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_useConfigName"/>
+						</MultiTextOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_useConfigName"/>
+					</Bitmap>
+					
+					<!-- USE CONFIG INDEX -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickSelectedConfigs" onCreate="onCreateUseConfigIndex" id="useConfigIndexListBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_useConfigIndex"/>
+						</MultiTextOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_useConfigIndex"/>
+					</Bitmap>
+
 				</ScrollingLayout>
 				<Bitmap profile="fs25_settingsTooltipSeparator"/>
 			</GuiElement>

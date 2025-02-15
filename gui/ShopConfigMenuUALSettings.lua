@@ -24,16 +24,63 @@ function ShopConfigMenuUALSettings:setNewVehicle(vehicle)
 	self.vehicle = vehicle
 	local name = vehicle and ("  -  " .. vehicle:getFullName()) or ""
 	self.guiTitle:setText(g_i18n:getText("ui_config_settings_ual") .. name)
+
+	if self.selectedConfigsListBox then		
+		local texts = {g_i18n:getText("universalAutoload_ALL")}
+		local spec = vehicle and vehicle.spec_universalAutoload
+		if spec and spec.configId then
+			table.insert(texts, tostring(spec.configId))
+			self.selectedConfigsListBox.state = #texts
+		end
+		self.selectedConfigsListBox:setTexts(texts)
+	end
+
+	if self.useConfigNameListBox then
+		local texts = {"-"}
+		if vehicle then
+			local spec = self.vehicle and self.vehicle.spec_universalAutoload
+			for config, id in pairs(vehicle.configurations or {}) do
+				table.insert(texts, tostring(config))
+				if spec.useConfigName and spec.useConfigName == config then
+					self.useConfigNameListBox.state = #texts
+				end
+			end
+		end
+		self.useConfigNameListBox:setTexts(texts)
+	end
+	
+	if self.useConfigIndexListBox then
+		local texts = {"-"}
+		self.useConfigIndexListBox:setTexts(texts)
+	end
+	
+	-- if useConfigName == nil and tostring(selectedConfigs):find("|") then
+		-- configuration.originalSelectedConfigs = selectedConfigs
+		-- selectedConfigs = tostring(selectedConfigs):match("^(.-)|")
+		-- print(" *** SUGGEST REPAIRING CONFIG: '" .. configuration.originalSelectedConfigs
+			-- .. "' - using '" .. selectedConfigs .. "' OR specify useConfigName='design' ***")
+	-- end
+	self:setUseConfigName()
 	self:updateSettings()
+end
+
+function ShopConfigMenuUALSettings:setUseConfigName(id)
+	if self.vehicle and self.useConfigNameListBox and self.useConfigIndexListBox then
+		local id = id or self.useConfigNameListBox.state
+		local config = self.useConfigNameListBox.texts[id]
+		local index = self.vehicle.configurations[config] or "-"
+		local texts = {tostring(index)}
+		self.useConfigIndexListBox:setTexts(texts)
+	end
 end
 
 function ShopConfigMenuUALSettings:updateSettings()
 	
-	local vehicle = self.vehicle and self.vehicle.spec_universalAutoload
+	local spec = self.vehicle and self.vehicle.spec_universalAutoload
 	local settings = self.ualShopConfigSettingsLayout
 	
-	local isValid = vehicle ~= nil
-	local isEnabled = vehicle and vehicle.autoloadDisabled ~= true
+	local isValid = spec ~= nil
+	local isEnabled = spec and spec.autoloadDisabled ~= true
 	for _, item in pairs(settings.elements) do
 		if item.name ~= "enableAutoload" then
 			item:setVisible(isEnabled)
@@ -56,44 +103,44 @@ function ShopConfigMenuUALSettings:updateSettings()
 	
 	if isValid then
 		print("SET ALL")
-		setChecked('enableAutoloadCheckBox', not vehicle.autoloadDisabled)
-		setChecked('horizontalLoadingCheckBox', vehicle.horizontalLoading)
-		setChecked('disableAutoStrapCheckBox', not vehicle.disableAutoStrap)
-		setChecked('disableHeightLimitCheckBox', not vehicle.disableHeightLimit)
-		setChecked('enableSideLoadingCheckBox', vehicle.enableSideLoading)
-		setChecked('enableRearLoadingCheckBox', vehicle.enableRearLoading)
+		setChecked('enableAutoloadCheckBox', not spec.autoloadDisabled)
+		setChecked('horizontalLoadingCheckBox', spec.horizontalLoading)
+		setChecked('disableAutoStrapCheckBox', not spec.disableAutoStrap)
+		setChecked('disableHeightLimitCheckBox', not spec.disableHeightLimit)
+		setChecked('enableSideLoadingCheckBox', spec.enableSideLoading)
+		setChecked('enableRearLoadingCheckBox', spec.enableRearLoading)
 		
-		if vehicle.isBaleTrailer then
+		if spec.isBaleTrailer then
 			setValue('trailerTypeListBox', 2)
-		elseif vehicle.isLogTrailer then
+		elseif spec.isLogTrailer then
 			setValue('trailerTypeListBox', 3)
-		elseif vehicle.isBoxTrailer then
+		elseif spec.isBoxTrailer then
 			setValue('trailerTypeListBox', 4)
-		elseif vehicle.isCurtainTrailer then
+		elseif spec.isCurtainTrailer then
 			setValue('trailerTypeListBox', 5)
 		else
 			setValue('trailerTypeListBox', 1)
 		end
 		
-		if vehicle.rearUnloadingOnly then
+		if spec.rearUnloadingOnly then
 			setValue('unloadingTypeListBox', 2)
-		elseif vehicle.frontUnloadingOnly then
+		elseif spec.frontUnloadingOnly then
 			setValue('unloadingTypeListBox', 3)
 		else
 			setValue('unloadingTypeListBox', 1)
 		end
 		
-		if vehicle.noLoadingIfFolded then
+		if spec.noLoadingIfFolded then
 			setValue('noLoadingFoldedListBox', 2)
-		elseif vehicle.noLoadingIfUnfolded then
+		elseif spec.noLoadingIfUnfolded then
 			setValue('noLoadingFoldedListBox', 3)
 		else
 			setValue('noLoadingFoldedListBox', 1)
 		end
 		
-		if vehicle.noLoadingIfCovered then
+		if spec.noLoadingIfCovered then
 			setValue('noLoadingCoveredListBox', 2)
-		elseif vehicle.noLoadingIfUncovered then
+		elseif spec.noLoadingIfUncovered then
 			setValue('noLoadingCoveredListBox', 3)
 		else
 			setValue('noLoadingCoveredListBox', 1)
@@ -104,10 +151,9 @@ function ShopConfigMenuUALSettings:updateSettings()
 	--zonesOverlap
 	--offsetRoot
 	
-		local spec = vehicle.spec_universalAutoload
 		local numberAreas = spec.loadingVolume and #spec.loadingVolume.bbs or 1
 		setValue('addRemoveAreasListBox', numberAreas)
-	
+
 	end
 	
 end
@@ -170,61 +216,86 @@ end
 function ShopConfigMenuUALSettings:onCreateAddRemoveAreas(control)
 	control.texts = {"1", "2", "3"}
 end
+
 function ShopConfigMenuUALSettings:onCreateSelectedArea(control)
 	control.texts = {g_i18n:getText("universalAutoload_ALL")}
+end
+
+function ShopConfigMenuUALSettings:onCreateSelectedConfigs(control)
+	control.texts = {"-"}
+end	
+
+function ShopConfigMenuUALSettings:onClickSelectedConfigs(id, control, direction)
+	print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
+		
+	local spec = self.vehicle and self.vehicle.spec_universalAutoload
+	if not spec then
+		return
+	end
+
+	if control == self.selectedConfigsListBox then
+		print("configFileName: " .. tostring(spec.configFileName))
+		print("selectedConfigs: " .. tostring(spec.selectedConfigs))
+		print("useConfigName: " .. tostring(spec.useConfigName))
+	end
+	
+	if control == self.useConfigNameListBox then
+		self:setUseConfigName(id)
+	end
+
 end
 
 function ShopConfigMenuUALSettings:onClickMultiOption(id, control, direction)
 	print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
 		
-	local vehicle = self.vehicle and self.vehicle.spec_universalAutoload
-	if not vehicle then
+	local spec = self.vehicle and self.vehicle.spec_universalAutoload
+	if not spec then
 		return
 	end
 	
 	if control == self.trailerTypeListBox then
-		vehicle.isBaleTrailer = false
-		vehicle.isLogTrailer = false
-		vehicle.isBoxTrailer = false
-		vehicle.isCurtainTrailer = false
+		spec.isBaleTrailer = false
+		spec.isLogTrailer = false
+		spec.isBoxTrailer = false
+		spec.isCurtainTrailer = false
 		if id == 2 then
-			vehicle.isBaleTrailer = true
+			spec.isBaleTrailer = true
 		elseif id == 3 then
-			vehicle.isLogTrailer = true
+			spec.isLogTrailer = true
 		elseif id == 4 then
-			vehicle.isBoxTrailer = true
+			spec.isBoxTrailer = true
 		elseif id == 5 then
-			vehicle.isCurtainTrailer = true
+			spec.isCurtainTrailer = true
 		end
 	end
 	
 	if control == self.unloadingTypeListBox then
-		vehicle.rearUnloadingOnly = false
-		vehicle.frontUnloadingOnly = false
+		spec.rearUnloadingOnly = false
+		spec.frontUnloadingOnly = false
 		if id == 2 then
-			vehicle.rearUnloadingOnly = true
+			spec.rearUnloadingOnly = true
 		elseif id == 3 then
-			vehicle.frontUnloadingOnly = true
+			spec.frontUnloadingOnly = true
 		end
 	end
 	
 	if control == self.noLoadingFoldedListBox then
-		vehicle.noLoadingIfFolded = false
-		vehicle.noLoadingIfUnfolded = false
+		spec.noLoadingIfFolded = false
+		spec.noLoadingIfUnfolded = false
 		if id == 2 then
-			vehicle.noLoadingIfFolded = true
+			spec.noLoadingIfFolded = true
 		elseif id == 3 then
-			vehicle.noLoadingIfUnfolded = true
+			spec.noLoadingIfUnfolded = true
 		end
 	end
 	
 	if control == self.noLoadingCoveredListBox then
-		vehicle.noLoadingIfCovered = false
-		vehicle.noLoadingIfUncovered = false
+		spec.noLoadingIfCovered = false
+		spec.noLoadingIfUncovered = false
 		if id == 2 then
-			vehicle.noLoadingIfCovered = true
+			spec.noLoadingIfCovered = true
 		elseif id == 3 then
-			vehicle.noLoadingIfUncovered = true
+			spec.noLoadingIfUncovered = true
 		end
 	end
 	
@@ -233,13 +304,12 @@ end
 function ShopConfigMenuUALSettings:onClickAreaMultiOption(id, control, direction)
 	print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
 		
-	local vehicle = self.vehicle and self.vehicle.spec_universalAutoload
-	if not vehicle then
+	local spec = self.vehicle and self.vehicle.spec_universalAutoload
+	if not spec then
 		return
 	end
 
 	if control == self.addRemoveAreasListBox then
-		local spec = vehicle.spec_universalAutoload
 		local numberAreas = spec.loadingVolume and #spec.loadingVolume.bbs or 1
 		local newNumberAreas = self.addRemoveAreasListBox.state or 1
 		
@@ -247,7 +317,6 @@ function ShopConfigMenuUALSettings:onClickAreaMultiOption(id, control, direction
 			if UniversalAutoloadManager.shopConfig then
 				UniversalAutoloadManager.shopConfig.enableEditing = true
 			end
-			
 			if newNumberAreas < numberAreas then
 				print("REMOVE LOAD AREA #" .. numberAreas)
 				spec.loadingVolume:removeBoundingBox()
@@ -255,10 +324,8 @@ function ShopConfigMenuUALSettings:onClickAreaMultiOption(id, control, direction
 				print("ADD LOAD AREA #" .. newNumberAreas)
 				spec.loadingVolume:addBoundingBox()
 			end
-
 		end
-	
-	
+
 		-- local texts = {g_i18n:getText("universalAutoload_ALL")}
 		-- if id > 1 then
 			-- for i = 1, id do
@@ -276,24 +343,24 @@ end
 function ShopConfigMenuUALSettings:onClickBinaryOption(id, control, direction)
 	print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
 	
-	local vehicle = self.vehicle and self.vehicle.spec_universalAutoload
-	if not vehicle then
+	local spec = self.vehicle and self.vehicle.spec_universalAutoload
+	if not spec then
 		return
 	end
 	
 	if control == self.enableAutoloadCheckBox then
-		vehicle.autoloadDisabled = direction
+		spec.autoloadDisabled = direction
 		self:updateSettings()
 	elseif control == self.horizontalLoadingCheckBox then
-		vehicle.horizontalLoading = not direction
+		spec.horizontalLoading = not direction
 	elseif control == self.enableSideLoadingCheckBox then
-		vehicle.enableSideLoading = not direction
+		spec.enableSideLoading = not direction
 	elseif control == self.enableRearLoadingCheckBox then
-		vehicle.enableRearLoading = not direction
+		spec.enableRearLoading = not direction
 	elseif control == self.disableAutoStrapCheckBox then
-		vehicle.disableAutoStrap = direction
+		spec.disableAutoStrap = direction
 	elseif control == self.disableHeightLimitCheckBox then
-		vehicle.disableHeightLimit = direction
+		spec.disableHeightLimit = direction
 	end
 
 end
