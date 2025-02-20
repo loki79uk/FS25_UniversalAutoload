@@ -1497,7 +1497,7 @@ function UniversalAutoload:updateLoadingTriggers()
 	if spec.enableSideLoading then
 		sideBoundary = spec.loadVolume.width/4
 	end
-	if spec.enableRearLoading or spec.rearUnloadingOnly then
+	if spec.enableRearLoading then
 		rearBoundary = spec.loadVolume.width/4
 	end
 
@@ -1550,7 +1550,7 @@ function UniversalAutoload:updateLoadingTriggers()
 		doRemoveTrigger("frontPickupTrigger")
 	end
 
-	if spec.enableRearLoading or spec.rearUnloadingOnly then
+	if spec.enableRearLoading then
 		local depth = 0.05
 		local recess = spec.loadVolume.width/4
 		local boundary = spec.loadVolume.width/4
@@ -2290,7 +2290,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 						end
 					end
 				end
-			end --else
+			end
 
 			if spec.loadingVolume then
 				spec.loadingVolume:draw(true)
@@ -5666,6 +5666,7 @@ function UniversalAutoload:drawDebugDisplay()
 	local spec = self.spec_universalAutoload
 
 	if (UniversalAutoload.showLoading or UniversalAutoload.showDebug) and not g_gui:getIsGuiVisible() then
+		-- g_currentMission:addExtraPrintText("ACTIVE - " .. tostring(self:getName()))
 		
 		local RED     = { 1.0, 0.1, 0.1 }
 		local GREEN   = { 0.1, 1.0, 0.1 }
