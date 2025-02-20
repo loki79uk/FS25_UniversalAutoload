@@ -28,7 +28,7 @@ function ShopConfigMenuUALSettings:setNewVehicle(vehicle)
 	if self.selectedConfigsListBox then		
 		local texts = {g_i18n:getText("universalAutoload_ALL")}
 		local spec = vehicle and vehicle.spec_universalAutoload
-		if spec and spec.configId then
+		if spec and spec.configId and spec.configId ~= UniversalAutoload.ALL then
 			table.insert(texts, tostring(spec.configId))
 			self.selectedConfigsListBox.state = #texts
 		end
@@ -54,12 +54,6 @@ function ShopConfigMenuUALSettings:setNewVehicle(vehicle)
 		self.useConfigIndexListBox:setTexts(texts)
 	end
 	
-	-- if useConfigName == nil and tostring(selectedConfigs):find("|") then
-		-- configuration.originalSelectedConfigs = selectedConfigs
-		-- selectedConfigs = tostring(selectedConfigs):match("^(.-)|")
-		-- print(" *** SUGGEST REPAIRING CONFIG: '" .. configuration.originalSelectedConfigs
-			-- .. "' - using '" .. selectedConfigs .. "' OR specify useConfigName='design' ***")
-	-- end
 	self:setUseConfigName()
 	self:updateSettings()
 end
@@ -232,17 +226,48 @@ function ShopConfigMenuUALSettings:onClickSelectedConfigs(id, control, direction
 	if not spec then
 		return
 	end
-
-	if control == self.selectedConfigsListBox then
-		print("configFileName: " .. tostring(spec.configFileName))
-		print("selectedConfigs: " .. tostring(spec.selectedConfigs))
-		print("useConfigName: " .. tostring(spec.useConfigName))
-	end
 	
 	if control == self.useConfigNameListBox then
 		self:setUseConfigName(id)
 	end
 
+	local useConfigName = nil
+	local selectedConfigs = nil
+	
+	if self.selectedConfigsListBox then
+		local id = self.selectedConfigsListBox.state
+		local text = self.selectedConfigsListBox.texts[id]
+		if text == g_i18n:getText("universalAutoload_ALL") then
+			selectedConfigs = UniversalAutoload.ALL
+		else
+			selectedConfigs = text
+		end
+	end
+	if self.useConfigNameListBox then
+		local id = self.useConfigNameListBox.state
+		local text = self.useConfigNameListBox.texts[id]
+		useConfigName = text ~= "-" and text or nil
+	end
+	if self.useConfigIndexListBox and useConfigName then
+		local id = self.useConfigIndexListBox.state
+		local text = self.useConfigIndexListBox.texts[id]
+		if text ~= "-" then
+			selectedConfigs = selectedConfigs .. "|" .. text
+		else
+			print("WARNING: useConfigIndex was not set")
+		end
+	end
+
+	if selectedConfigs then
+		print("selectedConfigs: " .. tostring(selectedConfigs))
+		print("useConfigName: " .. tostring(useConfigName))
+		
+		spec.useConfigName = useConfigName
+		spec.selectedConfigs = selectedConfigs
+	else
+		print("WARNING: selectedConfigs was not set")
+	end
+	
 end
 
 function ShopConfigMenuUALSettings:onClickMultiOption(id, control, direction)

@@ -10,11 +10,9 @@ function UpdateDefaultSettingsEvent.emptyNew()
 	return self
 end
 
-function UpdateDefaultSettingsEvent.new(exportSpec, configFileName, selectedConfigs)
+function UpdateDefaultSettingsEvent.new(exportSpec)
 	local self = UpdateDefaultSettingsEvent.emptyNew()
 	self.exportSpec = exportSpec
-	self.configFileName = configFileName
-	self.selectedConfigs = selectedConfigs
 	return self
 end
 
@@ -55,6 +53,8 @@ function UpdateDefaultSettingsEvent:readStream(streamId, connection)
 	print("useConfigName: " .. tostring(useConfigName))
 
 	local config = {}
+	config.configFileName = configFileName
+	config.selectedConfigs = selectedConfigs
 	config.useConfigName = useConfigName
 	print("options:")
 	iterateDefaultsTable(UniversalAutoload.OPTIONS_DEFAULTS, "", ".options", config, recieveValues)
@@ -71,7 +71,7 @@ function UpdateDefaultSettingsEvent:readStream(streamId, connection)
 	print("CONFIG RECIEVED ON SERVER:")
 	DebugUtil.printTableRecursively(config, "--", 0, 2)
 	
-	UniversalAutoloadManager.saveConfigurationToSettings(config, configFileName, selectedConfigs, noEventSend)
+	UniversalAutoloadManager.saveConfigurationToSettings(config, noEventSend)
 	
 end
 
@@ -106,10 +106,10 @@ function UpdateDefaultSettingsEvent:writeStream(streamId, connection)
 	print("SEND VEHICLE CONFIG TO SERVER")
 	local spec = self.exportSpec or {}
 
-	print("configFileName: " .. tostring(self.configFileName))
-	streamWriteString(streamId, self.configFileName)
-	print("selectedConfigs: " .. tostring(self.selectedConfigs))
-	streamWriteString(streamId, self.selectedConfigs)
+	print("configFileName: " .. tostring(spec.configFileName))
+	streamWriteString(streamId, spec.configFileName or "")
+	print("selectedConfigs: " .. tostring(spec.selectedConfigs))
+	streamWriteString(streamId, spec.selectedConfigs or "")
 	print("useConfigName: " .. tostring(spec.useConfigName))
 	streamWriteString(streamId, spec.useConfigName or "")
 	
@@ -126,11 +126,11 @@ function UpdateDefaultSettingsEvent:writeStream(streamId, connection)
 
 end
 
-function UpdateDefaultSettingsEvent.sendEvent(exportSpec, configFileName, selectedConfigs, noEventSend)
+function UpdateDefaultSettingsEvent.sendEvent(exportSpec, noEventSend)
 	if noEventSend == nil or noEventSend == false then
 		if g_server == nil then
 			print("client: Change Settings Event")
-			g_client:getServerConnection():sendEvent(UpdateDefaultSettingsEvent.new(exportSpec, configFileName, selectedConfigs))
+			g_client:getServerConnection():sendEvent(UpdateDefaultSettingsEvent.new(exportSpec))
 		end
 	end
 end

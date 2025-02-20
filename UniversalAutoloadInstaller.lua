@@ -399,8 +399,12 @@ function UniversalAutoloadManager.getConfigSettingsPosition(targetFileName, targ
 	end
 end
 --
-function UniversalAutoloadManager.getVehicleConfigIndexesForSaving(exportSpec, configFileName, configId, xmlFile)
+function UniversalAutoloadManager.getVehicleConfigIndexesForSaving(exportSpec, xmlFile)
 
+	local configFileName = exportSpec.configFileName
+	local selectedConfigs = exportSpec.selectedConfigs
+	local configId = selectedConfigs or exportSpec.configId
+	
 	local index, subIndex, size = UniversalAutoloadManager.getConfigSettingsPosition(configFileName, configId, xmlFile)
 
 	if index then
@@ -460,43 +464,37 @@ function UniversalAutoloadManager.getVehicleConfigNames(vehicle)
 		return
 	end
 
-	local configFileName, selectedConfigs
 	local didReplaceUseConfigId =  false
-	
 	if spec.selectedConfigs and spec.configFileName then
-		print("WAS ALREADY SET WITH:")
-		selectedConfigs = spec.selectedConfigs
-		configFileName = spec.configFileName
 		if spec.replaceConfigId and spec.replaceConfigId ~= spec.selectedConfigs then
-			local CONFIGS = UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName]
+			local CONFIGS = UniversalAutoload.VEHICLE_CONFIGURATIONS[spec.configFileName]
 			CONFIGS[spec.replaceConfigId] = deepCopy(CONFIGS[spec.selectedConfigs])
 			CONFIGS[spec.selectedConfigs] = nil
-			selectedConfigs = spec.replaceConfigId
+			spec.selectedConfigs = spec.replaceConfigId
 			didReplaceUseConfigId = true
 		end
 	end
 	
-	if not selectedConfigs or not configFileName then
-		print("FIND CORRECT SETTINGS FILE POSITION:")
-		configFileName = UniversalAutoloadManager.cleanConfigFileName(vehicle.configFileName)
-		selectedConfigs = UniversalAutoloadManager.getValidConfigurationId(vehicle)
-		spec.configFileName = configFileName
-		spec.selectedConfigs = selectedConfigs
+	if not spec.configFileName then
+		print("warning: config file name was missing..")
+		spec.configFileName = UniversalAutoloadManager.cleanConfigFileName(vehicle.configFileName)
 	end
 	
-	print(" configFileName = " .. tostring(configFileName))
-	print(" selectedConfig = " .. tostring(selectedConfigs))
-	print(" useConfigName = " .. tostring(spec.useConfigName))
+	if not spec.selectedConfigs then
+		print("FIND CORRECT SETTINGS FILE POSITION:")
+		spec.selectedConfigs = UniversalAutoloadManager.getValidConfigurationId(vehicle)
+	end
+	
 	if didReplaceUseConfigId then
 		print(" *** REPLACED " .. spec.selectedConfigs .. " with " .. spec.replaceConfigId .. " for saving ***")
 	end
 	
-	return configFileName, selectedConfigs
+	return spec.configFileName, spec.selectedConfigs
 end
 --
-function UniversalAutoloadManager.saveVehicleConfigToSettingsXML(exportSpec, configFileName, configId)
-	if not exportSpec or not configFileName or not configId then
-		print("Invalid vehicle spec supplied: " .. tostring(configFileName))
+function UniversalAutoloadManager.saveVehicleConfigToSettingsXML(exportSpec)
+	if not exportSpec or not exportSpec.configFileName or not exportSpec.selectedConfigs then
+		print("Invalid vehicle spec supplied: " .. tostring(exportSpec.configFileName))
 		return
 	end
 
@@ -534,7 +532,11 @@ function UniversalAutoloadManager.saveVehicleConfigToSettingsXML(exportSpec, con
 		if exportSpec.loadArea and #exportSpec.loadArea > 0 then
 
 			print("SAVE TO SETTINGS FILE")
-			local index, subIndex = UniversalAutoloadManager.getVehicleConfigIndexesForSaving(exportSpec, configFileName, configId, xmlFile)
+			print("configFileName: " .. tostring(exportSpec.configFileName))
+			print("selectedConfigs: " .. tostring(exportSpec.selectedConfigs))
+			print("useConfigName: " .. tostring(exportSpec.useConfigName))
+			print("configId: " .. tostring(exportSpec.configId))
+			local index, subIndex = UniversalAutoloadManager.getVehicleConfigIndexesForSaving(exportSpec, xmlFile)
 
 			print("options:")
 			local configKey = string.format(UniversalAutoload.vehicleConfigKey, index, subIndex)
@@ -546,11 +548,14 @@ function UniversalAutoloadManager.saveVehicleConfigToSettingsXML(exportSpec, con
 			end
 			xmlFile:save()
 			
-			print("UPDATE CONFIG IN MEMORY - " .. configId)
+			print("UPDATE CONFIG IN MEMORY - " .. exportSpec.selectedConfigs)
+			local configFileName = exportSpec.configFileName
+			local selectedConfigs = exportSpec.selectedConfigs
+			local useConfigName = exportSpec.useConfigName
 			local CONFIGS = UniversalAutoload.VEHICLE_CONFIGURATIONS
 			CONFIGS[configFileName] = CONFIGS[configFileName] or {}
-			CONFIGS[configFileName][configId] = CONFIGS[configFileName][configId] or {}
-			local config = CONFIGS[configFileName][configId]
+			CONFIGS[configFileName][selectedConfigs] = CONFIGS[configFileName][selectedConfigs] or {}
+			local config = CONFIGS[configFileName][selectedConfigs]
 			for k, v in pairs(UniversalAutoload.OPTIONS_DEFAULTS) do
 				local id = v.id
 				config[id] = exportSpec[id] or v.default
@@ -563,7 +568,8 @@ function UniversalAutoloadManager.saveVehicleConfigToSettingsXML(exportSpec, con
 				DebugUtil.printTableRecursively(config.loadArea[i] or {}, "--", 0, 1)
 			end
 			config.configFileName = configFileName
-			config.selectedConfigs = configId
+			config.selectedConfigs = selectedConfigs
+			config.useConfigName = useConfigName
 			
 		else
 			print("DID NOT SAVE SETTINGS - loading area was missing")
@@ -756,19 +762,19 @@ function UniversalAutoloadManager.getValidConfigurationId(vehicle)
     end
 end
 
-function UniversalAutoloadManager.saveConfigurationToSettings(exportSpec, configFileName, configId, noEventSend)
+function UniversalAutoloadManager.saveConfigurationToSettings(exportSpec, noEventSend)
 	local serverOrClient = g_currentMission:getIsServer() and "SERVER" or "CLIENT"
-	print(serverOrClient .. ": SAVE UAL CONFIGURATION for " .. tostring(configFileName))
+	print(serverOrClient .. ": SAVE UAL CONFIGURATION for " .. tostring(exportSpec.configFileName))
 	
-	if not exportSpec or not configFileName then
+	if not exportSpec or not exportSpec.configFileName then
 		print("valid UAL spec is required to save settings")
 		return
 	end
 	
-	UniversalAutoloadManager.saveVehicleConfigToSettingsXML(exportSpec, configFileName, configId)
+	UniversalAutoloadManager.saveVehicleConfigToSettingsXML(exportSpec)
 
 	if g_currentMission:getIsClient() and not g_currentMission:getIsServer() then
-		UniversalAutoload.UpdateDefaultSettingsEvent.sendEvent(exportSpec, configFileName, configId, noEventSend)
+		UniversalAutoload.UpdateDefaultSettingsEvent.sendEvent(exportSpec, noEventSend)
 	end
 
 end
@@ -811,7 +817,7 @@ function UniversalAutoloadManager.exportVehicleConfigToServer()
 
 			local configFileName, configId = UniversalAutoloadManager.getVehicleConfigNames(exportVehicle)
 			
-			UniversalAutoloadManager.saveConfigurationToSettings(exportSpec, configFileName, configId)
+			UniversalAutoloadManager.saveConfigurationToSettings(exportSpec)
 
 		end
 	end
