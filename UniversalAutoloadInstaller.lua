@@ -1318,10 +1318,10 @@ end
 function UniversalAutoloadManager.createLoadingVolumeInsideShop(vehicle)
 	local spec = vehicle.spec_universalAutoload
 	
-	if not spec.skipFirstUpdate then
-		spec.skipFirstUpdate = true
-		return
-	end
+	-- if not spec.skipFirstUpdate then
+		-- spec.skipFirstUpdate = true
+		-- return
+	-- end
 	
 	if UniversalAutoloadManager.pauseOnNextStep then
 		return
@@ -1351,10 +1351,10 @@ end
 function UniversalAutoloadManager.resetLoadingVolumeForShopEdit(vehicle)
 	local spec = vehicle.spec_universalAutoload
 	
-	if not spec.skipFirstUpdate then
-		spec.skipFirstUpdate = true
-		return
-	end
+	-- if not spec.skipFirstUpdate then
+		-- spec.skipFirstUpdate = true
+		-- return
+	-- end
 	
 	if not vehicle.rootNode then
 		print("*** Vehicle Root Node is UNDEFINED ***")
