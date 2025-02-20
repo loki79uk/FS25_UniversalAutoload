@@ -85,10 +85,10 @@
 		<text name="ui_option_tooltip_offsetRoot" text="Вузол i3d транспортного засобу, відносно якого є зміщення площі"/>
 		<text name="ui_option_tooltip_minLogLength" text="Мінімальна довжина для колод які будуть автозавантажені"/>
 
-		<text name="ui_option_addRemoveAreas" text="Number of Loading Areas"/>
-		<text name="ui_option_selectedArea" text="Selected Area"/>
-		<text name="ui_option_tooltip_addRemoveAreas" text="Adjust value here to add or remove loading areas"/>
-		<text name="ui_option_tooltip_selectedArea" text="The area selected (to modify in the settings below)"/>
+		<text name="ui_option_addRemoveAreas" text="Кількість Площ Завантаження"/>
+		<text name="ui_option_selectedArea" text="Вибрана Площа"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="Налаштуйте це, щоб додати або прибрати площі завантаження"/>
+		<text name="ui_option_tooltip_selectedArea" text="Вибрана площа (щоб змінити в налаштуваннях нижче)"/>
 
 		<!-- LOADING_AREA -->
 		<text name="ui_loadArea_offset" text="Зміщення"/>
