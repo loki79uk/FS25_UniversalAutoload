@@ -463,17 +463,6 @@ function UniversalAutoloadManager.getVehicleConfigNames(vehicle)
 		print("Invalid vehicle supplied: " .. tostring(vehicle))
 		return
 	end
-
-	local didReplaceUseConfigId =  false
-	if spec.selectedConfigs and spec.configFileName then
-		if spec.replaceConfigId and spec.replaceConfigId ~= spec.selectedConfigs then
-			local CONFIGS = UniversalAutoload.VEHICLE_CONFIGURATIONS[spec.configFileName]
-			CONFIGS[spec.replaceConfigId] = deepCopy(CONFIGS[spec.selectedConfigs])
-			CONFIGS[spec.selectedConfigs] = nil
-			spec.selectedConfigs = spec.replaceConfigId
-			didReplaceUseConfigId = true
-		end
-	end
 	
 	if not spec.configFileName then
 		print("warning: config file name was missing..")
@@ -483,10 +472,6 @@ function UniversalAutoloadManager.getVehicleConfigNames(vehicle)
 	if not spec.selectedConfigs then
 		print("FIND CORRECT SETTINGS FILE POSITION:")
 		spec.selectedConfigs = UniversalAutoloadManager.getValidConfigurationId(vehicle)
-	end
-	
-	if didReplaceUseConfigId then
-		print(" *** REPLACED " .. spec.selectedConfigs .. " with " .. spec.replaceConfigId .. " for saving ***")
 	end
 	
 	return spec.configFileName, spec.selectedConfigs
@@ -630,6 +615,7 @@ end
 --
 function UniversalAutoloadManager.importVehicleConfigurations(xmlFilename)
 	print("UAL - IMPORT VEHICLE CONFIGS")
+	-- TODO: could clean incompatible settings here..
 
 	UniversalAutoload.VEHICLE_CONFIGURATIONS = {}
 	local xmlFile = UniversalAutoloadManager.openUserSettingsXMLFile(xmlFilename)
@@ -733,7 +719,7 @@ function UniversalAutoloadManager.getValidConfigurationId(vehicle)
 
     if #configurationSets == 0 then
         local fullConfigId = UniversalAutoload.ALL .. (configName and ("|" .. configName) or "")
-        return fullConfigId, "UNIQUE" .. (useConfigName and ("|" .. useConfigName) or "")
+        return fullConfigId, UniversalAutoload.ALL, "UNIQUE" .. (useConfigName and ("|" .. useConfigName) or "")
     end
 
     local bestMatch = { index = nil, count = 0, name = nil }
@@ -750,7 +736,7 @@ function UniversalAutoloadManager.getValidConfigurationId(vehicle)
 
         if match then
             local fullConfigId = i .. (configName and ("|" .. configName) or "")
-            return fullConfigId, config.name
+            return fullConfigId, i, config.name
         elseif count > bestMatch.count then
             bestMatch = { index = i, count = count, name = config.name }
         end
@@ -758,7 +744,7 @@ function UniversalAutoloadManager.getValidConfigurationId(vehicle)
 
     if bestMatch.index then
         local fullConfigId = bestMatch.index .. (configName and ("|" .. configName) or "")
-        return fullConfigId, bestMatch.name
+        return fullConfigId, bestMatch.index, bestMatch.name
     end
 end
 
@@ -1444,20 +1430,45 @@ function UniversalAutoloadManager.addLocalConfigIfAvailable(vehicle)
 	
 	local configurationAdded = nil
 	
-	-- must set use useConfigName before calling getValidConfigurationId
 	local configFileName = UniversalAutoloadManager.cleanConfigFileName(vehicle.configFileName)
-	if configFileName == "data/vehicles/international/cvSeries/cvSeries.xml" then
-		spec.useConfigName = "enterablePassenger"
+	local availableConfigs = UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName]
+	
+	if availableConfigs then
+		print("AVAILABLE selectedConfigs: ")
+		local i = 1
+		for selectedConfigs, config in pairs(availableConfigs) do
+			print(" [".. i .. "] " .. selectedConfigs)
+			local j = 1
+			local selectedConfigsList = tostring(selectedConfigs):split(",")
+			for _, configListItem in pairs(selectedConfigsList) do
+				if configListItem ~= selectedConfigs then
+					print("  #".. j .. " " .. configListItem)
+				end
+				
+				local isMatchAny = tostring(configListItem):find(UniversalAutoload.ALL)
+				local hasPipeChar = tostring(configListItem):find("|")
+				
+				if hasPipeChar then
+					print("  useConfigName: " .. tostring(config.useConfigName))
+					if not spec.useConfigName then
+						spec.useConfigName = config.useConfigName
+					end
+				end
+				j = j + 1
+			end
+			i = i + 1
+		end
 	end
-	if configFileName == "data/vehicles/riedler/timberTrailer3A/timberTrailer3A.xml" then
-		spec.useConfigName = "design"
+	
+	if spec.useConfigName then
+		print("SET useConfigName: " .. tostring(spec.useConfigName))
 	end
 
-	local configId, description = UniversalAutoloadManager.getValidConfigurationId(vehicle)
-	if configId then
+	local fullConfigId, rootConfigId, description = UniversalAutoloadManager.getValidConfigurationId(vehicle)
+	if fullConfigId then
 		
-		print("UniversalAutoload - supported vehicle: "..vehicle:getFullName().." #"..configId.." ("..description..")" )
-		spec.configId = configId  -- used for shop config setting
+		print("UniversalAutoload - supported vehicle: "..vehicle:getFullName().." #"..fullConfigId.." ("..description..")" )
+		spec.configId = rootConfigId  -- used for shop config setting
 
 		if configFileName == "data/vehicles/krone/profiLiner/profiLiner.xml" then
 			spec.isCurtainTrailer = true
@@ -1482,25 +1493,38 @@ function UniversalAutoloadManager.addLocalConfigIfAvailable(vehicle)
 			spec.isLogTrailer = true
 		end
 
-		local configGroup = UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName]
-		if configGroup then
-			print("configId: " .. configId)
-			for selectedConfigs, config in pairs(configGroup) do
+		if availableConfigs then
+			print("DETECTED fullConfigId: " .. fullConfigId)
+			local firstPart, secondPart = string.match(fullConfigId, "([^|]+)|([^|]+)")
+			if not firstPart then
+				firstPart = fullConfigId
+				secondPart = nil
+			end
+			if not firstPart == rootConfigId then
+				print("WARNING: rootConfigId = " .. rootConfigId)
+			end
+			
+			for selectedConfigs, config in pairs(availableConfigs) do
+				print("TRY selectedConfigs: " .. selectedConfigs)
 				local selectedConfigsList = tostring(selectedConfigs):split(",")
-				for _, configListPart in pairs(selectedConfigsList) do
-					print("configListPart: " .. configListPart)
-					local isMatchAny = configListPart == UniversalAutoload.ALL
-					local hasPipeChar = tostring(configId):find("|")
-					local isMatchFull = hasPipeChar and configId == configListPart
-					local isMatchPart = not hasPipeChar and tostring(configId):find(configListPart)
-					if isMatchAny or isMatchPart or isMatchFull then
+				for _, configListItem in pairs(selectedConfigsList) do
+					if configListItem ~= selectedConfigs then
+						print(" configListItem: " .. configListItem)
+					end
+					local otherFirstPart, otherSecondPart = string.match(configListItem, "([^|]+)|([^|]+)")
+					if not otherFirstPart then
+						otherFirstPart = configListItem
+						otherSecondPart = nil
+					end
+
+					local isMatchFirst = otherFirstPart == firstPart or otherFirstPart == UniversalAutoload.ALL
+					local isMatchSecond = secondPart and otherSecondPart and secondPart == otherSecondPart
+					local ignoreSecondParts = secondPart == nil and otherSecondPart == nil
+					
+					if isMatchFirst and (isMatchSecond or ignoreSecondParts) then
 						if config and config.loadArea and #config.loadArea > 0 then
-							print("*** USING CONFIG FROM SETTINGS - "..selectedConfigs.." for #"..configId.." ("..description..") ***")
-							
-							if isMatchAny and hasPipeChar and not isMatchFull then
-								print("useConfigName '" .. tostring(spec.useConfigName) .. "' was MISSING for " .. configId)
-								spec.replaceConfigId = configId
-							end
+							print("*** USING CONFIG FROM SETTINGS - "..selectedConfigs.." for #"..fullConfigId.." ("..description..") ***")
+							spec.configId = otherFirstPart  -- used for shop config setting
 							
 							for id, value in pairs(deepCopy(config)) do
 								print(" >> " .. tostring(id) .. " = " .. tostring(value))
@@ -1520,13 +1544,13 @@ function UniversalAutoloadManager.addLocalConfigIfAvailable(vehicle)
 			end
 			
 			if not configurationAdded then
-				print("*** NO MATCHING LOCAL CONFIG - #"..configId.." ("..description..") ***")
+				print("*** NO MATCHING LOCAL CONFIG - #"..fullConfigId.." ("..description..") ***")
 			end
 		else
-			print("*** NO LOCAL CONFIGS AVAILABLE - #"..configId.." ("..description..") ***")
+			print("*** NO LOCAL CONFIGS AVAILABLE - #"..fullConfigId.." ("..description..") ***")
 		end
 	else
-		print("*** UNSUPPORTED CONFIG - #"..tostring(configId).." ("..tostring(description)..") ***")
+		print("*** UNSUPPORTED CONFIG - #"..tostring(fullConfigId).." ("..tostring(description)..") ***")
 	end
 	return configurationAdded
 end

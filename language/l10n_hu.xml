@@ -9,6 +9,7 @@
 		<text name="ui_config_settings_ual" text="Autoload beállítások"/>
 		<text name="ui_vehicle_options_ual" text="Jármű opciók"/>
 		<text name="ui_loading_area_options_ual" text="Rakodási terület opciók"/>
+		<text name="ui_save_options_ual" text="Save Options"/>
 		<text name="ui_button_save_config_ual" text="Jármű beállítások mentése"/>
 		<text name="ui_confirm_save_config_ual" text="Felülírod a jármű alapértelmezett autoload beállításait?"/>
 		
@@ -88,6 +89,13 @@
 		<text name="ui_option_selectedArea" text="Selected Area"/>
 		<text name="ui_option_tooltip_addRemoveAreas" text="Adjust value here to add or remove loading areas"/>
 		<text name="ui_option_tooltip_selectedArea" text="The area selected (to modify in the settings below)"/>
+		
+		<text name="ui_option_selectedConfigSet" text="Selected Configuration Set"/>
+		<text name="ui_option_useConfigName" text="Use Configuration Name"/>
+		<text name="ui_option_useConfigIndex" text="Use Configuration Index"/>
+		<text name="ui_option_tooltip_selectedConfigSet" text="The 'configuration set' to which the saved settings will apply"/>
+		<text name="ui_option_tooltip_useConfigName" text="The configuration to be indexed (optional)"/>
+		<text name="ui_option_tooltip_useConfigIndex" text="The index for the configuration (optional)"/>
 		
 		<!-- LOADING_AREA -->
 		<text name="ui_loadArea_offset" text="Eltolás"/>

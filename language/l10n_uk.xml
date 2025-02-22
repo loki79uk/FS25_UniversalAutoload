@@ -10,6 +10,7 @@
 		<text name="ui_config_settings_ual" text="Налаштування Автозавантаження"/>
 		<text name="ui_vehicle_options_ual" text="Налаштування Транспортного Засобу"/>
 		<text name="ui_loading_area_options_ual" text="Налаштування Зони Завантаження"/>
+		<text name="ui_save_options_ual" text="Save Options"/>
 		<text name="ui_button_save_config_ual" text="Зберегти Налаштування Транспортного Засобу"/>
 		<text name="ui_confirm_save_config_ual" text="Ви хочете перезаписати стандартну конфігурацію автозавантаження для цього транспортного засобу?"/>	
 		
@@ -89,6 +90,13 @@
 		<text name="ui_option_selectedArea" text="Вибрана Площа"/>
 		<text name="ui_option_tooltip_addRemoveAreas" text="Налаштуйте це, щоб додати або прибрати площі завантаження"/>
 		<text name="ui_option_tooltip_selectedArea" text="Вибрана площа (щоб змінити в налаштуваннях нижче)"/>
+		
+		<text name="ui_option_selectedConfigSet" text="Selected Configuration Set"/>
+		<text name="ui_option_useConfigName" text="Use Configuration Name"/>
+		<text name="ui_option_useConfigIndex" text="Use Configuration Index"/>
+		<text name="ui_option_tooltip_selectedConfigSet" text="The 'configuration set' to which the saved settings will apply"/>
+		<text name="ui_option_tooltip_useConfigName" text="The configuration to be indexed (optional)"/>
+		<text name="ui_option_tooltip_useConfigIndex" text="The index for the configuration (optional)"/>
 
 		<!-- LOADING_AREA -->
 		<text name="ui_loadArea_offset" text="Зміщення"/>

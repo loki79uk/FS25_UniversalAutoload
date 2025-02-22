@@ -102,7 +102,7 @@
             </configuration>
         </vehicle>
         <vehicle configFileName="data/vehicles/riedler/timberFrameFH16/timberFrameFH16.xml">
-            <configuration selectedConfigs="1">
+            <configuration selectedConfigs="ALL">
                 <options isLogTrailer="true"/>
                 <loadingArea offset="0.013 1.602 -1.109" width="2.060" length="5.855" height="2.65"/>
             </configuration>

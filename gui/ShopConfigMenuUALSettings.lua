@@ -39,10 +39,15 @@ function ShopConfigMenuUALSettings:setNewVehicle(vehicle)
 		local texts = {"-"}
 		if vehicle then
 			local spec = self.vehicle and self.vehicle.spec_universalAutoload
-			for config, id in pairs(vehicle.configurations or {}) do
-				table.insert(texts, tostring(config))
-				if spec.useConfigName and spec.useConfigName == config then
-					self.useConfigNameListBox.state = #texts
+			
+			if spec.useConfigName then
+				texts = {spec.useConfigName}
+			else
+				for config, id in pairs(vehicle.configurations or {}) do
+					table.insert(texts, tostring(config))
+					-- if spec.useConfigName and spec.useConfigName == config then
+						-- self.useConfigNameListBox.state = #texts
+					-- end
 				end
 			end
 		end
@@ -220,7 +225,7 @@ function ShopConfigMenuUALSettings:onCreateSelectedConfigs(control)
 end	
 
 function ShopConfigMenuUALSettings:onClickSelectedConfigs(id, control, direction)
-	print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
+	-- print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
 		
 	local spec = self.vehicle and self.vehicle.spec_universalAutoload
 	if not spec then
@@ -271,7 +276,7 @@ function ShopConfigMenuUALSettings:onClickSelectedConfigs(id, control, direction
 end
 
 function ShopConfigMenuUALSettings:onClickMultiOption(id, control, direction)
-	print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
+	-- print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
 		
 	local spec = self.vehicle and self.vehicle.spec_universalAutoload
 	if not spec then
@@ -327,7 +332,7 @@ function ShopConfigMenuUALSettings:onClickMultiOption(id, control, direction)
 end
 
 function ShopConfigMenuUALSettings:onClickAreaMultiOption(id, control, direction)
-	print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
+	-- print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
 		
 	local spec = self.vehicle and self.vehicle.spec_universalAutoload
 	if not spec then
@@ -366,7 +371,7 @@ function ShopConfigMenuUALSettings:onClickAreaMultiOption(id, control, direction
 end
 
 function ShopConfigMenuUALSettings:onClickBinaryOption(id, control, direction)
-	print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
+	-- print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
 	
 	local spec = self.vehicle and self.vehicle.spec_universalAutoload
 	if not spec then
