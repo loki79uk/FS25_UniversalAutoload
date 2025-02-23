@@ -9,10 +9,10 @@
 		<text name="ui_config_settings_ual" text="Ustawienia autoload"/>
 		<text name="ui_vehicle_options_ual" text="Opcje pojazdu"/>
 		<text name="ui_loading_area_options_ual" text="Opcje obszaru ładowania"/>
-		<text name="ui_save_options_ual" text="Save Options"/>
+		<text name="ui_save_options_ual" text="Zapisz opcje"/>
 		<text name="ui_button_save_config_ual" text="Zapisz ustawienia pojazdu"/>
 		<text name="ui_confirm_save_config_ual" text="Czy chcesz nadpisać domyślną konfigurację autoload dla tego pojazdu?"/>
-		<text name="ui_confirm_save_config2_ual" text="(Purchase new vehicle or restart game to apply the new settings)"/>
+		<text name="ui_confirm_save_config2_ual" text="(Zakup nowy pojazd lub uruchom ponownie grę, aby zastosować nowe ustawienia)"/>
 		
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Pokaż debugowanie"/>
@@ -86,17 +86,17 @@
 		<text name="ui_option_tooltip_offsetRoot" text="Węzeł i3d pojazdu, względem którego określane są przesunięcia stref"/>
 		<text name="ui_option_tooltip_minLogLength" text="Minimalna długość kłód, które będą automatycznie ładowane"/>
 
-		<text name="ui_option_addRemoveAreas" text="Number of Loading Areas"/>
-		<text name="ui_option_selectedArea" text="Selected Area"/>
-		<text name="ui_option_tooltip_addRemoveAreas" text="Adjust value here to add or remove loading areas"/>
-		<text name="ui_option_tooltip_selectedArea" text="The area selected (to modify in the settings below)"/>
+		<text name="ui_option_addRemoveAreas" text="Liczba obszarów ładowania"/>
+		<text name="ui_option_selectedArea" text="Wybrany obszar"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="Dostosuj wartość tutaj, aby dodać lub usunąć obszary ładowania"/>
+		<text name="ui_option_tooltip_selectedArea" text="Wybrany obszar (do modyfikacji w ustawieniach poniżej)"/>
 		
-		<text name="ui_option_selectedConfigSet" text="Selected Configuration Set"/>
-		<text name="ui_option_useConfigName" text="Use Configuration Name"/>
-		<text name="ui_option_useConfigIndex" text="Use Configuration Index"/>
-		<text name="ui_option_tooltip_selectedConfigSet" text="The 'configuration set' to which the saved settings will apply"/>
-		<text name="ui_option_tooltip_useConfigName" text="The configuration to be indexed (optional)"/>
-		<text name="ui_option_tooltip_useConfigIndex" text="The index for the configuration (optional)"/>
+		<text name="ui_option_selectedConfigSet" text="Wybrany zestaw konfiguracji"/>
+		<text name="ui_option_useConfigName" text="Użyj nazwy konfiguracji"/>
+		<text name="ui_option_useConfigIndex" text="Użyj indeksu konfiguracji"/>
+		<text name="ui_option_tooltip_selectedConfigSet" text="'Zestaw konfiguracji', do którego będą stosowane zapisane ustawienia"/>
+		<text name="ui_option_tooltip_useConfigName" text="Konfiguracja do zindeksowania (opcjonalnie)"/>
+		<text name="ui_option_tooltip_useConfigIndex" text="Indeks konfiguracji (opcjonalnie)"/>
 		
 		<!-- LOADING_AREA -->
 		<text name="ui_loadArea_offset" text="Przesunięcie"/>
