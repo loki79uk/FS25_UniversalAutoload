@@ -12,7 +12,8 @@
 		<text name="ui_loading_area_options_ual" text="Налаштування Зони Завантаження"/>
 		<text name="ui_save_options_ual" text="Save Options"/>
 		<text name="ui_button_save_config_ual" text="Зберегти Налаштування Транспортного Засобу"/>
-		<text name="ui_confirm_save_config_ual" text="Ви хочете перезаписати стандартну конфігурацію автозавантаження для цього транспортного засобу?"/>	
+		<text name="ui_confirm_save_config_ual" text="Ви хочете перезаписати стандартну конфігурацію автозавантаження для цього транспортного засобу?"/>
+		<text name="ui_confirm_save_config2_ual" text="(Purchase new vehicle or restart game to apply the new settings)"/>	
 		
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Показати Налагодження"/>

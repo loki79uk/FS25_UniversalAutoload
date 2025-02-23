@@ -2273,7 +2273,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 			
 			if not spec.loadingVolume or spec.loadingVolume.state < LoadingVolume.STATE.SHOP_CONFIG then
 				print("doUpdate: " .. tostring(netGetTime()))
-				if spec.selectedConfigs and not spec.wasResetToDefault then
+				if spec.loadArea and not spec.wasResetToDefault then
 					print("resetLoadingVolumeForShopEdit")
 					UniversalAutoloadManager.resetLoadingVolumeForShopEdit(self)
 				else
@@ -2285,7 +2285,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 						if configFileName and selectedConfigs and UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName] then
 							print("*** RESET TO DEFAULT CONFIG ***")
 							UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName][selectedConfigs] = nil
-							spec.selectedConfigs = nil
+							spec.loadArea = nil
 							spec.wasResetToDefault = nil
 						end
 					end

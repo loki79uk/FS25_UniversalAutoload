@@ -4,7 +4,7 @@
         <vehicle configFileName="data/vehicles/krone/profiLiner/profiLiner.xml">
             <configuration selectedConfigs="ALL">
                 <options isCurtainTrailer="true" enableRearLoading="true" enableSideLoading="true"/>
-                <loadingArea offset="0 1.188 -0.123" width="2.44" height="2.50" length="13.4"/>
+                <loadingArea offset="0.000 1.188 -0.123" width="2.44" height="2.50" length="13.4"/>
             </configuration>
         </vehicle>
         <vehicle configFileName="data/vehicles/lizard/multiPurposeTruck/multiPurposeTruck.xml">
@@ -24,10 +24,10 @@
                 <loadingArea offset="0.000 1.037 -2.544" width="2.225" length="3.836" height="2.340"/>
             </configuration>
             <configuration selectedConfigs="1|1" useConfigName="enterablePassenger">
-                <loadingArea offset="-0.000 1.071 -2.190" width="1.983" length="4.345" height="1.869"/>
+                <loadingArea offset="0.000 1.071 -2.190" width="1.983" length="4.345" height="1.869"/>
             </configuration>
             <configuration selectedConfigs="1|2" useConfigName="enterablePassenger">
-                <loadingArea offset="-0.000 1.065 -3.006" width="1.983" length="4.345" height="1.876"/>
+                <loadingArea offset="0.000 1.065 -3.006" width="1.983" length="4.345" height="1.876"/>
             </configuration>
         </vehicle>
         <vehicle configFileName="data/vehicles/lizard/pickup2017/pickup2017.xml">
@@ -44,13 +44,13 @@
         <vehicle configFileName="data/vehicles/salek/ans1900/ans1900.xml">
             <configuration selectedConfigs="1">
                 <options isBaleTrailer="true" horizontalLoading="true"/>
-                <loadingArea offset="-0.000 0.59 -0.484" width="1.39" length="2.45" height="1.85"/>
+                <loadingArea offset="0.000 0.59 -0.484" width="1.39" length="2.45" height="1.85"/>
             </configuration>
         </vehicle>
         <vehicle configFileName="data/vehicles/brantner/dd24073/dd24073.xml">
             <configuration selectedConfigs="1">
                 <options isBaleTrailer="true" horizontalLoading="true"/>
-                <loadingArea offset="-0.000 1.423 -0.765" width="2.410" height="2.650" length="7.250" baleHeight="3.200"/>
+                <loadingArea offset="0.000 1.423 -0.765" width="2.410" height="2.650" length="7.250" baleHeight="3.200"/>
             </configuration>
         </vehicle>
         <vehicle configFileName="data/vehicles/farmtech/dpw1800/dpw1800.xml">
@@ -62,7 +62,7 @@
         <vehicle configFileName="data/vehicles/kroeger/pwo24/pwo24.xml">
             <configuration selectedConfigs="1">
                 <options isBaleTrailer="true" horizontalLoading="true"/>
-                <loadingArea offset="-0.001 1.276 -0.176" width="2.347" length="9.775" height="2.99"/>
+                <loadingArea offset="0.000 1.276 -0.176" width="2.347" length="9.775" height="2.99"/>
             </configuration>
         </vehicle>
         <vehicle configFileName="data/vehicles/fliegl/dts59/dts59.xml">
@@ -73,74 +73,74 @@
         <vehicle configFileName="data/vehicles/demco/steelDropDeck/steelDropDeck.xml">
             <configuration selectedConfigs="ALL">
                 <options isBaleTrailer="false" enableRearLoading="true" enableSideLoading="true"/>
-                <loadingArea offset="-0.001 1.011 -0.330" width="2.45" height="2.25" length="11.2" baleHeight="2.8"/>
-                <loadingArea offset="-0.001 1.444 7.020" width="2.45" height="2.25" length="3.20" baleHeight="2.8"/>
+                <loadingArea offset="0.000 1.011 -0.330" width="2.45" height="2.25" length="11.2" baleHeight="2.8"/>
+                <loadingArea offset="0.000 1.444 7.020" width="2.45" height="2.25" length="3.20" baleHeight="2.8"/>
             </configuration>
         </vehicle>
         <vehicle configFileName="data/vehicles/lodeKing/renownTriAxleBeavertailLowDrop/renownTriAxleBeavertailLowDrop.xml">
             <configuration selectedConfigs="ALL">
                 <options isBaleTrailer="false" enableRearLoading="true" enableSideLoading="true"/>
-                <loadingArea offset="0 1.010 -1.00" width="2.45" height="2.25" length="11.1" baleHeight="2.8"/>
-                <loadingArea offset="0 1.620 6.235" width="2.45" height="2.25" length="3.20" baleHeight="2.8"/>
+                <loadingArea offset="0.000 1.010 -1.00" width="2.45" height="2.25" length="11.1" baleHeight="2.8"/>
+                <loadingArea offset="0.000 1.620 6.235" width="2.45" height="2.25" length="3.20" baleHeight="2.8"/>
             </configuration>
         </vehicle>
         <vehicle configFileName="data/vehicles/schwarzmueller/lowloader4A/lowloader4A.xml">
             <configuration selectedConfigs="ALL">
-                <loadingArea offset="0.002 0.979 -1.213" width="2.405" length="8.455" height="2.405"/>
+                <loadingArea offset="0.000 0.979 -1.213" width="2.405" length="8.455" height="2.405"/>
             </configuration>
         </vehicle>
         <vehicle configFileName="data/vehicles/brandt/h550/h550.xml">
             <configuration selectedConfigs="ALL">
-                <loadingArea offset="-0.002 0.740 3.756" width="2.975" length="6.820" height="3.025"/>
+                <loadingArea offset="0.000 0.740 3.756" width="2.975" length="6.820" height="3.025"/>
                 <loadingArea offset="0.000 1.083 -2.194" width="3.045" length="4.365" height="3.025"/>
             </configuration>
         </vehicle>
         <vehicle configFileName="data/vehicles/pittsTrailers/lt408L/lt408L.xml">
             <configuration selectedConfigs="ALL">
                 <options isLogTrailer="true"/>
-                <loadingArea offset="0.020 1.702 -0.096" width="2.290" length="12.600" height="2.25"/>
+                <loadingArea offset="0.000 1.702 -0.096" width="2.290" length="12.600" height="2.25"/>
             </configuration>
         </vehicle>
         <vehicle configFileName="data/vehicles/riedler/timberFrameFH16/timberFrameFH16.xml">
             <configuration selectedConfigs="ALL">
                 <options isLogTrailer="true"/>
-                <loadingArea offset="0.013 1.602 -1.109" width="2.060" length="5.855" height="2.65"/>
+                <loadingArea offset="0.000 1.602 -1.109" width="2.060" length="5.855" height="2.65"/>
             </configuration>
         </vehicle>
         <vehicle configFileName="data/vehicles/riedler/timberTrailer3A/timberTrailer3A.xml">
             <configuration useConfigName="design" selectedConfigs="ALL|1">
                 <options isLogTrailer="true"/>
-                <loadingArea offset="0.015 1.280 -1.184" width="2.065" length="6.050" height="2.850"/>
+                <loadingArea offset="0.000 1.280 -1.184" width="2.065" length="6.050" height="2.850"/>
             </configuration>
             <configuration useConfigName="design" selectedConfigs="ALL|2">
                 <options isLogTrailer="true"/>
-                <loadingArea offset="0.015 1.280 -1.182" width="2.065" length="6.280" height="2.850"/>
+                <loadingArea offset="0.000 1.280 -1.182" width="2.065" length="6.280" height="2.850"/>
             </configuration>
             <configuration useConfigName="design" selectedConfigs="ALL|3">
                 <options isLogTrailer="true"/>
-                <loadingArea offset="0.015 1.280 -1.466" width="2.065" length="6.800" height="2.850"/>
+                <loadingArea offset="0.000 1.280 -1.466" width="2.065" length="6.800" height="2.850"/>
             </configuration>
             <configuration useConfigName="design" selectedConfigs="ALL|4">
                 <options isLogTrailer="true"/>
-                <loadingArea offset="0.015 1.280 -1.837" width="2.065" length="7.650" height="2.850"/>
+                <loadingArea offset="0.000 1.280 -1.837" width="2.065" length="7.650" height="2.850"/>
             </configuration>
             <configuration useConfigName="design" selectedConfigs="ALL|5">
                 <options isLogTrailer="true"/>
-                <loadingArea offset="0.015 1.280 -2.036" width="2.065" length="8.050" height="2.850"/>
+                <loadingArea offset="0.000 1.280 -2.036" width="2.065" length="8.050" height="2.850"/>
             </configuration>
             <configuration useConfigName="design" selectedConfigs="ALL|6">
                 <options isLogTrailer="true"/>
-                <loadingArea offset="0.015 1.280 -2.257" width="2.065" length="8.550" height="2.850"/>
+                <loadingArea offset="0.000 1.280 -2.257" width="2.065" length="8.550" height="2.850"/>
             </configuration>
         </vehicle>
 		<vehicle configFileName="data/vehicles/kesla/nd144/nd144.xml">
             <configuration selectedConfigs="1">
                 <options isLogTrailer="true"/>
-                <loadingArea offset="-0.003 1.406 -0.173" width="2.254" length="3.995" height="1.625" lengthAxis="AXIS_FRONTLOADER_ARM2"/>
+                <loadingArea offset="0.000 1.406 -0.173" width="2.254" length="3.995" height="1.625" lengthAxis="AXIS_FRONTLOADER_ARM2"/>
             </configuration>
             <configuration selectedConfigs="2">
                 <options isLogTrailer="true"/>
-                <loadingArea offset="-0.003 1.235 0.034" width="2.206" length="4.635" height="1.625" lengthAxis="AXIS_FRONTLOADER_ARM2"/>
+                <loadingArea offset="0.000 1.235 0.034" width="2.206" length="4.635" height="1.625" lengthAxis="AXIS_FRONTLOADER_ARM2"/>
             </configuration>
         </vehicle>
     </vehicleConfigurations>

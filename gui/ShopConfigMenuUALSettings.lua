@@ -24,43 +24,49 @@ function ShopConfigMenuUALSettings:setNewVehicle(vehicle)
 	self.vehicle = vehicle
 	local name = vehicle and ("  -  " .. vehicle:getFullName()) or ""
 	self.guiTitle:setText(g_i18n:getText("ui_config_settings_ual") .. name)
-
-	if self.selectedConfigsListBox then		
-		local texts = {g_i18n:getText("universalAutoload_ALL")}
-		local spec = vehicle and vehicle.spec_universalAutoload
-		if spec and spec.configId and spec.configId ~= UniversalAutoload.ALL then
-			table.insert(texts, tostring(spec.configId))
-			self.selectedConfigsListBox.state = #texts
-		end
-		self.selectedConfigsListBox:setTexts(texts)
-	end
-
-	if self.useConfigNameListBox then
-		local texts = {"-"}
-		if vehicle then
-			local spec = self.vehicle and self.vehicle.spec_universalAutoload
-			
-			if spec.useConfigName then
-				texts = {spec.useConfigName}
-			else
-				for config, id in pairs(vehicle.configurations or {}) do
-					table.insert(texts, tostring(config))
-					-- if spec.useConfigName and spec.useConfigName == config then
-						-- self.useConfigNameListBox.state = #texts
-					-- end
-				end
-			end
-		end
-		self.useConfigNameListBox:setTexts(texts)
-	end
 	
-	if self.useConfigIndexListBox then
-		local texts = {"-"}
-		self.useConfigIndexListBox:setTexts(texts)
-	end
-	
+	self:initConfigListBoxes()
 	self:setUseConfigName()
 	self:updateSettings()
+end
+
+function ShopConfigMenuUALSettings:initConfigListBoxes()
+	if self.vehicle and self.useConfigNameListBox and self.useConfigIndexListBox then
+		local vehicle = self.vehicle
+		if self.selectedConfigsListBox then		
+			local texts = {g_i18n:getText("universalAutoload_ALL")}
+			local spec = vehicle and vehicle.spec_universalAutoload
+			if spec and spec.configId and spec.configId ~= UniversalAutoload.ALL then
+				table.insert(texts, tostring(spec.configId))
+				self.selectedConfigsListBox.state = #texts
+			end
+			self.selectedConfigsListBox:setTexts(texts)
+		end
+
+		if self.useConfigNameListBox then
+			local texts = {"-"}
+			if vehicle then
+				local spec = self.vehicle and self.vehicle.spec_universalAutoload
+				
+				if spec.useConfigName then
+					texts = {spec.useConfigName}
+				else
+					for config, id in pairs(vehicle.configurations or {}) do
+						table.insert(texts, tostring(config))
+						-- if spec.useConfigName and spec.useConfigName == config then
+							-- self.useConfigNameListBox.state = #texts
+						-- end
+					end
+				end
+			end
+			self.useConfigNameListBox:setTexts(texts)
+		end
+		
+		if self.useConfigIndexListBox then
+			local texts = {"-"}
+			self.useConfigIndexListBox:setTexts(texts)
+		end
+	end
 end
 
 function ShopConfigMenuUALSettings:setUseConfigName(id)
@@ -244,8 +250,10 @@ function ShopConfigMenuUALSettings:onClickSelectedConfigs(id, control, direction
 		local text = self.selectedConfigsListBox.texts[id]
 		if text == g_i18n:getText("universalAutoload_ALL") then
 			selectedConfigs = UniversalAutoload.ALL
+			spec.configId = UniversalAutoload.ALL
 		else
 			selectedConfigs = text
+			spec.configId = text
 		end
 	end
 	if self.useConfigNameListBox then
@@ -422,13 +430,15 @@ function ShopConfigMenuUALSettings:onClickSave()
 	print("CLICKED SAVE")
 	g_inputBinding:setShowMouseCursor(true)
 	self:playSample(GuiSoundPlayer.SOUND_SAMPLES.CLICK)
-	local text = g_i18n:getText("ui_confirm_save_config_ual")
+	local text = g_i18n:getText("ui_confirm_save_config_ual") .. "\n" .. g_i18n:getText("ui_confirm_save_config2_ual")
 	local callback = function(self, yes)
 		if yes == true then
 			UniversalAutoloadManager.exportVehicleConfigToServer()
 		end
 	end
 	YesNoDialog.show(callback, self, text)
+	self:initConfigListBoxes()
+	self:setUseConfigName()
 end
 
 function ShopConfigMenuUALSettings:onClickClose()
