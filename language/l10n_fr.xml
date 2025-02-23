@@ -90,7 +90,7 @@
 		<text name="ui_option_tooltip_addRemoveAreas" text="Ajustez la valeur ici pour ajouter ou supprimer des zones de chargement"/>
 		<text name="ui_option_tooltip_selectedArea" text="La zone sélectionnée (à modifier dans les paramètres ci-dessous)"/>
 		
-		<text name="ui_option_selectedConfigSet" text="Configuration sélectionné"/>
+		<text name="ui_option_selectedConfigSet" text="Configuration sélectionnée"/>
 		<text name="ui_option_useConfigName" text="Utiliser le nom de la configuration"/>
 		<text name="ui_option_useConfigIndex" text="Utiliser l'index de la configuration"/>
 		<text name="ui_option_tooltip_selectedConfigSet" text="La configuration' auquel s'appliqueront les paramètres sauvegardés"/>
