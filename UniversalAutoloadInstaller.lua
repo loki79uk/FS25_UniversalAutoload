@@ -466,8 +466,8 @@ function UniversalAutoloadManager.getVehicleConfigNames(vehicle)
 	
 	if not spec.configFileName then
 		print("warning: config file name was missing..")
-		spec.configFileName = UniversalAutoloadManager.cleanConfigFileName(vehicle.configFileName)
 	end
+	spec.configFileName = UniversalAutoloadManager.cleanConfigFileName(vehicle.configFileName)
 	
 	if not spec.selectedConfigs then
 		print("FIND CORRECT SETTINGS FILE POSITION:")
