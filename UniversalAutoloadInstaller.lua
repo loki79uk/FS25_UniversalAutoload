@@ -1216,6 +1216,11 @@ function UniversalAutoloadManager.editLoadingVolumeInsideShop(vehicle)
 				local lx1, ly1, lz1 = unpack(p1)
 				local lx2, ly2, lz2 = unpack(p2)
 				
+				if lx2-lx1 == 0 and ly2-ly1 == 0 and lz2-lz1 == 0 then
+					print("don't divide by zero")
+					return 0, 0, 0
+				end
+				
 				-- Calculate normalized direction and distance
 				local lineDx, lineDy, lineDz = MathUtil.vector3Normalize(lx2-lx1, ly2-ly1, lz2-lz1)
 				local distance = MathUtil.vector3Length(pX-camX, pY-camY, pZ-camZ)
@@ -1277,14 +1282,16 @@ function UniversalAutoloadManager.editLoadingVolumeInsideShop(vehicle)
 				local dx, dy, dz = expandAxis(points[axisPairs[i][1]], points[axisPairs[i][2]], altHeld or shiftHeld)
 				local delta = (i <= 2 and dx) or (i <= 4 and dy) or dz
 				
-				if not shiftHeld and not altHeld then
-					bb:moveFace(i, delta)
-				elseif shiftHeld and not altHeld then
-					bb:moveFace(axisPairs[i][1], delta/2)
-					bb:moveFace(axisPairs[i][2], delta/2)
-				elseif altHeld and not shiftHeld then
-					bb:moveFace(axisPairs[i][1], delta/2)
-					bb:moveFace(axisPairs[i][2], -delta/2)
+				if delta and delta > 0 then
+					if not shiftHeld and not altHeld then
+						bb:moveFace(i, delta)
+					elseif shiftHeld and not altHeld then
+						bb:moveFace(axisPairs[i][1], delta/2)
+						bb:moveFace(axisPairs[i][2], delta/2)
+					elseif altHeld and not shiftHeld then
+						bb:moveFace(axisPairs[i][1], delta/2)
+						bb:moveFace(axisPairs[i][2], -delta/2)
+					end
 				end
 			end
 			
@@ -1304,10 +1311,10 @@ end
 function UniversalAutoloadManager.createLoadingVolumeInsideShop(vehicle)
 	local spec = vehicle.spec_universalAutoload
 	
-	-- if not spec.skipFirstUpdate then
-		-- spec.skipFirstUpdate = true
-		-- return
-	-- end
+	if not spec.skipFirstUpdate then
+		spec.skipFirstUpdate = true
+		return
+	end
 	
 	if UniversalAutoloadManager.pauseOnNextStep then
 		return
@@ -1337,10 +1344,10 @@ end
 function UniversalAutoloadManager.resetLoadingVolumeForShopEdit(vehicle)
 	local spec = vehicle.spec_universalAutoload
 	
-	-- if not spec.skipFirstUpdate then
-		-- spec.skipFirstUpdate = true
-		-- return
-	-- end
+	if not spec.skipFirstUpdate then
+		spec.skipFirstUpdate = true
+		return
+	end
 	
 	if not vehicle.rootNode then
 		print("*** Vehicle Root Node is UNDEFINED ***")

@@ -768,6 +768,7 @@ function BoundingBox:moveFace(pointIndex, delta)
 		"z", --back
 	}
 
+	local delta = delta or 0
 	local axis = axisLookup[pointIndex]
 	local sign = (pointIndex % 2 == 0) and -1 or 1
 	local size = self:getSize()
