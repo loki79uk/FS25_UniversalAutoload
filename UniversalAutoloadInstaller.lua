@@ -1282,7 +1282,7 @@ function UniversalAutoloadManager.editLoadingVolumeInsideShop(vehicle)
 				local dx, dy, dz = expandAxis(points[axisPairs[i][1]], points[axisPairs[i][2]], altHeld or shiftHeld)
 				local delta = (i <= 2 and dx) or (i <= 4 and dy) or dz
 				
-				if delta and delta > 0 then
+				if delta and delta ~= 0 then
 					if not shiftHeld and not altHeld then
 						bb:moveFace(i, delta)
 					elseif shiftHeld and not altHeld then
