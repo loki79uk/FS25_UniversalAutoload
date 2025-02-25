@@ -14,6 +14,7 @@
 		<text name="ui_save_options_ual" text="Save Options"/>
 		<text name="ui_button_save_config_ual" text="保存车辆设置"/>
 		<text name="ui_confirm_save_config_ual" text="是否要覆盖此车辆的默认 autoload 配置？"/>
+		<text name="ui_confirm_save_config2_ual" text="(Purchase new vehicle or restart game to apply the new settings)"/>
 		
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="显示调试"/>

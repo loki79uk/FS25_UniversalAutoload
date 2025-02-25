@@ -30,7 +30,7 @@ UniversalAutoload.LOG_SPACE = 0.25
 UniversalAutoload.DELAY_TIME = 150
 UniversalAutoload.MP_DELAY = 1000
 UniversalAutoload.LOG_DELAY = 1000
-UniversalAutoload.TRIGGER_DELTA = 0.1
+UniversalAutoload.TRIGGER_DELTA = 0.2
 UniversalAutoload.MAX_LAYER_COUNT = 10
 UniversalAutoload.ROTATED_BALE_FACTOR = 0.80
 -- 0.85355339
@@ -2273,7 +2273,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 			
 			if not spec.loadingVolume or spec.loadingVolume.state < LoadingVolume.STATE.SHOP_CONFIG then
 				print("doUpdate: " .. tostring(netGetTime()))
-				if spec.selectedConfigs and not spec.wasResetToDefault then
+				if spec.loadArea and not spec.wasResetToDefault then
 					print("resetLoadingVolumeForShopEdit")
 					UniversalAutoloadManager.resetLoadingVolumeForShopEdit(self)
 				else
@@ -2285,7 +2285,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 						if configFileName and selectedConfigs and UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName] then
 							print("*** RESET TO DEFAULT CONFIG ***")
 							UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName][selectedConfigs] = nil
-							spec.selectedConfigs = nil
+							spec.loadArea = nil
 							spec.wasResetToDefault = nil
 						end
 					end
@@ -2783,6 +2783,11 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 								end
 								spec.lastUnloadCount = spec.totalUnloadCount
 								UniversalAutoload.stopLoading(self)
+								
+								if spec.totalUnloadCount == 0 then
+									print("** RESET LOADING AREA **")
+									UniversalAutoload.resetLoadingArea(self)
+								end
 							
 							end
 						end

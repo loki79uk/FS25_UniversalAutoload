@@ -12,6 +12,7 @@
 		<text name="ui_save_options_ual" text="Save Options"/>
 		<text name="ui_button_save_config_ual" text="Save Vehicle Settings"/>
 		<text name="ui_confirm_save_config_ual" text="Do you want to overwrite the default autoload configuration for this vehicle?"/>
+		<text name="ui_confirm_save_config2_ual" text="(Purchase new vehicle or restart game to apply the new settings)"/>
 		
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Show Debug"/>

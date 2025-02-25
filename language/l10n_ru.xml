@@ -12,6 +12,7 @@
 		<text name="ui_save_options_ual" text="Save Options"/>
 		<text name="ui_button_save_config_ual" text="Сохранение настроек автомобиля"/>
 		<text name="ui_confirm_save_config_ual" text="Вы хотите перезаписать конфигурацию автозагрузки по умолчанию для этого автомобиля?"/>
+		<text name="ui_confirm_save_config2_ual" text="(Purchase new vehicle or restart game to apply the new settings)"/>
 		
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Показать отладку"/>
@@ -37,15 +38,15 @@
 		<text name="ui_option_rearOnly" text="Только сзади"/>
 		<text name="ui_option_frontOnly" text="Только спереди"/>
 		
-		<text name="ui_option_noLoadingFolded" text="В сложенном виде не загружается"/>
+		<text name="ui_option_noLoadingFolded" text="Не загружаться, если состояние"/>
 		<text name="ui_option_folded" text="Сложенный"/>
 		<text name="ui_option_unfolded" text="Разложенный"/>
 		
-		<text name="ui_option_noLoadingCovered" text="Нет загрузки, если он закрыт"/>
-		<text name="ui_option_covered" text="Закрытый"/>
-		<text name="ui_option_uncovered" text="Открытый"/>
+		<text name="ui_option_noLoadingCovered" text="Не загружаться, если крышка"/>
+		<text name="ui_option_covered" text="Закрыта"/>
+		<text name="ui_option_uncovered" text="Открыта"/>
 
-		<text name="ui_option_isBoxTrailer" text="Прицеп для ящиков"/>
+		<text name="ui_option_isBoxTrailer" text="Фургон"/>
 		<text name="ui_option_isLogTrailer" text="Прицеп для перевозки бревен"/>
 		<text name="ui_option_isBaleTrailer" text="Прицеп для тюков"/>
 		<text name="ui_option_isBaleProcessor" text="Устройство для обработки тюков"/>
@@ -65,10 +66,10 @@
 		<text name="ui_option_tooltip_enableAutoload" text="Если автозагрузка включена или отключена для данного автомобиля"/>
 		<text name="ui_option_tooltip_trailerType" text="Специальный тип прицепа, например, для перевозки тюков, бревен, навесов"/>
 		<text name="ui_option_tooltip_unloadingType" text="Используйте специальное место для разгрузки (спереди или сзади)."/>
-		<text name="ui_option_tooltip_noLoadingFolded" text="Предотвращайте загрузку как в сложенном, так и в разложенном виде"/>
-		<text name="ui_option_tooltip_noLoadingCovered" text="Предотвращайте загрузку как в закрытом, так и в непокрытом виде"/>
+		<text name="ui_option_tooltip_noLoadingFolded" text="Отключает загрузку в сложенном или разложенном виде"/>
+		<text name="ui_option_tooltip_noLoadingCovered" text="Отключает загрузку при закрытом или открытом положениии крышки"/>
 		
-		<text name="ui_option_tooltip_isBoxTrailer" text="Если прицеп закрыт задней дверью"/>
+		<text name="ui_option_tooltip_isBoxTrailer" text="Если прицеп - фургон с задней дверью"/>
 		<text name="ui_option_tooltip_isLogTrailer" text="Если прицеп является лесовозным - будут загружены только бревна, сброшенные сверху"/>
 		<text name="ui_option_tooltip_isBaleTrailer" text="Если прицеп должен использовать автоматический режим сбора тюков,"/>	
 		<text name="ui_option_tooltip_isBaleProcessor" text="Если прицеп должен использовать тюки (например, смеситель TMR или воздуходувку для соломы)"/>
@@ -85,10 +86,10 @@
 		<text name="ui_option_tooltip_offsetRoot" text="Узел i3d транспортного средства, относительно которого смещены области"/>
 		<text name="ui_option_tooltip_minLogLength" text="Минимальная длина бревна, которые будут загружаться автоматически"/>
 
-		<text name="ui_option_addRemoveAreas" text="Количество погрузочных площадок"/>
-		<text name="ui_option_selectedArea" text="Выбранная область"/>
-		<text name="ui_option_tooltip_addRemoveAreas" text="Измените значение здесь, чтобы добавить или удалить области загрузки"/>
-		<text name="ui_option_tooltip_selectedArea" text="Выбранная область (для изменения в настройках ниже)"/>
+		<text name="ui_option_addRemoveAreas" text="Число зон загрузки"/>
+		<text name="ui_option_selectedArea" text="Выбранная зона"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="Измени это число для добавления или удаления зон загрузки"/>
+		<text name="ui_option_tooltip_selectedArea" text="Выбранная зона загрузки (для изменения настроек ниже)"/>
 		
 		<text name="ui_option_selectedConfigSet" text="Selected Configuration Set"/>
 		<text name="ui_option_useConfigName" text="Use Configuration Name"/>
