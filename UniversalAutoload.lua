@@ -1492,8 +1492,8 @@ function UniversalAutoload:updateLoadingTriggers()
 	end
 	
 	-- create triggers
-	local sideBoundary = 3 * UniversalAutoload.TRIGGER_DELTA
-	local rearBoundary = 1 * UniversalAutoload.TRIGGER_DELTA
+	local sideBoundary = 3.33 * UniversalAutoload.TRIGGER_DELTA
+	local rearBoundary = 1.00 * UniversalAutoload.TRIGGER_DELTA
 	if spec.enableSideLoading then
 		sideBoundary = spec.loadVolume.width/4
 	end
@@ -2763,7 +2763,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 						else
 							if spec.activeLoading then
 								if not spec.trailerIsFull and not self:ualGetIsMoving() then
-									print("ATTEMPT RELOAD")
+									-- print("** ATTEMPT RELOAD **")
 									UniversalAutoload.startLoading(self)
 								end
 							else
@@ -4752,7 +4752,7 @@ function UniversalAutoload:ualUnloadingTrigger_Callback(triggerId, otherActorId,
 				elseif onLeave then
 					if debugLoading then print(" UnloadingTrigger LEAVE: " .. tostring(object.id)) end
 					if self.spec_tensionBelts.areAllBeltsFastened and self:ualGetIsMoving() then
-						print("*** DID WE ACTUALLY UNLOAD THIS? ***")
+						-- print("** DID WE ACTUALLY UNLOAD THIS? **")
 					else
 						UniversalAutoload.removeLoadedObject(self, object)
 					end
@@ -5338,33 +5338,35 @@ function UniversalAutoload.getContainerType(object)
 					return nil
 				else
 					print("*** UNIVERSAL AUTOLOAD - FOUND NEW OBJECT TYPE: ".. name.." ***")
-					if UniversalAutoload.OBJECT_FILL_LEVEL[object] then
-						print("  PARTIAL FILL LEVEL: " .. UniversalAutoload.OBJECT_FILL_LEVEL[object])
-					end
-					if isPallet then
-						print("Pallet")
-						print("  width: " .. object.size.width)
-						print("  height: " .. object.size.height)
-						print("  length: " .. object.size.length)
-					elseif isBale then
-						if isRoundbale then
-							print("Round Bale")
-							print("  width: " .. object.width)
-							print("  height: " .. object.diameter)
-							print("  length: " .. object.diameter)
-						else
-							print("Square Bale")
-							print("  width: " .. object.width)
-							print("  height: " .. object.height)
-							print("  length: " .. object.length)
+					if debugPallets then 
+						if UniversalAutoload.OBJECT_FILL_LEVEL[object] then
+							print("  PARTIAL FILL LEVEL: " .. UniversalAutoload.OBJECT_FILL_LEVEL[object])
 						end
+						if isPallet then
+							print("Pallet")
+							print("  width: " .. object.size.width)
+							print("  height: " .. object.size.height)
+							print("  length: " .. object.size.length)
+						elseif isBale then
+							if isRoundbale then
+								print("Round Bale")
+								print("  width: " .. object.width)
+								print("  height: " .. object.diameter)
+								print("  length: " .. object.diameter)
+							else
+								print("Square Bale")
+								print("  width: " .. object.width)
+								print("  height: " .. object.height)
+								print("  length: " .. object.length)
+							end
+						end
+						print("  size X: " .. size.x)
+						print("  size Y: " .. size.y)
+						print("  size Z: " .. size.z)
+						print("  offset X: " .. offset.x)
+						print("  offset Y: " .. offset.y)
+						print("  offset Z: " .. offset.z)
 					end
-					print("  size X: " .. size.x)
-					print("  size Y: " .. size.y)
-					print("  size Z: " .. size.z)
-					print("  offset X: " .. offset.x)
-					print("  offset Y: " .. offset.y)
-					print("  offset Z: " .. offset.z)
 				end
 
 			else
@@ -5722,12 +5724,14 @@ function UniversalAutoload:drawDebugDisplay()
 				local node = UniversalAutoload.getObjectPositionNode(object)
 				if node then
 					local containerType = UniversalAutoload.getContainerType(object)
-					local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType)
-					local offset = 0 if containerType.isBale then offset = h/2 end
-					if UniversalAutoload.isValidForLoading(self, object) then
-						UniversalAutoload.DrawDebugPallet( node, w, h, l, true, false, GREEN, offset )
-					else
-						UniversalAutoload.DrawDebugPallet( node, w, h, l, true, false, GREY, offset )
+					if containerType ~= nil then
+						local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType)
+						local offset = 0 if containerType.isBale then offset = h/2 end
+						if UniversalAutoload.isValidForLoading(self, object) then
+							UniversalAutoload.DrawDebugPallet( node, w, h, l, true, false, GREEN, offset )
+						else
+							UniversalAutoload.DrawDebugPallet( node, w, h, l, true, false, GREY, offset )
+						end
 					end
 				end
 			end
@@ -5738,12 +5742,14 @@ function UniversalAutoload:drawDebugDisplay()
 				local node = UniversalAutoload.getObjectPositionNode(object)
 				if node then
 					local containerType = UniversalAutoload.getContainerType(object)
-					local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType)
-					local offset = 0 if containerType.isBale then offset = h/2 end
-					if UniversalAutoload.isValidForUnloading(self, object) then 
-						UniversalAutoload.DrawDebugPallet( node, w, h, l, true, false, GREEN, offset )
-					else
-						UniversalAutoload.DrawDebugPallet( node, w, h, l, true, false, GREY, offset )
+					if containerType ~= nil then
+						local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType)
+						local offset = 0 if containerType.isBale then offset = h/2 end
+						if UniversalAutoload.isValidForUnloading(self, object) then 
+							UniversalAutoload.DrawDebugPallet( node, w, h, l, true, false, GREEN, offset )
+						else
+							UniversalAutoload.DrawDebugPallet( node, w, h, l, true, false, GREY, offset )
+						end
 					end
 				end
 			end
@@ -5762,12 +5768,14 @@ function UniversalAutoload:drawDebugDisplay()
 				
 				for object, unloadPlace in pairs(spec.objectsToUnload or {}) do
 					local containerType = UniversalAutoload.getContainerType(object)
-					local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType)
-					local offset = 0 if containerType.isBale then offset = h/2 end
-					if spec.unloadingAreaClear then
-						UniversalAutoload.DrawDebugPallet( unloadPlace.node, w, h, l, true, false, CYAN, offset )
-					else
-						UniversalAutoload.DrawDebugPallet( unloadPlace.node, w, h, l, true, false, RED, offset )
+					if containerType ~= nil then
+						local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType)
+						local offset = 0 if containerType.isBale then offset = h/2 end
+						if spec.unloadingAreaClear then
+							UniversalAutoload.DrawDebugPallet( unloadPlace.node, w, h, l, true, false, CYAN, offset )
+						else
+							UniversalAutoload.DrawDebugPallet( unloadPlace.node, w, h, l, true, false, RED, offset )
+						end
 					end
 				end
 			end
@@ -5811,16 +5819,18 @@ function UniversalAutoload:drawDebugDisplay()
 			local x, y, z = place.sizeX, place.sizeY, place.sizeZ 
 			
 			local containerType = spec.lastLoadAttempt.containerType
-			local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType)
-			if containerType.flipXY then
-				X, Y = w, h
-				h, w = X, Y
-			elseif containerType.flipYZ then
-				Y, Z = h, l
-				l, h = Y, Z
+			if containerType ~= nil then
+				local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType)
+				if containerType.flipXY then
+					X, Y = w, h
+					h, w = X, Y
+				elseif containerType.flipYZ then
+					Y, Z = h, l
+					l, h = Y, Z
+				end
+				UniversalAutoload.DrawDebugPallet( place.node, x, y, z, true, false, GREY, offset )
+				UniversalAutoload.DrawDebugPallet( place.node, w, h, l, true, false, YELLOW, offset )
 			end
-			UniversalAutoload.DrawDebugPallet( place.node, x, y, z, true, false, GREY, offset )
-			UniversalAutoload.DrawDebugPallet( place.node, w, h, l, true, false, YELLOW, offset )
 		end
 		
 		if debugLoading and spec.lastOverlapBox then
