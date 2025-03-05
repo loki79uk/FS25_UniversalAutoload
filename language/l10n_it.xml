@@ -9,10 +9,10 @@
 		<text name="ui_config_settings_ual" text="impostazioni Autoload"/>
 		<text name="ui_vehicle_options_ual" text="Opzioni veicoli"/>
 		<text name="ui_loading_area_options_ual" text="Opzioni area di carico"/>
-		<text name="ui_save_options_ual" text="Save Options"/>
+		<text name="ui_save_options_ual" text="Opzioni di salvataggio"/>
 		<text name="ui_button_save_config_ual" text="Salva impostazioni veicolo"/>
 		<text name="ui_confirm_save_config_ual" text="Vuoi sovrascrivere la configurazione di caricamento automatico predefinita per questo veicolo?"/>
-		<text name="ui_confirm_save_config2_ual" text="(Purchase new vehicle or restart game to apply the new settings)"/>
+		<text name="ui_confirm_save_config2_ual" text="(Acquista un nuovo veicolo o riavvia il gioco per applicare le nuove impostazioni)"/>
 		
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Mostra Debug"/>
@@ -91,12 +91,12 @@
 		<text name="ui_option_tooltip_addRemoveAreas" text="Regola il valore qui per aggiungere o rimuovere aree di carico"/>
 		<text name="ui_option_tooltip_selectedArea" text="L'area selezionata (da modificare nelle impostazioni sottostanti)"/>
 		
-		<text name="ui_option_selectedConfigSet" text="Selected Configuration Set"/>
-		<text name="ui_option_useConfigName" text="Use Configuration Name"/>
-		<text name="ui_option_useConfigIndex" text="Use Configuration Index"/>
-		<text name="ui_option_tooltip_selectedConfigSet" text="The 'configuration set' to which the saved settings will apply"/>
-		<text name="ui_option_tooltip_useConfigName" text="The configuration to be indexed (optional)"/>
-		<text name="ui_option_tooltip_useConfigIndex" text="The index for the configuration (optional)"/>
+		<text name="ui_option_selectedConfigSet" text="Set di configurazione selezionato"/>
+		<text name="ui_option_useConfigName" text="Utilizza nome configurazione"/>
+		<text name="ui_option_useConfigIndex" text="Usa indice di configurazione"/>
+		<text name="ui_option_tooltip_selectedConfigSet" text="Il 'set di configurazione' a cui verranno applicate le impostazioni salvate"/>
+		<text name="ui_option_tooltip_useConfigName" text="La configurazione da indicizzare (facoltativo)"/>
+		<text name="ui_option_tooltip_useConfigIndex" text="L'indice per la configurazione (facoltativo)"/>
 		
 		<!-- LOADING_AREA -->
 		<text name="ui_loadArea_offset" text="Compensazione"/>
