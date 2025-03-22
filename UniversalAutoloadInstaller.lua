@@ -1764,6 +1764,7 @@ function UniversalAutoloadManager:consoleAddLogs(arg1, arg2)
 			for vehicle, hasAutoload in pairs(vehicles) do
 				if hasAutoload and vehicle:getIsActiveForInput() then
 					local maxSingleLength = UniversalAutoload.getMaxSingleLength(vehicle)
+					maxSingleLength = math.floor(10*maxSingleLength)/10
 					if length > maxSingleLength then
 						length = maxSingleLength - 0.1
 						print("resizing to fit trailer " .. length .. "m")
@@ -2264,6 +2265,7 @@ ShopConfigScreen.processAttributeData = Utils.overwrittenFunction(ShopConfigScre
 			if vehicle.spec_universalAutoload.isLogTrailer then
 				local maxSingleLengthString
 				local maxSingleLength = UniversalAutoload.getMaxSingleLength(vehicle)
+				maxSingleLength = math.floor(10*maxSingleLength)/10
 				local nearestHalfValue = math.floor(2*maxSingleLength)/2
 				if nearestHalfValue % 1 < 0.1 then
 					maxSingleLengthString = string.format("  %dm", nearestHalfValue)

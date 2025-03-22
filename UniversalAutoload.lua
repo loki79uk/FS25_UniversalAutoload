@@ -2941,7 +2941,7 @@ end
 --
 function UniversalAutoload:isValidForLoading(object)
 	local spec = self.spec_universalAutoload
-	local maxLength = spec.loadArea and spec.loadArea[spec.currentLoadAreaIndex or 1].length or 0
+	local maxLength = UniversalAutoload.getMaxSingleLength(self)
 	local minLength = spec.minLogLength or 0
 	if minLength > maxLength or not spec.isLogTrailer then
 		minLength = 0
@@ -2971,7 +2971,7 @@ function UniversalAutoload:isValidForLoading(object)
 		return false
 	end
 
-	if object.isSplitShape and object.sizeY > maxLength then
+	if object.isSplitShape and object.sizeY > maxLength + UniversalAutoload.DELTA then
 		if debugPallets then
 			g_currentMission:addExtraPrintText("Log - too long")
 		end
@@ -5648,7 +5648,7 @@ function UniversalAutoload:getMaxSingleLength()
 	local maxSingleLength = 0
 	for i, loadArea in pairs(spec.loadArea or {}) do
 		if loadArea.length > maxSingleLength then
-			maxSingleLength = math.floor(10*loadArea.length)/10
+			maxSingleLength = loadArea.length
 		end
 	end
 	return maxSingleLength
