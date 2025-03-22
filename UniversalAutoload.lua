@@ -1523,7 +1523,7 @@ function UniversalAutoload:updateLoadingTriggers()
 	local rightPickupTrigger = spec.triggers["rightPickupTrigger"]
 	if leftPickupTrigger and rightPickupTrigger then
 		local width = 1.66*spec.loadVolume.width
-		local height = 2*spec.loadVolume.height
+		local height = 3*spec.loadVolume.height
 		local length = spec.loadVolume.length+spec.loadVolume.width/2
 		local tx, ty, tz = 1.1*(width+spec.loadVolume.width)/2, 0, 0
 		doUpdateTrigger("leftPickupTrigger", width, height, length, tx, ty, tz)
@@ -1532,7 +1532,7 @@ function UniversalAutoload:updateLoadingTriggers()
 
 	if spec.rearUnloadingOnly then
 		local width = spec.loadVolume.length+spec.loadVolume.width
-		local height = 2*spec.loadVolume.height
+		local height = 3*spec.loadVolume.height
 		local length = 0.8*width
 		local tx, ty, tz = 0, 0, -1.1*(length+spec.loadVolume.length)/2
 		doUpdateTrigger("rearPickupTrigger", width, height, length, tx, ty, tz)
@@ -1542,7 +1542,7 @@ function UniversalAutoload:updateLoadingTriggers()
 	
 	if spec.frontUnloadingOnly then
 		local width = spec.loadVolume.length+spec.loadVolume.width
-		local height = 2*spec.loadVolume.height
+		local height = 3*spec.loadVolume.height
 		local length = 0.8*width
 		local tx, ty, tz = 0, 0, 1.1*(length+spec.loadVolume.length)/2
 		doUpdateTrigger("frontPickupTrigger", width, height, length, tx, ty, tz)
