@@ -789,16 +789,15 @@ function UniversalAutoloadManager.exportVehicleConfigToServer()
 
 			print("..convert shop volume to loading area")
 			local exportSpec = exportVehicle.spec_universalAutoload
-			exportSpec.loadArea = {}
+			exportSpec.loadArea = exportSpec.loadArea or {}
 			for i, boundingBox in (shopVolume.bbs) do
 				local s = boundingBox:getSize()
 				local o = boundingBox:getOffset()
-				exportSpec.loadArea[i] = {
-					width = s.x,
-					height = s.y,
-					length = s.z,
-					offset = {o.x, o.y-s.y/2, o.z},
-				}
+				exportSpec.loadArea[i] = exportSpec.loadArea[i] or {}
+				exportSpec.loadArea[i].width = s.x
+				exportSpec.loadArea[i].height = s.y
+				exportSpec.loadArea[i].length = s.z
+				exportSpec.loadArea[i].offset = {o.x, o.y-s.y/2, o.z}
 			end
 
 			local configFileName, configId = UniversalAutoloadManager.getVehicleConfigNames(exportVehicle)
