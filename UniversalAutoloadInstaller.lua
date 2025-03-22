@@ -676,10 +676,10 @@ function UniversalAutoloadManager.importVehicleConfigurations(xmlFilename)
 						configuration.selectedConfigs = selectedConfigs
 						configGroup[selectedConfigs] = configuration
 					else
-						if UniversalAutoload.showDebug then print("  ALREADY EXISTS: "..configFileName.." ["..selectedConfigs.."]") end
+						if UniversalAutoload.showDebug then print("  ALREADY EXISTS: ["..selectedConfigs.."]") end
 					end
 
-					print("  >> "..configFileName.." ["..selectedConfigs.."] ".. (useConfigName and ("(" .. useConfigName .. ")") or ""))
+					print("  >> ["..selectedConfigs.."] ".. (useConfigName and ("(" .. useConfigName .. ")") or ""))
 
 					j = j + 1
 				end

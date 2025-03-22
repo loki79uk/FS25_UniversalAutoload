@@ -5337,8 +5337,8 @@ function UniversalAutoload.getContainerType(object)
 					-- UniversalAutoload.INVALID_OBJECTS[name] = true
 					return nil
 				else
-					print("*** UNIVERSAL AUTOLOAD - FOUND NEW OBJECT TYPE: ".. name.." ***")
-					if debugPallets then 
+					if debugPallets then
+						print("*** UNIVERSAL AUTOLOAD - FOUND NEW OBJECT TYPE: ".. name.." ***")
 						if UniversalAutoload.OBJECT_FILL_LEVEL[object] then
 							print("  PARTIAL FILL LEVEL: " .. UniversalAutoload.OBJECT_FILL_LEVEL[object])
 						end
