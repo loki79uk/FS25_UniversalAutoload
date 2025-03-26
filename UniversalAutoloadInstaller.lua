@@ -34,7 +34,7 @@ end)
 -- DETECT SPAWNED LOGS
 ROOT.addToPhysics = Utils.appendedFunction(ROOT.addToPhysics, function(nodeId)
 	if nodeId ~= 0 and nodeId ~= nil then
-		if getRigidBodyType(nodeId) == RigidBodyType.DYNAMIC and getSplitType(nodeId) ~= 0 then
+		if getHasClassId(nodeId, ClassIds.MESH_SPLIT_SHAPE) and getSplitType(nodeId) ~= 0 and getRigidBodyType(nodeId) == RigidBodyType.DYNAMIC then
 			if not UniversalAutoload.createdLogId and UniversalAutoload.createdTreeId and nodeId > UniversalAutoload.createdTreeId then
 				UniversalAutoload.createdLogId = nodeId
 			end
