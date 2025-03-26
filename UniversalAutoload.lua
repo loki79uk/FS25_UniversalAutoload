@@ -1492,7 +1492,7 @@ function UniversalAutoload:updateLoadingTriggers()
 	end
 	
 	-- create triggers
-	local sideBoundary = 3.33 * UniversalAutoload.TRIGGER_DELTA
+	local sideBoundary = 3.50 * UniversalAutoload.TRIGGER_DELTA
 	local rearBoundary = 1.00 * UniversalAutoload.TRIGGER_DELTA
 	if spec.enableSideLoading then
 		sideBoundary = spec.loadVolume.width/4
