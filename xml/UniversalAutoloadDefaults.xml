@@ -54,9 +54,13 @@
             </configuration>
         </vehicle>
         <vehicle configFileName="data/vehicles/farmtech/dpw1800/dpw1800.xml">
-            <configuration selectedConfigs="ALL">
+            <configuration selectedConfigs="ALL|1" useConfigName="design">
                 <options isBaleTrailer="true" horizontalLoading="true"/>
                 <loadingArea offset="0.000 1.144 -0.820" width="2.400" length="9.728" height="2.403"/>
+            </configuration>
+            <configuration selectedConfigs="ALL|2" useConfigName="design">
+                <options isBaleTrailer="true" horizontalLoading="true"/>
+                <loadingArea offset="0.000 1.144 -0.820" width="2.400" length="9.330" height="2.403"/>
             </configuration>
         </vehicle>
         <vehicle configFileName="data/vehicles/kroeger/pwo24/pwo24.xml">
@@ -133,7 +137,7 @@
                 <loadingArea offset="0.000 1.280 -2.257" width="2.065" length="8.550" height="2.850"/>
             </configuration>
         </vehicle>
-		<vehicle configFileName="data/vehicles/kesla/nd144/nd144.xml">
+        <vehicle configFileName="data/vehicles/kesla/nd144/nd144.xml">
             <configuration selectedConfigs="1">
                 <options isLogTrailer="true"/>
                 <loadingArea offset="0.000 1.406 -0.173" width="2.254" length="3.995" height="1.625" lengthAxis="AXIS_FRONTLOADER_ARM2"/>
