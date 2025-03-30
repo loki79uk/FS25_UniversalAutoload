@@ -140,7 +140,7 @@
 		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="防止未覆盖时装载(仅适用于此区域)"/>
 
 		<!-- KEY BINDINGS -->
-		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Open global settings menu"/>
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="打开全局设置菜单"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="打开配置设置菜单(在商店内)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="启用装载量编辑(在商店中)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="切换装载"/>
