@@ -11,10 +11,10 @@
 		<text name="ui_config_settings_ual" text="自动加载设置"/>
 		<text name="ui_vehicle_options_ual" text="车辆选项"/>
 		<text name="ui_loading_area_options_ual" text="加载区域选项"/>
-		<text name="ui_save_options_ual" text="Save Options"/>
+		<text name="ui_save_options_ual" text="保存选项"/>
 		<text name="ui_button_save_config_ual" text="保存车辆设置"/>
 		<text name="ui_confirm_save_config_ual" text="是否要覆盖此车辆的默认 autoload 配置？"/>
-		<text name="ui_confirm_save_config2_ual" text="(Purchase new vehicle or restart game to apply the new settings)"/>
+		<text name="ui_confirm_save_config2_ual" text="(购买新车辆或重新启动游戏以应用新设置)"/>
 		
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="显示调试"/>
@@ -88,18 +88,18 @@
 		<text name="ui_option_tooltip_offsetRoot" text="区域偏移相对于的车辆 i3d 节点"/>
 		<text name="ui_option_tooltip_minLogLength" text="自动加载原木的最小长度"/>
 
-		<text name="ui_option_addRemoveAreas" text="Number of Loading Areas"/>
-		<text name="ui_option_selectedArea" text="Selected Area"/>
-		<text name="ui_option_tooltip_addRemoveAreas" text="Adjust value here to add or remove loading areas"/>
-		<text name="ui_option_tooltip_selectedArea" text="The area selected (to modify in the settings below)"/>
+		<text name="ui_option_addRemoveAreas" text="装载区域数量"/>
+		<text name="ui_option_selectedArea" text="选定区域"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="在此调整值以添加或删除装载区域"/>
+		<text name="ui_option_tooltip_selectedArea" text="选定的区域（在下面的设置中进行修改）"/>
 		
-		<text name="ui_option_selectedConfigSet" text="Selected Configuration Set"/>
-		<text name="ui_option_useConfigName" text="Use Configuration Name"/>
-		<text name="ui_option_useConfigIndex" text="Use Configuration Index"/>
-		<text name="ui_option_tooltip_selectedConfigSet" text="The 'configuration set' to which the saved settings will apply"/>
-		<text name="ui_option_tooltip_useConfigName" text="The configuration to be indexed (optional)"/>
-		<text name="ui_option_tooltip_useConfigIndex" text="The index for the configuration (optional)"/>
-		
+		<text name="ui_option_selectedConfigSet" text="选定的配置集"/>
+		<text name="ui_option_useConfigName" text="使用配置名称"/>
+		<text name="ui_option_useConfigIndex" text="使用配置索引"/>
+		<text name="ui_option_tooltip_selectedConfigSet" text="已保存的设置将应用到的“配置集”"/>
+		<text name="ui_option_tooltip_useConfigName" text="要索引的配置(可选)"/>
+		<text name="ui_option_tooltip_useConfigIndex" text="配置的索引(可选)"/>
+
 		<!-- LOADING_AREA -->
 		<text name="ui_loadArea_offset" text="偏移"/>
 		<text name="ui_loadArea_offsetRoot" text="偏移根"/>
@@ -140,7 +140,7 @@
 		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="防止未覆盖时装载(仅适用于此区域)"/>
 
 		<!-- KEY BINDINGS -->
-		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Open global settings menu"/>
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="打开全局设置菜单"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="打开配置设置菜单(在商店内)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="启用装载量编辑(在商店中)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="切换装载"/>
