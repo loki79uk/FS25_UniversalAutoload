@@ -1492,7 +1492,7 @@ function UniversalAutoload:updateLoadingTriggers()
 	end
 	
 	-- create triggers
-	local sideBoundary = 3.33 * UniversalAutoload.TRIGGER_DELTA
+	local sideBoundary = 3.50 * UniversalAutoload.TRIGGER_DELTA
 	local rearBoundary = 1.00 * UniversalAutoload.TRIGGER_DELTA
 	if spec.enableSideLoading then
 		sideBoundary = spec.loadVolume.width/4
@@ -1523,7 +1523,7 @@ function UniversalAutoload:updateLoadingTriggers()
 	local rightPickupTrigger = spec.triggers["rightPickupTrigger"]
 	if leftPickupTrigger and rightPickupTrigger then
 		local width = 1.66*spec.loadVolume.width
-		local height = 2*spec.loadVolume.height
+		local height = 3*spec.loadVolume.height
 		local length = spec.loadVolume.length+spec.loadVolume.width/2
 		local tx, ty, tz = 1.1*(width+spec.loadVolume.width)/2, 0, 0
 		doUpdateTrigger("leftPickupTrigger", width, height, length, tx, ty, tz)
@@ -1532,7 +1532,7 @@ function UniversalAutoload:updateLoadingTriggers()
 
 	if spec.rearUnloadingOnly then
 		local width = spec.loadVolume.length+spec.loadVolume.width
-		local height = 2*spec.loadVolume.height
+		local height = 3*spec.loadVolume.height
 		local length = 0.8*width
 		local tx, ty, tz = 0, 0, -1.1*(length+spec.loadVolume.length)/2
 		doUpdateTrigger("rearPickupTrigger", width, height, length, tx, ty, tz)
@@ -1542,7 +1542,7 @@ function UniversalAutoload:updateLoadingTriggers()
 	
 	if spec.frontUnloadingOnly then
 		local width = spec.loadVolume.length+spec.loadVolume.width
-		local height = 2*spec.loadVolume.height
+		local height = 3*spec.loadVolume.height
 		local length = 0.8*width
 		local tx, ty, tz = 0, 0, 1.1*(length+spec.loadVolume.length)/2
 		doUpdateTrigger("frontPickupTrigger", width, height, length, tx, ty, tz)
@@ -2941,7 +2941,7 @@ end
 --
 function UniversalAutoload:isValidForLoading(object)
 	local spec = self.spec_universalAutoload
-	local maxLength = spec.loadArea and spec.loadArea[spec.currentLoadAreaIndex or 1].length or 0
+	local maxLength = UniversalAutoload.getMaxSingleLength(self)
 	local minLength = spec.minLogLength or 0
 	if minLength > maxLength or not spec.isLogTrailer then
 		minLength = 0
@@ -2971,7 +2971,7 @@ function UniversalAutoload:isValidForLoading(object)
 		return false
 	end
 
-	if object.isSplitShape and object.sizeY > maxLength then
+	if object.isSplitShape and object.sizeY > maxLength + UniversalAutoload.DELTA then
 		if debugPallets then
 			g_currentMission:addExtraPrintText("Log - too long")
 		end
@@ -5337,8 +5337,8 @@ function UniversalAutoload.getContainerType(object)
 					-- UniversalAutoload.INVALID_OBJECTS[name] = true
 					return nil
 				else
-					print("*** UNIVERSAL AUTOLOAD - FOUND NEW OBJECT TYPE: ".. name.." ***")
-					if debugPallets then 
+					if debugPallets then
+						print("*** UNIVERSAL AUTOLOAD - FOUND NEW OBJECT TYPE: ".. name.." ***")
 						if UniversalAutoload.OBJECT_FILL_LEVEL[object] then
 							print("  PARTIAL FILL LEVEL: " .. UniversalAutoload.OBJECT_FILL_LEVEL[object])
 						end
@@ -5648,7 +5648,7 @@ function UniversalAutoload:getMaxSingleLength()
 	local maxSingleLength = 0
 	for i, loadArea in pairs(spec.loadArea or {}) do
 		if loadArea.length > maxSingleLength then
-			maxSingleLength = math.floor(10*loadArea.length)/10
+			maxSingleLength = loadArea.length
 		end
 	end
 	return maxSingleLength

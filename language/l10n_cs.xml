@@ -12,10 +12,10 @@
 		<text name="ui_vehicle_options_ual" text="车辆选项"/>
 		<text name="ui_loading_area_options_ual" text="加载区域选项"/>
 		<text name="ui_save_options_ual" text="保存选项"/>
-        <text name="ui_button_save_config_ual" text="保存车辆设置"/>
+		<text name="ui_button_save_config_ual" text="保存车辆设置"/>
 		<text name="ui_confirm_save_config_ual" text="是否要覆盖此车辆的默认 autoload 配置？"/>
-        <text name="ui_confirm_save_config2_ual" text="(购买新车辆或重新启动游戏以应用新设置)"/>
-		
+		<text name="ui_confirm_save_config2_ual" text="(购买新车辆或重新启动游戏以应用新设置)"/>
+    
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="显示调试"/>
 		<text name="ui_global_highPriority" text="高优先级"/>
@@ -93,7 +93,7 @@
 		<text name="ui_option_tooltip_addRemoveAreas" text="在此调整值以添加或删除装载区域"/>
 		<text name="ui_option_tooltip_selectedArea" text="选定的区域（在下面的设置中进行修改）"/>
 		
-        <text name="ui_option_selectedConfigSet" text="选定的配置集"/>
+		<text name="ui_option_selectedConfigSet" text="选定的配置集"/>
 		<text name="ui_option_useConfigName" text="使用配置名称"/>
 		<text name="ui_option_useConfigIndex" text="使用配置索引"/>
 		<text name="ui_option_tooltip_selectedConfigSet" text="已保存的设置将应用到的“配置集”"/>

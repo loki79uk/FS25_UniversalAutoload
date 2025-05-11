@@ -34,7 +34,7 @@ end)
 -- DETECT SPAWNED LOGS
 ROOT.addToPhysics = Utils.appendedFunction(ROOT.addToPhysics, function(nodeId)
 	if nodeId ~= 0 and nodeId ~= nil then
-		if getRigidBodyType(nodeId) == RigidBodyType.DYNAMIC and getSplitType(nodeId) ~= 0 then
+		if getHasClassId(nodeId, ClassIds.MESH_SPLIT_SHAPE) and getSplitType(nodeId) ~= 0 and getRigidBodyType(nodeId) == RigidBodyType.DYNAMIC then
 			if not UniversalAutoload.createdLogId and UniversalAutoload.createdTreeId and nodeId > UniversalAutoload.createdTreeId then
 				UniversalAutoload.createdLogId = nodeId
 			end
@@ -676,10 +676,10 @@ function UniversalAutoloadManager.importVehicleConfigurations(xmlFilename)
 						configuration.selectedConfigs = selectedConfigs
 						configGroup[selectedConfigs] = configuration
 					else
-						if UniversalAutoload.showDebug then print("  ALREADY EXISTS: "..configFileName.." ["..selectedConfigs.."]") end
+						if UniversalAutoload.showDebug then print("  ALREADY EXISTS: ["..selectedConfigs.."]") end
 					end
 
-					print("  >> "..configFileName.." ["..selectedConfigs.."] ".. (useConfigName and ("(" .. useConfigName .. ")") or ""))
+					print("  >> ["..selectedConfigs.."] ".. (useConfigName and ("(" .. useConfigName .. ")") or ""))
 
 					j = j + 1
 				end
@@ -789,16 +789,15 @@ function UniversalAutoloadManager.exportVehicleConfigToServer()
 
 			print("..convert shop volume to loading area")
 			local exportSpec = exportVehicle.spec_universalAutoload
-			exportSpec.loadArea = {}
+			exportSpec.loadArea = exportSpec.loadArea or {}
 			for i, boundingBox in (shopVolume.bbs) do
 				local s = boundingBox:getSize()
 				local o = boundingBox:getOffset()
-				exportSpec.loadArea[i] = {
-					width = s.x,
-					height = s.y,
-					length = s.z,
-					offset = {o.x, o.y-s.y/2, o.z},
-				}
+				exportSpec.loadArea[i] = exportSpec.loadArea[i] or {}
+				exportSpec.loadArea[i].width = s.x
+				exportSpec.loadArea[i].height = s.y
+				exportSpec.loadArea[i].length = s.z
+				exportSpec.loadArea[i].offset = {o.x, o.y-s.y/2, o.z}
 			end
 
 			local configFileName, configId = UniversalAutoloadManager.getVehicleConfigNames(exportVehicle)
@@ -1764,6 +1763,7 @@ function UniversalAutoloadManager:consoleAddLogs(arg1, arg2)
 			for vehicle, hasAutoload in pairs(vehicles) do
 				if hasAutoload and vehicle:getIsActiveForInput() then
 					local maxSingleLength = UniversalAutoload.getMaxSingleLength(vehicle)
+					maxSingleLength = math.floor(10*maxSingleLength)/10
 					if length > maxSingleLength then
 						length = maxSingleLength - 0.1
 						print("resizing to fit trailer " .. length .. "m")
@@ -2264,6 +2264,7 @@ ShopConfigScreen.processAttributeData = Utils.overwrittenFunction(ShopConfigScre
 			if vehicle.spec_universalAutoload.isLogTrailer then
 				local maxSingleLengthString
 				local maxSingleLength = UniversalAutoload.getMaxSingleLength(vehicle)
+				maxSingleLength = math.floor(10*maxSingleLength)/10
 				local nearestHalfValue = math.floor(2*maxSingleLength)/2
 				if nearestHalfValue % 1 < 0.1 then
 					maxSingleLengthString = string.format("  %dm", nearestHalfValue)
