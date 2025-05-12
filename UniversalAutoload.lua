@@ -143,6 +143,8 @@ function UniversalAutoload.registerFunctions(vehicleType)
 	SpecializationUtil.registerFunction(vehicleType, "ualGetFillUnitCapacity", UniversalAutoload.ualGetFillUnitCapacity)
 	SpecializationUtil.registerFunction(vehicleType, "ualGetFillUnitFillLevel", UniversalAutoload.ualGetFillUnitFillLevel)
 	SpecializationUtil.registerFunction(vehicleType, "ualGetFillUnitFreeCapacity", UniversalAutoload.ualGetFillUnitFreeCapacity)
+	SpecializationUtil.registerFunction(vehicleType, "ualSetMaterialTypeIndex", UniversalAutoload.ualSetMaterialTypeIndex)
+	SpecializationUtil.registerFunction(vehicleType, "ualGetTotalAvailableCount", UniversalAutoload.ualGetTotalAvailableCount)
 end
 --
 function UniversalAutoload.registerOverwrittenFunctions(vehicleType)
@@ -6071,6 +6073,22 @@ function UniversalAutoload:ualGetFillUnitFreeCapacity(fillUnitIndex)
 		else
 			return self:ualGetFillUnitCapacity(fillUnitIndex) - self:ualGetFillUnitFillLevel(fillUnitIndex)
 		end
+	else
+		return 0
+	end
+end
+
+function UniversalAutoload:ualSetMaterialTypeIndex(typeIndex)
+	local spec = self.spec_universalAutoload
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
+		UniversalAutoload.setMaterialTypeIndex(self, typeIndex)
+	end
+end
+
+function UniversalAutoload:ualGetTotalAvailableCount()
+	local spec = self.spec_universalAutoload
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
+		return spec.totalAvailableCount
 	else
 		return 0
 	end
