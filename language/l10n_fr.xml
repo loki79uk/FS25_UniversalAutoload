@@ -11,13 +11,13 @@
 		<text name="ui_loading_area_options_ual" text="Options de la zone de chargement"/>
 		<text name="ui_save_options_ual" text="Sauvegarder les options"/>
 		<text name="ui_button_save_config_ual" text="Sauvegarder les paramètres du véhicule"/>
-		<text name="ui_confirm_save_config_ual" text="Voulez-vous modifier les paramètres de chargement automatique par défaut pour ce véhicule ?"/>
-		<text name="ui_confirm_save_config2_ual" text="(Achetez un nouveau véhicule ou redémarrez le jeu pour appliquer les nouveaux réglages)"/>
+		<text name="ui_confirm_save_config_ual" text="Voulez-vous modifier les paramètres de chargement automatique par défaut pour ce véhicule ?"/>
+		<text name="ui_confirm_save_config2_ual" text="(Achetez un nouveau véhicule ou relancez la partie pour appliquer les nouveaux paramètres)"/>
 		
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Montrer débogage"/>
-		<text name="ui_global_highPriority" text="Priorité élevée"/>
-		<text name="ui_global_disableAutoStrap" text="Sangles de serrage automatiques"/>
+		<text name="ui_global_highPriority" text="Menu : Priorité élevée"/>
+		<text name="ui_global_disableAutoStrap" text="Sangles automatiques"/>
 		<text name="ui_global_pricePerLog" text="Tarif par grume"/>
 		<text name="ui_global_pricePerBale" text="Tarif par balle"/>
 		<text name="ui_global_pricePerPallet" text="Tarif par palette"/>
@@ -25,10 +25,10 @@
 		
 		<text name="ui_global_tooltip_showDebug" text="Afficher les infos complètes de débogage pour tous les véhicules du jeu"/>
 		<text name="ui_global_tooltip_highPriority" text="Appliquer une priorité élevée à toutes les combinaisons de touches du mod dans le menu F1"/>
-		<text name="ui_global_tooltip_disableAutoStrap" text="Désactive l'attachement/désatachement automatique des sangles de serrage"/>
-		<text name="ui_global_tooltip_pricePerLog" text="Le montant facturé pour chaque grume chargée automatiquement"/>
-		<text name="ui_global_tooltip_pricePerBale" text="Le montant facturé pour chaque balle chargée automatiquement"/>
-		<text name="ui_global_tooltip_pricePerPallet" text="Le montant facturé pour chaque palette chargée automatiquement"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="Attache automatique des sangles après chargement ou déchargement"/>
+		<text name="ui_global_tooltip_pricePerLog" text="Le montant facturé pour chaque grume chargée automatiquement (appuyer sur Entrée pour confirmer)"/>
+		<text name="ui_global_tooltip_pricePerBale" text="Le montant facturé pour chaque balle chargée automatiquement (appuyer sur Entrée pour confirmer)"/>
+		<text name="ui_global_tooltip_pricePerPallet" text="Le montant facturé pour chaque palette chargée automatiquement (appuyer sur Entrée pour confirmer)"/>
 		<text name="ui_global_tooltip_minLogLength" text="La longueur minimale des grumes qui seront chargées automatiquement"/>
 
 		<!-- OPTIONS -->
@@ -85,19 +85,19 @@
 		<text name="ui_option_tooltip_zonesOverlap" text="Avertissement pour identifier lorsque les zones de chargement se chevauchent"/>
 		<text name="ui_option_tooltip_offsetRoot" text="Noeud i3d du véhicule auquel les décalages de zone sont relatifs"/>
 		<text name="ui_option_tooltip_minLogLength" text="La longueur minimale des grumes qui seront chargées automatiquement"/>
-
+		
 		<text name="ui_option_addRemoveAreas" text="Nombre de zones de chargement"/>
 		<text name="ui_option_selectedArea" text="Zone sélectionnée"/>
-		<text name="ui_option_tooltip_addRemoveAreas" text="Ajustez la valeur ici pour ajouter ou supprimer des zones de chargement"/>
-		<text name="ui_option_tooltip_selectedArea" text="La zone sélectionnée (à modifier dans les paramètres ci-dessous)"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="Modifiez ce chiffre pour ajouter ou retirer des zones de chargement"/>
+		<text name="ui_option_tooltip_selectedArea" text="Zone sélectionnée (modifiable dans les paramètres ci-dessous)"/>
 		
-		<text name="ui_option_selectedConfigSet" text="Configuration sélectionnée"/>
+		<text name="ui_option_selectedConfigSet" text="Ensemble de configuration sélectionné"/>
 		<text name="ui_option_useConfigName" text="Utiliser le nom de la configuration"/>
-		<text name="ui_option_useConfigIndex" text="Utiliser l'index de la configuration"/>
-		<text name="ui_option_tooltip_selectedConfigSet" text="La configuration auquel s'appliqueront les paramètres sauvegardés"/>
-		<text name="ui_option_tooltip_useConfigName" text="Le nom de la configuration à indexer (facultatif)"/>
-		<text name="ui_option_tooltip_useConfigIndex" text="L'index pour la configuration (facultatif)"/>
-		
+		<text name="ui_option_useConfigIndex" text="Utiliser le numéro de la configuration"/>
+		<text name="ui_option_tooltip_selectedConfigSet" text="L'ensemble de configuration auquel les paramètres sauvegardés seront appliqués"/>
+		<text name="ui_option_tooltip_useConfigName" text="La configuration devant être numérotée (facultatif)"/>
+		<text name="ui_option_tooltip_useConfigIndex" text="Le numéro de la configuration (facultatif)"/>
+
 		<!-- LOADING_AREA -->
 		<text name="ui_loadArea_offset" text="Décalage"/>
 		<text name="ui_loadArea_offsetRoot" text="Noeud de décalage"/>
@@ -138,11 +138,11 @@
 		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Empêche le chargement si bâche retirée (pour cette zone uniquement)"/>
 
 		<!-- KEY BINDINGS -->
-		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Ouvrir le menu des paramètres globaux"/>
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Ouvrir le menu des paramètres généraux"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Ouvrir le menu des paramètres de configuration (dans la boutique)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Activer la modification du volume de chargement (dans la boutique)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Activer/désactiver le chargement"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" text="Activer/désactiver le mode de collecte automatique"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" text="Activer/désactiver le mode de ramassage automatique"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Décharger"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Forcer le déchargement"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Choix du côté actif"/>
@@ -180,10 +180,10 @@
 		<text name="universalAutoload_stopLoading" text="Arrêter le chargement"/>
 		<text name="universalAutoload_unloadAll" text="Décharger"/>
 		<text name="universalAutoload_unloadAllForce" text="Forcer le déchargement"/>
-		<text name="universalAutoload_logMode" text="Mode Grume"/>
-		<text name="universalAutoload_baleMode" text="Mode Balles"/>
-		<text name="universalAutoload_palletMode" text="Mode Palette"/>
-		<text name="universalAutoload_collectionMode" text="Mode Collecte"/>
+		<text name="universalAutoload_logMode" text="Mode bois"/>
+		<text name="universalAutoload_baleMode" text="Mode balles"/>
+		<text name="universalAutoload_palletMode" text="Pallet Mode palettes"/>
+		<text name="universalAutoload_collectionMode" text="Mode de ramassage"/>
 		<text name="universalAutoload_enabled" text="Activé"/>
 		<text name="universalAutoload_disabled" text="Désactivé"/>
 		<text name="universalAutoload_activate" text="Activer"/>
