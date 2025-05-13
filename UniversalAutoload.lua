@@ -172,6 +172,27 @@ end
 	-- return superFunc(self)
 -- end
 --
+function UniversalAutoload.getWorldRotation(node, x, y, z)
+	return getWorldRotation(node, x or 0, y or 0, z or 0)
+end
+--
+function UniversalAutoload.getWorldTranslation(node, x, y, z)
+	return getWorldTranslation(node, x or 0, y or 0, z or 0)
+end
+--
+function UniversalAutoload.localDirectionToWorld(node, x, y, z)
+	return localDirectionToWorld(node, x or 0, y or 0, z or 0)
+end
+--
+function UniversalAutoload.localToWorld(node, x, y, z, velocityCorrection)
+	local X, Y, Z = localToWorld(node, x or 0, y or 0, z or 0)
+	if velocityCorrection then
+		c = velocityCorrection
+		X, Y, Z = X+c[1], Y+c[2], Z+c[3]
+	end
+	return X, Y, Z
+end
+--
 function UniversalAutoload:getDynamicMountTimeToMount(superFunc)
 	local spec = self.spec_universalAutoload
 	if spec==nil or not spec.isAutoloadAvailable or spec.autoloadDisabled then
@@ -1297,6 +1318,26 @@ function UniversalAutoload:updatePlayerTriggerState(playerId, inTrigger, noEvent
 	UniversalAutoload.PlayerTriggerEvent.sendEvent(self, playerId, inTrigger, noEventSend)
 end
 
+function UniversalAutoload:updateVelocityCorrection()
+	local spec = self.spec_universalAutoload
+	
+	local x0,y0,z0 = UniversalAutoload.localToWorld(self.rootNode)
+	local nxx, nxy, nxz = UniversalAutoload.localDirectionToWorld(self.rootNode, 1, 0, 0)
+	local nyx, nyy, nyz = UniversalAutoload.localDirectionToWorld(self.rootNode, 0, 1, 0)
+	local nzx, nzy, nzz = UniversalAutoload.localDirectionToWorld(self.rootNode, 0, 0, 1)
+
+	local dt = g_currentDt * 0.001
+	local vx, vy, vz = getVelocityAtLocalPos(self.rootNode, 0, 0, 0)
+	local dx, dy, dz = vx*dt, vy*dt, vz*dt
+	spec.velocityCorrection = { dx, dy, dz }
+
+	local dX = dx * nxx + dy * nxy + dz * nxz
+	local dY = dx * nyx + dy * nyy + dz * nyz
+	local dZ = dx * nzx + dy * nzy + dz * nzz
+	setTranslation(spec.loadVolume.transformGroup, dX, dY, dZ)
+	
+end
+
 function UniversalAutoload:initialiseTransformGroups(actualRootNode)
 	local spec = self.spec_universalAutoload
 
@@ -1326,15 +1367,17 @@ function UniversalAutoload:initialiseTransformGroups(actualRootNode)
 
 	spec.loadVolume = {}
 	spec.loadVolume.actualRootNode = actualRootNode
+	spec.loadVolume.transformGroup = createTransformGroup("referenceNode")
+	link(actualRootNode, spec.loadVolume.transformGroup)
 	
 	spec.loadVolume.rootNode = createTransformGroup("loadVolumeCentre")
-	link(actualRootNode, spec.loadVolume.rootNode)
+	link(spec.loadVolume.transformGroup, spec.loadVolume.rootNode)
 
 	spec.loadVolume.startNode = createTransformGroup("loadVolumeStart")
-	link(actualRootNode, spec.loadVolume.startNode)
+	link(spec.loadVolume.transformGroup, spec.loadVolume.startNode)
 	
 	spec.loadVolume.endNode = createTransformGroup("loadVolumeEnd")
-	link(actualRootNode, spec.loadVolume.endNode)
+	link(spec.loadVolume.transformGroup, spec.loadVolume.endNode)
 	
 	
 	spec.loadVolume.width = self.size.width
@@ -1373,6 +1416,8 @@ function UniversalAutoload:initialiseTransformGroups(actualRootNode)
 				trigger.width = width/sx
 				trigger.height = height/sy
 				trigger.length = length/sz
+				trigger.offset = {tx or 0, ty or 0, tz or 0}
+				trigger.rotation = {rx or 0, ry or 0, rz or 0}
 			end
 		end
 	end
@@ -1418,7 +1463,7 @@ function UniversalAutoload:updateLoadAreaTransformGroups()
 	for i, loadArea in pairs(spec.loadArea) do
 		-- create bounding box for loading area
 		local offset = loadArea.offset
-		local loadAreaRoot = spec.loadVolume.actualRootNode
+		local loadAreaRoot = spec.loadVolume.transformGroup
 		-- if spec.loadArea[i].offsetRoot then
 			-- local otherOffset = self.i3dMappings[spec.loadArea[i].offsetRoot]
 			-- if otherOffset then
@@ -1490,6 +1535,8 @@ function UniversalAutoload:updateLoadingTriggers()
 			trigger.width = width/sx
 			trigger.height = height/sy
 			trigger.length = length/sz
+			trigger.offset = {tx or 0, ty or 0, tz or 0}
+			trigger.rotation = {rx or 0, ry or 0, rz or 0}
 		end
 	end
 	
@@ -2405,6 +2452,9 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 	end
 	
 	if self.isServer then
+		
+		-- CALCULATE AND APPLY VELOCITY CORRECTION
+		UniversalAutoload.updateVelocityCorrection(self)
 
 		-- DETECT WHEN FOLDING STOPS IF IT WAS STARTED
 		if spec.foldAnimationStarted then
@@ -3320,7 +3370,7 @@ function UniversalAutoload.buildObjectsToUnloadTable(vehicle, forceUnloadPositio
 				setTranslation(unloadPlace.node, x+offsetX, y+offsetY, z+offsetZ)
 				setRotation(unloadPlace.node, rx, ry, rz)
 
-				local X, Y, Z = getWorldTranslation(unloadPlace.node)
+				local X, Y, Z = UniversalAutoload.getWorldTranslation(unloadPlace.node)
 				local heightAboveGround = DensityMapHeightUtil.getCollisionHeightAtWorldPos(X, Y, Z) + 0.1
 				unloadPlace.heightAbovePlace = math.max(0, y)
 				unloadPlace.heightAboveGround = math.max(-(HEIGHT+y), heightAboveGround-Y)
@@ -4122,8 +4172,8 @@ function UniversalAutoload:getIsLoadingVehicleAllowed(triggerId)
 	
 	if node then
 		-- check that the vehicle has not fallen on its side
-		local _, y1, _ = getWorldTranslation(node)
-		local _, y2, _ = localToWorld(node, 0, 1, 0)
+		local _, y1, _ = UniversalAutoload.getWorldTranslation(node)
+		local _, y2, _ = UniversalAutoload.localToWorld(node, 0, 1, 0)
 		if y2 - y1 < 0.5 then
 			-- print("NO LOADING IF FALLEN OVER")
 			return false
@@ -4169,9 +4219,9 @@ function UniversalAutoload:testLocationIsFull(loadPlace, offset)
 	local spec = self.spec_universalAutoload
 	local r = 0.50
 	local sizeX, sizeY, sizeZ = (loadPlace.sizeX/2)*r, (loadPlace.sizeY/2)*r, (loadPlace.sizeZ/2)*r
-	local x, y, z = localToWorld(loadPlace.node, 0, offset or 0, 0)
-	local rx, ry, rz = getWorldRotation(loadPlace.node)
-	local dx, dy, dz = localDirectionToWorld(loadPlace.node, 0, sizeY, 0)
+	local x, y, z = UniversalAutoload.localToWorld(loadPlace.node, 0, offset or 0, 0, spec.velocityCorrection)
+	local rx, ry, rz = UniversalAutoload.getWorldRotation(loadPlace.node)
+	local dx, dy, dz = UniversalAutoload.localDirectionToWorld(loadPlace.node, 0, sizeY, 0)
 		
 	spec.foundObject = false
 	spec.currentObject = self
@@ -4192,9 +4242,9 @@ function UniversalAutoload:testLocationIsEmpty(loadPlace, object, offset, mask)
 	local spec = self.spec_universalAutoload
 	local r = 0.025
 	local sizeX, sizeY, sizeZ = (loadPlace.sizeX/2)-r, (loadPlace.sizeY/2)-r, (loadPlace.sizeZ/2)-r
-	local x, y, z = localToWorld(loadPlace.node, 0, offset or 0, 0)
-	local rx, ry, rz = getWorldRotation(loadPlace.node)
-	local dx, dy, dz = localDirectionToWorld(loadPlace.node, 0, loadPlace.sizeY/2, 0)
+	local x, y, z = UniversalAutoload.localToWorld(loadPlace.node, 0, offset or 0, 0, spec.velocityCorrection)
+	local rx, ry, rz = UniversalAutoload.getWorldRotation(loadPlace.node)
+	local dx, dy, dz = UniversalAutoload.localDirectionToWorld(loadPlace.node, 0, loadPlace.sizeY/2, 0)
 	
 	spec.foundObject = false
 	spec.currentObject = object
@@ -4257,9 +4307,9 @@ function UniversalAutoload:testLoadAreaIsEmpty()
 	end
 	
 	local sizeX, sizeY, sizeZ = spec.loadArea[i].width/2, spec.loadArea[i].height/2, spec.loadArea[i].length/2
-	local x, y, z = localToWorld(spec.loadArea[i].rootNode, 0, 0, 0)
-	local rx, ry, rz = getWorldRotation(spec.loadArea[i].rootNode)
-	local dx, dy, dz = localDirectionToWorld(spec.loadArea[i].rootNode, 0, sizeY, 0)
+	local x, y, z = UniversalAutoload.localToWorld(spec.loadArea[i].rootNode)
+	local rx, ry, rz = UniversalAutoload.getWorldRotation(spec.loadArea[i].rootNode)
+	local dx, dy, dz = UniversalAutoload.localDirectionToWorld(spec.loadArea[i].rootNode, 0, sizeY, 0)
 	
 	spec.foundObject = false
 	spec.currentObject = nil
@@ -4281,15 +4331,15 @@ function UniversalAutoload:testUnloadLocationIsEmpty(unloadPlace)
 
 	local spec = self.spec_universalAutoload
 	local sizeX, sizeY, sizeZ = unloadPlace.sizeX/2, unloadPlace.sizeY/2, unloadPlace.sizeZ/2
-	local x, y, z = localToWorld(unloadPlace.node, 0, 0, 0)
-	local rx, ry, rz = getWorldRotation(unloadPlace.node)
+	local x, y, z = UniversalAutoload.localToWorld(unloadPlace.node)
+	local rx, ry, rz = UniversalAutoload.getWorldRotation(unloadPlace.node)
 	local dx, dy, dz
 	if unloadPlace.wasFlippedXY then
-		dx, dy, dz = localDirectionToWorld(unloadPlace.node, -sizeY, 0, 0)
+		dx, dy, dz = UniversalAutoload.localDirectionToWorld(unloadPlace.node, -sizeY, 0, 0)
 	elseif unloadPlace.wasFlippedYZ then
-		dx, dy, dz = localDirectionToWorld(unloadPlace.node, 0, 0, -sizeY)
+		dx, dy, dz = UniversalAutoload.localDirectionToWorld(unloadPlace.node, 0, 0, -sizeY)
 	else
-		dx, dy, dz = localDirectionToWorld(unloadPlace.node, 0, sizeY, 0)
+		dx, dy, dz = UniversalAutoload.localDirectionToWorld(unloadPlace.node, 0, sizeY, 0)
 	end
 	
 	spec.hasOverlap = false
@@ -4332,14 +4382,14 @@ function UniversalAutoload:testLocation(loadPlace)
 			return
 		end
 		sizeX, sizeY, sizeZ = spec.loadArea[i].width/2, spec.loadArea[i].height/2, spec.loadArea[i].length/2
-		x, y, z = localToWorld(spec.loadArea[i].rootNode, 0, 0, 0)
-		rx, ry, rz = getWorldRotation(spec.loadArea[i].rootNode)
-		dx, dy, dz = localDirectionToWorld(spec.loadArea[i].rootNode, 0, sizeY, 0)
+		x, y, z = UniversalAutoload.localToWorld(spec.loadArea[i].rootNode)
+		rx, ry, rz = UniversalAutoload.getWorldRotation(spec.loadArea[i].rootNode)
+		dx, dy, dz = UniversalAutoload.localDirectionToWorld(spec.loadArea[i].rootNode, 0, sizeY, 0)
 	else
 		sizeX, sizeY, sizeZ = (loadPlace.sizeX/2)-r, (loadPlace.sizeY/2)-r, (loadPlace.sizeZ/2)-r
-		x, y, z = localToWorld(loadPlace.node, 0, 0, 0)
-		rx, ry, rz = getWorldRotation(loadPlace.node)
-		dx, dy, dz = localDirectionToWorld(loadPlace.node, 0, sizeY, 0)
+		x, y, z = UniversalAutoload.localToWorld(loadPlace.node)
+		rx, ry, rz = UniversalAutoload.getWorldRotation(loadPlace.node)
+		dx, dy, dz = UniversalAutoload.localDirectionToWorld(loadPlace.node, 0, sizeY, 0)
 	end
 
 	local FLAGS = {}
@@ -4430,12 +4480,12 @@ function UniversalAutoload.getSplitShapeObject( objectId )
 			if UniversalAutoload.SPLITSHAPES_LOOKUP[objectId] == nil then
 			
 				local sizeX, sizeY, sizeZ, numConvexes, numAttachments = getSplitShapeStats(objectId)
-				local xx,xy,xz = localDirectionToWorld(objectId, 1, 0, 0)
-				local yx,yy,yz = localDirectionToWorld(objectId, 0, 1, 0)
-				local zx,zy,zz = localDirectionToWorld(objectId, 0, 0, 1)
+				local xx,xy,xz = UniversalAutoload.localDirectionToWorld(objectId, 1, 0, 0)
+				local yx,yy,yz = UniversalAutoload.localDirectionToWorld(objectId, 0, 1, 0)
+				local zx,zy,zz = UniversalAutoload.localDirectionToWorld(objectId, 0, 0, 1)
 				
 				if getChild(objectId, 'positionNode') == 0 then
-					local x, y, z = getWorldTranslation(objectId)
+					local x, y, z = UniversalAutoload.getWorldTranslation(objectId)
 					local xBelow, xAbove = getSplitShapePlaneExtents(objectId, x,y,z, xx,xy,xz)
 					local yBelow, yAbove = getSplitShapePlaneExtents(objectId, x,y,z, yx,yy,yz)
 					local zBelow, zAbove = getSplitShapePlaneExtents(objectId, x,y,z, zx,zy,zz)
@@ -4449,7 +4499,7 @@ function UniversalAutoload.getSplitShapeObject( objectId )
 				logObject.nodeId = objectId
 				logObject.positionNodeId = getChild(objectId, 'positionNode')
 
-				local x, y, z  = getWorldTranslation(logObject.positionNodeId)
+				local x, y, z  = UniversalAutoload.getWorldTranslation(logObject.positionNodeId)
 				local xBelow, xAbove = getSplitShapePlaneExtents(objectId, x,y,z, xx,xy,xz)
 				local yBelow, yAbove = getSplitShapePlaneExtents(objectId, x,y,z, yx,yy,yz)
 				local zBelow, zAbove = getSplitShapePlaneExtents(objectId, x,y,z, zx,zy,zz)
@@ -4503,8 +4553,8 @@ end
 function UniversalAutoload.unlinkObject( object )
 	local node = UniversalAutoload.getObjectRootNode(object)
 	if node then
-		local x, y, z = localToWorld(node, 0, 0, 0)
-		local rx, ry, rz = getWorldRotation(node, 0, 0, 0)
+		local x, y, z = UniversalAutoload.localToWorld(node)
+		local rx, ry, rz = UniversalAutoload.getWorldRotation(node)
 		link(getRootNode(), node)
 		setWorldTranslation(node, x, y, z)
 		setWorldRotation(node, rx, ry, rz)
@@ -4549,8 +4599,8 @@ function UniversalAutoload.getTransformation( position, nodes )
 	local n = {}
 	for i = 1, #nodes do
 		n[i] = {}
-		n[i].x, n[i].y, n[i].z = localToWorld(position.node, 0, position.baleOffset or 0, 0)
-		n[i].rx, n[i].ry, n[i].rz = getWorldRotation(position.node)
+		n[i].x, n[i].y, n[i].z = UniversalAutoload.localToWorld(position.node, 0, position.baleOffset or 0, 0)
+		n[i].rx, n[i].ry, n[i].rz = UniversalAutoload.getWorldRotation(position.node)
 		if position.flipYZ then
 			n[i].rx = n[i].rx + math.pi/2
 		end
@@ -4639,9 +4689,9 @@ function UniversalAutoload:moveObjectNodes( object, position, isLoading, rotateL
 				-- if rotateLogs then print("ROTATE") else print("NORMAL") end
 			
 				local s = rotateLogs and 1 or -1
-				local xx,xy,xz = localDirectionToWorld(position.node, s, 0, 0) --length
-				local yx,yy,yz = localDirectionToWorld(position.node, 0, 1, 0) --height
-				local zx,zy,zz = localDirectionToWorld(position.node, 0, 0, 0) --width
+				local xx,xy,xz = UniversalAutoload.localDirectionToWorld(position.node, s, 0, 0) --length
+				local yx,yy,yz = UniversalAutoload.localDirectionToWorld(position.node, 0, 1, 0) --height
+				local zx,zy,zz = UniversalAutoload.localDirectionToWorld(position.node, 0, 0, 0) --width
 				-- print(string.format("X %f, %f, %f",xx,xy,xz))
 				-- print(string.format("Y %f, %f, %f",yx,yy,yz))
 				-- print(string.format("Z %f, %f, %f",zx,zy,zz))
@@ -4677,8 +4727,8 @@ function UniversalAutoload:moveObjectNodes( object, position, isLoading, rotateL
 		-- SPLITSHAPE TRANSLATION
 		if object.isSplitShape then
 
-			local x0, y0, z0 = getWorldTranslation(node)
-			local x1, y1, z1 = getWorldTranslation(object.positionNodeId)
+			local x0, y0, z0 = UniversalAutoload.getWorldTranslation(node)
+			local x1, y1, z1 = UniversalAutoload.getWorldTranslation(object.positionNodeId)
 			
 			local offset = {}
 			offset['x'] = x0 - (x1-x0)
@@ -4966,7 +5016,7 @@ function UniversalAutoload:createPallet(xmlFilename)
 		end
 	end
 
-	local x, y, z = getWorldTranslation(spec.loadVolume.rootNode)
+	local x, y, z = UniversalAutoload.getWorldTranslation(spec.loadVolume.rootNode)
     local farmId = g_currentMission:getFarmId()
 	farmId = farmId ~= FarmManager.SPECTATOR_FARM_ID and farmId or 1
 
@@ -5017,8 +5067,8 @@ function UniversalAutoload:createLog(length, treeType, growthState)
 	
 	UniversalAutoload.spawningLog = true
 
-	local x, y, z = getWorldTranslation(spec.loadVolume.rootNode)
-	dirX, dirY, dirZ = localDirectionToWorld(spec.loadVolume.rootNode, 0, 0, 1)
+	local x, y, z = UniversalAutoload.getWorldTranslation(spec.loadVolume.rootNode)
+	dirX, dirY, dirZ = UniversalAutoload.localDirectionToWorld(spec.loadVolume.rootNode, 0, 0, 1)
 	y = y + 20
 
 	local length = tonumber(length)
@@ -5107,7 +5157,7 @@ end
 function UniversalAutoload:createBale(xmlFilename, fillTypeIndex, wrapState)
 	local spec = self.spec_universalAutoload
 
-	local x, y, z = getWorldTranslation(spec.loadVolume.rootNode)
+	local x, y, z = UniversalAutoload.getWorldTranslation(spec.loadVolume.rootNode)
 	y = y + 10
 
 	local farmId = g_currentMission:getFarmId()
@@ -5235,8 +5285,8 @@ function UniversalAutoload.getContainerType(object)
 			print("*** UNIVERSAL AUTOLOAD - FOUND NEW SPLITSHAPE [" .. tostring(object.nodeId) .. "] ***")	
 			-- DebugUtil.printTableRecursively(object, "--", 0, 1)
 			
-			-- print("POS:", localToWorld(object.nodeId, 0, 0, 0))
-			-- print("ROT:", getWorldRotation(object.nodeId, 0, 0, 0))
+			-- print("POS:", UniversalAutoload.localToWorld(object.nodeId, 0, 0, 0))
+			-- print("ROT:", UniversalAutoload.getWorldRotation(object.nodeId, 0, 0, 0))
 			
 			-- local boundingBox = BoundingBox.new(object)
 			-- --print("SPLITSHAPE boundingBox:")
@@ -5432,7 +5482,7 @@ function UniversalAutoload.getContainerType(object)
 			end
 			
 			if isRoundbale == true then
-				print("Round Bale flipYZ")
+				-- print("Round Bale flipYZ")
 				newType.flipYZ = true
 				newType.sizeY = size.z + UniversalAutoload.SPACING
 				newType.sizeZ = size.y + UniversalAutoload.SPACING
@@ -5661,8 +5711,8 @@ function UniversalAutoload.raiseObjectDirtyFlags(object)
 		if object.physicsObjectDirtyFlag then
 			object:raiseDirtyFlags(object.physicsObjectDirtyFlag)
 			if entityExists(object.nodeId) then
-				object.sendPosX, object.sendPosY, object.sendPosZ = getWorldTranslation(object.nodeId)
-				object.sendRotX, object.sendRotY, object.sendRotZ = getWorldRotation(object.nodeId)
+				object.sendPosX, object.sendPosY, object.sendPosZ = UniversalAutoload.getWorldTranslation(object.nodeId)
+				object.sendRotX, object.sendRotY, object.sendRotZ = UniversalAutoload.getWorldRotation(object.nodeId)
 			end
 		elseif object.vehicleDirtyFlag then
 			object:raiseDirtyFlags(object.vehicleDirtyFlag)
@@ -5702,7 +5752,7 @@ function UniversalAutoload:drawDebugDisplay()
 		if UniversalAutoload.showDebug and spec.testLocation then
 			local place = spec.testLocation
 			-- DebugUtil.drawDebugNode(spec.testLocation.node, getName(place.node))
-			local X, Y, Z = getWorldTranslation(spec.testLocation.node)
+			local X, Y, Z = UniversalAutoload.getWorldTranslation(spec.testLocation.node)
 			UniversalAutoload.DrawDebugPallet( place.node, place.sizeX, place.sizeY, place.sizeZ, true, false, WHITE)
 		end
 
@@ -5748,9 +5798,9 @@ function UniversalAutoload:drawDebugDisplay()
 						local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType)
 						local offset = 0 if containerType.isBale then offset = h/2 end
 						if UniversalAutoload.isValidForUnloading(self, object) then 
-							UniversalAutoload.DrawDebugPallet( node, w, h, l, true, false, GREEN, offset )
+							UniversalAutoload.DrawDebugPallet( node, w, h, l, true, false, GREEN, offset, spec.velocityCorrection )
 						else
-							UniversalAutoload.DrawDebugPallet( node, w, h, l, true, false, GREY, offset )
+							UniversalAutoload.DrawDebugPallet( node, w, h, l, true, false, GREY, offset, spec.velocityCorrection )
 						end
 					end
 				end
@@ -5788,7 +5838,7 @@ function UniversalAutoload:drawDebugDisplay()
 				
 				if spec.boundingBox then
 					local W, H, L = spec.boundingBox.width, spec.boundingBox.height, spec.boundingBox.length
-					UniversalAutoload.DrawDebugPallet( spec.boundingBox.rootNode, W, H, L, true, false, MAGENTA )
+					UniversalAutoload.DrawDebugPallet( spec.boundingBox.rootNode, W, H, L, true, false, RED )
 				end
 			end
 			
@@ -5830,8 +5880,8 @@ function UniversalAutoload:drawDebugDisplay()
 					Y, Z = h, l
 					l, h = Y, Z
 				end
-				UniversalAutoload.DrawDebugPallet( place.node, x, y, z, true, false, GREY, offset )
-				UniversalAutoload.DrawDebugPallet( place.node, w, h, l, true, false, YELLOW, offset )
+				UniversalAutoload.DrawDebugPallet( place.node, x, y, z, true, false, GREY )
+				UniversalAutoload.DrawDebugPallet( place.node, w, h, l, true, false, YELLOW )
 			end
 		end
 		
@@ -5859,7 +5909,7 @@ function UniversalAutoload:drawDebugDisplay()
 	end
 end
 --
-function UniversalAutoload.DrawDebugPallet( node, w, h, l, showCube, showAxis, colour, offset )
+function UniversalAutoload.DrawDebugPallet( node, w, h, l, showCube, showAxis, colour, offset, velocityCorrection )
 
 	if node and node ~= 0 and entityExists(node) then
 		-- colour for square
@@ -5868,18 +5918,18 @@ function UniversalAutoload.DrawDebugPallet( node, w, h, l, showCube, showAxis, c
 		local w, h, l = (w or 1), (h or 1), (l or 1)
 		local offset = offset or 0
 
-		local xx,xy,xz = localDirectionToWorld(node, w,0,0)
-		local yx,yy,yz = localDirectionToWorld(node, 0,h,0)
-		local zx,zy,zz = localDirectionToWorld(node, 0,0,l)
+		local xx,xy,xz = UniversalAutoload.localDirectionToWorld(node, w,0,0)
+		local yx,yy,yz = UniversalAutoload.localDirectionToWorld(node, 0,h,0)
+		local zx,zy,zz = UniversalAutoload.localDirectionToWorld(node, 0,0,l)
 		
-		local x0,y0,z0 = localToWorld(node, -w/2, -offset, -l/2)
+		local x0,y0,z0 = UniversalAutoload.localToWorld(node, -w/2, -offset, -l/2, velocityCorrection)
 		drawDebugLine(x0,y0,z0,r,g,b,x0+xx,y0+xy,z0+xz,r,g,b)
 		drawDebugLine(x0,y0,z0,r,g,b,x0+zx,y0+zy,z0+zz,r,g,b)
 		drawDebugLine(x0+xx,y0+xy,z0+xz,r,g,b,x0+xx+zx,y0+xy+zy,z0+xz+zz,r,g,b)
 		drawDebugLine(x0+zx,y0+zy,z0+zz,r,g,b,x0+xx+zx,y0+xy+zy,z0+xz+zz,r,g,b)
 
 		if showCube then			
-			local x1,y1,z1 = localToWorld(node, -w/2, h-offset, -l/2)
+			local x1,y1,z1 = UniversalAutoload.localToWorld(node, -w/2, h-offset, -l/2, velocityCorrection)
 			drawDebugLine(x1,y1,z1,r,g,b,x1+xx,y1+xy,z1+xz,r,g,b)
 			drawDebugLine(x1,y1,z1,r,g,b,x1+zx,y1+zy,z1+zz,r,g,b)
 			drawDebugLine(x1+xx,y1+xy,z1+xz,r,g,b,x1+xx+zx,y1+xy+zy,z1+xz+zz,r,g,b)
@@ -5892,7 +5942,7 @@ function UniversalAutoload.DrawDebugPallet( node, w, h, l, showCube, showAxis, c
 		end
 		
 		if showAxis then
-			local x,y,z = localToWorld(node, 0, (h/2)-offset, 0)
+			local x,y,z = UniversalAutoload.localToWorld(node, 0, (h/2)-offset, 0, velocityCorrection)
 			Utils.renderTextAtWorldPosition(x-xx/2,y-xy/2,z-xz/2, "-x", getCorrectTextSize(0.012), 0)
 			Utils.renderTextAtWorldPosition(x+xx/2,y+xy/2,z+xz/2, "+x", getCorrectTextSize(0.012), 0)
 			Utils.renderTextAtWorldPosition(x-yx/2,y-yy/2,z-yz/2, "-y", getCorrectTextSize(0.012), 0)
