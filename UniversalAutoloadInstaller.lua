@@ -1384,11 +1384,13 @@ function UniversalAutoloadManager.resetLoadingVolumeForShopEdit(vehicle)
 end
 
 function UniversalAutoloadManager.getIsTrainCarriage(vehicle)
-	local rootVehicle = vehicle:getRootVehicle()
-	if rootVehicle and rootVehicle:getFullName():find("Locomotive")
-		or rootVehicle:getFullName():find("Timber Wagon")
-		or rootVehicle:getFullName():find("Flatbed Wagon")
-		or rootVehicle:getFullName():find("Vehicle Wagon") then
+	if not vehicle then
+		return false
+	end
+
+	if vehicle:getFullName():find("Timber Wagon")
+	or vehicle:getFullName():find("Flatbed Wagon")
+	or vehicle:getFullName():find("Vehicle Wagon") then
 		return true
 	end
 end
@@ -1401,8 +1403,8 @@ function UniversalAutoloadManager.getIsValidForAutoload(vehicle)
 	end
 	
 	if UniversalAutoloadManager.getIsTrainCarriage(vehicle) then
-		print(vehicle:getFullName() .. " - don't add UAL to train for now..")
-		return false
+		print(vehicle:getFullName() .. " - TRAIN CARRIAGE")
+		return true
 	end
 	
 	local isValidForAutoload = nil

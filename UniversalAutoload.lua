@@ -1634,11 +1634,12 @@ function UniversalAutoload:onLoad(savegame)
 	self.spec_universalAutoload = self[UniversalAutoload.specName]
 	local spec = self.spec_universalAutoload
 
+	print("onLoad START: " .. tostring(netGetTime()))
 	if UniversalAutoloadManager.getIsValidForAutoload(self) then
 		if UniversalAutoloadManager.handleNewVehicleCreation(self) then
 			print(self:getFullName() .. ": UAL ACTIVATED")
 		elseif self.propertyState ~= VehiclePropertyState.SHOP_CONFIG then
-			print(self:getFullName() .. ": SETTINGS NOT AVAILABLE - autoloadDisabled")
+			print(self:getFullName() .. ": SETTINGS NOT AVAILABLE (autoload disabled)")
 			spec.autoloadDisabled = true
 		end
 		spec.isAutoloadAvailable = true
@@ -1720,7 +1721,7 @@ function UniversalAutoload:onLoad(savegame)
 	-- print("SPEC")
 	-- DebugUtil.printTableRecursively(spec, "--", 0, 1)
 
-	print("onLoad: " .. tostring(netGetTime()))
+	print("onLoad FINISH: " .. tostring(netGetTime()))
 end
 
 -- "ON POST LOAD" CALLED AFTER VEHICLE IS LOADED (not when buying)
