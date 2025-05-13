@@ -9,15 +9,15 @@
 		<text name="ui_config_settings_ual" text="Nastavení autoload"/>
 		<text name="ui_vehicle_options_ual" text="Nastavení vozidla"/>
 		<text name="ui_loading_area_options_ual" text="Nastavení ložné plochy"/>
-		<text name="ui_save_options_ual" text="Save Options"/>
+		<text name="ui_save_options_ual" text="Uložit nastavení"/>
 		<text name="ui_button_save_config_ual" text="Uložit nastavení vozidla"/>
 		<text name="ui_confirm_save_config_ual" text="Chcete přepsat výchozí konfiguraci automatické nakládky pro toto vozidlo?"/>
-		<text name="ui_confirm_save_config2_ual" text="(Purchase new vehicle or restart game to apply the new settings)"/>
+		<text name="ui_confirm_save_config2_ual" text="(Zakupte si nové vozidlo nebo restartujte hru, abyste použili nová nastavení)"/>
 		
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Zobrazit ladění"/>
 		<text name="ui_global_highPriority" text="Vysoká priorita"/>
-		<text name="ui_global_disableAutoStrap" text="Automatické upínací řemeny"/>
+		<text name="ui_global_disableAutoStrap" text="Automatické upínací pásy"/>
 		<text name="ui_global_pricePerLog" text="Cena za kmen"/>
 		<text name="ui_global_pricePerBale" text="Cena za balík"/>
 		<text name="ui_global_pricePerPallet" text="Cena za paletu"/>
@@ -57,10 +57,10 @@
 		<text name="ui_option_rearUnloadingOnly" text="Pouze zadní vykládka"/>
 		<text name="ui_option_frontUnloadingOnly" text="Pouze přední vykládka"/>
 		<text name="ui_option_horizontalLoading" text="Horizontální nakládání"/>
-		<text name="ui_option_disableAutoStrap" text="Automatické upínací řemeny"/>
+		<text name="ui_option_disableAutoStrap" text="Automatické upínací pásy"/>
 		<text name="ui_option_disableHeightLimit" text="Omezit výšku stohování"/>
 		<text name="ui_option_zonesOverlap" text="Překrývání zón"/>
-		<text name="ui_option_offsetRoot" text="Posunutí kořene"/>
+		<text name="ui_option_offsetRoot" text="Posunutí základny"/>
 		<text name="ui_option_minLogLength" text="Minimální délka kmene"/>
 		
 		<text name="ui_option_tooltip_enableAutoload" text="Zda je funkce Autoload pro toto vozidlo povolena nebo zakázána"/>
@@ -77,30 +77,30 @@
 		<text name="ui_option_tooltip_enableRearLoading" text="Použití automatického trigeru pro zadní nakládku"/>
 		<text name="ui_option_tooltip_enableSideLoading" text="Použití automatických trigerů pro boční nakládku"/>
 
-		<text name="ui_option_tooltip_rearUnloadingOnly" text="Použití pouze zadní vykládací zóny (žádné boční zóny)"/>
-		<text name="ui_option_tooltip_frontUnloadingOnly" text="Použití pouze přední vykládací zóny (žádné boční zóny)"/>
+		<text name="ui_option_tooltip_rearUnloadingOnly" text="Použití pouze zadní vykládací plochy (žádné boční plochy)"/>
+		<text name="ui_option_tooltip_frontUnloadingOnly" text="Použití pouze přední vykládací plochy (žádné boční plochy)"/>
 		<text name="ui_option_tooltip_horizontalLoading" text="Začít se zapnutou horizontální nakládkou (lze přepnout, pokud je nastavena klávesa)"/>
 		<text name="ui_option_tooltip_disableAutoStrap" text="Automatické nasazení upínacích řemenů po nakládce nebo vykládce"/>
 		<text name="ui_option_tooltip_disableHeightLimit" text="Omezení výšky stohování palet na základě hustoty"/>
-		<text name="ui_option_tooltip_zonesOverlap" text="Povoluje vzájemné překrývání nakládacích zón"/>
+		<text name="ui_option_tooltip_zonesOverlap" text="Povoluje vzájemné překrývání nakládacích ploch"/>
 		<text name="ui_option_tooltip_offsetRoot" text="Bod i3d vozidla, ke kterému se vztahují posuny plochy"/>
 		<text name="ui_option_tooltip_minLogLength" text="Minimální délka kmenů, které se budou automaticky nakládat"/>
 
-		<text name="ui_option_addRemoveAreas" text="Number of Loading Areas"/>
-		<text name="ui_option_selectedArea" text="Selected Area"/>
-		<text name="ui_option_tooltip_addRemoveAreas" text="Adjust value here to add or remove loading areas"/>
-		<text name="ui_option_tooltip_selectedArea" text="The area selected (to modify in the settings below)"/>
+		<text name="ui_option_addRemoveAreas" text="Počet nakládacích ploch"/>
+		<text name="ui_option_selectedArea" text="Vybraná plocha"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="Zde upravte hodnotu pro přidání nebo odebrání ložných ploch"/>
+		<text name="ui_option_tooltip_selectedArea" text="Vybraná plocha (k úpravě v nastavení níže)"/>
 		
-		<text name="ui_option_selectedConfigSet" text="Selected Configuration Set"/>
-		<text name="ui_option_useConfigName" text="Use Configuration Name"/>
-		<text name="ui_option_useConfigIndex" text="Use Configuration Index"/>
-		<text name="ui_option_tooltip_selectedConfigSet" text="The 'configuration set' to which the saved settings will apply"/>
-		<text name="ui_option_tooltip_useConfigName" text="The configuration to be indexed (optional)"/>
-		<text name="ui_option_tooltip_useConfigIndex" text="The index for the configuration (optional)"/>
+		<text name="ui_option_selectedConfigSet" text="Vybraná sada konfigurací"/>
+		<text name="ui_option_useConfigName" text="Použít název konfigurace"/>
+		<text name="ui_option_useConfigIndex" text="Použít index konfigurace"/>
+		<text name="ui_option_tooltip_selectedConfigSet" text="'Konfigurační sada', na kterou se uložená nastavení vztahují."/>
+		<text name="ui_option_tooltip_useConfigName" text="Konfigurace, která má být indexována (nepovinné)"/>
+		<text name="ui_option_tooltip_useConfigIndex" text="Index konfigurace (nepovinné)"/>
 		
 		<!-- LOADING_AREA -->
 		<text name="ui_loadArea_offset" text="Posun"/>
-		<text name="ui_loadArea_offsetRoot" text="Posun kořene"/>
+		<text name="ui_loadArea_offsetRoot" text="Posun základny"/>
 		<text name="ui_loadArea_width" text="Šířka"/>
 		<text name="ui_loadArea_length" text="Délka"/>
 		<text name="ui_loadArea_height" text="Výška"/>
@@ -138,7 +138,7 @@
 		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Zabránit nakládání při odkrytí (pouze pro tuto oblast)"/>
 
 		<!-- KEY BINDINGS -->
-		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Open global settings menu"/>
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Otevřít nabídku globálních nastavení"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Otevřít nabídku nastavení konfigurace (v obchodě)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Povolit úpravy objemu nákladu (v obchodě)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Přepnout nakládku"/>
