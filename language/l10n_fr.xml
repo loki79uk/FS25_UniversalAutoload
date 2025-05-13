@@ -182,7 +182,7 @@
 		<text name="universalAutoload_unloadAllForce" text="Forcer le déchargement"/>
 		<text name="universalAutoload_logMode" text="Mode bois"/>
 		<text name="universalAutoload_baleMode" text="Mode balles"/>
-		<text name="universalAutoload_palletMode" text="Pallet Mode palettes"/>
+		<text name="universalAutoload_palletMode" text="Mode palettes"/>
 		<text name="universalAutoload_collectionMode" text="Mode de ramassage"/>
 		<text name="universalAutoload_enabled" text="Activé"/>
 		<text name="universalAutoload_disabled" text="Désactivé"/>
