@@ -9,10 +9,10 @@
 		<text name="ui_config_settings_ual" text="Paramètres de chargement automatique"/>
 		<text name="ui_vehicle_options_ual" text="Options du véhicule"/>
 		<text name="ui_loading_area_options_ual" text="Options de la zone de chargement"/>
-		<text name="ui_save_options_ual" text="Save Options"/>
+		<text name="ui_save_options_ual" text="Sauvegarder les options"/>
 		<text name="ui_button_save_config_ual" text="Sauvegarder les paramètres du véhicule"/>
 		<text name="ui_confirm_save_config_ual" text="Voulez-vous modifier les paramètres de chargement automatique par défaut pour ce véhicule ?"/>
-		<text name="ui_confirm_save_config2_ual" text="(Purchase new vehicle or restart game to apply the new settings)"/>
+		<text name="ui_confirm_save_config2_ual" text="(Achetez un nouveau véhicule ou redémarrez le jeu pour appliquer les nouveaux réglages)"/>
 		
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Montrer débogage"/>
@@ -86,17 +86,17 @@
 		<text name="ui_option_tooltip_offsetRoot" text="Noeud i3d du véhicule auquel les décalages de zone sont relatifs"/>
 		<text name="ui_option_tooltip_minLogLength" text="La longueur minimale des grumes qui seront chargées automatiquement"/>
 
-		<text name="ui_option_addRemoveAreas" text="Number of Loading Areas"/>
-		<text name="ui_option_selectedArea" text="Selected Area"/>
-		<text name="ui_option_tooltip_addRemoveAreas" text="Adjust value here to add or remove loading areas"/>
-		<text name="ui_option_tooltip_selectedArea" text="The area selected (to modify in the settings below)"/>
+		<text name="ui_option_addRemoveAreas" text="Nombre de zones de chargement"/>
+		<text name="ui_option_selectedArea" text="Zone sélectionnée"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="Ajustez la valeur ici pour ajouter ou supprimer des zones de chargement"/>
+		<text name="ui_option_tooltip_selectedArea" text="La zone sélectionnée (à modifier dans les paramètres ci-dessous)"/>
 		
-		<text name="ui_option_selectedConfigSet" text="Selected Configuration Set"/>
-		<text name="ui_option_useConfigName" text="Use Configuration Name"/>
-		<text name="ui_option_useConfigIndex" text="Use Configuration Index"/>
-		<text name="ui_option_tooltip_selectedConfigSet" text="The 'configuration set' to which the saved settings will apply"/>
-		<text name="ui_option_tooltip_useConfigName" text="The configuration to be indexed (optional)"/>
-		<text name="ui_option_tooltip_useConfigIndex" text="The index for the configuration (optional)"/>
+		<text name="ui_option_selectedConfigSet" text="Configuration sélectionnée"/>
+		<text name="ui_option_useConfigName" text="Utiliser le nom de la configuration"/>
+		<text name="ui_option_useConfigIndex" text="Utiliser l'index de la configuration"/>
+		<text name="ui_option_tooltip_selectedConfigSet" text="La configuration auquel s'appliqueront les paramètres sauvegardés"/>
+		<text name="ui_option_tooltip_useConfigName" text="Le nom de la configuration à indexer (facultatif)"/>
+		<text name="ui_option_tooltip_useConfigIndex" text="L'index pour la configuration (facultatif)"/>
 		
 		<!-- LOADING_AREA -->
 		<text name="ui_loadArea_offset" text="Décalage"/>
@@ -138,7 +138,7 @@
 		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Empêche le chargement si bâche retirée (pour cette zone uniquement)"/>
 
 		<!-- KEY BINDINGS -->
-		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Open global settings menu"/>
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Ouvrir le menu des paramètres globaux"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Ouvrir le menu des paramètres de configuration (dans la boutique)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Activer la modification du volume de chargement (dans la boutique)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Activer/désactiver le chargement"/>
@@ -180,7 +180,7 @@
 		<text name="universalAutoload_stopLoading" text="Arrêter le chargement"/>
 		<text name="universalAutoload_unloadAll" text="Décharger"/>
 		<text name="universalAutoload_unloadAllForce" text="Forcer le déchargement"/>
-		<text name="universalAutoload_logMode" text="Mode Tronc"/>
+		<text name="universalAutoload_logMode" text="Mode Grume"/>
 		<text name="universalAutoload_baleMode" text="Mode Balles"/>
 		<text name="universalAutoload_palletMode" text="Mode Palette"/>
 		<text name="universalAutoload_collectionMode" text="Mode Collecte"/>
