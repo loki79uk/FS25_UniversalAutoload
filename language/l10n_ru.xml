@@ -9,10 +9,10 @@
 		<text name="ui_config_settings_ual" text="Настройки автоматической загрузки"/>
 		<text name="ui_vehicle_options_ual" text="Варианты транспортного средства"/>
 		<text name="ui_loading_area_options_ual" text="Варианты погрузочной площадки"/>
-		<text name="ui_save_options_ual" text="Save Options"/>
+		<text name="ui_save_options_ual" text="Сохранить параметры"/>
 		<text name="ui_button_save_config_ual" text="Сохранение настроек автомобиля"/>
 		<text name="ui_confirm_save_config_ual" text="Вы хотите перезаписать конфигурацию автозагрузки по умолчанию для этого автомобиля?"/>
-		<text name="ui_confirm_save_config2_ual" text="(Purchase new vehicle or restart game to apply the new settings)"/>
+		<text name="ui_confirm_save_config2_ual" text="(Приобретите новое транспортное средство или перезапустите игру, чтобы применить новые настройки)"/>
 		
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Показать отладку"/>
@@ -91,12 +91,12 @@
 		<text name="ui_option_tooltip_addRemoveAreas" text="Измени это число для добавления или удаления зон загрузки"/>
 		<text name="ui_option_tooltip_selectedArea" text="Выбранная зона загрузки (для изменения настроек ниже)"/>
 		
-		<text name="ui_option_selectedConfigSet" text="Selected Configuration Set"/>
-		<text name="ui_option_useConfigName" text="Use Configuration Name"/>
-		<text name="ui_option_useConfigIndex" text="Use Configuration Index"/>
-		<text name="ui_option_tooltip_selectedConfigSet" text="The 'configuration set' to which the saved settings will apply"/>
-		<text name="ui_option_tooltip_useConfigName" text="The configuration to be indexed (optional)"/>
-		<text name="ui_option_tooltip_useConfigIndex" text="The index for the configuration (optional)"/>
+		<text name="ui_option_selectedConfigSet" text="Выбранный набор конфигураций"/>
+		<text name="ui_option_useConfigName" text="Использовать имя конфигурации"/>
+		<text name="ui_option_useConfigIndex" text="Использовать индекс конфигурации"/>
+		<text name="ui_option_tooltip_selectedConfigSet" text="'Набор настроек', к которому будут применены сохраненные настройки"/>
+		<text name="ui_option_tooltip_useConfigName" text="Конфигурация для индексации (необязательно)"/>
+		<text name="ui_option_tooltip_useConfigIndex" text="Индекс для конфигурации (необязательно)"/>
 		
 		<!-- LOADING_AREA -->
 		<text name="ui_loadArea_offset" text="Смещение"/>
