@@ -434,7 +434,7 @@ function BoundingBox:addComponents(object, doEvaluate)
 			local size = bb:getSize()
 			local offset = bb:getOffset()
 		
-			DebugUtil.drawDebugCube(componentNode, size.x, size.y, size.z, 0, 1, 0, offset.x, offset.y, offset.z)
+			-- DebugUtil.drawDebugCube(componentNode, size.x, size.y, size.z, 0, 1, 0, offset.x, offset.y, offset.z)
 			
 			local vertices = BoundingBox.getCubeVertices(componentNode, offset.x, offset.y, offset.z, size.x/2, size.y/2, size.z/2)
 			if self:addVertices(vertices) then
