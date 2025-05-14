@@ -94,9 +94,9 @@
 		<text name="ui_option_selectedConfigSet" text="Выбранный набор конфигураций"/>
 		<text name="ui_option_useConfigName" text="Использовать имя конфигурации"/>
 		<text name="ui_option_useConfigIndex" text="Использовать индекс конфигурации"/>
-		<text name="ui_option_tooltip_selectedConfigSet" text="'Набор настроек', к которому будут применены сохраненные настройки"/>
-		<text name="ui_option_tooltip_useConfigName" text="Конфигурация для индексации (необязательно)"/>
-		<text name="ui_option_tooltip_useConfigIndex" text="Индекс для конфигурации (необязательно)"/>
+		<text name="ui_option_tooltip_selectedConfigSet" text="'Набор настроек'  к которому будут применены сохраненные настройки"/>
+		<text name="ui_option_tooltip_useConfigName" text="Конфигурация для индексации (по желанию)"/>
+		<text name="ui_option_tooltip_useConfigIndex" text="Индекс для конфигурации (по желанию)"/>
 		
 		<!-- LOADING_AREA -->
 		<text name="ui_loadArea_offset" text="Смещение"/>
