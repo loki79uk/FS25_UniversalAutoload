@@ -587,6 +587,48 @@ function UniversalAutoloadManager.consoleResetConfigurations()
 	print("New configurations will be used for new vehicles, please restart game to apply to all vehicles")
 end
 --
+function UniversalAutoloadManager.exportGlobalSettings()
+	-- print("UAL - EXPORT GLOBAL SETTINGS")
+
+	if g_currentMission:getIsServer() then
+
+		local userSettingsFile = Utils.getFilename(UniversalAutoload.userSettingsFile, getUserProfileAppPath())
+		local xmlFile = UniversalAutoloadManager.openUserSettingsXMLFile(userSettingsFile)
+		
+		if xmlFile ~= 0 and xmlFile ~= nil then
+		
+			print("SAVING Universal Autoload global settings")
+			
+			local xmlWasChanged = false
+			
+			iterateDefaultsTable(UniversalAutoload.GLOBAL_DEFAULTS, UniversalAutoload.globalKey, "", UniversalAutoload,
+			function(k, v, parentKey, currentKey, currentValue, finalValue)
+				local newValue = UniversalAutoload[v.id]
+				local oldValue = xmlFile:getValue(parentKey..currentKey, v.default)
+				if oldValue ~= newValue then
+					print("  << " .. tostring(v.id) .. ": " .. tostring(newValue))
+					if newValue == v.default then
+						xmlFile:removeProperty(parentKey..currentKey)
+					else
+						xmlFile:setValue(parentKey..currentKey, newValue)
+					end
+					xmlWasChanged = true
+				end
+			end)
+			
+			if xmlWasChanged then
+				xmlFile:save()
+			end
+
+			xmlFile:delete()
+		else
+			print("Universal Autoload - could not open global settings file")
+		end
+	else
+		print("Universal Autoload - global settings are only loaded for the server")
+	end
+end
+--
 function UniversalAutoloadManager.importGlobalSettings(xmlFilename)
 	-- print("UAL - IMPORT GLOBAL SETTINGS")
 
@@ -601,7 +643,7 @@ function UniversalAutoloadManager.importGlobalSettings(xmlFilename)
 			iterateDefaultsTable(UniversalAutoload.GLOBAL_DEFAULTS, UniversalAutoload.globalKey, "", UniversalAutoload,
 			function(k, v, parentKey, currentKey, currentValue, finalValue)
 				UniversalAutoload[v.id] = xmlFile:getValue(parentKey..currentKey, v.default)
-				print("  >> " .. tostring(v.id) .. ": " .. tostring(v.default))
+				print("  >> " .. tostring(v.id) .. ": " .. tostring(UniversalAutoload[v.id]))
 			end)
 
 			xmlFile:delete()

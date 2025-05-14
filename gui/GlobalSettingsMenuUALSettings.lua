@@ -183,6 +183,7 @@ function GlobalSettingsMenuUALSettings:onClose()
 		UniversalAutoload.clearActionEvents(self.vehicle)
 		UniversalAutoload.updateActionEventKeys(self.vehicle)
 	end
+	UniversalAutoloadManager.exportGlobalSettings()
 end
 
 function GlobalSettingsMenuUALSettings:onClickClose()
