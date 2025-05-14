@@ -1328,7 +1328,7 @@ function UniversalAutoload:updateVelocityCorrection()
 
 	local dt = g_currentDt * 0.001
 	local vx, vy, vz = getVelocityAtLocalPos(self.rootNode, 0, 0, 0)
-	local dx, dy, dz = vx*dt, vy*dt, vz*dt
+	local dx, dy, dz = (vx or 0)*dt, (vy or 0)*dt, (vz or 0)*dt
 	spec.velocityCorrection = { dx, dy, dz }
 
 	local dX = dx * nxx + dy * nxy + dz * nxz

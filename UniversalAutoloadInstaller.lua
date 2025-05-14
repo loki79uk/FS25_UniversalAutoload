@@ -839,6 +839,10 @@ function UniversalAutoloadManager.getValidXmlName(ualConfigName)
 			return xmlFilename
 		end
 	end
+	
+	if string.find(ualConfigName, "data/vehicles/train/") then
+		return ualConfigName
+	end
 
 end
 

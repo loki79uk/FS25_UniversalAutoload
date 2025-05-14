@@ -147,5 +147,36 @@
                 <loadingArea offset="0.000 1.235 0.034" width="2.206" length="4.635" height="1.625" lengthAxis="AXIS_FRONTLOADER_ARM2"/>
             </configuration>
         </vehicle>
+        <vehicle configFileName="data/vehicles/train/wagonFlatBedUS/wagonFlatBedUS.xml">
+            <configuration selectedConfigs="ALL">
+                <options isBaleTrailer="false" disableHeightLimit="true"/>
+                <loadingArea offset="0 1.220 -7.476" width="2.55" height="3.35" length="19.6" baleHeight="4.00"/>
+            </configuration>
+        </vehicle>
+        <vehicle configFileName="data/vehicles/train/wagonTimberUS/wagonTimberUS.xml">
+            <configuration selectedConfigs="ALL">
+                <options isLogTrailer="true" disableHeightLimit="true"/>
+                <loadingArea offset="0 1.493 -5.474" width="3.00" height="3.40" length="15.5"/>
+            </configuration>
+        </vehicle>
+        <vehicle configFileName="data/vehicles/train/wagonPlanksUS/wagonPlanksUS.xml">
+            <configuration selectedConfigs="ALL">
+                <options isLogTrailer="false" disableHeightLimit="true"/>
+                <loadingArea offset="0.8 1.379 -9.665" width="1.30" height="3.10" length="24.3"/>
+                <loadingArea offset="-0.8 1.379 -9.665" width="1.30" height="3.10" length="24.3"/>
+            </configuration>
+        </vehicle>
+        <vehicle configFileName="data/vehicles/train/wagonVehiclesEU/wagonVehiclesEU.xml">
+            <configuration selectedConfigs="ALL">
+                <options isBaleTrailer="false" disableHeightLimit="true"/>
+                <loadingArea offset="0 1.323 -10.841" width="2.60" height="3.35" length="24.85" baleHeight="4.00"/>
+            </configuration>
+        </vehicle>
+        <vehicle configFileName="data/vehicles/train/wagonTimberEU/wagonTimberEU.xml">
+            <configuration selectedConfigs="ALL">
+                <options isLogTrailer="true" disableHeightLimit="true"/>
+                <loadingArea offset="0 1.400 -10.615" width="3.10" height="3.55" length="23.5"/>
+            </configuration>
+        </vehicle>
     </vehicleConfigurations>
 </universalAutoload>
