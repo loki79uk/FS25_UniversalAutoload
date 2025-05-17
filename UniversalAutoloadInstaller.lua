@@ -2160,8 +2160,10 @@ function UniversalAutoloadManager:loadMap(name)
 		-- addConsoleCommand("ualFullTest", "Test all the different loading types", "consoleFullTest", UniversalAutoloadManager)
 	end
 	
-	if tostring(UniversalAutoload.name):find("fs25planet") or tostring(UniversalAutoload.name):find("_0_") then
-		InfoDialog.show("PLEASE DON'T USE SCUMMY THIRD-PARTY MOD SITES")
+	if tostring(UniversalAutoload.name) ~= "FS25_UniversalAutoload" then
+		--InfoDialog.show("PLEASE DON'T USE SCUMMY THIRD-PARTY MOD SITES")
+		-- previous save-games will not load correctly if the mod name is changed
+		print("WARNING: altered mod name detected - %s")
 	end
 end
 
