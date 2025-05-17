@@ -6100,7 +6100,7 @@ end
 function UniversalAutoload:ualGetFillUnitCapacity(fillUnitIndex)
 	local spec = self.spec_universalAutoload
 	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
-		return (spec.validUnloadCount and (spec.validUnloadCount + 1)) or 0
+		return (spec.totalUnloadCount and (spec.totalUnloadCount + 1)) or 0
 	else
 		return 0
 	end
@@ -6109,7 +6109,7 @@ end
 function UniversalAutoload:ualGetFillUnitFillLevel(fillUnitIndex)
 	local spec = self.spec_universalAutoload
 	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled then
-		return (spec.validUnloadCount and spec.validUnloadCount) or 0
+		return (spec.totalUnloadCount and spec.totalUnloadCount) or 0
 	else
 		return 0
 	end
