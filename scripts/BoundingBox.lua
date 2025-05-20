@@ -283,14 +283,14 @@ function BoundingBox:evaluate(minSize)
 	end
 end
 
-function BoundingBox:draw(r, g, b, drawAll)
+function BoundingBox:draw(r, g, b, drawComponents)
 	
 	local rootNode = self:getRootNode()
 	if not rootNode or not entityExists(rootNode) then
 		return
 	end
 	
-	if drawAll then
+	if drawComponents then
 
 		if self.debug then
 			for _, bb in pairs(self.debug.components) do
@@ -312,9 +312,11 @@ function BoundingBox:draw(r, g, b, drawAll)
 		end
 	end
 
-	local size = self:getSize()
-	local offset = self:getOffset()
-	DebugUtil.drawDebugCube(rootNode, size.x, size.y, size.z, r or 1, b or 1, g or 1, offset.x, offset.y, offset.z)
+	if not (r==0 and b==0 and g==0) then
+		local size = self:getSize()
+		local offset = self:getOffset()
+		DebugUtil.drawDebugCube(rootNode, size.x, size.y, size.z, r or 1, b or 1, g or 1, offset.x, offset.y, offset.z)
+	end
 	
 end
 
