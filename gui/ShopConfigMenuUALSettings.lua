@@ -25,9 +25,34 @@ function ShopConfigMenuUALSettings:setNewVehicle(vehicle)
 	local name = vehicle and ("  -  " .. vehicle:getFullName()) or ""
 	self.guiTitle:setText(g_i18n:getText("ui_config_settings_ual") .. name)
 	
+	self:initAreaListBoxes()
 	self:initConfigListBoxes()
 	self:setUseConfigName()
 	self:updateSettings()
+end
+
+function ShopConfigMenuUALSettings:initAreaListBoxes()
+	local vehicle = self.vehicle
+	if vehicle and self.lengthAxisDirectionListBox then
+		local axisMappings = {}
+		local texts = {g_i18n:getText("configuration_valueNone")}
+		local cylinderedSpec = vehicle and vehicle.spec_cylindered
+		if cylinderedSpec and cylinderedSpec.movingTools then
+			for id, tool in pairs(cylinderedSpec.movingTools) do
+				if tool.axis and not axisMappings[tool.axis] then
+					for name, object in pairs(vehicle.i3dMappings) do
+						if object.nodeId == tool.node then
+							table.insert(texts, name)
+							axisMappings[tool.axis] = #texts
+						end
+					end
+					
+				end
+			end
+		end
+		self.lengthAxisDirectionListBox:setTexts(texts)
+		self.lengthAxisDirectionListBox.axisMappings = axisMappings
+	end
 end
 
 function ShopConfigMenuUALSettings:initConfigListBoxes()
@@ -81,7 +106,8 @@ end
 
 function ShopConfigMenuUALSettings:updateSettings()
 	
-	local spec = self.vehicle and self.vehicle.spec_universalAutoload
+	local vehicle = self.vehicle
+	local spec = vehicle and vehicle.spec_universalAutoload
 	local settings = self.ualShopConfigSettingsLayout
 	
 	local isValid = spec ~= nil
@@ -158,7 +184,19 @@ function ShopConfigMenuUALSettings:updateSettings()
 	
 		local numberAreas = spec.loadingVolume and #spec.loadingVolume.bbs or 1
 		setValue('addRemoveAreasListBox', numberAreas)
-
+		
+		local selectedArea = self.selectedAreaListBox:getState()
+		for index, loadArea in pairs(spec.loadArea or {}) do
+			if selectedArea == index then
+				if loadArea.lengthAxis then
+					local value = self.lengthAxisDirectionListBox.axisMappings[loadArea.lengthAxis]
+					setValue('lengthAxisDirectionListBox', value)
+				else
+					setValue('lengthAxisDirectionListBox', 1)
+				end
+			end
+		end
+		
 	end
 	
 end
@@ -226,7 +264,11 @@ function ShopConfigMenuUALSettings:onCreateAddRemoveAreas(control)
 end
 
 function ShopConfigMenuUALSettings:onCreateSelectedArea(control)
-	control.texts = {g_i18n:getText("universalAutoload_ALL")}
+	control.texts = {g_i18n:getText("configuration_valueNone")}
+end
+
+function ShopConfigMenuUALSettings:onCreateAxisDirection(control)
+	control.texts = {g_i18n:getText("configuration_valueNone")}
 end
 
 function ShopConfigMenuUALSettings:onCreateSelectedConfigs(control)
@@ -361,22 +403,43 @@ function ShopConfigMenuUALSettings:onClickAreaMultiOption(id, control, direction
 			if newNumberAreas < numberAreas then
 				UniversalAutoload.debugPrint("REMOVE LOAD AREA #" .. numberAreas, debugMenus)
 				spec.loadingVolume:removeBoundingBox()
+				spec.loadArea[numberAreas] = nil
 			else
 				UniversalAutoload.debugPrint("ADD LOAD AREA #" .. newNumberAreas, debugMenus)
 				spec.loadingVolume:addBoundingBox()
 			end
 		end
 
-		-- local texts = {g_i18n:getText("universalAutoload_ALL")}
-		-- if id > 1 then
-			-- for i = 1, id do
-				-- table.insert(texts, "#" .. tostring(i))
-			-- end
-		-- end
-		-- self.selectedAreaListBox:setTexts(texts)
+		local texts = {}
+		if id and id > 0 then
+			for i = 1, id do
+				table.insert(texts, "#" .. tostring(i))
+			end
+		else
+			table.insert(texts, "-")
+		end
+		self.selectedAreaListBox:setTexts(texts)
 	end
 	
 	if control == self.selectedAreaListBox then
+		self:updateSettings()
+	end
+	
+	if control == self.lengthAxisDirectionListBox then
+		local i = self.selectedAreaListBox:getState()
+		if id == 1 then
+			if spec.loadArea[i] and spec.loadArea[i].lengthAxis then
+				spec.loadArea[i].lengthAxis = nil
+			end
+		else
+			local axisMappings = self.lengthAxisDirectionListBox.axisMappings
+			for axis, index in pairs(axisMappings) do
+				if id == index and spec.loadArea[i] then
+					UniversalAutoload.debugPrint("SET LENGTH AXIS: " .. axis, debugMenus)
+					spec.loadArea[i].lengthAxis = axis
+				end
+			end
+		end
 	end
 	
 end

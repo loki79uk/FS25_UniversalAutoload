@@ -111,12 +111,22 @@
 					</Bitmap>
 					
 					<!-- SELECT LOADING AREA -->
-					<!-- <Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox"> -->
-						<!-- <MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickAreaMultiOption" onCreate="onCreateSelectedArea" id="selectedAreaListBox"> -->
-							<!-- <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_selectedArea"/> -->
-						<!-- </MultiTextOption> -->
-						<!-- <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_selectedArea"/> -->
-					<!-- </Bitmap> -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickAreaMultiOption" onCreate="onCreateSelectedArea" id="selectedAreaListBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_selectedArea"/>
+						</MultiTextOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_selectedArea"/>
+					</Bitmap>
+					
+					<!-- HEIGHT/LENGTH/WIDTH AXIS DIRECTION -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickAreaMultiOption" onCreate="onCreateAxisDirection" id="lengthAxisDirectionListBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_loadArea_tooltip_lengthAxis"/>
+						</MultiTextOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_loadArea_lengthAxis"/>
+					</Bitmap>
+					
+					
 
 					<Text profile="fs25_settingsSectionHeader" name="sectionHeader" text="$l10n_ui_save_options_ual"/>
 					
