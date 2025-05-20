@@ -39,6 +39,7 @@ UniversalAutoload.showDebug = false
 UniversalAutoload.showLoading = false
 
 local debugKeys = false
+local debugMenus = false
 local debugSchema = false
 local debugConsole = false
 local debugLoading = false

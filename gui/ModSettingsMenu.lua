@@ -61,7 +61,7 @@ function InGameMenuSettingsFrame:initModPages()
 end
 
 function ModSettingsMenu:onFrameOpen()
-	print("ModSettingsMenu:onFrameOpen")
+	UniversalAutoload.debugPrint("ModSettingsMenu:onFrameOpen", debugMenus)
 	ModSettingsMenu:superClass().onFrameOpen(self)
 
 	-- self:initModPages()
@@ -69,11 +69,11 @@ function ModSettingsMenu:onFrameOpen()
 end
 
 function ModSettingsMenu:updateButtons()
-	print("ModSettingsMenu:updateButtons")
+	UniversalAutoload.debugPrint("ModSettingsMenu:updateButtons", debugMenus)
 
 	-- self:setMenuButtonInfoDirty()
 end
 
 function ModSettingsMenu:onClickBinaryOption(id, control, direction)
-	print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
+	UniversalAutoload.debugPrint("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")", debugMenus)
 end

@@ -21,7 +21,7 @@ function GlobalSettingsMenuUALSettings.new(vehicle, subclass_mt)
 end
 
 function GlobalSettingsMenuUALSettings:setNewVehicle(vehicle)
-	print("SET VEHICLE: " .. tostring(vehicle:getFullName()))
+	UniversalAutoload.debugPrint("SET VEHICLE: " .. tostring(vehicle:getFullName()), debugMenus)
 	self.vehicle = vehicle
 	-- local name = vehicle and ("  -  " .. vehicle:getFullName()) or ""
 	-- self.guiTitle:setText(g_i18n:getText("ui_global_settings_ual") .. name)
@@ -51,10 +51,10 @@ function GlobalSettingsMenuUALSettings:updateSettings()
 		end
 	end
 	
-	print("SET GLOBAL")
-	print(" showDebug: " .. tostring(UniversalAutoload.showDebug))
-	print(" highPriority: " .. tostring(UniversalAutoload.highPriority))
-	print(" disableAutoStrap: " .. tostring(UniversalAutoload.disableAutoStrap))
+	UniversalAutoload.debugPrint("GlobalSettingsMenu: SET GLOBAL", debugMenus)
+	UniversalAutoload.debugPrint(" showDebug: " .. tostring(UniversalAutoload.showDebug), debugMenus)
+	UniversalAutoload.debugPrint(" highPriority: " .. tostring(UniversalAutoload.highPriority), debugMenus)
+	UniversalAutoload.debugPrint(" disableAutoStrap: " .. tostring(UniversalAutoload.disableAutoStrap), debugMenus)
 	setChecked('showDebugCheckBox', UniversalAutoload.showDebug)
 	setChecked('highPriorityCheckBox', UniversalAutoload.highPriority)
 	setChecked('disableAutoStrapCheckBox', not UniversalAutoload.disableAutoStrap)
@@ -66,7 +66,7 @@ function GlobalSettingsMenuUALSettings:updateSettings()
 end
 
 function GlobalSettingsMenuUALSettings:onCreate()
-	print("GlobalSettingsMenu: onCreate")
+	UniversalAutoload.debugPrint("GlobalSettingsMenu: onCreate", debugMenus)
 
 	local settings = self.ualGlobalSettingsLayout
 	-- for _, item in pairs(settings.elements) do
@@ -114,29 +114,29 @@ function GlobalSettingsMenuUALSettings:onCreate()
 end
 
 function GlobalSettingsMenuUALSettings:onClickBinaryOption(id, control, direction)
-	print("CLICKED GLOBAL " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
+	UniversalAutoload.debugPrint("CLICKED GLOBAL " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")", debugMenus)
 
 	if control == self.showDebugCheckBox then
 		UniversalAutoload.showDebug = not direction
-		print(" showDebug: " .. tostring(UniversalAutoload.showDebug))
+		UniversalAutoload.debugPrint(" showDebug: " .. tostring(UniversalAutoload.showDebug), debugMenus)
 	elseif control == self.highPriorityCheckBox then
 		UniversalAutoload.highPriority = not direction
-		print(" highPriority: " .. tostring(UniversalAutoload.highPriority))
+		UniversalAutoload.debugPrint(" highPriority: " .. tostring(UniversalAutoload.highPriority), debugMenus)
 	elseif control == self.disableAutoStrapCheckBox then
 		UniversalAutoload.disableAutoStrap = direction
-		print(" disableAutoStrap: " .. tostring(UniversalAutoload.disableAutoStrap))
+		UniversalAutoload.debugPrint(" disableAutoStrap: " .. tostring(UniversalAutoload.disableAutoStrap), debugMenus)
 	end
 
 end
 
 
 function GlobalSettingsMenuUALSettings:onClickTextInputOption(id)
-	print("CLICKED GLOBAL VALUE " .. tostring(id) .. " = " .. tostring(id.text))
+	UniversalAutoload.debugPrint("CLICKED GLOBAL VALUE " .. tostring(id) .. " = " .. tostring(id.text), debugMenus)
 	local focusedElement = FocusManager:getFocusedElement()
 end
 
 function GlobalSettingsMenuUALSettings:onEnterTextInputOption(id)
-	print("ENTERED GLOBAL VALUE " .. tostring(id) .. " = " .. tostring(id.text))
+	UniversalAutoload.debugPrint("ENTERED GLOBAL VALUE " .. tostring(id) .. " = " .. tostring(id.text), debugMenus)
 	local numericValue = tonumber(id.text)
 	if not numericValue or type(numericValue) ~= "number" then
 		id:setText("0")
@@ -144,15 +144,15 @@ function GlobalSettingsMenuUALSettings:onEnterTextInputOption(id)
 	end
 	if id == self.pricePerLogTextInput then
 		UniversalAutoload.pricePerLog = numericValue
-		print(" pricePerLog: " .. tostring(UniversalAutoload.pricePerLog))	
+		UniversalAutoload.debugPrint(" pricePerLog: " .. tostring(UniversalAutoload.pricePerLog), debugMenus)	
 	end
 	if id == self.pricePerBaleTextInput then
 		UniversalAutoload.pricePerBale = numericValue
-		print(" pricePerBale: " .. tostring(UniversalAutoload.pricePerBale))	
+		UniversalAutoload.debugPrint(" pricePerBale: " .. tostring(UniversalAutoload.pricePerBale), debugMenus)	
 	end
 	if id == self.pricePerPalletTextInput then
 		UniversalAutoload.pricePerPallet = numericValue
-		print(" pricePerPallet: " .. tostring(UniversalAutoload.pricePerPallet))	
+		UniversalAutoload.debugPrint(" pricePerPallet: " .. tostring(UniversalAutoload.pricePerPallet), debugMenus)	
 	end
 end
 
@@ -165,18 +165,18 @@ function GlobalSettingsMenuUALSettings.inputEvent(self, action, value, direction
 		self:onClickSave()
 		return true
 	end
-	-- print("action: " .. tostring(action))
+	-- UniversalAutoload.debugPrint("action: " .. tostring(action), debugMenus)
 end
 
 function GlobalSettingsMenuUALSettings:onOpen()
-	print("GlobalSettingsMenu: onOpen")
+	UniversalAutoload.debugPrint("GlobalSettingsMenu: onOpen", debugMenus)
 	self:updateSettings()
 	self.isActive = true
 	g_inputBinding:setShowMouseCursor(true)
 end
 
 function GlobalSettingsMenuUALSettings:onClose()
-	print("GlobalSettingsMenu: onClose")
+	UniversalAutoload.debugPrint("GlobalSettingsMenu: onClose", debugMenus)
 	self.isActive = false
 	g_inputBinding:setShowMouseCursor(false)
 	if self.vehicle then
@@ -187,6 +187,6 @@ function GlobalSettingsMenuUALSettings:onClose()
 end
 
 function GlobalSettingsMenuUALSettings:onClickClose()
-	print("CLICKED CLOSE")
+	UniversalAutoload.debugPrint("CLICKED CLOSE", debugMenus)
 	g_gui:closeDialogByName("GlobalSettingsMenuUALSettings")
 end

@@ -129,13 +129,13 @@ function BoundingBox:isEmpty(delta, drawAll)
 
 	function callbackTarget.testLocationOverlap_Callback(target, nodeId, subShapeIndex)
 		if subShapeIndex ~= -1 then
-			print("nodeId: " .. tostring(nodeId))
-			print("subShapeIndex: " .. tostring(subShapeIndex))
+			-- print("nodeId: " .. tostring(nodeId))
+			-- print("subShapeIndex: " .. tostring(subShapeIndex))
 			local rigidBodyType = getRigidBodyType(nodeId)
 			if rigidBodyType == RigidBodyType.DYNAMIC then
-				print("rigidBodyType DYNAMIC")
+				-- print("rigidBodyType DYNAMIC")
 			elseif rigidBodyType == RigidBodyType.KINEMATIC then
-				print("rigidBodyType KINEMATIC")
+				-- print("rigidBodyType KINEMATIC")
 			end
 		end
 				
@@ -159,12 +159,12 @@ function BoundingBox:isEmpty(delta, drawAll)
 						-- print("group: " .. tostring(group))
 					-- end
 				else
-					print("--- testLocationOverlap - EMPTY ---")
+					-- print("--- testLocationOverlap - EMPTY ---")
 				end
 			else
 				local object = g_currentMission:getNodeObject(nodeId)
 				if object ~= nil then
-					print("--- testLocationOverlap - OTHER ---")
+					-- print("--- testLocationOverlap - OTHER ---")
 					-- DebugUtil.drawDebugNode(nodeId, getName(nodeId))
 					target.isVolumeEmpty = false
 				end
@@ -741,7 +741,7 @@ function BoundingBox:getCubeFaces(doUpdate)
 		
 		return self.centre, self.points, self.names
 	else
-		print("NO ROOT NODE..")
+		-- print("NO ROOT NODE..")
 	end
 end
 
@@ -817,7 +817,7 @@ function BoundingBox:adjustBoundingBox(original, range, sign, updateFn, delta, s
 		updateFn(original, value)
 		if self:isEmpty() then
 			updateFn(original, value - sigma)
-			print(" ADJUSTED BY " .. value - sigma)
+			-- print(" ADJUSTED BY " .. value - sigma)
 			break
 		else
 			updateFn(original, 0)

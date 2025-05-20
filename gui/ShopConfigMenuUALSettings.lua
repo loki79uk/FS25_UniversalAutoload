@@ -107,7 +107,7 @@ function ShopConfigMenuUALSettings:updateSettings()
 	end
 	
 	if isValid then
-		print("SET ALL")
+		UniversalAutoload.debugPrint("ShopConfigMenu: SET ALL", debugMenus)
 		setChecked('enableAutoloadCheckBox', not spec.autoloadDisabled)
 		setChecked('horizontalLoadingCheckBox', spec.horizontalLoading)
 		setChecked('disableAutoStrapCheckBox', not spec.disableAutoStrap)
@@ -164,7 +164,7 @@ function ShopConfigMenuUALSettings:updateSettings()
 end
 
 function ShopConfigMenuUALSettings:onCreate()
-	print("ShopConfigMenu: onCreate")
+	UniversalAutoload.debugPrint("ShopConfigMenu: onCreate", debugMenus)
 	
 	local settings = self.ualShopConfigSettingsLayout
 	-- for _, item in pairs(settings.elements) do
@@ -231,7 +231,7 @@ function ShopConfigMenuUALSettings:onCreateSelectedConfigs(control)
 end	
 
 function ShopConfigMenuUALSettings:onClickSelectedConfigs(id, control, direction)
-	-- print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
+	-- UniversalAutoload.debugPrint("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")", debugMenus)
 		
 	local spec = self.vehicle and self.vehicle.spec_universalAutoload
 	if not spec then
@@ -267,24 +267,24 @@ function ShopConfigMenuUALSettings:onClickSelectedConfigs(id, control, direction
 		if text ~= "-" then
 			selectedConfigs = selectedConfigs .. "|" .. text
 		else
-			print("WARNING: useConfigIndex was not set")
+			UniversalAutoload.debugPrint("WARNING: useConfigIndex was not set", debugMenus)
 		end
 	end
 
 	if selectedConfigs then
-		print("selectedConfigs: " .. tostring(selectedConfigs))
-		print("useConfigName: " .. tostring(useConfigName))
+		UniversalAutoload.debugPrint("selectedConfigs: " .. tostring(selectedConfigs), debugMenus)
+		UniversalAutoload.debugPrint("useConfigName: " .. tostring(useConfigName), debugMenus)
 		
 		spec.useConfigName = useConfigName
 		spec.selectedConfigs = selectedConfigs
 	else
-		print("WARNING: selectedConfigs was not set")
+		UniversalAutoload.debugPrint("WARNING: selectedConfigs was not set", debugMenus)
 	end
 	
 end
 
 function ShopConfigMenuUALSettings:onClickMultiOption(id, control, direction)
-	-- print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
+	-- UniversalAutoload.debugPrint("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")", debugMenus)
 		
 	local spec = self.vehicle and self.vehicle.spec_universalAutoload
 	if not spec then
@@ -340,7 +340,7 @@ function ShopConfigMenuUALSettings:onClickMultiOption(id, control, direction)
 end
 
 function ShopConfigMenuUALSettings:onClickAreaMultiOption(id, control, direction)
-	-- print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
+	-- UniversalAutoload.debugPrint("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")", debugMenus)
 		
 	local spec = self.vehicle and self.vehicle.spec_universalAutoload
 	if not spec then
@@ -356,10 +356,10 @@ function ShopConfigMenuUALSettings:onClickAreaMultiOption(id, control, direction
 				UniversalAutoloadManager.shopConfig.enableEditing = true
 			end
 			if newNumberAreas < numberAreas then
-				print("REMOVE LOAD AREA #" .. numberAreas)
+				UniversalAutoload.debugPrint("REMOVE LOAD AREA #" .. numberAreas, debugMenus)
 				spec.loadingVolume:removeBoundingBox()
 			else
-				print("ADD LOAD AREA #" .. newNumberAreas)
+				UniversalAutoload.debugPrint("ADD LOAD AREA #" .. newNumberAreas, debugMenus)
 				spec.loadingVolume:addBoundingBox()
 			end
 		end
@@ -379,7 +379,7 @@ function ShopConfigMenuUALSettings:onClickAreaMultiOption(id, control, direction
 end
 
 function ShopConfigMenuUALSettings:onClickBinaryOption(id, control, direction)
-	-- print("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")")
+	-- UniversalAutoload.debugPrint("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")", debugMenus)
 	
 	local spec = self.vehicle and self.vehicle.spec_universalAutoload
 	if not spec then
@@ -412,22 +412,22 @@ function ShopConfigMenuUALSettings.inputEvent(self, action, value, direction)
 		self:onClickSave()
 		return true
 	end
-	-- print("action: " .. tostring(action))
+	-- UniversalAutoload.debugPrint("action: " .. tostring(action), debugMenus)
 end
 
 function ShopConfigMenuUALSettings:onOpen()
-	print("ShopConfigMenu: onOpen")
+	UniversalAutoload.debugPrint("ShopConfigMenu: onOpen", debugMenus)
 	self:updateSettings()
 	self.isActive = true
 end
 
 function ShopConfigMenuUALSettings:onClose()
-	print("ShopConfigMenu: onClose")
+	UniversalAutoload.debugPrint("ShopConfigMenu: onClose", debugMenus)
 	self.isActive = false
 end
 
 function ShopConfigMenuUALSettings:onClickSave()
-	print("CLICKED SAVE")
+	UniversalAutoload.debugPrint("CLICKED SAVE", debugMenus)
 	g_inputBinding:setShowMouseCursor(true)
 	self:playSample(GuiSoundPlayer.SOUND_SAMPLES.CLICK)
 	local text = g_i18n:getText("ui_confirm_save_config_ual") .. "\n" .. g_i18n:getText("ui_confirm_save_config2_ual")
@@ -442,6 +442,6 @@ function ShopConfigMenuUALSettings:onClickSave()
 end
 
 function ShopConfigMenuUALSettings:onClickClose()
-	print("CLICKED CLOSE")
+	UniversalAutoload.debugPrint("CLICKED CLOSE", debugMenus)
 	g_gui:closeDialogByName("ShopConfigMenuUALSettings")
 end

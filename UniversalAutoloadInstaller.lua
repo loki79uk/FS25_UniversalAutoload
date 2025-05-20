@@ -550,7 +550,9 @@ function UniversalAutoloadManager.saveVehicleConfigToSettingsXML(exportSpec)
 			for i, loadArea in (exportSpec.loadArea) do
 				config.loadArea[i] = deepCopy(exportSpec.loadArea[i])
 				UniversalAutoload.debugPrint(" [" .. i .. "]")
-				DebugUtil.printTableRecursively(config.loadArea[i] or {}, "--", 0, 1)
+				if UniversalAutoload.showDebug then
+					DebugUtil.printTableRecursively(config.loadArea[i] or {}, "--", 0, 1)
+				end
 			end
 			config.configFileName = configFileName
 			config.selectedConfigs = selectedConfigs
@@ -1588,7 +1590,9 @@ function UniversalAutoloadManager.addLocalConfigIfAvailable(vehicle)
 							break
 						else
 							UniversalAutoload.debugPrint("*** LOAD AREA MISSING FROM CONFIG - please check mod settings file ***")
-							DebugUtil.printTableRecursively(config, "  --", 0, 2)
+							if UniversalAutoload.showDebug then
+								DebugUtil.printTableRecursively(config, "  --", 0, 2)
+							end
 						end
 					end
 				end
