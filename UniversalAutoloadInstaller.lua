@@ -527,6 +527,10 @@ function UniversalAutoloadManager.saveVehicleConfigToSettingsXML(exportSpec)
 			local configKey = string.format(UniversalAutoload.vehicleConfigKey, index, subIndex)
 			iterateDefaultsTable(UniversalAutoload.OPTIONS_DEFAULTS, configKey, ".options", exportSpec, writeSettingToFile)
 			UniversalAutoload.debugPrint("loadingAreas:")
+			for n = 1, UniversalAutoload.MAX_AREAS do
+				local loadAreaKey = string.format(".loadingArea(%d)", n-1)
+				xmlFile:removeProperty(configKey..loadAreaKey)
+			end
 			for j, loadArea in pairs(exportSpec.loadArea or {}) do
 				local loadAreaKey = string.format(".loadingArea(%d)", j-1)
 				iterateDefaultsTable(UniversalAutoload.LOADING_AREA_DEFAULTS, configKey, loadAreaKey, loadArea, writeSettingToFile)

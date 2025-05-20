@@ -219,7 +219,10 @@ function ShopConfigMenuUALSettings:onCreateNoLoadingCovered(control)
 end
 
 function ShopConfigMenuUALSettings:onCreateAddRemoveAreas(control)
-	control.texts = {"1", "2", "3"}
+	control.texts = {}
+	for n = 1, UniversalAutoload.MAX_AREAS do
+		table.insert(control.texts, tostring(n))
+	end
 end
 
 function ShopConfigMenuUALSettings:onCreateSelectedArea(control)
