@@ -32,8 +32,12 @@
         </vehicle>
         <vehicle configFileName="data/vehicles/lizard/pickup2017/pickup2017.xml">
             <configuration selectedConfigs="ALL">
-                <options isBaleTrailer="true" zonesOverlap="true" rearUnloadingOnly="true"/>
-                <loadingArea offset="0.000 0.771 -1.352" width="1.140" length="2.275" height="1.500"/>
+                <options rearUnloadingOnly="true" zonesOverlap="true"/>
+                <loadingArea offset="0.000 0.763 -0.625" width="1.450" length="0.850" height="1.600" baleHeight="1.850"/>
+                <loadingArea offset="0.000 0.763 -1.370" width="1.100" length="2.250" height="1.600" baleHeight="1.850"/>
+                <loadingArea offset="0.000 0.763 -1.775" width="1.100" length="1.450" height="1.600" baleHeight="1.850"/>
+                <loadingArea offset="0.000 0.763 -2.150" width="1.550" length="0.633" height="1.600" baleHeight="1.850"/>
+                <loadingArea offset="0.000 0.763 -1.450" width="1.100" length="0.770" height="1.600" baleHeight="1.850"/>
             </configuration>
         </vehicle>
         <vehicle configFileName="data/vehicles/international/series200/series200.xml">

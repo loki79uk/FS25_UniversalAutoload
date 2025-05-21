@@ -33,7 +33,7 @@ UniversalAutoload.LOG_DELAY = 1000
 UniversalAutoload.TRIGGER_DELTA = 0.1
 UniversalAutoload.MAX_LAYER_COUNT = 10
 UniversalAutoload.ROTATED_BALE_FACTOR = 0.80
-UniversalAutoload.MAX_AREAS = 3
+UniversalAutoload.MAX_AREAS = 5
 -- 0.85355339
 
 UniversalAutoload.showDebug = false

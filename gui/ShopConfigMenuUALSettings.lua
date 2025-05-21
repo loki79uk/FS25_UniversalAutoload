@@ -140,6 +140,7 @@ function ShopConfigMenuUALSettings:updateSettings()
 		setChecked('disableHeightLimitCheckBox', not spec.disableHeightLimit)
 		setChecked('enableSideLoadingCheckBox', spec.enableSideLoading)
 		setChecked('enableRearLoadingCheckBox', spec.enableRearLoading)
+		setChecked('zonesOverlapCheckBox', spec.zonesOverlap)
 		
 		if spec.isBaleTrailer then
 			setValue('trailerTypeListBox', 2)
@@ -178,8 +179,6 @@ function ShopConfigMenuUALSettings:updateSettings()
 		end
 
 	--minLogLength
-	
-	--zonesOverlap
 	--offsetRoot
 	
 		local numberAreas = spec.loadingVolume and #spec.loadingVolume.bbs or 1
@@ -465,6 +464,8 @@ function ShopConfigMenuUALSettings:onClickBinaryOption(id, control, direction)
 		spec.disableAutoStrap = direction
 	elseif control == self.disableHeightLimitCheckBox then
 		spec.disableHeightLimit = direction
+	elseif control == self.zonesOverlapCheckBox then
+		spec.zonesOverlap = not direction
 	end
 
 end
