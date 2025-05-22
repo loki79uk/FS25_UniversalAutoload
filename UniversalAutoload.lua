@@ -1330,11 +1330,12 @@ function UniversalAutoload:updateVelocityCorrection()
 	local dx, dy, dz = (vx or 0)*dt, (vy or 0)*dt, (vz or 0)*dt
 	spec.velocityCorrection = { dx, dy, dz }
 
-	local dX = dx * nxx + dy * nxy + dz * nxz
-	local dY = dx * nyx + dy * nyy + dz * nyz
-	local dZ = dx * nzx + dy * nzy + dz * nzz
-	setTranslation(spec.loadVolume.transformGroup, dX, dY, dZ)
-	
+	if not spec.autoCollectionMode then
+		local dX = dx * nxx + dy * nxy + dz * nxz
+		local dY = dx * nyx + dy * nyy + dz * nyz
+		local dZ = dx * nzx + dy * nzy + dz * nzz
+		setTranslation(spec.loadVolume.transformGroup, dX, dY, dZ)
+	end
 end
 
 function UniversalAutoload:initialiseTransformGroups(actualRootNode)
