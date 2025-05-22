@@ -50,7 +50,7 @@ local debugMultiplayer = false
 local debugSpecial = false
 
 function UniversalAutoload.debugPrint(inputString, flag)
-	if UniversalAutoload.showDebug then
+	if UniversalAutoload.showDebug or flag then
 		if flag == nil or flag then
 			print(inputString)
 		end
@@ -299,9 +299,15 @@ function UniversalAutoload:updateActionEventKeys()
 
 	if self.isClient and g_dedicatedServer==nil then
 		local spec = self.spec_universalAutoload
+		
+		local currentVehicle = g_localPlayer and g_localPlayer:getCurrentVehicle()
+		if not currentVehicle then
+			-- print("ON FOOT - IGNORE UPDATE RECEIVED FOR " .. self:getFullName())
+			return
+		end
 
 		if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled and spec.actionEvents and next(spec.actionEvents) == nil then
-			UniversalAutoload.debugPrint("updateActionEventKeys: "..self:getFullName(), debugKeys)
+			-- print("updateActionEventKeys: "..self:getFullName())
 			local actions = UniversalAutoload.ACTIONS
 			local ignoreCollisions = true
 			local reportAnyDeviceCollision = true
