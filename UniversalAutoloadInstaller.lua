@@ -312,6 +312,21 @@ function UniversalAutoload:OverwrittenUpdateObjects(superFunc, ...)
 end
 ActivatableObjectsSystem.updateObjects = Utils.overwrittenFunction(ActivatableObjectsSystem.updateObjects, UniversalAutoload.OverwrittenUpdateObjects)
 
+function UniversalAutoloadManager:update(dt)
+	if g_currentMission:getIsServer() then
+		for _, vehicle in pairs(UniversalAutoload.VEHICLES) do
+			local spec = vehicle and vehicle.spec_universalAutoload
+			local isCollectionModeActive = spec and spec.autoCollectionMode
+			if isCollectionModeActive or vehicle==UniversalAutoload.lastClosestVehicle then
+				--g_currentMission:addExtraPrintText("FORCE " .. vehicle:getFullName())
+				--UniversalAutoload.forceRaiseActive(vehicle, true)
+				UniversalAutoload.doUpdate(vehicle, dt)
+				UniversalAutoload.onDraw(vehicle)
+			end
+		end
+	end
+end
+
 function UniversalAutoloadManager.openUserSettingsXMLFile(xmlFilename)
 	
 	local xmlFilename = xmlFilename or Utils.getFilename(UniversalAutoload.userSettingsFile, getUserProfileAppPath())

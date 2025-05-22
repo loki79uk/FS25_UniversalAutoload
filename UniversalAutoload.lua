@@ -5731,7 +5731,7 @@ function UniversalAutoload:drawDebugDisplay()
 		local WHITE   = { 1.0, 1.0, 1.0 }
 		
 		local isActiveForInput = self:getIsActiveForInput()
-		if not (isActiveForInput or self==UniversalAutoload.lastClosestVehicle) then
+		if not (isActiveForInput or spec.autoCollectionMode or self==UniversalAutoload.lastClosestVehicle) then
 			RED = GREY
 			GREEN = GREY
 			YELLOW = GREY
