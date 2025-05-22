@@ -3116,11 +3116,12 @@ function UniversalAutoload.isValidForManualLoading(object)
 	if object.mountObject or object.dynamicMountObject then
 		return true
 	end
-	local pickedUpObject = UniversalAutoload.getObjectRootNode(object)
-	-- if pickedUpObject and Player.PICKED_UP_OBJECTS[pickedUpObject] == true then
-		-- return true
-	-- end
-	-- HandToolHands.getIsHoldingItem() ??
+	if g_localPlayer and g_localPlayer.hands and g_localPlayer.hands:getIsHoldingItem() then
+		local rootObject = UniversalAutoload.getObjectRootNode(object)
+		if rootObject and (rootObject == g_localPlayer.hands:getHeldItem()) then
+			return true
+		end
+	end
 end
 --
 function UniversalAutoload:isUsingAutoStrap()
