@@ -1320,6 +1320,10 @@ end
 function UniversalAutoload:updateVelocityCorrection()
 	local spec = self.spec_universalAutoload
 	
+	if not self.rootNode then
+		return
+	end
+	
 	local x0,y0,z0 = UniversalAutoload.localToWorld(self.rootNode)
 	local nxx, nxy, nxz = UniversalAutoload.localDirectionToWorld(self.rootNode, 1, 0, 0)
 	local nyx, nyy, nyz = UniversalAutoload.localDirectionToWorld(self.rootNode, 0, 1, 0)
@@ -3725,7 +3729,7 @@ end
 --
 function UniversalAutoload:resetLoadingPattern()
 	local spec = self.spec_universalAutoload
-	UniversalAutoload.debugPrint("["..self.rootNode.."] RESET loading pattern", debugLoading)
+	UniversalAutoload.debugPrint("["..tostring(self.rootNode).."] RESET loading pattern", debugLoading)
 	spec.currentLoadWidth = 0
 	spec.currentLoadHeight = 0
 	spec.currentLoadLength = 0
@@ -3737,7 +3741,7 @@ end
 --
 function UniversalAutoload:resetLoadingLayer()
 	local spec = self.spec_universalAutoload
-	UniversalAutoload.debugPrint("["..self.rootNode.."] RESET loading layer", debugLoading)
+	UniversalAutoload.debugPrint("["..tostring(self.rootNode).."] RESET loading layer", debugLoading)
 	spec.nextLayerHeight = 0
 	spec.currentLayerCount = 0
 	spec.currentLayerHeight = 0
@@ -3746,7 +3750,7 @@ end
 --
 function UniversalAutoload:resetLoadingArea()
 	local spec = self.spec_universalAutoload
-	UniversalAutoload.debugPrint("["..self.rootNode.."] RESET loading area", debugLoading)
+	UniversalAutoload.debugPrint("["..tostring(self.rootNode).."] RESET loading area", debugLoading)
 	UniversalAutoload.resetLoadingLayer(self)
 	UniversalAutoload.resetLoadingPattern(self)
 	spec.trailerIsFull = false
@@ -3853,7 +3857,7 @@ function UniversalAutoload:getLoadPlace(containerType, object)
 		if debugLoading then
 			UniversalAutoload.debugPrint("")
 			UniversalAutoload.debugPrint("===============================")
-			UniversalAutoload.debugPrint("["..self.rootNode.."] FIND LOADING PLACE FOR "..containerType.name)
+			UniversalAutoload.debugPrint("["..tostring(self.rootNode).."] FIND LOADING PLACE FOR "..containerType.name)
 		end
 		
 		-- if spec.isLogTrailer then
@@ -4265,7 +4269,7 @@ function UniversalAutoload:testLocationIsEmpty(loadPlace, object, offset, mask)
 	local hitCount = overlapBox(x+dx, y+dy, z+dz, rx, ry, rz, sizeX, sizeY, sizeZ, "ualTestLocationOverlap_Callback", self, collisionMask, true, true, true, true)
 
 	-- if debugLoading then 
-	--	UniversalAutoload.debugPrint(self.rootNode .. " HIT COUNT: " .. tostring(hitCount))
+	--	UniversalAutoload.debugPrint(tostring(self.rootNode) .. " HIT COUNT: " .. tostring(hitCount))
 	-- end
 	
 	if UniversalAutoload.showDebug then
