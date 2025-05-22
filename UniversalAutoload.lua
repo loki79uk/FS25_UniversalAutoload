@@ -1284,21 +1284,6 @@ function UniversalAutoload:updateActionEventText(loadCount, unloadCount, noEvent
 	spec.updateToggleLoading = true
 end
 --
-function UniversalAutoload:printHelpText()
-	local spec = self.spec_universalAutoload
-	local textExists = false
-	if #g_currentMission.hud.inputHelp.extraHelpTexts > 0 then
-		for _, text in ipairs(g_currentMission.inGameMenu.hud.inputHelp.extraHelpTexts) do
-			if text == self:getFullName() then
-				textExists = true
-			end
-		end
-	end
-	if not textExists then
-		g_currentMission:addExtraPrintText(self:getFullName())
-	end
-end
---
 function UniversalAutoload:forceRaiseActive(state, noEventSend)
 	-- UniversalAutoload.debugPrint("forceRaiseActive: "..self:getFullName() )
 	local spec = self.spec_universalAutoload
@@ -2401,9 +2386,8 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 	end
 
 	spec.countedPallets = false
-	-- local playerActive = (spec.playerInTrigger and (spec.playerInTrigger[g_localPlayer.userId] == true)) or false
 	
-	if self.isClient and not g_gui:getIsGuiVisible() and isActiveForInputIgnoreSelection or playerActive then
+	if self.isClient and not g_gui:getIsGuiVisible() and isActiveForInputIgnoreSelection then
 		spec.menuDelayTime = spec.menuDelayTime or 0
 		if spec.menuDelayTime > UniversalAutoload.DELAY_TIME/2 then
 			spec.menuDelayTime = 0

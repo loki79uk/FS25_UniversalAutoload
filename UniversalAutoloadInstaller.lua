@@ -241,6 +241,77 @@ UniversalAutoload.debugPrint("GLOBAL_DEFAULTS") iterateDefaultsTable(UniversalAu
 UniversalAutoload.debugPrint("VEHICLE_DEFAULTS") iterateDefaultsTable(UniversalAutoload.VEHICLE_DEFAULTS)
 UniversalAutoload.debugPrint("SAVEGAME_STATE_DEFAULTS") iterateDefaultsTable(UniversalAutoload.SAVEGAME_STATE_DEFAULTS)
 
+--
+function UniversalAutoload:printHelpText()
+	local spec = self.spec_universalAutoload
+	local textExists = false
+	if #g_currentMission.hud.inputHelp.extraHelpTexts > 0 then
+		for _, text in ipairs(g_currentMission.hud.inputHelp.extraHelpTexts) do
+			if text == self:getFullName() then
+				textExists = true
+			end
+		end
+	end
+	if not textExists then
+		g_currentMission:addExtraPrintText(self:getFullName())
+	end
+end
+
+-- HOOK PLAYER ON FOOT UPDATE OBJECTS/TRIGGERS
+UniversalAutoload.lastClosestVehicle = nil
+function UniversalAutoload:OverwrittenUpdateObjects(superFunc, ...)
+
+	superFunc(self, ...)
+
+	if g_localPlayer and g_localPlayer.isControlled and not g_gui:getIsGuiVisible() then
+	
+		-- g_currentMission:addExtraPrintText("Player Is Controlled")
+		local player = g_localPlayer
+		local playerId = player.userId
+	
+		local closestVehicle = nil
+		local closestVehicleDistance = math.huge
+		for _, vehicle in pairs(UniversalAutoload.VEHICLES) do
+			if vehicle ~= nil then
+				local SPEC = vehicle.spec_universalAutoload
+				if SPEC.playerInTrigger~=nil and SPEC.playerInTrigger[playerId] == true and
+				g_currentMission.nodeToObject[vehicle.rootNode]~=nil then
+					local distance = calcDistanceFrom(player.rootNode, vehicle.rootNode)
+					if distance < closestVehicleDistance then
+						closestVehicle = vehicle
+						closestVehicleDistance = distance
+					end
+				end
+			end
+		end
+		
+		local lastVehicle = UniversalAutoload.lastClosestVehicle
+		if lastVehicle ~= closestVehicle then
+			if lastVehicle ~= nil then
+				-- print("Move away from " .. lastVehicle:getFullName())
+			end
+			if closestVehicle ~= nil then
+				-- print("Move close to " .. closestVehicle:getFullName())
+				UniversalAutoload.lastClosestVehicle = closestVehicle
+			elseif lastVehicle ~= nil then
+				-- print("No closest vehicle")
+				UniversalAutoload.lastClosestVehicle = nil
+			end
+		end
+	
+		if UniversalAutoload.lastClosestVehicle ~= nil then
+			UniversalAutoload.printHelpText(UniversalAutoload.lastClosestVehicle)
+		end
+	else
+		if UniversalAutoload.lastClosestVehicle ~= nil then
+			-- print("Not on foot")
+			local lastVehicle = UniversalAutoload.lastClosestVehicle
+			UniversalAutoload.lastClosestVehicle = nil
+		end
+	end
+end
+ActivatableObjectsSystem.updateObjects = Utils.overwrittenFunction(ActivatableObjectsSystem.updateObjects, UniversalAutoload.OverwrittenUpdateObjects)
+
 function UniversalAutoloadManager.openUserSettingsXMLFile(xmlFilename)
 	
 	local xmlFilename = xmlFilename or Utils.getFilename(UniversalAutoload.userSettingsFile, getUserProfileAppPath())
