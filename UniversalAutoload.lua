@@ -3012,6 +3012,13 @@ function UniversalAutoload:isValidForLoading(object)
 		return false
 	end
 	
+	if UniversalAutoload.isPlayerHoldingItem(object) then
+		if debugPallets then
+			g_currentMission:addExtraPrintText(object.i3dFilename, "Held by player")
+		end
+		return false
+	end
+	
 	if UniversalAutoload.disableAutoStrap and UniversalAutoload.isStrappedOnOtherVehicle(self, object) then
 		if debugPallets then
 			g_currentMission:addExtraPrintText(object.i3dFilename, "Strapped On Other Vehicle")
@@ -3121,10 +3128,14 @@ function UniversalAutoload.isValidForManualLoading(object)
 	if object.mountObject or object.dynamicMountObject then
 		return true
 	end
-	if g_localPlayer and g_localPlayer.hands and g_localPlayer.hands:getIsHoldingItem() then
-		local rootObject = UniversalAutoload.getObjectRootNode(object)
-		if rootObject and (rootObject == g_localPlayer.hands:getHeldItem()) then
-			return true
+end
+function UniversalAutoload.isPlayerHoldingItem(object)
+	for _, player in pairs(g_currentMission.players) do
+		if player and player.hands and player.hands:getIsHoldingItem() then
+			local rootObject = UniversalAutoload.getObjectRootNode(object)
+			if rootObject and (rootObject == player.hands:getHeldItem()) then
+				return true
+			end
 		end
 	end
 end
