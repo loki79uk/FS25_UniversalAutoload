@@ -22,6 +22,8 @@
 		<text name="ui_global_pricePerBale" text="Tarif par balle"/>
 		<text name="ui_global_pricePerPallet" text="Tarif par palette"/>
 		<text name="ui_global_minLogLength" text="Longueur min. des grumes"/>
+		<text name="ui_global_loadingSpeed" text="Vitesse de chargement"/>
+		<text name="ui_global_objectSpacing" text="Espacement des objets"/>
 		
 		<text name="ui_global_tooltip_showDebug" text="Afficher les infos complètes de débogage pour tous les véhicules du jeu"/>
 		<text name="ui_global_tooltip_highPriority" text="Appliquer une priorité élevée à toutes les combinaisons de touches du mod dans le menu F1"/>
@@ -30,6 +32,8 @@
 		<text name="ui_global_tooltip_pricePerBale" text="Le montant facturé pour chaque balle chargée automatiquement"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Le montant facturé pour chaque palette chargée automatiquement"/>
 		<text name="ui_global_tooltip_minLogLength" text="La longueur minimale des grumes qui seront chargées automatiquement"/>
+		<text name="ui_global_tooltip_loadingSpeed" text="Délai entre le chargement de chaque objet (ms)"/>
+		<text name="ui_global_tooltip_objectSpacing" text="Espacement supplémentaire entre les objets chargés (m)"/>
 
 		<!-- OPTIONS -->
 		<text name="ui_option_enableAutoload" text="Autoriser le chargement automatique"/>

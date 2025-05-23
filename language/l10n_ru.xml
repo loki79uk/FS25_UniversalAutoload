@@ -22,6 +22,8 @@
 		<text name="ui_global_pricePerBale" text="Цена за тюк"/>
 		<text name="ui_global_pricePerPallet" text="Цена за поддон"/>
 		<text name="ui_global_minLogLength" text="Минимальная длина бревна"/>
+		<text name="ui_global_loadingSpeed" text="Скорость загрузки"/>
+		<text name="ui_global_objectSpacing" text="Расстояние между объектами"/>
 		
 		<text name="ui_global_tooltip_showDebug" text="Отображение полного графического отображения отладки для всех транспортных средств в игре"/>
 		<text name="ui_global_tooltip_highPriority" text="Примените высокий приоритет ко всем привязкам клавиш UAL в меню F1"/>
@@ -30,6 +32,8 @@
 		<text name="ui_global_tooltip_pricePerBale" text="Цена, взимаемая за каждый автоматически загружаемый тюк"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Цена, взимаемая за каждый автоматически загружаемый поддон"/>
 		<text name="ui_global_tooltip_minLogLength" text="Глобальная минимальная длина бревна, которые будут загружаться автоматически"/>
+		<text name="ui_global_tooltip_loadingSpeed" text="Задержка между загрузкой каждого объекта (мс)"/>
+		<text name="ui_global_tooltip_objectSpacing" text="Дополнительное расстояние между загруженными объектами (м)"/>
 
 		<!-- OPTIONS -->
 		<text name="ui_option_enableAutoload" text="Включить автозагрузку"/>

@@ -22,6 +22,8 @@
 		<text name="ui_global_pricePerBale" text="Ár bálánként"/>
 		<text name="ui_global_pricePerPallet" text="Ár raklaponként"/>
 		<text name="ui_global_minLogLength" text="Minimum rönkhossz"/>
+		<text name="ui_global_loadingSpeed" text="Betöltési sebesség"/>
+		<text name="ui_global_objectSpacing" text="Objektumok közötti távolság"/>
 		
 		<text name="ui_global_tooltip_showDebug" text="Hibakeresési információk megjelenítése az összes járműre"/>
 		<text name="ui_global_tooltip_highPriority" text="Magas prioritás alkalmazása az összes UAL billentyűkombinációra az F1 menüben"/>
@@ -30,6 +32,8 @@
 		<text name="ui_global_tooltip_pricePerBale" text="Az automata rakodás ára bálánként"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Az automata rakodás ára raklaponként"/>
 		<text name="ui_global_tooltip_minLogLength" text="Az automatikusan felrakodható legkisebb rönk hossza"/>
+		<text name="ui_global_tooltip_loadingSpeed" text="Késleltetés az egyes objektumok betöltése között (ms)"/>
+		<text name="ui_global_tooltip_objectSpacing" text="További távolság a betöltött objektumok között (m)"/>
 
 		<!-- OPTIONS -->
 		<text name="ui_option_enableAutoload" text="Autoload engedélyezése"/>

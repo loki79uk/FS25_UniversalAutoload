@@ -22,6 +22,8 @@
 		<text name="ui_global_pricePerBale" text="Cena za balík"/>
 		<text name="ui_global_pricePerPallet" text="Cena za paletu"/>
 		<text name="ui_global_minLogLength" text="Minimální délka kmene"/>
+		<text name="ui_global_loadingSpeed" text="Rychlost načítání"/>
+		<text name="ui_global_objectSpacing" text="Rozestupy objektů"/>
 		
 		<text name="ui_global_tooltip_showDebug" text="Zobrazí úplné grafické zobrazení ladění pro všechna vozidla ve hře"/>
 		<text name="ui_global_tooltip_highPriority" text="Použití vysoké priority pro všechny vazby kláves UAL v nabídce F1"/>
@@ -30,6 +32,8 @@
 		<text name="ui_global_tooltip_pricePerBale" text="Cena účtovaná za každý automaticky naložený balík"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Cena účtovaná za každou automaticky naloženou paletu"/>
 		<text name="ui_global_tooltip_minLogLength" text="Globální minimální délka kmenů, které budou automaticky nakládány"/>
+		<text name="ui_global_tooltip_loadingSpeed" text="Zpoždění mezi načítáním jednotlivých objektů (ms)"/>
+		<text name="ui_global_tooltip_objectSpacing" text="Další rozestup mezi načtenými objekty (m)"/>
 
 		<!-- OPTIONS -->
 		<text name="ui_option_enableAutoload" text="Povolit automatickou nakládku"/>

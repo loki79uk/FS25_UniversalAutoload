@@ -22,6 +22,8 @@
 		<text name="ui_global_pricePerBale" text="Preis pro Ballen"/>
 		<text name="ui_global_pricePerPallet" text="Preis pro Palette"/>
 		<text name="ui_global_minLogLength" text="Min. Länge des Stammes"/>
+		<text name="ui_global_loadingSpeed" text="Ladegeschwindigkeit"/>
+		<text name="ui_global_objectSpacing" text="Objektabstand"/>
 		
 		<text name="ui_global_tooltip_showDebug" text="Zeigt die vollständige grafische Fehlersuchanzeige für alle Fahrzeuge im Spiel an"/>
 		<text name="ui_global_tooltip_highPriority" text="Wendet hohe Priorität auf alle UAL-Tastenbelegungen im F1-Menü an"/>
@@ -30,6 +32,8 @@
 		<text name="ui_global_tooltip_pricePerBale" text="Der Preis, der für jeden automatisch geladenen Ballen berechnet wird"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Der Preis, der für jede automatisch geladene Palette berechnet wird"/>
 		<text name="ui_global_tooltip_minLogLength" text="Die globale Mindestlänge für Stämme, die automatisch gegeladen werden"/>
+		<text name="ui_global_tooltip_loadingSpeed" text="Zeit zwischen dem Laden von zwei Objekten (ms)"/>
+		<text name="ui_global_tooltip_objectSpacing" text="Zusätzlicher Abstand zwischen Objekten (m)"/>
 
 		<!-- OPTIONS -->
 		<text name="ui_option_enableAutoload" text="Autoload einschalten"/>

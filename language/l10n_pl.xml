@@ -22,6 +22,8 @@
 		<text name="ui_global_pricePerBale" text="Koszt za belę"/>
 		<text name="ui_global_pricePerPallet" text="Koszt za paletę"/>
 		<text name="ui_global_minLogLength" text="Minimalna długość kłody"/>
+		<text name="ui_global_loadingSpeed" text="Prędkość ładowania"/>
+		<text name="ui_global_objectSpacing" text="Odstępy między obiektami"/>
 		
 		<text name="ui_global_tooltip_showDebug" text="Pokaż pełny graficzny wyświetlacz debugowania dla wszystkich pojazdów w grze"/>
 		<text name="ui_global_tooltip_highPriority" text="Zastosuj wysoki priorytet dla wszystkich przypisań klawiszy UAL w menu F1"/>
@@ -30,6 +32,8 @@
 		<text name="ui_global_tooltip_pricePerBale" text="Kwota pobierana za każdą automatycznie załadowaną belę"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Kwota pobierana za każdą automatycznie załadowaną paletę"/>
 		<text name="ui_global_tooltip_minLogLength" text="Minimalna długość kłód, które będą automatycznie ładowane"/>
+		<text name="ui_global_tooltip_loadingSpeed" text="Opóźnienie między ładowaniem każdego obiektu (ms)"/>
+		<text name="ui_global_tooltip_objectSpacing" text="Dodatkowy odstęp między załadowanymi obiektami (m)"/>
 
 		<!-- OPTIONS -->
 		<text name="ui_option_enableAutoload" text="Włącz autoload"/>

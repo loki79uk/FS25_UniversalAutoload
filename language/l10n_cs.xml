@@ -24,6 +24,8 @@
 		<text name="ui_global_pricePerBale" text="每个捆包价格"/>
 		<text name="ui_global_pricePerPallet" text="每个托盘价格"/>
 		<text name="ui_global_minLogLength" text="最小原木长度"/>
+		<text name="ui_global_loadingSpeed" text="加载速度"/>
+		<text name="ui_global_objectSpacing" text="对象间距"/>
 		
 		<text name="ui_global_tooltip_showDebug" text="显示游戏中所有车辆的完整图形调试显示"/>
 		<text name="ui_global_tooltip_highPriority" text="对 F1 菜单中的所有 UAL 键绑定应用高优先级"/>
@@ -32,6 +34,8 @@
 		<text name="ui_global_tooltip_pricePerBale" text="每捆包自动装载货物的收费"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="每个自动装载托盘的收费"/>
 		<text name="ui_global_tooltip_minLogLength" text="自动加载原木的全局最小长度"/>
+		<text name="ui_global_tooltip_loadingSpeed" text="每个对象加载之间的延迟时间（毫秒）"/>
+		<text name="ui_global_tooltip_objectSpacing" text="已加载对象之间的额外间距（米）"/>
 
 		<!-- OPTIONS -->
 		<text name="ui_option_enableAutoload" text="启用自动加载"/>

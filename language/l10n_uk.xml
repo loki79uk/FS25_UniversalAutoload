@@ -23,6 +23,8 @@
 		<text name="ui_global_pricePerBale" text="Ціна за Тюк"/>
 		<text name="ui_global_pricePerPallet" text="Ціна за Піддон"/>
 		<text name="ui_global_minLogLength" text="Мін Довжина Колоди"/>
+		<text name="ui_global_loadingSpeed" text="Швидкість завантаження"/>
+		<text name="ui_global_objectSpacing" text="Інтервал між об'єктами"/>
 		
 		<text name="ui_global_tooltip_showDebug" text="Показати повний графічний дисплей налагодження для всіх транспортних засобів у грі"/>
 		<text name="ui_global_tooltip_highPriority" text="Встановити високий пріоритет для усіх UAL прив'язок клавіш у F1 меню"/>
@@ -31,6 +33,8 @@
 		<text name="ui_global_tooltip_pricePerBale" text="Ціна за кожний автозавантажений тюк"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Ціна за кожний автозавантажений піддон"/>
 		<text name="ui_global_tooltip_minLogLength" text="Глобальна мінімальна довжина для колод які будуть автозавантажені"/>
+		<text name="ui_global_tooltip_loadingSpeed" text="Затримка між завантаженням кожного об'єкта (мс)"/>
+		<text name="ui_global_tooltip_objectSpacing" text="Додатковий інтервал між завантаженими об'єктами (м)"/>
 
 		<!-- OPTIONS -->
 		<text name="ui_option_enableAutoload" text="Автозавантаження"/>

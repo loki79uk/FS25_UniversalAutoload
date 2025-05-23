@@ -22,6 +22,8 @@
 		<text name="ui_global_pricePerBale" text="Price Per Bale"/>
 		<text name="ui_global_pricePerPallet" text="Price Per Pallet"/>
 		<text name="ui_global_minLogLength" text="Min Log Length"/>
+		<text name="ui_global_loadingSpeed" text="Loading Speed"/>
+		<text name="ui_global_objectSpacing" text="Object Spacing"/>
 		
 		<text name="ui_global_tooltip_showDebug" text="Show the full graphical debugging display for all vehicles in game"/>
 		<text name="ui_global_tooltip_highPriority" text="Apply high priority to all UAL key bindings in the F1 menu"/>
@@ -30,6 +32,8 @@
 		<text name="ui_global_tooltip_pricePerBale" text="The price charged for each auto-loaded bale"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="The price charged for each auto-loaded pallet"/>
 		<text name="ui_global_tooltip_minLogLength" text="The global minimum length for logs that will be autoloaded"/>
+		<text name="ui_global_tooltip_loadingSpeed" text="Time delay between loading each object (ms)"/>
+		<text name="ui_global_tooltip_objectSpacing" text="Additional spacing between loaded objects (m)"/>
 
 		<!-- OPTIONS -->
 		<text name="ui_option_enableAutoload" text="Enable Autoload"/>
