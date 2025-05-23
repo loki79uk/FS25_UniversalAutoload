@@ -3343,12 +3343,14 @@ function UniversalAutoload.buildObjectsToUnloadTable(vehicle, forceUnloadPositio
 				
 				local unloadPlace = {}
 				local containerType = UniversalAutoload.getContainerType(object)
-				unloadPlace.sizeX = containerType.sizeX
-				unloadPlace.sizeY = containerType.sizeY
-				unloadPlace.sizeZ = containerType.sizeZ
+				local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType, true)
+				unloadPlace.sizeX = w
+				unloadPlace.sizeY = h
+				unloadPlace.sizeZ = l
+				if containerType.flipXY then
+					unloadPlace.wasFlippedXY = true
+				end
 				if containerType.flipYZ then
-					unloadPlace.sizeY = containerType.sizeZ
-					unloadPlace.sizeZ = containerType.sizeY
 					unloadPlace.wasFlippedYZ = true
 				end
 				
@@ -3517,12 +3519,10 @@ function UniversalAutoload:createLoadingPlace(containerType)
 	local i = spec.currentLoadAreaIndex or 1
 	
 	--DEFINE CONTAINER SIZES
-	local loadSizeX = containerType.sizeX
-	local loadSizeY = containerType.sizeY
-	local loadSizeZ = containerType.sizeZ
-	local containerSizeX = containerType.sizeX
-	local containerSizeY = containerType.sizeY
-	local containerSizeZ = containerType.sizeZ
+	local containerSizeX, containerSizeY, containerSizeZ = UniversalAutoload.getContainerTypeDimensions(containerType)
+	local loadSizeX = containerSizeX
+	local loadSizeY = containerSizeY
+	local loadSizeZ = containerSizeZ
 	local containerFlipYZ = containerType.flipYZ
 	local isRoundbale = containerType.isRoundbale
 	
@@ -3530,9 +3530,8 @@ function UniversalAutoload:createLoadingPlace(containerType)
 	if isRoundbale == true then
 		if spec.useHorizontalLoading then
 		-- LONGWAYS ROUNDBALE STACKING
-			containerSizeY = containerType.sizeZ
-			containerSizeZ = containerType.sizeY
-			--containerFlipYZ = false
+			containerSizeY = loadSizeZ
+			containerSizeZ = loadSizeY
 		end
 	end
 	
@@ -3584,9 +3583,9 @@ function UniversalAutoload:createLoadingPlace(containerType)
 	if doRotate then
 		N, M = N2, M2
 		rotation = math.pi/2
-		loadSizeX = containerType.sizeZ
-		loadSizeY = containerType.sizeY
-		loadSizeZ = containerType.sizeX
+		loadSizeX = containerSizeZ
+		loadSizeY = containerSizeY
+		loadSizeZ = containerSizeX
 	end
 	
 	--TEST FOR ROUNDBALE PACKING
@@ -3601,12 +3600,12 @@ function UniversalAutoload:createLoadingPlace(containerType)
 			useRoundbalePacking = false
 		else
 		-- UPRIGHT ROUNDBALE STACKING
-			NR = math.floor(width / (R*containerType.sizeX))
-			MR = math.floor(length / (R*containerType.sizeX))
-			if NR > N and width >= (2*R)*containerType.sizeX then
+			NR = math.floor(width / (R*containerSizeX))
+			MR = math.floor(length / (R*containerSizeX))
+			if NR > N and width >= (2*R)*containerSizeX then
 				useRoundbalePacking = true
 				N, M = NR, MR
-				loadSizeX = R*containerType.sizeX
+				loadSizeX = R*containerSizeX
 			end
 		end
 	end
@@ -3888,17 +3887,19 @@ function UniversalAutoload:getLoadPlace(containerType, object)
 				spec.currentLayerCount = spec.currentLayerCount or 0
 				spec.currentLayerHeight = spec.currentLayerHeight or 0
 
-				local containerSizeX = containerType.sizeX
-				local containerSizeY = containerType.sizeY
-				local containerSizeZ = containerType.sizeZ
+				local containerSizeX, containerSizeY, containerSizeZ = UniversalAutoload.getContainerTypeDimensions(containerType)
+				local containerSizeX = containerSizeX
+				local containerSizeY = containerSizeY
+				local containerSizeZ = containerSizeZ
 				local containerFlipYZ = containerType.flipYZ
 
 				--TEST FOR ROUNDBALE PACKING
 				if containerType.isBale and containerType.isRoundbale then
 					if spec.useHorizontalLoading then
 					-- LONGWAYS ROUNDBALE STACKING
-						containerSizeY = containerType.sizeZ * UniversalAutoload.ROTATED_BALE_FACTOR
-						containerSizeZ = containerType.sizeY
+						local originalContainerSizeY = containerSizeY
+						containerSizeY = containerSizeZ * UniversalAutoload.ROTATED_BALE_FACTOR
+						containerSizeZ = originalContainerSizeY
 					end
 				end
 				
@@ -5547,7 +5548,7 @@ function UniversalAutoload.getContainerTypeDimensions(containerType, doFlip)
 		if doFlip and containerType.flipYZ then
 			l, h = containerType.sizeY, containerType.sizeZ
 		end
-		return w, h, l
+		return w+UniversalAutoload.SPACING, h+UniversalAutoload.SPACING, l+UniversalAutoload.SPACING
 	end
 end
 --
@@ -5884,16 +5885,9 @@ function UniversalAutoload:drawDebugDisplay()
 			
 			local containerType = spec.lastLoadAttempt.containerType
 			if containerType ~= nil then
-				local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType, true)
-				if containerType.flipXY then
-					X, Y = w, h
-					h, w = X, Y
-				elseif containerType.flipYZ then
-					Y, Z = h, l
-					l, h = Y, Z
-				end
+				local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType)
 				UniversalAutoload.DrawDebugPallet( place.node, x, y, z, true, false, GREY )
-				UniversalAutoload.DrawDebugPallet( place.node, w, h, l, true, false, YELLOW )
+				UniversalAutoload.DrawDebugPallet( place.node, w, h, l, true, false, MAGENTA )
 			end
 		end
 		
