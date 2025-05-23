@@ -5521,19 +5521,19 @@ function UniversalAutoload.getContainerType(object)
 	return objectType
 end
 --
-function UniversalAutoload.getContainerDimensions(object)
+function UniversalAutoload.getContainerDimensions(object, doFlip)
 	local containerType = UniversalAutoload.getContainerType(object)
-	UniversalAutoload.getContainerTypeDimensions(containerType)
+	UniversalAutoload.getContainerTypeDimensions(containerType, doFlip)
 end
 --
-function UniversalAutoload.getContainerTypeDimensions(containerType)
+function UniversalAutoload.getContainerTypeDimensions(containerType, doFlip)
 	if containerType then
 		local w, h, l = containerType.sizeX, containerType.sizeY, containerType.sizeZ
 
-		if containerType.flipXY then
+		if doFlip and containerType.flipXY then
 			w, h = containerType.sizeY, containerType.sizeX
 		end
-		if containerType.flipYZ then
+		if doFlip and containerType.flipYZ then
 			l, h = containerType.sizeY, containerType.sizeZ
 		end
 		return w, h, l
@@ -5778,7 +5778,7 @@ function UniversalAutoload:drawDebugDisplay()
 				if node then
 					local containerType = UniversalAutoload.getContainerType(object)
 					if containerType ~= nil then
-						local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType)
+						local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType, true)
 						local offset = 0 if containerType.isBale then offset = h/2 end
 						if UniversalAutoload.isValidForLoading(self, object) then
 							UniversalAutoload.DrawDebugPallet( node, w, h, l, true, false, GREEN, offset )
@@ -5796,7 +5796,7 @@ function UniversalAutoload:drawDebugDisplay()
 				if node then
 					local containerType = UniversalAutoload.getContainerType(object)
 					if containerType ~= nil then
-						local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType)
+						local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType, true)
 						local offset = 0 if containerType.isBale then offset = h/2 end
 						if UniversalAutoload.isValidForUnloading(self, object) then 
 							UniversalAutoload.DrawDebugPallet( node, w, h, l, true, false, GREEN, offset, spec.velocityCorrection )
@@ -5822,7 +5822,7 @@ function UniversalAutoload:drawDebugDisplay()
 				for object, unloadPlace in pairs(spec.objectsToUnload or {}) do
 					local containerType = UniversalAutoload.getContainerType(object)
 					if containerType ~= nil then
-						local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType)
+						local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType, true)
 						local offset = 0 if containerType.isBale then offset = h/2 end
 						if spec.unloadingAreaClear then
 							UniversalAutoload.DrawDebugPallet( unloadPlace.node, w, h, l, true, false, CYAN, offset )
@@ -5873,7 +5873,7 @@ function UniversalAutoload:drawDebugDisplay()
 			
 			local containerType = spec.lastLoadAttempt.containerType
 			if containerType ~= nil then
-				local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType)
+				local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType, true)
 				if containerType.flipXY then
 					X, Y = w, h
 					h, w = X, Y
