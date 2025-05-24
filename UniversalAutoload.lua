@@ -3519,19 +3519,21 @@ function UniversalAutoload:createLoadingPlace(containerType)
 	local i = spec.currentLoadAreaIndex or 1
 	
 	--DEFINE CONTAINER SIZES
-	local containerSizeX, containerSizeY, containerSizeZ = UniversalAutoload.getContainerTypeDimensions(containerType)
-	local loadSizeX = containerSizeX
-	local loadSizeY = containerSizeY
-	local loadSizeZ = containerSizeZ
-	local containerFlipYZ = containerType.flipYZ
+	local sizeX, sizeY, sizeZ = UniversalAutoload.getContainerTypeDimensions(containerType)
+	local loadSizeX = sizeX
+	local loadSizeY = sizeY
+	local loadSizeZ = sizeZ
+	local containerSizeX = sizeX
+	local containerSizeY = sizeY
+	local containerSizeZ = sizeZ
 	local isRoundbale = containerType.isRoundbale
 	
 	--TEST FOR ROUNDBALE PACKING
 	if isRoundbale == true then
 		if spec.useHorizontalLoading then
 		-- LONGWAYS ROUNDBALE STACKING
-			containerSizeY = loadSizeZ
-			containerSizeZ = loadSizeY
+			containerSizeY = sizeZ
+			containerSizeZ = sizeY
 		end
 	end
 	
@@ -3556,8 +3558,10 @@ function UniversalAutoload:createLoadingPlace(containerType)
 	
 	--CHOOSE BEST PACKING ORIENTATION
 	local N, M, rotation
+	local neverRotate = containerType.neverRotate
+	local alwaysRotate = containerType.alwaysRotate
 	local shouldRotate = ((N2*M2) > (N1*M1)) or (((N2*M2)==(N1*M1)) and (N1>N2) and (N2*M2)>0)
-	local doRotate = (containerType.alwaysRotate or shouldRotate) and not containerType.neverRotate
+	local doRotate = (alwaysRotate or shouldRotate) and not neverRotate
 	
 	--ALWAYS ROTATE ROUNDBALES WITH HORIZONTAL LOADING
 	if isRoundbale == true and spec.useHorizontalLoading then
@@ -3570,8 +3574,8 @@ function UniversalAutoload:createLoadingPlace(containerType)
 		UniversalAutoload.debugPrint("length: " .. tostring(length) )
 		UniversalAutoload.debugPrint(" N1: "..N1.. " ,  M1: "..M1)
 		UniversalAutoload.debugPrint(" N2: "..N2.. " ,  M2: "..M2)
-		UniversalAutoload.debugPrint("neverRotate: " .. tostring(containerType.neverRotate) )
-		UniversalAutoload.debugPrint("alwaysRotate: " .. tostring(containerType.alwaysRotate) )
+		UniversalAutoload.debugPrint("neverRotate: " .. tostring(neverRotate) )
+		UniversalAutoload.debugPrint("alwaysRotate: " .. tostring(alwaysRotate) )
 		UniversalAutoload.debugPrint("shouldRotate: " .. tostring(shouldRotate) )
 		UniversalAutoload.debugPrint("doRotate: " .. tostring(doRotate) )
 	end
@@ -3583,9 +3587,9 @@ function UniversalAutoload:createLoadingPlace(containerType)
 	if doRotate then
 		N, M = N2, M2
 		rotation = math.pi/2
-		loadSizeX = containerSizeZ
-		loadSizeY = containerSizeY
-		loadSizeZ = containerSizeX
+		loadSizeX = sizeZ
+		loadSizeY = sizeY
+		loadSizeZ = sizeX
 	end
 	
 	--TEST FOR ROUNDBALE PACKING
@@ -3600,12 +3604,12 @@ function UniversalAutoload:createLoadingPlace(containerType)
 			useRoundbalePacking = false
 		else
 		-- UPRIGHT ROUNDBALE STACKING
-			NR = math.floor(width / (R*containerSizeX))
-			MR = math.floor(length / (R*containerSizeX))
-			if NR > N and width >= (2*R)*containerSizeX then
+			NR = math.floor(width / (R*sizeX))
+			MR = math.floor(length / (R*sizeX))
+			if NR > N and width >= (2*R)*sizeX then
 				useRoundbalePacking = true
 				N, M = NR, MR
-				loadSizeX = R*containerSizeX
+				loadSizeX = R*sizeX
 			end
 		end
 	end
@@ -3695,7 +3699,7 @@ function UniversalAutoload:createLoadingPlace(containerType)
 		loadPlace.sizeX = containerSizeX + d
 		loadPlace.sizeY = containerSizeY + d
 		loadPlace.sizeZ = containerSizeZ + d
-		loadPlace.flipYZ = containerFlipYZ
+		loadPlace.flipYZ = containerType.flipYZ
 		loadPlace.isRoundbale = isRoundbale
 		loadPlace.roundbaleOffset = roundbaleOffset
 		loadPlace.useRoundbalePacking = useRoundbalePacking
@@ -3869,10 +3873,6 @@ function UniversalAutoload:getLoadPlace(containerType, object)
 			UniversalAutoload.debugPrint("===============================")
 			UniversalAutoload.debugPrint("["..tostring(self.rootNode).."] FIND LOADING PLACE FOR "..containerType.name)
 		end
-		
-		-- if spec.isLogTrailer then
-			-- spec.resetLoadingPattern = true
-		-- end
 
 		local i = spec.currentLoadAreaIndex or 1
 		while i <= #spec.loadArea do
@@ -3887,19 +3887,17 @@ function UniversalAutoload:getLoadPlace(containerType, object)
 				spec.currentLayerCount = spec.currentLayerCount or 0
 				spec.currentLayerHeight = spec.currentLayerHeight or 0
 
-				local containerSizeX, containerSizeY, containerSizeZ = UniversalAutoload.getContainerTypeDimensions(containerType)
-				local containerSizeX = containerSizeX
-				local containerSizeY = containerSizeY
-				local containerSizeZ = containerSizeZ
+				local containerSizeX = containerType.sizeX
+				local containerSizeY = containerType.sizeY
+				local containerSizeZ = containerType.sizeZ
 				local containerFlipYZ = containerType.flipYZ
 
 				--TEST FOR ROUNDBALE PACKING
 				if containerType.isBale and containerType.isRoundbale then
 					if spec.useHorizontalLoading then
 					-- LONGWAYS ROUNDBALE STACKING
-						local originalContainerSizeY = containerSizeY
-						containerSizeY = containerSizeZ * UniversalAutoload.ROTATED_BALE_FACTOR
-						containerSizeZ = originalContainerSizeY
+						containerSizeY = containerType.sizeZ * UniversalAutoload.ROTATED_BALE_FACTOR
+						containerSizeZ = containerType.sizeY
 					end
 				end
 				
@@ -3971,7 +3969,7 @@ function UniversalAutoload:getLoadPlace(containerType, object)
 					if spec.currentLoadingPlace then
 						UniversalAutoload.debugPrint("TRY NEW LOAD PLACE..", debugLoading)
 						local newLoadPlace = spec.currentLoadingPlace
-						newLoadPlace.newLoadHeight = containerSizeY
+						newLoadPlace.newLoadHeight = containerSizeY + UniversalAutoload.DELTA
 					
 						local containerFitsInLoadSpace = spec.isLogTrailer or 
 							(newLoadPlace.useRoundbalePacking and containerType.isRoundbale) or
