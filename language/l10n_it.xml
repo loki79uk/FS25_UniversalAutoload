@@ -22,8 +22,8 @@
 		<text name="ui_global_pricePerBale" text="Prezzo per balla"/>
 		<text name="ui_global_pricePerPallet" text="Prezzo per pallet"/>
 		<text name="ui_global_minLogLength" text="Lunghezza minima del tronco"/>
-		<text name="ui_global_loadingSpeed" text="Loading Speed"/>
-		<text name="ui_global_objectSpacing" text="Object Spacing"/>
+		<text name="ui_global_loadingSpeed" text="Velocità di caricamento"/>
+		<text name="ui_global_objectSpacing" text="Spaziatura degli oggetti"/>
 		
 		<text name="ui_global_tooltip_showDebug" text="Mostra la visualizzazione completa del debug grafico per tutti i veicoli nel gioco"/>
 		<text name="ui_global_tooltip_highPriority" text="Applica alta priorità a tutti i tasti di scelta rapida UAL nel menu F1"/>
@@ -32,8 +32,8 @@
 		<text name="ui_global_tooltip_pricePerBale" text="Il prezzo addebitato per ogni balla caricata automaticamente"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Il prezzo addebitato per ogni pallet caricato automaticamente"/>
 		<text name="ui_global_tooltip_minLogLength" text="La lunghezza minima globale per i tronchi che verranno caricati automaticamente"/>
-		<text name="ui_global_tooltip_loadingSpeed" text="Time delay between loading each object (ms)"/>
-		<text name="ui_global_tooltip_objectSpacing" text="Additional spacing between loaded objects (m)"/>
+		<text name="ui_global_tooltip_loadingSpeed" text="Ritardo tra il caricamento di ciascun oggetto (ms)"/>
+		<text name="ui_global_tooltip_objectSpacing" text="Spaziatura aggiuntiva tra gli oggetti caricati (m)"/>
 
 		<!-- OPTIONS -->
 		<text name="ui_option_enableAutoload" text="Abilita Autoload"/>
