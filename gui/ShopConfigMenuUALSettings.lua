@@ -23,7 +23,7 @@ end
 function ShopConfigMenuUALSettings:setNewVehicle(vehicle)
 	self.vehicle = vehicle
 	local name = vehicle and ("  -  " .. vehicle:getFullName()) or ""
-	self.guiTitle:setText(g_i18n:getText("ui_config_settings_ual") .. name)
+	self.guiTitle:setText(g_i18n:getText("ui_config_settings_ual") .. tostring(name))
 	
 	self:initAreaListBoxes()
 	self:initConfigListBoxes()
@@ -308,7 +308,7 @@ function ShopConfigMenuUALSettings:onClickSelectedConfigs(id, control, direction
 	if self.useConfigIndexListBox and useConfigName then
 		local id = self.useConfigIndexListBox.state
 		local text = self.useConfigIndexListBox.texts[id]
-		if text ~= "-" then
+		if text and text ~= "-" then
 			selectedConfigs = selectedConfigs .. "|" .. text
 		else
 			UniversalAutoload.debugPrint("WARNING: useConfigIndex was not set", debugMenus)
@@ -402,7 +402,9 @@ function ShopConfigMenuUALSettings:onClickAreaMultiOption(id, control, direction
 			if newNumberAreas < numberAreas then
 				UniversalAutoload.debugPrint("REMOVE LOAD AREA #" .. numberAreas, debugMenus)
 				spec.loadingVolume:removeBoundingBox()
-				spec.loadArea[numberAreas] = nil
+				if spec.loadArea then
+					spec.loadArea[numberAreas] = nil
+				end
 			else
 				UniversalAutoload.debugPrint("ADD LOAD AREA #" .. newNumberAreas, debugMenus)
 				spec.loadingVolume:addBoundingBox()
@@ -424,7 +426,7 @@ function ShopConfigMenuUALSettings:onClickAreaMultiOption(id, control, direction
 		self:updateSettings()
 	end
 	
-	if control == self.lengthAxisDirectionListBox then
+	if control == self.lengthAxisDirectionListBox and spec.loadArea then
 		local i = self.selectedAreaListBox:getState()
 		if id == 1 then
 			if spec.loadArea[i] and spec.loadArea[i].lengthAxis then
@@ -434,7 +436,7 @@ function ShopConfigMenuUALSettings:onClickAreaMultiOption(id, control, direction
 			local axisMappings = self.lengthAxisDirectionListBox.axisMappings
 			for axis, index in pairs(axisMappings) do
 				if id == index and spec.loadArea[i] then
-					UniversalAutoload.debugPrint("SET LENGTH AXIS: " .. axis, debugMenus)
+					UniversalAutoload.debugPrint("SET LENGTH AXIS: " .. tostring(axis), debugMenus)
 					spec.loadArea[i].lengthAxis = axis
 				end
 			end

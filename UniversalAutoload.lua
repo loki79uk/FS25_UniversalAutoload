@@ -222,7 +222,7 @@ function UniversalAutoload:ualGetFullName(superFunc)
 end
 
 function UniversalAutoload.registerEventListeners(vehicleType)
-	UniversalAutoload.debugPrint("  Register vehicle type: " .. vehicleType.name)
+	UniversalAutoload.debugPrint("  Register vehicle type: " .. tostring(vehicleType.name))
 	SpecializationUtil.registerEventListener(vehicleType, "onLoad", UniversalAutoload)
 	SpecializationUtil.registerEventListener(vehicleType, "onPostLoad", UniversalAutoload)
 	
@@ -332,7 +332,7 @@ function UniversalAutoload:updateActionEventKeys()
 			local function registerActionEvent(id, event, callback, priority, visible)
 				local valid, actionEventId = self:addActionEvent(spec.actionEvents, actions[id], self, UniversalAutoload[callback],
 					triggerUp, triggerDown, triggerAlways, startActive, callbackState, customIconName, ignoreCollisions, reportAnyDeviceCollision)
-				UniversalAutoload.debugPrint("  " .. id .. ": "..tostring(valid), debugKeys)
+				UniversalAutoload.debugPrint("  " .. tostring(id) .. ": "..tostring(valid), debugKeys)
 				if valid == false then -- and self:getIsSelected()
 					local _, _, otherEvents = g_inputBinding:registerActionEvent(actions[id], self, UniversalAutoload[callback],
 						triggerUp, triggerDown, triggerAlways, startActive, callbackState, true, reportAnyDeviceCollision)
@@ -360,11 +360,11 @@ function UniversalAutoload:updateActionEventKeys()
 							spec.alreadyPrintedConflictingAction = spec.alreadyPrintedConflictingAction or {}
 							if not spec.alreadyPrintedConflictingAction[removedConflictingEvent] then
 								spec.alreadyPrintedConflictingAction[removedConflictingEvent] = true
-								print("UAL - key binding for " .. id .. " failed to register")
+								print("UAL - key binding for " .. tostring(id) .. " failed to register")
 								if valid then
-									print("removed conflicting action: " .. removedConflictingEvent)
+									print("removed conflicting action: " .. tostring(removedConflictingEvent))
 								else
-									print("COULD NOT REMOVE conflicting action: " .. removedConflictingEvent)
+									print("COULD NOT REMOVE conflicting action: " .. tostring(removedConflictingEvent))
 								end
 								print("*** Please re-bind one of these actions to prevent this message ***")
 							end
@@ -620,7 +620,7 @@ function UniversalAutoload:updateToggleLoadingActionEvent()
 			g_inputBinding:setActionEventText(spec.toggleCollectionModeEventId, autoCollectionModeText)
 			g_inputBinding:setActionEventActive(spec.toggleCollectionModeEventId, true)
 			g_inputBinding:setActionEventTextVisibility(spec.toggleCollectionModeEventId, true)
-			UniversalAutoload.debugPrint("   >> " .. autoCollectionModeText, debugKeys)
+			UniversalAutoload.debugPrint("   >> " .. tostring(autoCollectionModeText), debugKeys)
 		else
 			g_inputBinding:setActionEventActive(spec.toggleCollectionModeEventId, false)
 		end
@@ -631,7 +631,7 @@ function UniversalAutoload:updateToggleLoadingActionEvent()
 		if spec.isLoading and not spec.autoCollectionMode then
 			local stopLoadingText = g_i18n:getText("universalAutoload_stopLoading")
 			g_inputBinding:setActionEventText(spec.toggleLoadingActionEventId, stopLoadingText)
-			UniversalAutoload.debugPrint("   >> " .. stopLoadingText, debugKeys)
+			UniversalAutoload.debugPrint("   >> " .. tostring(stopLoadingText), debugKeys)
 		else
 			if UniversalAutoload.getIsLoadingKeyAllowed(self) == true then
 				local startLoadingText = g_i18n:getText("universalAutoload_startLoading")
@@ -639,7 +639,7 @@ function UniversalAutoload:updateToggleLoadingActionEvent()
 				g_inputBinding:setActionEventText(spec.toggleLoadingActionEventId, startLoadingText)
 				g_inputBinding:setActionEventActive(spec.toggleLoadingActionEventId, true)
 				g_inputBinding:setActionEventTextVisibility(spec.toggleLoadingActionEventId, true)
-				UniversalAutoload.debugPrint("   >> " .. startLoadingText, debugKeys)
+				UniversalAutoload.debugPrint("   >> " .. tostring(startLoadingText), debugKeys)
 			else
 				g_inputBinding:setActionEventActive(spec.toggleLoadingActionEventId, false)
 			end
@@ -1174,7 +1174,7 @@ function UniversalAutoload:startUnloading(force, noEventSend)
 
 			if spec.loadedObjects then
 				if force and spec.forceUnloadPosition then
-					UniversalAutoload.debugPrint("USING UNLOADING POSITION: " .. spec.forceUnloadPosition, debugLoading)
+					UniversalAutoload.debugPrint("USING UNLOADING POSITION: " .. tostring(spec.forceUnloadPosition), debugLoading)
 					UniversalAutoload.buildObjectsToUnloadTable(self, spec.forceUnloadPosition)
 				else
 					UniversalAutoload.buildObjectsToUnloadTable(self)
@@ -1727,7 +1727,7 @@ function UniversalAutoload:onLoad(savegame)
 	-- UniversalAutoload.debugPrint("SPEC")
 	-- DebugUtil.printTableRecursively(spec, "--", 0, 1)
 
-	UniversalAutoload.debugPrint("onLoad FINISH: " .. tostring(netGetTime()))
+	UniversalAutoload.debugPrint("onLoad FINISH: " .. tostring(netGetTime()), debugVehicles)
 end
 
 -- "ON POST LOAD" CALLED AFTER VEHICLE IS LOADED (not when buying)
@@ -2401,7 +2401,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 				if debugKeys or debugVehicles then
 					if not spec.counter then spec.counter = 0 end
 					spec.counter = spec.counter + 1
-					UniversalAutoload.debugPrint( self:getFullName() .. " - RefreshActionEvents " .. spec.counter)
+					UniversalAutoload.debugPrint( self:getFullName() .. " - RefreshActionEvents " .. tostring(spec.counter))
 				end
 
 				UniversalAutoload.debugPrint("*** clearActionEvents ***", debugKeys)
@@ -2612,7 +2612,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 						if spec.palletsToSpawn and #spec.palletsToSpawn>1 then
 							for i, name in pairs(spec.palletsToSpawn) do
 								if spec.spawningPallet == name then
-									UniversalAutoload.debugPrint("removing: " .. spec.spawningPallet, debugConsole)
+									UniversalAutoload.debugPrint("removing: " .. tostring(spec.spawningPallet), debugConsole)
 									table.remove(spec.palletsToSpawn, i)
 									spec.trailerIsFull = false
 									break
@@ -2669,7 +2669,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 					if spec.testDelayTime > 1250 or spec.testStage == 1 then
 						spec.testDelayTime = 0
 						
-						print("TEST STAGE: " .. spec.testStage )
+						print("TEST STAGE: " .. tostring(spec.testStage) )
 						if spec.testStage == 1 then
 							UniversalAutoloadManager.originalMode = spec.useHorizontalLoading
 							spec.useHorizontalLoading = false
@@ -2805,7 +2805,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 								local shorterLog = nextObject~=nil and lastObject.isSplitShape and nextObject.isSplitShape and nextObject.sizeY <= lastObject.sizeY
 								
 								if lastObjectType == nextObjectType and not shorterLog then
-									UniversalAutoload.debugPrint("DELETE SAME OBJECT TYPE: "..lastObjectType.name, debugLoading)
+									UniversalAutoload.debugPrint("DELETE SAME OBJECT TYPE: "..tostring(lastObjectType.name), debugLoading)
 									table.remove(spec.sortedObjectsToLoad, i)
 								else
 									i = i - 1
@@ -3237,14 +3237,14 @@ function UniversalAutoload:countActivePallets()
 	if (spec.validLoadCount ~= validLoadCount) or (spec.validUnloadCount ~= validUnloadCount) then
 		local refreshMenuText = false
 		if spec.validLoadCount ~= validLoadCount then
-			UniversalAutoload.debugPrint("validLoadCount: "..spec.validLoadCount.."/"..validLoadCount, debugKeys)
+			UniversalAutoload.debugPrint("validLoadCount: "..tostring(spec.validLoadCount).."/"..validLoadCount, debugKeys)
 			if spec.validLoadCount==0 or validLoadCount==0 then
 				refreshMenuText = true
 			end
 			spec.validLoadCount = validLoadCount
 		end
 		if spec.validUnloadCount ~= validUnloadCount then
-			UniversalAutoload.debugPrint("validUnloadCount: "..spec.validUnloadCount.."/"..validUnloadCount, debugKeys)
+			UniversalAutoload.debugPrint("validUnloadCount: "..tostring(spec.validUnloadCount).."/"..validUnloadCount, debugKeys)
 			if spec.validUnloadCount==0 or validUnloadCount==0 then
 				refreshMenuText = true
 			end
@@ -4078,7 +4078,9 @@ function UniversalAutoload:getIsValidObject(object)
 		end
 	end
 	
-	UniversalAutoload.debugPrint("Invalid Object - " .. object.i3dFilename, tostring(object.typeName), debugPallets)
+	UniversalAutoload.debugPrint("UAL Invalid Object:", debugPallets)
+	UniversalAutoload.debugPrint("   i3d - " .. tostring(object.i3dFilename), debugPallets)
+	UniversalAutoload.debugPrint("  type - " .. tostring(object.typeName), debugPallets)
 	return false
 end
 
@@ -4426,7 +4428,7 @@ function UniversalAutoload:testLocation(loadPlace)
 		local collisionMask = flag.value
 		local hitCount = overlapBox(x+dx, y+dy, z+dz, rx, ry, rz, sizeX, sizeY, sizeZ, "ualTestLocation_Callback", self, collisionMask, true, true, true, true)
 		
-		UniversalAutoload.debugPrint("  " .. flag.name .. " = " .. tostring(spec.foundObject):upper() .. " (" .. hitCount .. ")")
+		UniversalAutoload.debugPrint("  " .. tostring(flag.name) .. " = " .. tostring(spec.foundObject):upper() .. " (" .. tostring(hitCount) .. ")")
 		
 		if spec.foundObject then
 			spec.foundAnyObject = true
@@ -4456,7 +4458,7 @@ function UniversalAutoload:ualTestLocation_Callback(hitObjectId, x, y, z, distan
 				if object.isSplitShape then
 					UniversalAutoload.debugPrint("  FOUND SPLIT SHAPE")
 				else
-					UniversalAutoload.debugPrint("  FOUND: " .. object.i3dFilename)
+					UniversalAutoload.debugPrint("  FOUND: " .. tostring(object.i3dFilename))
 				end
 			end
 			spec.foundObject = true
@@ -4539,7 +4541,7 @@ end
 function UniversalAutoload.getObjectPositionNode( object )
 	local node = UniversalAutoload.getObjectRootNode(object)
 	if node == nil then
-		UniversalAutoload.debugPrint("Object Root Node IS NIL - " .. object.i3dFilename, debugPallets)
+		UniversalAutoload.debugPrint("Object Root Node IS NIL - " .. tostring(object.i3dFilename), debugPallets)
 		return nil
 	end
 	if object.isSplitShape and object.positionNodeId then
@@ -5094,7 +5096,7 @@ function UniversalAutoload:createLog(length, treeType, growthState)
 	end
 	local treeTypeDesc = g_treePlantManager:getTreeTypeDescFromName(treeType)
 	if treeTypeDesc == nil then
-		print("Invalid tree type: " .. treeType)
+		print("Invalid tree type: " .. tostring(treeType))
 		return
 	end
 	local growthState = tonumber(growthState) or #treeTypeDesc.stages
@@ -5396,44 +5398,44 @@ function UniversalAutoload.getContainerType(object)
 				offset = boundingBox:getOffset()
 				
 				if not size or size.x==0 or size.y==0 or size.z==0 then
-					UniversalAutoload.debugPrint("*** UNIVERSAL AUTOLOAD - ZERO SIZE OBJECT: ".. name.." ***")
+					UniversalAutoload.debugPrint("*** UNIVERSAL AUTOLOAD - ZERO SIZE OBJECT: ".. tostring(name).." ***")
 					-- UniversalAutoload.INVALID_OBJECTS[name] = true
 					return nil
 				else
 					if debugPallets then
-						UniversalAutoload.debugPrint("*** UNIVERSAL AUTOLOAD - FOUND NEW OBJECT TYPE: ".. name.." ***")
+						UniversalAutoload.debugPrint("*** UNIVERSAL AUTOLOAD - FOUND NEW OBJECT TYPE: ".. tostring(name).." ***")
 						if UniversalAutoload.OBJECT_FILL_LEVEL[object] then
-							UniversalAutoload.debugPrint("  PARTIAL FILL LEVEL: " .. UniversalAutoload.OBJECT_FILL_LEVEL[object])
+							UniversalAutoload.debugPrint("  PARTIAL FILL LEVEL: " .. tostring(UniversalAutoload.OBJECT_FILL_LEVEL[object]))
 						end
 						if isPallet then
 							UniversalAutoload.debugPrint("Pallet")
-							UniversalAutoload.debugPrint("  width: " .. object.size.width)
-							UniversalAutoload.debugPrint("  height: " .. object.size.height)
-							UniversalAutoload.debugPrint("  length: " .. object.size.length)
+							UniversalAutoload.debugPrint("  width: " .. tostring(object.size.width))
+							UniversalAutoload.debugPrint("  height: " .. tostring(object.size.height))
+							UniversalAutoload.debugPrint("  length: " .. tostring(object.size.length))
 						elseif isBale then
 							if isRoundbale then
 								UniversalAutoload.debugPrint("Round Bale")
-								UniversalAutoload.debugPrint("  width: " .. object.width)
-								UniversalAutoload.debugPrint("  height: " .. object.diameter)
-								UniversalAutoload.debugPrint("  length: " .. object.diameter)
+								UniversalAutoload.debugPrint("  width: " .. tostring(object.width))
+								UniversalAutoload.debugPrint("  height: " .. tostring(object.diameter))
+								UniversalAutoload.debugPrint("  length: " .. tostring(object.diameter))
 							else
 								UniversalAutoload.debugPrint("Square Bale")
-								UniversalAutoload.debugPrint("  width: " .. object.width)
-								UniversalAutoload.debugPrint("  height: " .. object.height)
-								UniversalAutoload.debugPrint("  length: " .. object.length)
+								UniversalAutoload.debugPrint("  width: " .. tostring(object.width))
+								UniversalAutoload.debugPrint("  height: " .. tostring(object.height))
+								UniversalAutoload.debugPrint("  length: " .. tostring(object.length))
 							end
 						end
-						UniversalAutoload.debugPrint("  size X: " .. size.x)
-						UniversalAutoload.debugPrint("  size Y: " .. size.y)
-						UniversalAutoload.debugPrint("  size Z: " .. size.z)
-						UniversalAutoload.debugPrint("  offset X: " .. offset.x)
-						UniversalAutoload.debugPrint("  offset Y: " .. offset.y)
-						UniversalAutoload.debugPrint("  offset Z: " .. offset.z)
+						UniversalAutoload.debugPrint("  size X: " .. tostring(size.x))
+						UniversalAutoload.debugPrint("  size Y: " .. tostring(size.y))
+						UniversalAutoload.debugPrint("  size Z: " .. tostring(size.z))
+						UniversalAutoload.debugPrint("  offset X: " .. tostring(offset.x))
+						UniversalAutoload.debugPrint("  offset Y: " .. tostring(offset.y))
+						UniversalAutoload.debugPrint("  offset Z: " .. tostring(offset.z))
 					end
 				end
 
 			else
-				-- UniversalAutoload.debugPrint("*** UNIVERSAL AUTOLOAD - OBJECT NOT INITIALISED: ".. name.." ***")
+				-- UniversalAutoload.debugPrint("*** UNIVERSAL AUTOLOAD - OBJECT NOT INITIALISED: ".. tostring(name) .." ***")
 				-- if object.size then
 					-- size = {x=object.size.width, y=object.size.height, z=object.size.length}
 				-- elseif isBale then
@@ -5521,7 +5523,7 @@ function UniversalAutoload.getContainerType(object)
 			end
 			
 		else
-			-- UniversalAutoload.debugPrint("*** UNIVERSAL AUTOLOAD - FOUND NEW OBJECT TYPE: ".. name.." ***")
+			-- UniversalAutoload.debugPrint("*** UNIVERSAL AUTOLOAD - FOUND NEW OBJECT TYPE: ".. tostring(name) .." ***")
 			-- UniversalAutoload.debugPrint("...new object type was not valid")
 			UniversalAutoload.INVALID_OBJECTS[name] = true
 		end
@@ -5600,7 +5602,7 @@ end
 function UniversalAutoload:getSelectedContainerText()
 	local selectedContainerType = UniversalAutoload.getSelectedContainerType(self)
 	
-	return g_i18n:getText("universalAutoload_"..selectedContainerType)
+	return g_i18n:getText("universalAutoload_" .. tostring(selectedContainerType))
 end
 --
 function UniversalAutoload:getSelectedMaterialType()
