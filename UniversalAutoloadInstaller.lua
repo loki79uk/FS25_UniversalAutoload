@@ -123,6 +123,7 @@ UniversalAutoload.GLOBAL_DEFAULTS = {
 	{id="pricePerBale", default=0, valueType="FLOAT", key="#pricePerBale"}, --The price charged for each auto-loaded bale (default is zero)
 	{id="pricePerPallet", default=0, valueType="FLOAT", key="#pricePerPallet"}, --The price charged for each auto-loaded pallet (default is zero)
 	{id="minLogLength", default=0, valueType="FLOAT", key="#minLogLength"}, --The global minimum length for logs that will be autoloaded (default is zero)
+	{id="objectSpacing", default=0, valueType="FLOAT", key="#objectSpacing"}, --Additional spacing between loaded objects (m)
 }
 
 UniversalAutoload.OPTIONS_DEFAULTS = {
@@ -2290,6 +2291,7 @@ Player.readStream = Utils.overwrittenFunction(Player.readStream,
 		UniversalAutoload.pricePerLog = streamReadInt32(streamId)
 		UniversalAutoload.pricePerBale = streamReadInt32(streamId)
 		UniversalAutoload.pricePerPallet = streamReadInt32(streamId)
+		UniversalAutoload.objectSpacing = streamReadInt32(streamId)
 	end
 )
 Player.writeStream = Utils.overwrittenFunction(Player.writeStream,
@@ -2300,6 +2302,7 @@ Player.writeStream = Utils.overwrittenFunction(Player.writeStream,
 		streamWriteInt32(streamId, UniversalAutoload.pricePerLog or 0)
 		streamWriteInt32(streamId, UniversalAutoload.pricePerBale or 0)
 		streamWriteInt32(streamId, UniversalAutoload.pricePerPallet or 0)
+		streamWriteInt32(streamId, UniversalAutoload.objectSpacing or 0)
 	end
 )
 

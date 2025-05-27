@@ -44,6 +44,14 @@
 						</BinaryOption>
 						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_global_showDebug"/>
 					</Bitmap>
+
+					<!-- OBJECT SPACING -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickMultiOption" id="objectSpacingListBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_global_tooltip_objectSpacing"/>
+						</MultiTextOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_global_objectSpacing"/>
+					</Bitmap>
 					
 					<!-- PRICE FOR LOADING -->					
 					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">

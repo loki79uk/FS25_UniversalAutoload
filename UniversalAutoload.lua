@@ -23,7 +23,6 @@ UniversalAutoload.OBJECTS_LOOKUP = {}
 
 UniversalAutoload.ALL = "ALL"
 UniversalAutoload.DELTA = 0.005
-UniversalAutoload.SPACING = 0.0
 UniversalAutoload.BIGBAG_SPACING = 0.1
 UniversalAutoload.MAX_STACK = 5
 UniversalAutoload.LOG_SPACE = 0.25
@@ -5474,9 +5473,9 @@ function UniversalAutoload.getContainerType(object)
 			newType.name = name
 			newType.type = containerType
 			newType.containerIndex = containerIndex
-			newType.sizeX = size.x + UniversalAutoload.SPACING
-			newType.sizeY = size.y + UniversalAutoload.SPACING
-			newType.sizeZ = size.z + UniversalAutoload.SPACING
+			newType.sizeX = size.x
+			newType.sizeY = size.y
+			newType.sizeZ = size.z
 			newType.offset = offset or {x=0, y=0, z=0}
 			newType.isBale = isBale
 			newType.isRoundbale = isRoundbale
@@ -5497,8 +5496,8 @@ function UniversalAutoload.getContainerType(object)
 			if isRoundbale == true then
 				-- UniversalAutoload.debugPrint("Round Bale flipYZ")
 				newType.flipYZ = true
-				newType.sizeY = size.z + UniversalAutoload.SPACING
-				newType.sizeZ = size.y + UniversalAutoload.SPACING
+				newType.sizeY = size.z
+				newType.sizeZ = size.y
 			end
 			
 			if isPallet then
@@ -5548,7 +5547,7 @@ function UniversalAutoload.getContainerTypeDimensions(containerType, doFlip)
 		if doFlip and containerType.flipYZ then
 			l, h = containerType.sizeY, containerType.sizeZ
 		end
-		return w+UniversalAutoload.SPACING, h+UniversalAutoload.SPACING, l+UniversalAutoload.SPACING
+		return w+UniversalAutoload.objectSpacing, h+UniversalAutoload.objectSpacing, l+UniversalAutoload.objectSpacing
 	end
 end
 --

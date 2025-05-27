@@ -89,6 +89,7 @@ function GlobalSettingsMenuUALSettings:onCreate()
 	
 	if g_currentMission.missionDynamicInfo.isMultiplayer then
 		self.disableAutoStrapCheckBox:setDisabled(true)
+		self.objectSpacingListBox:setDisabled(true)
 		self.pricePerLogTextInput:setDisabled(true)
 		self.pricePerBaleTextInput:setDisabled(true)
 		self.pricePerPalletTextInput:setDisabled(true)
@@ -111,6 +112,24 @@ function GlobalSettingsMenuUALSettings:onCreate()
 	self.pricePerBaleTextInput.getIsUnicodeAllowed = getIsUnicodeAllowed
 	self.pricePerPalletTextInput.getIsUnicodeAllowed = getIsUnicodeAllowed
 
+	self.objectSpacingListBox.texts = {
+		'0.000',
+		'0.025',
+		'0.050',
+		'0.075',
+		'0.100',
+		'0.125'
+	}
+	self.objectSpacingListBox.values = {
+		0.000,
+		0.025,
+		0.050,
+		0.075,
+		0.100,
+		0.125
+	}
+	self.objectSpacingListBox:setState(1, true)
+
 end
 
 function GlobalSettingsMenuUALSettings:onClickBinaryOption(id, control, direction)
@@ -129,6 +148,19 @@ function GlobalSettingsMenuUALSettings:onClickBinaryOption(id, control, directio
 
 end
 
+function GlobalSettingsMenuUALSettings:onClickMultiOption(id, control, direction)
+	-- UniversalAutoload.debugPrint("CLICKED " .. tostring(control.id) .. " = " .. tostring(not direction) .. " (" .. tostring(id) .. ")", debugMenus)
+		
+	local spec = self.vehicle and self.vehicle.spec_universalAutoload
+	if not spec then
+		return
+	end
+	
+	if control == self.objectSpacingListBox then
+		UniversalAutoload.objectSpacing = control.values[id]
+	end
+	
+end
 
 function GlobalSettingsMenuUALSettings:onClickTextInputOption(id)
 	UniversalAutoload.debugPrint("CLICKED GLOBAL VALUE " .. tostring(id) .. " = " .. tostring(id.text), debugMenus)
