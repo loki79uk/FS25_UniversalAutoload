@@ -1323,17 +1323,16 @@ function UniversalAutoload:updateVelocityCorrection()
 		return
 	end
 	
-	local x0,y0,z0 = UniversalAutoload.localToWorld(self.rootNode)
-	local nxx, nxy, nxz = UniversalAutoload.localDirectionToWorld(self.rootNode, 1, 0, 0)
-	local nyx, nyy, nyz = UniversalAutoload.localDirectionToWorld(self.rootNode, 0, 1, 0)
-	local nzx, nzy, nzz = UniversalAutoload.localDirectionToWorld(self.rootNode, 0, 0, 1)
-
 	local dt = g_currentDt * 0.001
+	local x0,y0,z0 = UniversalAutoload.localToWorld(self.rootNode)
 	local vx, vy, vz = getVelocityAtLocalPos(self.rootNode, 0, 0, 0)
 	local dx, dy, dz = (vx or 0)*dt, (vy or 0)*dt, (vz or 0)*dt
 	spec.velocityCorrection = { dx, dy, dz }
 
 	if not spec.autoCollectionMode then
+		local nxx, nxy, nxz = UniversalAutoload.localDirectionToWorld(self.rootNode, 1, 0, 0)
+		local nyx, nyy, nyz = UniversalAutoload.localDirectionToWorld(self.rootNode, 0, 1, 0)
+		local nzx, nzy, nzz = UniversalAutoload.localDirectionToWorld(self.rootNode, 0, 0, 1)
 		local dX = dx * nxx + dy * nxy + dz * nxz
 		local dY = dx * nyx + dy * nyy + dz * nyz
 		local dZ = dx * nzx + dy * nzy + dz * nzz
@@ -4574,6 +4573,8 @@ function UniversalAutoload.unlinkObject( object )
 		link(getRootNode(), node)
 		setWorldTranslation(node, x, y, z)
 		setWorldRotation(node, rx, ry, rz)
+	else
+		UniversalAutoload.debugPrint("unlinkObject - node was " .. tostring(node))
 	end
 end
 --
