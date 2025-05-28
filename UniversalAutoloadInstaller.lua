@@ -54,16 +54,20 @@ local brokenTensionBeltObjects = {}
 TensionBelts.lockTensionBeltObject = Utils.appendedFunction(TensionBelts.lockTensionBeltObject,
 function(self, objectId, objectsToJointTable, isDynamic, jointNode, object)
 	if g_currentMission.missionDynamicInfo.isMultiplayer then
-		-- print("lockTensionBeltObject: " .. tostring(objectId))
-		brokenTensionBeltObjects[objectId] = nil
+		if object and (object.lastSpeedReal or object.rootVehicle) then
+			-- print("lockTensionBeltObject: " .. tostring(objectId))
+			brokenTensionBeltObjects[objectId] = nil
+		end
 	end
 end)
 	
 TensionBelts.freeTensionBeltObject = Utils.appendedFunction(TensionBelts.freeTensionBeltObject,
 function(self, objectId, objectsToJointTable, isDynamic, object)
 	if g_currentMission.missionDynamicInfo.isMultiplayer then
-		-- print("freeTensionBeltObject: " .. tostring(objectId))
-		brokenTensionBeltObjects[objectId] = object
+		if object and (object.lastSpeedReal or object.rootVehicle) then
+			-- print("freeTensionBeltObject: " .. tostring(objectId))
+			brokenTensionBeltObjects[objectId] = object
+		end
 	end
 end)
 
@@ -345,15 +349,28 @@ function UniversalAutoloadManager:update(dt)
 	end
 	
 	for id, object in pairs(brokenTensionBeltObjects) do
-		if object and object.lastSpeedReal and object.lastSpeedReal < 0.0005 then
-			-- print("fixTensionBeltObject " .. id)
-			brokenTensionBeltObjects[id] = nil
-			UniversalAutoload.unlinkObject(object)
-			if  g_currentMission:getIsServer() and object.raiseActive ~= nil then
-				object:raiseActive()
-				object.networkTimeInterpolator:reset()
-				UniversalAutoload.raiseObjectDirtyFlags(object)
+		if object and entityExists(id) then
+			if object.lastSpeedReal then
+				if object.lastSpeedReal < 0.0005 then
+					-- print("fixTensionBeltObject " .. id)
+					brokenTensionBeltObjects[id] = nil
+					UniversalAutoload.unlinkObject(object)
+					if  g_currentMission:getIsServer() and object.raiseActive ~= nil then
+						object:raiseActive()
+						object.networkTimeInterpolator:reset()
+						UniversalAutoload.raiseObjectDirtyFlags(object)
+					end
+				end
+			else
+				print("TensionBeltObject is not a pallet: " .. id)
+				brokenTensionBeltObjects[id] = nil
+				print("-------------------------------------------")
+				DebugUtil.printTableRecursively(object, "--", 0, 1)
+				print("-------------------------------------------")
 			end
+		else
+			print("unknownTensionBeltObject " .. id)
+			brokenTensionBeltObjects[id] = nil
 		end
 	end
 	
