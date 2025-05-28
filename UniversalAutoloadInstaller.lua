@@ -345,7 +345,7 @@ function UniversalAutoloadManager:update(dt)
 	end
 	
 	for id, object in pairs(brokenTensionBeltObjects) do
-		if object and object.lastSpeedReal < 0.0005 then
+		if object and object.lastSpeedReal and object.lastSpeedReal < 0.0005 then
 			-- print("fixTensionBeltObject " .. id)
 			brokenTensionBeltObjects[id] = nil
 			UniversalAutoload.unlinkObject(object)
