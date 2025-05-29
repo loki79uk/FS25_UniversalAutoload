@@ -53,7 +53,7 @@ end)
 local brokenTensionBeltObjects = {}
 TensionBelts.lockTensionBeltObject = Utils.appendedFunction(TensionBelts.lockTensionBeltObject,
 function(self, objectId, objectsToJointTable, isDynamic, jointNode, object)
-	if g_currentMission.missionDynamicInfo.isMultiplayer then
+	if g_currentMission.missionDynamicInfo.isMultiplayer and g_gameVersionNotification == "1.9.0.1" then
 		if object and (object.lastSpeedReal or object.rootVehicle) then
 			-- print("lockTensionBeltObject: " .. tostring(objectId))
 			brokenTensionBeltObjects[objectId] = nil
@@ -63,7 +63,7 @@ end)
 	
 TensionBelts.freeTensionBeltObject = Utils.appendedFunction(TensionBelts.freeTensionBeltObject,
 function(self, objectId, objectsToJointTable, isDynamic, object)
-	if g_currentMission.missionDynamicInfo.isMultiplayer then
+	if g_currentMission.missionDynamicInfo.isMultiplayer and g_gameVersionNotification == "1.9.0.1" then
 		if object and (object.lastSpeedReal or object.rootVehicle) then
 			-- print("freeTensionBeltObject: " .. tostring(objectId))
 			brokenTensionBeltObjects[objectId] = object
@@ -348,7 +348,7 @@ function UniversalAutoloadManager:update(dt)
 		end
 	end
 	
-	for id, object in pairs(brokenTensionBeltObjects) do
+	for id, object in pairs(brokenTensionBeltObjects or {}) do
 		if object and entityExists(id) then
 			if object.lastSpeedReal then
 				if object.lastSpeedReal < 0.0005 then
@@ -362,14 +362,11 @@ function UniversalAutoloadManager:update(dt)
 					end
 				end
 			else
-				print("TensionBeltObject is not a pallet: " .. id)
+				-- print("TensionBeltObject is NOT A PALLET: " .. id)
 				brokenTensionBeltObjects[id] = nil
-				print("-------------------------------------------")
-				DebugUtil.printTableRecursively(object, "--", 0, 1)
-				print("-------------------------------------------")
 			end
 		else
-			print("unknownTensionBeltObject " .. id)
+			-- print("TensionBeltObject is UNKNOWN: " .. id)
 			brokenTensionBeltObjects[id] = nil
 		end
 	end
