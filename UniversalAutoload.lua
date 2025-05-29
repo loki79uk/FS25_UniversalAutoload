@@ -130,6 +130,7 @@ function UniversalAutoload.registerFunctions(vehicleType)
 	SpecializationUtil.registerFunction(vehicleType, "ualGetIsFilled", UniversalAutoload.ualGetIsFilled)
 	SpecializationUtil.registerFunction(vehicleType, "ualGetIsCovered", UniversalAutoload.ualGetIsCovered)
 	SpecializationUtil.registerFunction(vehicleType, "ualGetIsFolding", UniversalAutoload.ualGetIsFolding)
+	SpecializationUtil.registerFunction(vehicleType, "ualGetIsAttaching", UniversalAutoload.ualGetIsAttaching)
 	SpecializationUtil.registerFunction(vehicleType, "ualOnDeleteVehicle_Callback", UniversalAutoload.ualOnDeleteVehicle_Callback)
 	SpecializationUtil.registerFunction(vehicleType, "ualOnDeleteLoadedObject_Callback", UniversalAutoload.ualOnDeleteLoadedObject_Callback)
 	SpecializationUtil.registerFunction(vehicleType, "ualOnDeleteAvailableObject_Callback", UniversalAutoload.ualOnDeleteAvailableObject_Callback)
@@ -240,6 +241,7 @@ function UniversalAutoload.registerEventListeners(vehicleType)
 	SpecializationUtil.registerEventListener(vehicleType, "onDeactivate", UniversalAutoload)
 	SpecializationUtil.registerEventListener(vehicleType, "onFoldStateChanged", UniversalAutoload)
 	SpecializationUtil.registerEventListener(vehicleType, "onMovingToolChanged", UniversalAutoload)
+	SpecializationUtil.registerEventListener(vehicleType, "onPostAttach", UniversalAutoload)
 
 	--- Courseplay event listeners.
 	SpecializationUtil.registerEventListener(vehicleType, "onAIImplementStart", UniversalAutoload)
@@ -267,6 +269,7 @@ function UniversalAutoload.removeEventListeners(vehicleType)
 	SpecializationUtil.removeEventListener(vehicleType, "onDeactivate", UniversalAutoload)
 	SpecializationUtil.removeEventListener(vehicleType, "onFoldStateChanged", UniversalAutoload)
 	SpecializationUtil.removeEventListener(vehicleType, "onMovingToolChanged", UniversalAutoload)
+	SpecializationUtil.removeEventListener(vehicleType, "onPostAttach", UniversalAutoload)
 	
 	SpecializationUtil.removeEventListener(vehicleType, "onAIImplementStart", UniversalAutoload)
 	SpecializationUtil.removeEventListener(vehicleType, "onAIImplementEnd", UniversalAutoload)
@@ -1923,6 +1926,20 @@ function UniversalAutoload:onDelete()
 	end
 end
 
+function UniversalAutoload:onPostAttach(attacherVehicle, inputJointDescIndex, jointDescIndex, loadFromSavegame)
+	-- UniversalAutoload.debugPrint("UniversalAutoload - onPostAttach")
+	local spec = self.spec_universalAutoload
+	if spec==nil or not spec.isAutoloadAvailable or spec.autoloadDisabled then
+		UniversalAutoload.debugPrint(self:getFullName() .. ": UAL DISABLED - onPostAttach", debugVehicles)
+		return
+	end
+	
+	if self.isServer then
+		-- UniversalAutoload.debugPrint("onPostAttach: "..self:getFullName())
+		spec.attachAnimationStarted = true
+		UniversalAutoload.updateActionEventText(self)
+	end
+end
 
 -- SET FOLDING STATE FLAG ON FOLDING STATE CHANGE
 function UniversalAutoload:onFoldStateChanged(direction, moveToMiddle)
@@ -2126,6 +2143,19 @@ function UniversalAutoload:ualGetIsFolding()
 	end
 
 	return isFolding
+end
+--
+function UniversalAutoload:ualGetIsAttaching()
+
+	local isAttaching = false
+	if self.spec_attachable and not isAttaching then
+		for _, animation in pairs(self.spec_attachable.supportAnimations or {}) do
+			if self:getIsAnimationPlaying(animation.animationName) then
+				isAttaching = true
+			end
+		end
+	end
+	return isAttaching
 end
 --
 function UniversalAutoload:ualGetIsCovered()
@@ -2459,6 +2489,15 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 		
 		-- CALCULATE AND APPLY VELOCITY CORRECTION
 		UniversalAutoload.updateVelocityCorrection(self)
+		
+		-- DETECT WHEN ATTACHING STOPS IF IT WAS STARTED
+		if spec.attachAnimationStarted then
+			if not self:ualGetIsAttaching() then
+				-- UniversalAutoload.debugPrint("*** ATTACHING COMPLETE ***")
+				spec.attachAnimationStarted = false
+				UniversalAutoload.updateActionEventText(self)
+			end
+		end
 
 		-- DETECT WHEN FOLDING STOPS IF IT WAS STARTED
 		if spec.foldAnimationStarted then
@@ -4137,6 +4176,10 @@ function UniversalAutoload:getIsLoadingVehicleAllowed(triggerId)
 	
 	if self:ualGetIsFilled() then
 		-- UniversalAutoload.debugPrint("ualGetIsFilled")
+		return false
+	end
+	if self:ualGetIsAttaching() then
+		-- UniversalAutoload.debugPrint("ualGetIsAttaching")
 		return false
 	end
 	if spec.noLoadingIfFolded and (self:ualGetIsFolding() or not self:getIsUnfolded()) then
