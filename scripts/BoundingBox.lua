@@ -279,6 +279,9 @@ function BoundingBox:evaluate(minSize)
 		offset.x = (self.limits.min_x + self.limits.max_x) / 2
 		offset.y = (self.limits.min_y + self.limits.max_y) / 2
 		offset.z = (self.limits.min_z + self.limits.max_z) / 2
+		offset.x = math.abs(offset.x) > UniversalAutoload.DELTA and offset.x or 0
+		offset.y = math.abs(offset.y) > UniversalAutoload.DELTA and offset.y or 0
+		offset.z = math.abs(offset.z) > UniversalAutoload.DELTA and offset.z or 0
 		return true
 	end
 end

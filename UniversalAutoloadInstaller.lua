@@ -1266,6 +1266,11 @@ function UniversalAutoloadManager:keyEvent(unicode, sym, modifier, isDown)
 			
 		end
 	end
+	
+	if sym == Input['KEY_tab'] and UniversalAutoloadManager.pauseOnNextStep then
+		UniversalAutoloadManager.pauseOnNextStep = nil
+		return
+	end
 
 end
 

@@ -50,6 +50,36 @@ function LoadingVolume:getVerticalAxis()
 
 		local _, p = self.boundingBox:getCubeFaces()
 		local ux, uy, uz, length = LoadingVolume.getNormalisedVector(p[3], p[4])
+
+		if self.vehicle and self.vehicle.spec_tensionBelts then
+			local linkNode = self.vehicle.spec_tensionBelts.linkNode
+			local linkNodeRotation = self.vehicle.spec_tensionBelts.linkNodeRotation or {0, 0, 0}
+			-- print("linkNode:", linkNode, unpack(linkNodeRotation))
+			if math.abs(linkNodeRotation[1]) > UniversalAutoload.DELTA then
+				local angle = linkNodeRotation[1]
+				local cosA = math.cos(angle)
+				local sinA = math.sin(angle)
+				local ry = uy * cosA - uz * sinA
+				local rz = uy * sinA + uz * cosA
+				ux, uy, uz = ux, ry, rz
+			end
+			if math.abs(linkNodeRotation[2]) > UniversalAutoload.DELTA then
+				local angle = linkNodeRotation[2]
+				local cosA = math.cos(angle)
+				local sinA = math.sin(angle)
+				local rx = ux * cosA + uz * sinA
+				local rz = -ux * sinA + uz * cosA
+				ux, uy, uz = rx, uy, rz
+			end
+			if math.abs(linkNodeRotation[3]) > UniversalAutoload.DELTA then
+				local angle = linkNodeRotation[3]
+				local cosA = math.cos(angle)
+				local sinA = math.sin(angle)
+				local rx = ux * cosA - uy * sinA
+				local ry = ux * sinA + uy * cosA
+				ux, uy, uz = rx, ry, uz
+			end
+		end
 		
 		return {ux, uy, uz}, length
 	end
