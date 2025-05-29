@@ -50,6 +50,21 @@ function GlobalSettingsMenuUALSettings:updateSettings()
 			control:setState(value or 1, true)
 		end
 	end
+	local function setClosestValue(controlId, value)
+		local control = self[controlId]
+		if control then
+			local index = 1
+			local initialdiff = math.huge
+			for i, v in pairs(control.values or {}) do
+				local currentdiff = math.abs(v - value)
+				if currentdiff < initialdiff then
+					initialdiff = currentdiff
+					index = i
+				end 
+			end
+			control:setState(index, true)
+		end
+	end
 	
 	UniversalAutoload.debugPrint("GlobalSettingsMenu: SET GLOBAL", debugMenus)
 	UniversalAutoload.debugPrint(" showDebug: " .. tostring(UniversalAutoload.showDebug), debugMenus)
@@ -63,6 +78,9 @@ function GlobalSettingsMenuUALSettings:updateSettings()
 	self.pricePerBaleTextInput:setText(tostring(UniversalAutoload.pricePerBale))
 	self.pricePerPalletTextInput:setText(tostring(UniversalAutoload.pricePerPallet))
 
+	setClosestValue('minLogLengthListBox', UniversalAutoload.minLogLength)
+	setClosestValue('objectSpacingListBox', UniversalAutoload.objectSpacing)
+	
 end
 
 function GlobalSettingsMenuUALSettings:onCreate()
@@ -89,6 +107,7 @@ function GlobalSettingsMenuUALSettings:onCreate()
 	
 	if g_currentMission.missionDynamicInfo.isMultiplayer then
 		self.disableAutoStrapCheckBox:setDisabled(true)
+		self.minLogLengthListBox:setDisabled(true)
 		self.objectSpacingListBox:setDisabled(true)
 		self.pricePerLogTextInput:setDisabled(true)
 		self.pricePerBaleTextInput:setDisabled(true)
@@ -111,25 +130,55 @@ function GlobalSettingsMenuUALSettings:onCreate()
 	self.pricePerLogTextInput.getIsUnicodeAllowed = getIsUnicodeAllowed
 	self.pricePerBaleTextInput.getIsUnicodeAllowed = getIsUnicodeAllowed
 	self.pricePerPalletTextInput.getIsUnicodeAllowed = getIsUnicodeAllowed
+	
+end
 
-	self.objectSpacingListBox.texts = {
+function GlobalSettingsMenuUALSettings:onCreateMinLogLength(control)
+	control.texts = {
+		'0.0',
+		'1.0',
+		'2.0',
+		'3.0',
+		'4.0',
+		'5.0',
+		'6.0',
+		'7.0',
+		'8.0'
+	}
+	control.values = {
+		0.0,
+		1.0,
+		2.0,
+		3.0,
+		4.0,
+		5.0,
+		6.0,
+		7.0,
+		8.0
+	}
+end
+
+function GlobalSettingsMenuUALSettings:onCreateObjectSpacing(control)
+	control.texts = {
 		'0.000',
+		'0.005',
+		'0.010',
 		'0.025',
 		'0.050',
 		'0.075',
 		'0.100',
 		'0.125'
 	}
-	self.objectSpacingListBox.values = {
+	control.values = {
 		0.000,
+		0.005,
+		0.010,
 		0.025,
 		0.050,
 		0.075,
 		0.100,
 		0.125
 	}
-	self.objectSpacingListBox:setState(1, true)
-
 end
 
 function GlobalSettingsMenuUALSettings:onClickBinaryOption(id, control, direction)
@@ -156,8 +205,14 @@ function GlobalSettingsMenuUALSettings:onClickMultiOption(id, control, direction
 		return
 	end
 	
+	if control == self.minLogLengthListBox then
+		UniversalAutoload.minLogLength = control.values[id]
+		UniversalAutoload.debugPrint(" minLogLength: " .. tostring(UniversalAutoload.minLogLength), debugMenus)	
+	end
+		
 	if control == self.objectSpacingListBox then
 		UniversalAutoload.objectSpacing = control.values[id]
+		UniversalAutoload.debugPrint(" objectSpacing: " .. tostring(UniversalAutoload.objectSpacing), debugMenus)	
 	end
 	
 end

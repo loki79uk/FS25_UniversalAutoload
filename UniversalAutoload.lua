@@ -2998,7 +2998,7 @@ end
 function UniversalAutoload:isValidForLoading(object)
 	local spec = self.spec_universalAutoload
 	local maxLength = UniversalAutoload.getMaxSingleLength(self)
-	local minLength = spec.minLogLength or 0
+	local minLength = spec.minLogLength or UniversalAutoload.minLogLength or 0
 	if minLength > maxLength or not spec.isLogTrailer then
 		minLength = 0
 	end

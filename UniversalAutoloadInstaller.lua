@@ -167,7 +167,7 @@ UniversalAutoload.OPTIONS_DEFAULTS = {
 	{id="disableHeightLimit", default=false, valueType="BOOL", key="#disableHeightLimit"}, --Disable the density based stacking height limit
 	{id="zonesOverlap", default=false, valueType="BOOL", key="#zonesOverlap"}, --Flag to identify when the loading areas overlap each other
 	{id="offsetRoot", default=nil, valueType="STRING", key="#offsetRoot"}, --Vehicle i3d node that area offsets are relative to
-	{id="minLogLength", default=0, valueType="FLOAT", key="#minLogLength"}, --The minimum length for logs that will be autoloaded (default is zero)
+	{id="minLogLength", default=nil, valueType="FLOAT", key="#minLogLength"}, --The minimum length for logs that will be autoloaded (default is global)
 }
 
 UniversalAutoload.LOADING_AREA_DEFAULTS = {
