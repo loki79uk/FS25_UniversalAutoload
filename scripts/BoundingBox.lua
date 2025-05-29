@@ -428,7 +428,7 @@ function BoundingBox:addComponents(object, doEvaluate)
 			
 		local function findCollisionsForNode(node, N)
 			local sx, sy, sz, r = getShapeBoundingSphere(node)
-			local vertices, origin = BoundingBox.getCubeVertices(node, sx, sy, sz, r)
+			local vertices, origin = BoundingBox.getCubeVertices(node, sx, sy, sz, 1.1*r)
 			bb:addVertices(vertices, node, origin, N)
 		end
 		
