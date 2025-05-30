@@ -5,185 +5,185 @@
 		<text name="configuration_universalAutoload" text="Carregamento Automático Universal"/>
 		
 		<!-- TITLES -->
-		<text name="ui_global_settings_ual" text="Global Settings"/>
-		<text name="ui_config_settings_ual" text="Autoload Settings"/>
-		<text name="ui_vehicle_options_ual" text="Vehicle Options"/>
-		<text name="ui_loading_area_options_ual" text="Loading Area Options"/>
-		<text name="ui_save_options_ual" text="Save Options"/>
-		<text name="ui_button_save_config_ual" text="Save Vehicle Settings"/>
-		<text name="ui_confirm_save_config_ual" text="Do you want to overwrite the default autoload configuration for this vehicle?"/>
-		<text name="ui_confirm_save_config2_ual" text="(Purchase new vehicle or restart game to apply the new settings)"/>
+		<text name="ui_global_settings_ual" text="Conf. globais"/>
+		<text name="ui_config_settings_ual" text="Conf. Carregamento. Automático"/>
+		<text name="ui_vehicle_options_ual" text="Opções para veículos"/>
+		<text name="ui_loading_area_options_ual" text="Opções da área de carga"/>
+		<text name="ui_save_options_ual" text="Salvar opções"/>
+		<text name="ui_button_save_config_ual" text="Salvar Conf. do veículo"/>
+		<text name="ui_confirm_save_config_ual" text="Deseja substituir a configuração padrão do carga automático para esse veículo?"/>
+		<text name="ui_confirm_save_config2_ual" text="(Compre um novo veículo ou reinicie o jogo para aplicar as novas Conf.)"/>
 		
 		<!-- GLOBAL -->
-		<text name="ui_global_showDebug" text="Show Debug"/>
-		<text name="ui_global_highPriority" text="High Priority"/>
-		<text name="ui_global_disableAutoStrap" text="Automatic Tension Belts"/>
-		<text name="ui_global_pricePerLog" text="Price Per Log"/>
-		<text name="ui_global_pricePerBale" text="Price Per Bale"/>
-		<text name="ui_global_pricePerPallet" text="Price Per Pallet"/>
-		<text name="ui_global_minLogLength" text="Min Log Length"/>
-		<text name="ui_global_loadingSpeed" text="Loading Speed"/>
-		<text name="ui_global_objectSpacing" text="Object Spacing"/>
+		<text name="ui_global_showDebug" text="Mostrar depuração"/>
+		<text name="ui_global_highPriority" text="Alta prioridade"/>
+		<text name="ui_global_disableAutoStrap" text="Correias de tensão automática"/>
+		<text name="ui_global_pricePerLog" text="Preço por tronco"/>
+		<text name="ui_global_pricePerBale" text="Preço por fardo"/>
+		<text name="ui_global_pricePerPallet" text="Preço por palete"/>
+		<text name="ui_global_minLogLength" text="Compr. mín. do tronco"/>
+		<text name="ui_global_loadingSpeed" text="Velocidade de carregamento"/>
+		<text name="ui_global_objectSpacing" text="Espaçamento de Objetos"/>													
 		
-		<text name="ui_global_tooltip_showDebug" text="Show the full graphical debugging display for all vehicles in game"/>
-		<text name="ui_global_tooltip_highPriority" text="Apply high priority to all UAL key bindings in the F1 menu"/>
-		<text name="ui_global_tooltip_disableAutoStrap" text="Automatic application of tension belts after loading or unloading"/>
-		<text name="ui_global_tooltip_pricePerLog" text="The price charged for each auto-loaded log"/>
-		<text name="ui_global_tooltip_pricePerBale" text="The price charged for each auto-loaded bale"/>
-		<text name="ui_global_tooltip_pricePerPallet" text="The price charged for each auto-loaded pallet"/>
-		<text name="ui_global_tooltip_minLogLength" text="The global minimum length for logs that will be autoloaded"/>
-		<text name="ui_global_tooltip_loadingSpeed" text="Time delay between loading each object (ms)"/>
-		<text name="ui_global_tooltip_objectSpacing" text="Additional spacing between loaded objects (m)"/>
+		<text name="ui_global_tooltip_showDebug" text="Mostrar a exibição de depuração gráfica completa para todos os veículos no jogo"/>
+		<text name="ui_global_tooltip_highPriority" text="Aplicar alta prioridade a todas as combinações de teclas UAL no menu F1"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="Aplicação automática de correias de tensão após o carga ou descarga"/>
+		<text name="ui_global_tooltip_pricePerLog" text="O preço cobrado por cada tronco carregado automaticamente"/>
+		<text name="ui_global_tooltip_pricePerBale" text="O preço cobrado por cada fardo carregado automaticamente"/>
+		<text name="ui_global_tooltip_pricePerPallet" text="O preço cobrado por cada palete carregado automaticamente"/>
+		<text name="ui_global_tooltip_minLogLength" text="O comprimento mínimo global para troncos que serão carregados automaticamente"/>
+		<text name="ui_global_tooltip_loadingSpeed" text="Atraso de tempo entre o carregamento de cada objeto (ms)"/>
+		<text name="ui_global_tooltip_objectSpacing" text="Espaçamento adicional entre os objetos carregados (m)"/>
 
 		<!-- OPTIONS -->
-		<text name="ui_option_enableAutoload" text="Enable Autoload"/>
-		<text name="ui_option_trailerType" text="Trailer Type"/>
-		<text name="ui_option_unloadingType" text="Unloading Position"/>
-		<text name="ui_option_rearOnly" text="Rear Only"/>
-		<text name="ui_option_frontOnly" text="Front Only"/>
+		<text name="ui_option_enableAutoload" text="Ativar carga automático"/>
+		<text name="ui_option_trailerType" text="Tipo de reboque"/>
+		<text name="ui_option_unloadingType" text="Posição de descarga"/>
+		<text name="ui_option_rearOnly" text="Somente na traseira"/>
+		<text name="ui_option_frontOnly" text="Somente na frente"/>
 		
-		<text name="ui_option_noLoadingFolded" text="No Loading If Folded"/>
-		<text name="ui_option_folded" text="Folded"/>
-		<text name="ui_option_unfolded" text="Unfolded"/>
+		<text name="ui_option_noLoadingFolded" text="Não Carregar dobrado"/>
+		<text name="ui_option_folded" text="Dobrado"/>
+		<text name="ui_option_unfolded" text="Desdobrado"/>
 		
-		<text name="ui_option_noLoadingCovered" text="No Loading If Covered"/>
-		<text name="ui_option_covered" text="Covered"/>
-		<text name="ui_option_uncovered" text="Uncovered"/>
+		<text name="ui_option_noLoadingCovered" text="Não Carregar coberto"/>
+		<text name="ui_option_covered" text="Coberto"/>
+		<text name="ui_option_uncovered" text="Descoberto"/>
 
-		<text name="ui_option_isBoxTrailer" text="Box Trailer"/>
-		<text name="ui_option_isLogTrailer" text="Log Trailer"/>
-		<text name="ui_option_isBaleTrailer" text="Bale Trailer"/>
-		<text name="ui_option_isBaleProcessor" text="Bale Processor"/>
-		<text name="ui_option_isCurtainTrailer" text="Curtain Trailer"/>
-		<text name="ui_option_enableRearLoading" text="Enable Rear Loading"/>
-		<text name="ui_option_enableSideLoading" text="Enable Side Loading"/>
+		<text name="ui_option_isBoxTrailer" text="Reboque Baú"/>
+		<text name="ui_option_isLogTrailer" text="Reboque para Troncos"/>
+		<text name="ui_option_isBaleTrailer" text="Reboque para Fardos"/>
+		<text name="ui_option_isBaleProcessor" text="Processador de Fardos"/>
+		<text name="ui_option_isCurtainTrailer" text="Reboque de Cortina"/>
+		<text name="ui_option_enableRearLoading" text="Ativar carga traseiro"/>
+		<text name="ui_option_enableSideLoading" text="Ativar carga lateral"/>
 
-		<text name="ui_option_rearUnloadingOnly" text="Rear Unloading Only"/>
-		<text name="ui_option_frontUnloadingOnly" text="Front Unloading Only"/>
-		<text name="ui_option_horizontalLoading" text="Horizontal Loading"/>
-		<text name="ui_option_disableAutoStrap" text="Automatic Tension Belts"/>
-		<text name="ui_option_disableHeightLimit" text="Limit Stacking Height"/>
-		<text name="ui_option_zonesOverlap" text="Zones Overlap"/>
-		<text name="ui_option_offsetRoot" text="Offset Root"/>
-		<text name="ui_option_minLogLength" text="Min Log Length"/>
+		<text name="ui_option_rearUnloadingOnly" text="Somente descarga na traseira"/>
+		<text name="ui_option_frontUnloadingOnly" text="Somente descarga na frente"/>
+		<text name="ui_option_horizontalLoading" text="carga horizontal"/>
+		<text name="ui_option_disableAutoStrap" text="Correias de tensão automática"/>
+		<text name="ui_option_disableHeightLimit" text="Limitar Altura de Empilhamento"/>
+		<text name="ui_option_zonesOverlap" text="Zonas Sobrepostas"/>
+		<text name="ui_option_offsetRoot" text="Desvio raiz"/>
+		<text name="ui_option_minLogLength" text="Compr. mín. da tronco"/>
 		
-		<text name="ui_option_tooltip_enableAutoload" text="If Autoload is enabled or disabled for this vehicle"/>
-		<text name="ui_option_tooltip_trailerType" text="The special type of trailer, e.g. bale, log, curtain"/>
-		<text name="ui_option_tooltip_unloadingType" text="Use a special unloading position (front or rear)"/>
-		<text name="ui_option_tooltip_noLoadingFolded" text="Prevent loading when either folded or unfolded"/>
-		<text name="ui_option_tooltip_noLoadingCovered" text="Prevent loading when either covered or uncovered"/>
+		<text name="ui_option_tooltip_enableAutoload" text="Se o carga automático estiver ativado ou desativado para este veículo"/>
+		<text name="ui_option_tooltip_trailerType" text="O tipo especial de reboque, por exemplo, fardo, tronco, cortina"/>
+		<text name="ui_option_tooltip_unloadingType" text="Use uma posição especial de descarga (dianteira ou traseira)"/>
+		<text name="ui_option_tooltip_noLoadingFolded" text="Evita o carga quando dobrado ou desdobrado"/>
+		<text name="ui_option_tooltip_noLoadingCovered" text="Evitar o carga quando coberto ou descoberto"/>
 		
-		<text name="ui_option_tooltip_isBoxTrailer" text="If trailer is enclosed with a rear door"/>
-		<text name="ui_option_tooltip_isLogTrailer" text="If trailer is a logging trailer - will load only logs dropped from above"/>
-		<text name="ui_option_tooltip_isBaleTrailer" text="If trailer should use an automatic bale collection mode"/>	
-		<text name="ui_option_tooltip_isBaleProcessor" text="If trailer should consume bales (e.g. TMR Mixer or Straw Blower)"/>
-		<text name="ui_option_tooltip_isCurtainTrailer" text="Automatically detect the available load side (if the trailer has curtain sides)"/>
-		<text name="ui_option_tooltip_enableRearLoading" text="Use the automatic rear loading trigger"/>
-		<text name="ui_option_tooltip_enableSideLoading" text="Use the automatic side loading triggers"/>
+		<text name="ui_option_tooltip_isBoxTrailer" text="Se o reboque contiver porta traseira e estiver fechado"/>
+		<text name="ui_option_tooltip_isLogTrailer" text="Se o reboque for para transporte de madeireira - Irá carregar os troncos caídos por cima"/>
+		<text name="ui_option_tooltip_isBaleTrailer" text="Se o reboque deve usar um modo de coleta automática de fardos"/>	
+		<text name="ui_option_tooltip_isBaleProcessor" text="Se o reboque consumir fardos (por exemplo, Misturador RMT ou Soprador de Palha)"/>
+		<text name="ui_option_tooltip_isCurtainTrailer" text="Detectar automaticamente o lado para carga disponível (se o reboque tiver laterais de cortina)"/>
+		<text name="ui_option_tooltip_enableRearLoading" text="Utilize o gatilho automático de carga traseiro"/>
+		<text name="ui_option_tooltip_enableSideLoading" text="Utilize os gatilhos automáticos de carga lateral"/>
 
-		<text name="ui_option_tooltip_rearUnloadingOnly" text="Use rear unloading zone only (no side zones)"/>
-		<text name="ui_option_tooltip_frontUnloadingOnly" text="Use front unloading zone only (no side zones)"/>
-		<text name="ui_option_tooltip_horizontalLoading" text="Start with horizontal loading enabled (can be toggled if key is bound)"/>
-		<text name="ui_option_tooltip_disableAutoStrap" text="Automatic application of tension belts after loading or unloading"/>
-		<text name="ui_option_tooltip_disableHeightLimit" text="Limit the height of pallet stacking based on density "/>
-		<text name="ui_option_tooltip_zonesOverlap" text="Flag to identify when the loading areas overlap each other"/>
-		<text name="ui_option_tooltip_offsetRoot" text="Vehicle i3d node that area offsets are relative to"/>
-		<text name="ui_option_tooltip_minLogLength" text="The minimum length for logs that will be autoloaded"/>
+		<text name="ui_option_tooltip_rearUnloadingOnly" text="Utilize apenas a zona de descarga traseira (sem zonas laterais)"/>
+		<text name="ui_option_tooltip_frontUnloadingOnly" text="Utilize apenas a zona de descarga frontal (sem zonas laterais)"/>
+		<text name="ui_option_tooltip_horizontalLoading" text="Comece com o carga horizontal ativado (pode ser alternado se a chave estiver vinculada)"/>
+		<text name="ui_option_tooltip_disableAutoStrap" text="Aplicação automática de correias de tensão após o carga ou descarga"/>
+		<text name="ui_option_tooltip_disableHeightLimit" text="Limite a altura do empilhamento de paletes com base na densidade "/>
+		<text name="ui_option_tooltip_zonesOverlap" text="Sinalização para identificar quando as áreas de carga se sobrepõem"/>
+		<text name="ui_option_tooltip_offsetRoot" text="Nó i3d do veículo ao qual os deslocamentos de área são relativos"/>
+		<text name="ui_option_tooltip_minLogLength" text="O Comprimento mínimo para tronco que serão carregados automaticamente"/>
 
-		<text name="ui_option_addRemoveAreas" text="Number of Loading Areas"/>
-		<text name="ui_option_selectedArea" text="Selected Area"/>
-		<text name="ui_option_tooltip_addRemoveAreas" text="Adjust value here to add or remove loading areas"/>
-		<text name="ui_option_tooltip_selectedArea" text="The area selected (to modify in the settings below)"/>
+		<text name="ui_option_addRemoveAreas" text="Número de áreas de carga"/>
+		<text name="ui_option_selectedArea" text="Área Selecionada"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="Ajuste o valor aqui para adicionar ou remover áreas de carga"/>
+		<text name="ui_option_tooltip_selectedArea" text="A área selecionada (para modificar nas Conf. abaixo)"/>
 		
-		<text name="ui_option_selectedConfigSet" text="Selected Configuration Set"/>
-		<text name="ui_option_useConfigName" text="Use Configuration Name"/>
-		<text name="ui_option_useConfigIndex" text="Use Configuration Index"/>
-		<text name="ui_option_tooltip_selectedConfigSet" text="The 'configuration set' to which the saved settings will apply"/>
-		<text name="ui_option_tooltip_useConfigName" text="The configuration to be indexed (optional)"/>
-		<text name="ui_option_tooltip_useConfigIndex" text="The index for the configuration (optional)"/>
+		<text name="ui_option_selectedConfigSet" text="Conjunto de Conf. selecionado"/>
+		<text name="ui_option_useConfigName" text="Utilizar nome de configuração"/>
+		<text name="ui_option_useConfigIndex" text="Utilizar índice de configuração"/>
+		<text name="ui_option_tooltip_selectedConfigSet" text="O 'conjunto de Conf.' ao qual as Conf. salvas serão aplicadas"/>
+		<text name="ui_option_tooltip_useConfigName" text="A configuração a ser indexada (opcional)"/>
+		<text name="ui_option_tooltip_useConfigIndex" text="O índice da configuração (opcional)"/>
 		
 		<!-- LOADING_AREA -->
-		<text name="ui_loadArea_offset" text="Offset"/>
-		<text name="ui_loadArea_offsetRoot" text="Offset Root"/>
-		<text name="ui_loadArea_width" text="Width"/>
-		<text name="ui_loadArea_length" text="Length"/>
-		<text name="ui_loadArea_height" text="Height"/>
-		<text name="ui_loadArea_baleHeight" text="Bale Height"/>
-		<text name="ui_loadArea_widthAxis" text="Width Axis"/>
-		<text name="ui_loadArea_lengthAxis" text="Length Axis"/>
-		<text name="ui_loadArea_heightAxis" text="Height Axis"/>
-		<text name="ui_loadArea_offsetFrontAxis" text="Offset Front Axis"/>
-		<text name="ui_loadArea_offsetRearAxis" text="Offset Rear Axis"/>
-		<text name="ui_loadArea_reverseWidthAxis" text="Reverse Width Axis"/>
-		<text name="ui_loadArea_reverseLengthAxis" text="Reverse Length Axis"/>
-		<text name="ui_loadArea_reverseHeightAxis" text="Reverse Height Axis"/>
-		<text name="ui_loadArea_noLoadingIfFolded" text="No Loading If Folded"/>
-		<text name="ui_loadArea_noLoadingIfUnfolded" text="No Loading If Unfolded"/>
-		<text name="ui_loadArea_noLoadingIfCovered" text="No Loading If Covered"/>
-		<text name="ui_loadArea_noLoadingIfUncovered" text="No Loading If Uncovered"/>
+		<text name="ui_loadArea_offset" text="Desvio"/>
+		<text name="ui_loadArea_offsetRoot" text="Desvio raiz"/>
+		<text name="ui_loadArea_width" text="Largura"/>
+		<text name="ui_loadArea_length" text="Comprimento"/>
+		<text name="ui_loadArea_height" text="Altura"/>
+		<text name="ui_loadArea_baleHeight" text="Altura do fardo"/>
+		<text name="ui_loadArea_widthAxis" text="Eixo de largura"/>
+		<text name="ui_loadArea_lengthAxis" text="Eixo de comprimento"/>
+		<text name="ui_loadArea_heightAxis" text="Eixo de altura"/>
+		<text name="ui_loadArea_offsetFrontAxis" text="Deslocamento do eixo frontal"/>
+		<text name="ui_loadArea_offsetRearAxis" text="Deslocamento do eixo traseiro"/>
+		<text name="ui_loadArea_reverseWidthAxis" text="Eixo de largura reversa"/>
+		<text name="ui_loadArea_reverseLengthAxis" text="Eixo de comprimento reverso"/>
+		<text name="ui_loadArea_reverseHeightAxis" text="Eixo de altura reversa"/>
+		<text name="ui_loadArea_noLoadingIfFolded" text="Sem carga se estiver dobrado"/>
+		<text name="ui_loadArea_noLoadingIfUnfolded" text="Sem carga se estiver desdobrado"/>
+		<text name="ui_loadArea_noLoadingIfCovered" text="Sem carga se estiver coberto"/>
+		<text name="ui_loadArea_noLoadingIfUncovered" text="Sem carga se estiver descoberto"/>
 		
-		<text name="ui_loadArea_tooltip_offset" text="Offset to the centre of the loading area"/>
-		<text name="ui_loadArea_tooltip_offsetRoot" text="Vehicle i3d node that this area offset is relative to"/>
-		<text name="ui_loadArea_tooltip_width" text="Width of the loading area"/>
-		<text name="ui_loadArea_tooltip_length" text="Length of the loading area"/>
-		<text name="ui_loadArea_tooltip_height" text="Height of the loading area"/>
-		<text name="ui_loadArea_tooltip_baleHeight" text="Height of the loading area for BALES only"/>
-		<text name="ui_loadArea_tooltip_widthAxis" text="Axis name to extend width of the loading area"/>
-		<text name="ui_loadArea_tooltip_lengthAxis" text="Axis name to extend length of the loading area"/>
-		<text name="ui_loadArea_tooltip_heightAxis" text="Axis name to extend height of the loading area"/>
-		<text name="ui_loadArea_tooltip_offsetFrontAxis" text="Axis name to adjust the front position of the loading area"/>
-		<text name="ui_loadArea_tooltip_offsetRearAxis" text="Axis name to adjust the rear position of the loading area"/>
-		<text name="ui_loadArea_tooltip_reverseWidthAxis" text="Reverses direction of width extension if true"/>
-		<text name="ui_loadArea_tooltip_reverseLengthAxis" text="Reverses direction of length extension if true"/>
-		<text name="ui_loadArea_tooltip_reverseHeightAxis" text="Reverses direction of height extension if true"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfFolded" text="Prevent loading when folded (for this area only)"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfUnfolded" text="Prevent loading when unfolded (for this area only)"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfCovered" text="Prevent loading when covered (for this area only)"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Prevent loading when uncovered (for this area only)"/>
+		<text name="ui_loadArea_tooltip_offset" text="Deslocado para o centro da área de carga"/>
+		<text name="ui_loadArea_tooltip_offsetRoot" text="Nó i3d do veículo ao qual este deslocamento de área é relativo"/>
+		<text name="ui_loadArea_tooltip_width" text="Largura da área de carga"/>
+		<text name="ui_loadArea_tooltip_length" text="Comprimento da área de carga"/>
+		<text name="ui_loadArea_tooltip_height" text="Altura da área de carga"/>
+		<text name="ui_loadArea_tooltip_baleHeight" text="Altura da área de carga apenas para FARDOS"/>
+		<text name="ui_loadArea_tooltip_widthAxis" text="Nome do eixo para estender a largura da área de carga"/>
+		<text name="ui_loadArea_tooltip_lengthAxis" text="Nome do eixo para estender o comprimento da área de carga"/>
+		<text name="ui_loadArea_tooltip_heightAxis" text="Nome do eixo para estender a altura da área de carga"/>
+		<text name="ui_loadArea_tooltip_offsetFrontAxis" text="Nome do eixo para ajustar a posição frontal da área de carga"/>
+		<text name="ui_loadArea_tooltip_offsetRearAxis" text="Nome do eixo para ajustar a posição traseira da área de carga"/>
+		<text name="ui_loadArea_tooltip_reverseWidthAxis" text="Inverte a direção da extensão da largura, se verdadeiro"/>
+		<text name="ui_loadArea_tooltip_reverseLengthAxis" text="Inverte a direção da extensão do comprimento, se verdadeiro"/>
+		<text name="ui_loadArea_tooltip_reverseHeightAxis" text="Inverte a direção da extensão da altura, se verdadeiro"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfFolded" text="Impedir o carga quando dobrado (somente para essa área)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfUnfolded" text="Impedir o carga quando desdobrado (somente para esta área)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfCovered" text="Impedir o carga quando coberto (somente para essa área)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Impedir o carga quando descoberto (somente para essa área)"/>
 
 		<!-- KEY BINDINGS -->
-		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Open global settings menu"/>
-		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Open configuration settings menu (in shop)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Enable editing of loading volume (in shop)"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Alternar carregamento"/>
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Abre o menu de Conf. globais"/>
+		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Abre o menu de Conf. (na loja)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Habilitar edição do volume de carga (na loja)"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Alternar carga"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" text="Modo automático de coleta"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Descarregar"/>
-		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Forçar descarregamento"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Alternar lado de descarregamento"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Alternar filtro de carregamento"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Alternar carregamento horizontal"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Forçar descarga"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Alternar lado de descarga"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Alternar filtro de carga"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Alternar carga horizontal"/>
 		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Material selecionado (próximo)"/>
 		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Material selecionado (anterior)"/>
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Seleciona todos os tipos de materiais"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Contêiner selecionado (próximo)"/>
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Contêiner selecionado (anterior)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Marca todos os tipos de contêiners"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Contêiner selec. (próximo)"/>
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Contêiner selec. (anterior)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Todos os tipos de contêiners"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Apertar/Soltar cintos de tensão"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Abrir/Fechar porta traseira"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Abrir/Fechar cortina lateral"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" text="Modo de depuração completo"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" text="Modo de depuração simples"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" text="Depuração completo"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" text="Depuração simples"/>
 		
-		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="A área de descarregamento está bloqueada. Por favor, limpe a área de descarregamento."/>
-		<text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="Não há mercadorias compatíveis disponíveis para carregamento ou descarregamento."/>
+		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="A área de descarga está bloqueada. Por favor, limpe a área de descarga."/>
+		<text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="Não há mercadorias compatíveis disponíveis para carga ou descarga."/>
 		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT_FULL" text="Não é possível carregar mais itens deste tamanho."/>
 		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT_EMPTY" text="O item é muito grande para este veículo."/>
 		<text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY" text="Não é permitido carregar em movimento."/>
 		
-		<text name="universalAutoload_tipside" text="Lado de descarregamento"/>
+		<text name="universalAutoload_tipside" text="Lado de descarga"/>
 		<text name="universalAutoload_left" text="Esquerda"/>
 		<text name="universalAutoload_right" text="Direita"/>
 		<text name="universalAutoload_none" text="Nenhum"/>
-		<text name="universalAutoload_loadingFilter" text="Filtro de carregamento"/>
-		<text name="universalAutoload_loadingMethod" text="Método de carregamento"/>
+		<text name="universalAutoload_loadingFilter" text="Filtro de carga"/>
+		<text name="universalAutoload_loadingMethod" text="Modo de carga"/>
 		<text name="universalAutoload_layer" text="Camada"/>
 		<text name="universalAutoload_stack" text="Pilha"/>
 		<text name="universalAutoload_fullOnly" text="Apenas completo"/>
 		<text name="universalAutoload_loadAny" text="Qualquer um"/>
-		<text name="universalAutoload_startLoading" text="Iniciar carregamento"/>
-		<text name="universalAutoload_stopLoading" text="Parar carregamento"/>
+		<text name="universalAutoload_startLoading" text="Iniciar carga"/>
+		<text name="universalAutoload_stopLoading" text="Parar carga"/>
 		<text name="universalAutoload_unloadAll" text="Descarregar"/>
-		<text name="universalAutoload_unloadAllForce" text="Forçar descarregamento"/>
+		<text name="universalAutoload_unloadAllForce" text="Forçar descarga"/>
 		<text name="universalAutoload_logMode" text="Modo de toras"/>
 		<text name="universalAutoload_baleMode" text="Modo de fardos"/>
 		<text name="universalAutoload_palletMode" text="Modo de paletes"/>
@@ -204,6 +204,6 @@
 		<text name="universalAutoload_BALE" text="Fardo"/>
 		<text name="universalAutoload_ROUND_BALE" text="Fardo cilíndrico"/>
 		<text name="universalAutoload_SQUARE_BALE" text="Fardo quadrado"/>
-		<text name="universalAutoload_LOGS" text="Toras de árvore"/>
+		<text name="universalAutoload_LOGS" text="Troncos de árvore"/>
     </texts>
 </l10n>
