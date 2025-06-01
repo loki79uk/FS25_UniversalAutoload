@@ -1660,7 +1660,7 @@ function UniversalAutoload:onLoad(savegame)
 	if self.isServer and self.propertyState ~= VehiclePropertyState.SHOP_CONFIG then
 		UniversalAutoload.debugPrint("SERVER - INITIALISE REAL UAL VEHICLE (ON LOAD) " ..tostring(self.rootNode))
 		
-		UniversalAutoload.VEHICLES[self] = self
+		UniversalAutoload.VEHICLES[self] = true
 		if self.addDeleteListener then
 			self:addDeleteListener(self, "ualOnDeleteVehicle_Callback")
 		end
@@ -2263,7 +2263,7 @@ function UniversalAutoload:onReadStream(streamId, connection)
 		UniversalAutoload.debugPrint("autoloadDisabled: " .. tostring(spec.autoloadDisabled))
 		
 		if self.propertyState ~= VehiclePropertyState.SHOP_CONFIG then
-			UniversalAutoload.VEHICLES[self] = self
+			UniversalAutoload.VEHICLES[self] = true
 		end
 	else
 		UniversalAutoload.debugPrint("Universal Autoload Disabled: " .. self:getFullName())
@@ -2780,16 +2780,20 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 			end
 		end
 
-		-- -- CHECK IF ANY PLAYERS ARE ACTIVE ON FOOT
-		-- local playerTriggerActive = false
-		-- if not isActiveForInputIgnoreSelection then
-			-- for k, v in pairs (spec.playerInTrigger) do
-				-- playerTriggerActive = true
-			-- end
-		-- end
+		-- CHECK IF ANY PLAYERS ARE ACTIVE ON FOOT
+		local playerTriggerActive = false
+		for _, playerInTrigger in pairs (spec.playerInTrigger) do
+			if playerInTrigger then
+				playerTriggerActive = true
+				break
+			end
+		end
 		
-		local isActiveForLoading = spec.isLoading or spec.isUnloading or spec.doPostLoadDelay
-		if isActiveForInputIgnoreSelection or isActiveForLoading or spec.autoCollectionMode or spec.baleCollectionModeDeactivated or spec.aiLoadingActive then
+		-- CHECK IF VEHICLE HAS ACTIVE LOADING REQUIREMENTS
+		local isActiveForLoading = spec.isLoading or spec.isUnloading or spec.doPostLoadDelay or spec.baleCollectionModeDeactivated or spec.autoCollectionMode or spec.aiLoadingActive
+		
+		-- SHOULD UPDATE VEHICLE LOADING (ON SERVER)
+		if isActiveForInputIgnoreSelection or isActiveForLoading or playerTriggerActive then
 		
 			if spec.autoCollectionMode and not isActiveForLoading or spec.aiLoadingActive then
 				if spec.totalAvailableCount > 0 and not spec.trailerIsFull then
@@ -3474,7 +3478,7 @@ function UniversalAutoload.buildObjectsToUnloadTable(vehicle, forceUnloadPositio
 end
 --
 function UniversalAutoload.clearPalletFromAllVehicles(self, object)
-	for _, vehicle in pairs(UniversalAutoload.VEHICLES) do
+	for vehicle, _ in pairs(UniversalAutoload.VEHICLES) do
 		if vehicle and object then
 			local loadedObjectRemoved = UniversalAutoload.removeLoadedObject(vehicle, object)
 			local availableObjectRemoved = UniversalAutoload.removeAvailableObject(vehicle, object)
@@ -3500,7 +3504,7 @@ function UniversalAutoload.clearPalletFromAllVehicles(self, object)
 end	
 --
 function UniversalAutoload.isStrappedOnOtherVehicle(self, object)
-	for _, vehicle in pairs(UniversalAutoload.VEHICLES) do
+	for vehicle, _ in pairs(UniversalAutoload.VEHICLES) do
 		if vehicle and self ~= vehicle then
 			if vehicle.spec_universalAutoload.loadedObjects[object] then
 				if vehicle.spec_tensionBelts.areAllBeltsFastened then
@@ -3512,7 +3516,7 @@ function UniversalAutoload.isStrappedOnOtherVehicle(self, object)
 end
 --
 function UniversalAutoload.isLoadedOnTrain(self, object)
-	for _, vehicle in pairs(UniversalAutoload.VEHICLES) do
+	for vehicle, _ in pairs(UniversalAutoload.VEHICLES) do
 		if vehicle and self ~= vehicle then
 			if UniversalAutoloadManager.getIsTrainCarriage(vehicle) then
 				if vehicle.spec_universalAutoload.loadedObjects[object] then

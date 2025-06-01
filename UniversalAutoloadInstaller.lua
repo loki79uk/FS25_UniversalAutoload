@@ -295,7 +295,7 @@ function UniversalAutoload:OverwrittenUpdateObjects(superFunc, ...)
 	
 		local closestVehicle = nil
 		local closestVehicleDistance = math.huge
-		for _, vehicle in pairs(UniversalAutoload.VEHICLES) do
+		for vehicle, _ in pairs(UniversalAutoload.VEHICLES) do
 			if vehicle ~= nil then
 				local SPEC = vehicle.spec_universalAutoload
 				if SPEC.playerInTrigger~=nil and SPEC.playerInTrigger[playerId] == true and
@@ -338,7 +338,7 @@ ActivatableObjectsSystem.updateObjects = Utils.overwrittenFunction(ActivatableOb
 
 function UniversalAutoloadManager:update(dt)
 	if g_currentMission:getIsServer() then
-		for _, vehicle in pairs(UniversalAutoload.VEHICLES) do
+		for vehicle, _ in pairs(UniversalAutoload.VEHICLES) do
 			local spec = vehicle and vehicle.spec_universalAutoload
 			local isCollectionModeActive = spec and spec.autoCollectionMode
 			if isCollectionModeActive or vehicle==UniversalAutoload.lastClosestVehicle then
@@ -1854,7 +1854,7 @@ function UniversalAutoloadManager:consoleResetVehicles()
 	UniversalAutoloadManager.resetCount = 1
 	g_currentMission.isReloadingVehicles = true
 	
-	for _, vehicle in pairs(UniversalAutoload.VEHICLES) do
+	for vehicle, _ in pairs(UniversalAutoload.VEHICLES) do
 		table.insert(UniversalAutoloadManager.resetList, vehicle)
 	end
 	UniversalAutoload.VEHICLES = {}
