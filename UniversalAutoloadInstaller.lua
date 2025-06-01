@@ -139,6 +139,7 @@ UniversalAutoload.LOADING_TYPES = {} -- known container object types
 UniversalAutoload.GLOBAL_DEFAULTS = {
 	{id="showDebug", default=false, valueType="BOOL", key="#showDebug"}, --Show the full graphical debugging display for all vehicles in game
 	{id="highPriority", default=true, valueType="BOOL", key="#highPriority"}, --Apply high priority to all UAL key bindings in the F1 menu
+	{id="lowRefreshMode", default=false, valueType="BOOL", key="#lowRefreshMode"}, --Update less frequently - set to 'true' if you experience lag when using autoload
 	{id="disableAutoStrap", default=false, valueType="BOOL", key="#disableAutoStrap"}, --Disable the automatic application of tension belts
 	{id="pricePerLog", default=0, valueType="FLOAT", key="#pricePerLog"}, --The price charged for each auto-loaded log (default is zero)
 	{id="pricePerBale", default=0, valueType="FLOAT", key="#pricePerBale"}, --The price charged for each auto-loaded bale (default is zero)

@@ -69,9 +69,11 @@ function GlobalSettingsMenuUALSettings:updateSettings()
 	UniversalAutoload.debugPrint("GlobalSettingsMenu: SET GLOBAL", debugMenus)
 	UniversalAutoload.debugPrint(" showDebug: " .. tostring(UniversalAutoload.showDebug), debugMenus)
 	UniversalAutoload.debugPrint(" highPriority: " .. tostring(UniversalAutoload.highPriority), debugMenus)
+	UniversalAutoload.debugPrint(" lowRefreshMode: " .. tostring(UniversalAutoload.lowRefreshMode), debugMenus)
 	UniversalAutoload.debugPrint(" disableAutoStrap: " .. tostring(UniversalAutoload.disableAutoStrap), debugMenus)
 	setChecked('showDebugCheckBox', UniversalAutoload.showDebug)
 	setChecked('highPriorityCheckBox', UniversalAutoload.highPriority)
+	setChecked('lowRefreshModeCheckBox', UniversalAutoload.lowRefreshMode)
 	setChecked('disableAutoStrapCheckBox', not UniversalAutoload.disableAutoStrap)
 	
 	self.pricePerLogTextInput:setText(tostring(UniversalAutoload.pricePerLog))
@@ -190,6 +192,9 @@ function GlobalSettingsMenuUALSettings:onClickBinaryOption(id, control, directio
 	elseif control == self.highPriorityCheckBox then
 		UniversalAutoload.highPriority = not direction
 		UniversalAutoload.debugPrint(" highPriority: " .. tostring(UniversalAutoload.highPriority), debugMenus)
+	elseif control == self.lowRefreshModeCheckBox then
+		UniversalAutoload.lowRefreshMode = not direction
+		UniversalAutoload.debugPrint(" lowRefreshMode: " .. tostring(UniversalAutoload.lowRefreshMode), debugMenus)
 	elseif control == self.disableAutoStrapCheckBox then
 		UniversalAutoload.disableAutoStrap = direction
 		UniversalAutoload.debugPrint(" disableAutoStrap: " .. tostring(UniversalAutoload.disableAutoStrap), debugMenus)

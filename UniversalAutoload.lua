@@ -1805,6 +1805,16 @@ function UniversalAutoload:onUpdate(dt, isActiveForInput, isActiveForInputIgnore
 		if isActiveForInputIgnoreSelection and not isSelected then
 			UniversalAutoload.onDraw(self)
 		end
+		
+		if not UniversalAutoload.lowRefreshMode then
+			local status, result = pcall(UniversalAutoload.doUpdate, self, dt, isActiveForInput, isActiveForInputIgnoreSelection, isSelected)
+
+			if not status then
+				spec.stopError = true
+				spec.result = result
+			end
+		end
+		
 	end
 end
 
@@ -2946,11 +2956,13 @@ function UniversalAutoload:onUpdateTick(dt, isActiveForInput, isActiveForInputIg
 		return
 	end
 	
-	local status, result = pcall(UniversalAutoload.doUpdate, self, dt, isActiveForInput, isActiveForInputIgnoreSelection, isSelected)
+	if UniversalAutoload.lowRefreshMode then
+		local status, result = pcall(UniversalAutoload.doUpdate, self, dt, isActiveForInput, isActiveForInputIgnoreSelection, isSelected)
 
-	if not status then
-		spec.stopError = true
-		spec.result = result
+		if not status then
+			spec.stopError = true
+			spec.result = result
+		end
 	end
 end
 
