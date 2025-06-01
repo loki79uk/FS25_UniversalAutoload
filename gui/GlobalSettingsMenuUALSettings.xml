@@ -61,6 +61,14 @@
 						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_global_minLogLength"/>
 					</Bitmap>
 					
+					<!-- LOADING SPEED -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickMultiOption" onCreate="onCreateLoadingSpeed" id="loadingSpeedListBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_global_tooltip_loadingSpeed"/>
+						</MultiTextOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_global_loadingSpeed"/>
+					</Bitmap>
+					
 					<!-- OBJECT SPACING -->
 					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
 						<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickMultiOption" onCreate="onCreateObjectSpacing" id="objectSpacingListBox">

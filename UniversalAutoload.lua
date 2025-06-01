@@ -2432,7 +2432,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 	
 	if self.isClient and not g_gui:getIsGuiVisible() and isActiveForInputIgnoreSelection then
 		spec.menuDelayTime = spec.menuDelayTime or 0
-		if spec.menuDelayTime > UniversalAutoload.DELAY_TIME/2 then
+		if spec.menuDelayTime > UniversalAutoload.loadingSpeed/2 then
 			spec.menuDelayTime = 0
 
 			if spec.updateToggleLoading then
@@ -2557,7 +2557,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 		-- CREATE AND LOAD BALES (IF REQUESTED)
 		if spec.spawnBales then
 			spec.spawnBalesDelayTime = spec.spawnBalesDelayTime or 0
-			if spec.spawnBalesDelayTime > UniversalAutoload.DELAY_TIME then
+			if spec.spawnBalesDelayTime > UniversalAutoload.loadingSpeed then
 				spec.spawnBalesDelayTime = 0
 				
 				local failedToLoad = false
@@ -2590,7 +2590,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 		-- CREATE AND LOAD LOGS (IF REQUESTED)
 		if spec.spawnLogs then
 			spec.spawnLogsDelayTime = spec.spawnLogsDelayTime or 0
-			if spec.spawnLogsDelayTime > UniversalAutoload.DELAY_TIME then
+			if spec.spawnLogsDelayTime > UniversalAutoload.loadingSpeed then
 
 				if spec.spawnedLogId == nil then
 					if not UniversalAutoload.spawningLog then
@@ -2643,7 +2643,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 		-- CREATE AND LOAD PALLETS (IF REQUESTED)
 		if spec.spawnPallets and not spec.spawningPallet then
 			spec.spawnPalletsDelayTime = spec.spawnPalletsDelayTime or 0
-			if spec.spawnPalletsDelayTime > UniversalAutoload.DELAY_TIME then
+			if spec.spawnPalletsDelayTime > UniversalAutoload.loadingSpeed then
 				spec.spawnPalletsDelayTime = 0
 				
 				if spec.spawnedPallet then
@@ -2653,7 +2653,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 					if UniversalAutoload.loadObject(self, pallet) then
 						spec.spawnPalletsDelayTime = 0
 					else
-						spec.spawnPalletsDelayTime = UniversalAutoload.DELAY_TIME
+						spec.spawnPalletsDelayTime = UniversalAutoload.loadingSpeed
 						pallet:delete()
 						
 						if spec.palletsToSpawn and #spec.palletsToSpawn>1 then
@@ -2820,7 +2820,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 			-- LOAD ALL ANIMATION SEQUENCE
 			if spec.isLoading then
 				spec.loadDelayTime = spec.loadDelayTime or 0
-				if spec.loadDelayTime > UniversalAutoload.DELAY_TIME then
+				if spec.loadDelayTime > UniversalAutoload.loadingSpeed then
 					local lastObject = nil
 					local loadedObject = false
 					for index, object in ipairs(spec.sortedObjectsToLoad or {}) do
@@ -2908,7 +2908,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 				spec.postLoadDelayTime = spec.postLoadDelayTime or 0
 				local logDelay = spec.isLogTrailer and UniversalAutoload.LOG_DELAY or 0
 				local mpDelay = g_currentMission.missionDynamicInfo.isMultiplayer and UniversalAutoload.MP_DELAY or 0
-				if spec.postLoadDelayTime > UniversalAutoload.DELAY_TIME + mpDelay + logDelay then
+				if spec.postLoadDelayTime > UniversalAutoload.loadingSpeed + mpDelay + logDelay then
 					UniversalAutoload.resetLoadingState(self)
 				else
 					spec.postLoadDelayTime = spec.postLoadDelayTime + dt
@@ -5880,7 +5880,7 @@ function UniversalAutoload:drawDebugDisplay()
 			UniversalAutoload.debugRefreshTime = (UniversalAutoload.debugRefreshTime or 0) + g_currentDt
 			
 			if UniversalAutoload.getIsUnloadingKeyAllowed(self) == true then
-				if spec.objectsToUnload == nil or UniversalAutoload.debugRefreshTime > UniversalAutoload.DELAY_TIME then
+				if spec.objectsToUnload == nil or UniversalAutoload.debugRefreshTime > UniversalAutoload.loadingSpeed then
 					UniversalAutoload.debugRefreshTime = 0
 					UniversalAutoload.buildObjectsToUnloadTable(self)
 					spec.objectsToUnload = spec.objectsToUnload or {}

@@ -81,6 +81,7 @@ function GlobalSettingsMenuUALSettings:updateSettings()
 	self.pricePerPalletTextInput:setText(tostring(UniversalAutoload.pricePerPallet))
 
 	setClosestValue('minLogLengthListBox', UniversalAutoload.minLogLength)
+	setClosestValue('loadingSpeedListBox', UniversalAutoload.loadingSpeed)
 	setClosestValue('objectSpacingListBox', UniversalAutoload.objectSpacing)
 	
 end
@@ -110,6 +111,7 @@ function GlobalSettingsMenuUALSettings:onCreate()
 	if g_currentMission.missionDynamicInfo.isMultiplayer then
 		self.disableAutoStrapCheckBox:setDisabled(true)
 		self.minLogLengthListBox:setDisabled(true)
+		self.loadingSpeedListBox:setDisabled(true)
 		self.objectSpacingListBox:setDisabled(true)
 		self.pricePerLogTextInput:setDisabled(true)
 		self.pricePerBaleTextInput:setDisabled(true)
@@ -157,6 +159,31 @@ function GlobalSettingsMenuUALSettings:onCreateMinLogLength(control)
 		6.0,
 		7.0,
 		8.0
+	}
+end
+
+function GlobalSettingsMenuUALSettings:onCreateLoadingSpeed(control)
+	control.texts = {
+		'50',
+		'100',
+		'150',
+		'200',
+		'250',
+		'500',
+		'750',
+		'1000',
+		'2000'
+	}
+	control.values = {
+		50,
+		100,
+		150,
+		200,
+		250,
+		500,
+		750,
+		1000,
+		2000
 	}
 end
 
@@ -214,7 +241,12 @@ function GlobalSettingsMenuUALSettings:onClickMultiOption(id, control, direction
 		UniversalAutoload.minLogLength = control.values[id]
 		UniversalAutoload.debugPrint(" minLogLength: " .. tostring(UniversalAutoload.minLogLength), debugMenus)	
 	end
-		
+	
+	if control == self.loadingSpeedListBox then
+		UniversalAutoload.loadingSpeed = control.values[id]
+		UniversalAutoload.debugPrint(" loadingSpeed: " .. tostring(UniversalAutoload.loadingSpeed), debugMenus)	
+	end
+	
 	if control == self.objectSpacingListBox then
 		UniversalAutoload.objectSpacing = control.values[id]
 		UniversalAutoload.debugPrint(" objectSpacing: " .. tostring(UniversalAutoload.objectSpacing), debugMenus)	

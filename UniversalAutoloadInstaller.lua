@@ -145,6 +145,7 @@ UniversalAutoload.GLOBAL_DEFAULTS = {
 	{id="pricePerBale", default=0, valueType="FLOAT", key="#pricePerBale"}, --The price charged for each auto-loaded bale (default is zero)
 	{id="pricePerPallet", default=0, valueType="FLOAT", key="#pricePerPallet"}, --The price charged for each auto-loaded pallet (default is zero)
 	{id="minLogLength", default=0, valueType="FLOAT", key="#minLogLength"}, --The global minimum length for logs that will be autoloaded (default is zero)
+	{id="loadingSpeed", default=150, valueType="INT", key="#loadingSpeed"}, --Time delay between loading each object (ms)
 	{id="objectSpacing", default=0, valueType="FLOAT", key="#objectSpacing"}, --Additional spacing between loaded objects (m)
 }
 
