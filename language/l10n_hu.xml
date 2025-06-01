@@ -17,6 +17,7 @@
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Hibakeresési infók"/>
 		<text name="ui_global_highPriority" text="Magas prioritás"/>
+		<text name="ui_global_lowRefreshMode" text="Alacsony frissítési mód"/>
 		<text name="ui_global_disableAutoStrap" text="Automata feszítőövek"/>
 		<text name="ui_global_pricePerLog" text="Ár rönkönként"/>
 		<text name="ui_global_pricePerBale" text="Ár bálánként"/>
@@ -27,6 +28,7 @@
 		
 		<text name="ui_global_tooltip_showDebug" text="Hibakeresési információk megjelenítése az összes járműre"/>
 		<text name="ui_global_tooltip_highPriority" text="Magas prioritás alkalmazása az összes UAL billentyűkombinációra az F1 menüben"/>
+		<text name="ui_global_tooltip_lowRefreshMode" text="Ritkább frissítés – engedélyezd ezt a beállítást, ha akadozást tapasztalsz automatikus betöltésnél"/>
 		<text name="ui_global_tooltip_disableAutoStrap" text="Feszítőövek automatikus használata rakodás vagy kirakodás után"/>
 		<text name="ui_global_tooltip_pricePerLog" text="Az automata rakodás ára rönkönként"/>
 		<text name="ui_global_tooltip_pricePerBale" text="Az automata rakodás ára bálánként"/>

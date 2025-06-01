@@ -18,6 +18,7 @@
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Показати Налагодження"/>
 		<text name="ui_global_highPriority" text="Високий Пріоритет"/>
+		<text name="ui_global_lowRefreshMode" text="Режим низької частоти оновлення"/>
 		<text name="ui_global_disableAutoStrap" text="Відключити Авто-Ремені"/>
 		<text name="ui_global_pricePerLog" text="Ціна за Колоду"/>
 		<text name="ui_global_pricePerBale" text="Ціна за Тюк"/>
@@ -28,6 +29,7 @@
 		
 		<text name="ui_global_tooltip_showDebug" text="Показати повний графічний дисплей налагодження для всіх транспортних засобів у грі"/>
 		<text name="ui_global_tooltip_highPriority" text="Встановити високий пріоритет для усіх UAL прив'язок клавіш у F1 меню"/>
+		<text name="ui_global_tooltip_lowRefreshMode" text="Оновлюйте рідше — увімкніть цей параметр, якщо спостерігається затримка під час автозавантаження"/>
 		<text name="ui_global_tooltip_disableAutoStrap" text="Вимикає автоматичне встановлення натяжних ременів"/>
 		<text name="ui_global_tooltip_pricePerLog" text="Ціна за кожну автозавантажену колоду"/>
 		<text name="ui_global_tooltip_pricePerBale" text="Ціна за кожний автозавантажений тюк"/>

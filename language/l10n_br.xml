@@ -17,6 +17,7 @@
 		<!-- GLOBAL -->
 		<text name="ui_global_showDebug" text="Mostrar depuração"/>
 		<text name="ui_global_highPriority" text="Alta prioridade"/>
+		<text name="ui_global_lowRefreshMode" text="Modo de Atualização Baixa"/>
 		<text name="ui_global_disableAutoStrap" text="Correias de tensão automática"/>
 		<text name="ui_global_pricePerLog" text="Preço por tronco"/>
 		<text name="ui_global_pricePerBale" text="Preço por fardo"/>
@@ -27,6 +28,7 @@
 		
 		<text name="ui_global_tooltip_showDebug" text="Mostrar a exibição de depuração gráfica completa para todos os veículos no jogo"/>
 		<text name="ui_global_tooltip_highPriority" text="Aplicar alta prioridade a todas as combinações de teclas UAL no menu F1"/>
+		<text name="ui_global_tooltip_lowRefreshMode" text="Atualize com menos frequência – ative esta opção se houver lentidão ao usar o carregamento automático"/>
 		<text name="ui_global_tooltip_disableAutoStrap" text="Aplicação automática de correias de tensão após o carga ou descarga"/>
 		<text name="ui_global_tooltip_pricePerLog" text="O preço cobrado por cada tronco carregado automaticamente"/>
 		<text name="ui_global_tooltip_pricePerBale" text="O preço cobrado por cada fardo carregado automaticamente"/>
