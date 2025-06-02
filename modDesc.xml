@@ -2,7 +2,7 @@
 <modDesc descVersion="97">
 
     <author>loki_79</author>
-    <version>0.4.8.7</version>
+    <version>0.4.8.8</version>
     
     <title>
         <en>Universal Autoload</en>
@@ -19,42 +19,32 @@
     </title>
     
     <description>
-<en><![CDATA[Autoloading specialisation for flatbed trailers.  This automatically modifies the actual base game trailers, and will be applied to any new or existing trailers on your farm.  Please see the included read-me file for instructions on adding to your own mod trailers or pallets.
+<en><![CDATA[Autoloading specialisation for trailers.  This automatically modifies the actual base game trailers, and will be applied to any new or existing trailers on your farm.  Supported trailers can be configured with a GUI when purchasing in the shop.  Please see the included read-me file for full instructions on configuration.
 
 Features:
-- Loads any compatible pallet/container types
-- Loads lumber to any supported forestry vehicles
-- Installed automatically on any compatible trailers
+- Loads all pallet/container types
+- Loads lumber to forestry vehicles
 - Load and Unload by selected material or container type
 - Can also restrict loading to full pallets only
-- Select 'ALL' to load mixed types in sequence 
-- Mixed pallets are loaded in size order for best packing efficiency
-- Can interact with trailers when player is on foot (even when not attached to a vehicle)
-
-Special Features for 'KRONE Trailer Profi Liner'
-- Load/Unload only available on the side that curtain is open
-- Rear loading directly from forklift
-- Rear door and curtain can be opened and closed by player on foot
+- Select 'ALL' to load mixed types in sequence
+- Option to load in stacks or layers
+- Objects are loaded in size order for best packing efficiency
+- Integrated with AutoDrive and CoursePlay
 
 ]]>
 </en>
 
-<de><![CDATA[Fügt die automatische Ladefähigkeit für Transportanhänger und Pritschen hinzu.  Die Änderung gilt automatisch für alle kompatiblen Grundausrüstungen im Spiel. Sie wird sowohl für die bereits auf deiner Farm vorhandenen Geräte als auch für zukünftige Käufe angewendet. Die README-Datei enthält die notwendigen Hinweise, um Ihre eigenen modellierten Anhänger oder Paletten hinzuzufügen.
+<de><![CDATA[Autoloading-Spezialisierung für Anhänger.  Dies modifiziert automatisch die aktuellen Anhänger des Basisspiels und wird auf alle neuen oder bestehenden Anhänger auf eurer Farm angewendet.  Unterstützte Anhänger können über eine grafische Benutzeroberfläche beim Kauf im Shop konfiguriert werden.  Eine ausführliche Anleitung zur Konfiguration finden Sie in der mitgelieferten Read-me-Datei.
 
-Funktionen:
-- Lädt jede Art von kompatiblen Paletten oder Containern
-- Lädt Holz auf beliebige Forstfahrzeuge
-- Wird automatisch auf allen kompatiblen Anhängern installiert
-- Be- und Entladen durch Auswahl der Warenart oder des Containertyps
-- Möglichkeit, nur vollständig gefüllte Paletten zu laden
-- Modus 'Alle', um alle gemischten Typen nacheinander zu laden
-- Die Paletten werden in der Reihenfolge ihrer Größe geladen, um den Lagerraum zu optimieren
-- Kann auch verwendet werden, wenn man zu Fuß neben dem Gerät steht (auch wenn das Gerät nicht angehängt ist)
-
-Sonderfunktionen für den Anhänger 'KRONE Trailer Profi Liner'
-- Be- und Entladen nur von der Öffnungsseite der Plane aus nutzbar
-- Beladen von der Rückseite bei Verwendung eines Gabelstaplers
-- Die Hecktür und die Plane können auch bedient werden, wenn man zu Fuß daneben steht
+Eigenschaften:
+- Lädt alle Paletten-/Containertypen
+- Lädt Holz auf Forstfahrzeuge
+- Laden und Entladen nach ausgewähltem Material oder Containertyp
+- Kann das Laden auch auf volle Paletten beschränken
+- Wählen Sie 'ALL', um gemischte Typen nacheinander zu laden
+- Option zum Laden in Stapeln oder Schichten
+- Die Objekte werden in der Reihenfolge ihrer Größe geladen, um die beste Packeffizienz zu erzielen
+- Integriert mit AutoDrive und CoursePlay
 
 ]]>
 </de>
