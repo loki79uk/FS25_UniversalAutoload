@@ -338,14 +338,22 @@ ActivatableObjectsSystem.updateObjects = Utils.overwrittenFunction(ActivatableOb
 
 function UniversalAutoloadManager:update(dt)
 	if g_currentMission:getIsServer() then
+		local activeVehicles = {}
 		for vehicle, _ in pairs(UniversalAutoload.VEHICLES) do
 			local spec = vehicle and vehicle.spec_universalAutoload
-			local isCollectionModeActive = spec and spec.autoCollectionMode
-			if isCollectionModeActive or vehicle==UniversalAutoload.lastClosestVehicle then
-				--g_currentMission:addExtraPrintText("FORCE " .. vehicle:getFullName())
-				--UniversalAutoload.forceRaiseActive(vehicle, true)
+			local doActivateExtra = spec and spec.autoCollectionMode or vehicle == UniversalAutoload.lastClosestVehicle
+			if doActivateExtra then
 				UniversalAutoload.doUpdate(vehicle, dt)
 				UniversalAutoload.onDraw(vehicle)
+				table.insert(activeVehicles, vehicle)
+			elseif vehicle:getIsActiveForInput(true, true) then
+				table.insert(activeVehicles, vehicle)
+			end
+		end
+		if UniversalAutoload.showDebug and next(activeVehicles) ~= nil then
+			renderText(0.21, 0.925, 0.015, "UAL Active Vehicles:")
+			for i, vehicle in ipairs(activeVehicles) do
+				renderText(0.21, 0.92 - (i * 0.015), 0.012, tostring(vehicle:getFullName()))
 			end
 		end
 	end

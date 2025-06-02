@@ -2794,6 +2794,10 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 		
 		-- SHOULD UPDATE VEHICLE LOADING (ON SERVER)
 		if isActiveForInputIgnoreSelection or isActiveForLoading or playerTriggerActive then
+			
+			if debugVehicles and playerTriggerActive then
+				UniversalAutoload.testLocation(self)
+			end
 		
 			if spec.autoCollectionMode and not isActiveForLoading or spec.aiLoadingActive then
 				if spec.totalAvailableCount > 0 and not spec.trailerIsFull then
@@ -4477,7 +4481,10 @@ function UniversalAutoload:testLocation(loadPlace)
 	end
 	table.sort(FLAGS, function (a, b) return a.value < b.value end)
 	
-	UniversalAutoload.debugPrint("TEST ALL COLLISIONS")
+	if UniversalAutoload.showDebug then
+		renderText(0.45, 0.925, 0.015, tostring(self:getFullName()))
+	end
+	
 	spec.foundAnyObject = false
 	for i, flag in ipairs(FLAGS) do
 		spec.foundObject = false
@@ -4485,14 +4492,16 @@ function UniversalAutoload:testLocation(loadPlace)
 		local collisionMask = flag.value
 		local hitCount = overlapBox(x+dx, y+dy, z+dz, rx, ry, rz, sizeX, sizeY, sizeZ, "ualTestLocation_Callback", self, collisionMask, true, true, true, true)
 		
-		UniversalAutoload.debugPrint("  " .. tostring(flag.name) .. " = " .. tostring(spec.foundObject):upper() .. " (" .. tostring(hitCount) .. ")")
+		if UniversalAutoload.showDebug then
+			renderText(0.45, 0.92-(i*0.015), 0.010, tostring(flag.name) .. " = " .. tostring(spec.foundObject):upper() .. " (" .. tostring(hitCount) .. ")")
+		end
 		
 		if spec.foundObject then
 			spec.foundAnyObject = true
 		end
 	end	
 
-	if UniversalAutoload.showDebug then
+	if loadPlace and UniversalAutoload.showDebug then
 		spec.testLocation = {
 			node = loadPlace.node,
 			sizeX = 2*sizeX,
