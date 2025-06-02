@@ -52,7 +52,7 @@ function GlobalSettingsMenuUALSettings:updateSettings()
 	end
 	local function setClosestValue(controlId, value)
 		local control = self[controlId]
-		if control then
+		if control and value then
 			local index = 1
 			local initialdiff = math.huge
 			for i, v in pairs(control.values or {}) do
@@ -116,6 +116,9 @@ function GlobalSettingsMenuUALSettings:onCreate()
 		self.pricePerLogTextInput:setDisabled(true)
 		self.pricePerBaleTextInput:setDisabled(true)
 		self.pricePerPalletTextInput:setDisabled(true)
+		self.highPriorityCheckBox:setDisabled(false)
+		self.lowRefreshModeCheckBox:setDisabled(true)
+		self.showDebugCheckBox:setDisabled(false)
 	end
 	
 	

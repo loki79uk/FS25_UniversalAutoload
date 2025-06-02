@@ -2351,6 +2351,7 @@ Player.readStream = Utils.overwrittenFunction(Player.readStream,
 		UniversalAutoload.pricePerLog = streamReadFloat32(streamId)
 		UniversalAutoload.pricePerBale = streamReadFloat32(streamId)
 		UniversalAutoload.pricePerPallet = streamReadFloat32(streamId)
+		UniversalAutoload.minLogLength = streamReadFloat32(streamId)
 		UniversalAutoload.loadingSpeed = streamReadInt32(streamId)
 		UniversalAutoload.objectSpacing = streamReadFloat32(streamId)
 	end
@@ -2363,7 +2364,8 @@ Player.writeStream = Utils.overwrittenFunction(Player.writeStream,
 		streamWriteFloat32(streamId, UniversalAutoload.pricePerLog or 0)
 		streamWriteFloat32(streamId, UniversalAutoload.pricePerBale or 0)
 		streamWriteFloat32(streamId, UniversalAutoload.pricePerPallet or 0)
-		streamWriteInt32(streamId, UniversalAutoload.loadingSpeed or 0)
+		streamWriteFloat32(streamId, UniversalAutoload.minLogLength or 0)
+		streamWriteInt32(streamId, UniversalAutoload.loadingSpeed or 150)
 		streamWriteFloat32(streamId, UniversalAutoload.objectSpacing or 0)
 	end
 )

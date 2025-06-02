@@ -5974,7 +5974,7 @@ function UniversalAutoload:drawDebugDisplay()
 		-- end
 	
 		g_currentMission:addExtraPrintText(tostring(self:getName() .. " # " .. (spec.validUnloadCount or "-") .. " / " .. (spec.totalAvailableCount or "-")
-			.. ((spec.useHorizontalLoading and " : L" .. spec.currentLayerCount  .. "") or "" )))
+			.. ((spec.useHorizontalLoading and " : L" .. (spec.currentLayerCount or "-")  .. "") or "" )))
 		
 		if self.isServer then
 			-- UniversalAutoload.testLoadAreaIsEmpty(self)
