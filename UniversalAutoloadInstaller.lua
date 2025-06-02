@@ -2348,10 +2348,11 @@ Player.readStream = Utils.overwrittenFunction(Player.readStream,
 		superFunc(self, streamId, connection, objectId)
 		UniversalAutoload.debugPrint("UAL Player.readStream")
 		UniversalAutoload.disableAutoStrap = streamReadBool(streamId)
-		UniversalAutoload.pricePerLog = streamReadInt32(streamId)
-		UniversalAutoload.pricePerBale = streamReadInt32(streamId)
-		UniversalAutoload.pricePerPallet = streamReadInt32(streamId)
-		UniversalAutoload.objectSpacing = streamReadInt32(streamId)
+		UniversalAutoload.pricePerLog = streamReadFloat32(streamId)
+		UniversalAutoload.pricePerBale = streamReadFloat32(streamId)
+		UniversalAutoload.pricePerPallet = streamReadFloat32(streamId)
+		UniversalAutoload.loadingSpeed = streamReadInt32(streamId)
+		UniversalAutoload.objectSpacing = streamReadFloat32(streamId)
 	end
 )
 Player.writeStream = Utils.overwrittenFunction(Player.writeStream,
@@ -2359,10 +2360,11 @@ Player.writeStream = Utils.overwrittenFunction(Player.writeStream,
 		superFunc(self, streamId, connection)
 		UniversalAutoload.debugPrint("UAL Player.writeStream")
 		streamWriteBool(streamId, UniversalAutoload.disableAutoStrap or false)
-		streamWriteInt32(streamId, UniversalAutoload.pricePerLog or 0)
-		streamWriteInt32(streamId, UniversalAutoload.pricePerBale or 0)
-		streamWriteInt32(streamId, UniversalAutoload.pricePerPallet or 0)
-		streamWriteInt32(streamId, UniversalAutoload.objectSpacing or 0)
+		streamWriteFloat32(streamId, UniversalAutoload.pricePerLog or 0)
+		streamWriteFloat32(streamId, UniversalAutoload.pricePerBale or 0)
+		streamWriteFloat32(streamId, UniversalAutoload.pricePerPallet or 0)
+		streamWriteInt32(streamId, UniversalAutoload.loadingSpeed or 0)
+		streamWriteFloat32(streamId, UniversalAutoload.objectSpacing or 0)
 	end
 )
 
