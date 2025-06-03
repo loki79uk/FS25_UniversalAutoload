@@ -141,9 +141,9 @@ UniversalAutoload.GLOBAL_DEFAULTS = {
 	{id="highPriority", default=true, valueType="BOOL", key="#highPriority"}, --Apply high priority to all UAL key bindings in the F1 menu
 	{id="lowRefreshMode", default=false, valueType="BOOL", key="#lowRefreshMode"}, --Update less frequently - set to 'true' if you experience lag when using autoload
 	{id="disableAutoStrap", default=false, valueType="BOOL", key="#disableAutoStrap"}, --Disable the automatic application of tension belts
-	{id="pricePerLog", default=0, valueType="FLOAT", key="#pricePerLog"}, --The price charged for each auto-loaded log (default is zero)
-	{id="pricePerBale", default=0, valueType="FLOAT", key="#pricePerBale"}, --The price charged for each auto-loaded bale (default is zero)
-	{id="pricePerPallet", default=0, valueType="FLOAT", key="#pricePerPallet"}, --The price charged for each auto-loaded pallet (default is zero)
+	{id="pricePerLog", default=0, valueType="INT", key="#pricePerLog"}, --The price charged for each auto-loaded log (default is zero)
+	{id="pricePerBale", default=0, valueType="INT", key="#pricePerBale"}, --The price charged for each auto-loaded bale (default is zero)
+	{id="pricePerPallet", default=0, valueType="INT", key="#pricePerPallet"}, --The price charged for each auto-loaded pallet (default is zero)
 	{id="minLogLength", default=0, valueType="FLOAT", key="#minLogLength"}, --The global minimum length for logs that will be autoloaded (default is zero)
 	{id="loadingSpeed", default=150, valueType="INT", key="#loadingSpeed"}, --Time delay between loading each object (ms)
 	{id="objectSpacing", default=0, valueType="FLOAT", key="#objectSpacing"}, --Additional spacing between loaded objects (m)
@@ -2348,9 +2348,9 @@ Player.readStream = Utils.overwrittenFunction(Player.readStream,
 		superFunc(self, streamId, connection, objectId)
 		UniversalAutoload.debugPrint("UAL Player.readStream")
 		UniversalAutoload.disableAutoStrap = streamReadBool(streamId)
-		UniversalAutoload.pricePerLog = streamReadFloat32(streamId)
-		UniversalAutoload.pricePerBale = streamReadFloat32(streamId)
-		UniversalAutoload.pricePerPallet = streamReadFloat32(streamId)
+		UniversalAutoload.pricePerLog = streamReadInt32(streamId)
+		UniversalAutoload.pricePerBale = streamReadInt32(streamId)
+		UniversalAutoload.pricePerPallet = streamReadInt32(streamId)
 		UniversalAutoload.minLogLength = streamReadFloat32(streamId)
 		UniversalAutoload.loadingSpeed = streamReadInt32(streamId)
 		UniversalAutoload.objectSpacing = streamReadFloat32(streamId)
@@ -2361,9 +2361,9 @@ Player.writeStream = Utils.overwrittenFunction(Player.writeStream,
 		superFunc(self, streamId, connection)
 		UniversalAutoload.debugPrint("UAL Player.writeStream")
 		streamWriteBool(streamId, UniversalAutoload.disableAutoStrap or false)
-		streamWriteFloat32(streamId, UniversalAutoload.pricePerLog or 0)
-		streamWriteFloat32(streamId, UniversalAutoload.pricePerBale or 0)
-		streamWriteFloat32(streamId, UniversalAutoload.pricePerPallet or 0)
+		streamWriteInt32(streamId, UniversalAutoload.pricePerLog or 0)
+		streamWriteInt32(streamId, UniversalAutoload.pricePerBale or 0)
+		streamWriteInt32(streamId, UniversalAutoload.pricePerPallet or 0)
 		streamWriteFloat32(streamId, UniversalAutoload.minLogLength or 0)
 		streamWriteInt32(streamId, UniversalAutoload.loadingSpeed or 150)
 		streamWriteFloat32(streamId, UniversalAutoload.objectSpacing or 0)
@@ -2377,23 +2377,6 @@ FSBaseMission.sendInitialClientState = Utils.overwrittenFunction(FSBaseMission.s
 		
 		UniversalAutoload.debugPrint("  user: " .. tostring(user.nickname) .. " " .. tostring(farm.name), debugMultiplayer)
 		UniversalAutoload.debugPrint("connectedToDedicatedServer: " .. tostring(g_currentMission.connectedToDedicatedServer))
-
-		-- UniversalAutoload.disableAutoStrap = UniversalAutoload.disableAutoStrap or false
-		-- UniversalAutoload.pricePerLog = UniversalAutoload.pricePerLog or 0
-		-- UniversalAutoload.pricePerBale = UniversalAutoload.pricePerBale or 0
-		-- UniversalAutoload.pricePerPallet = UniversalAutoload.pricePerPallet or 0
-		
-		-- streamWriteBool(streamId, UniversalAutoload.disableAutoStrap)
-		-- streamWriteInt32(streamId, spec.pricePerLog)
-		-- streamWriteInt32(streamId, spec.pricePerBale)
-		-- streamWriteInt32(streamId, spec.pricePerPallet)
-		-- streamWriteInt32(streamId, spec.minLogLength)
-
-		-- UniversalAutoload.disableAutoStrap = streamReadBool(streamId)
-		-- spec.pricePerLog = streamReadInt32(streamId)
-		-- spec.pricePerBale = streamReadInt32(streamId)
-		-- spec.pricePerPallet = streamReadInt32(streamId)
-		-- spec.minLogLength = streamReadInt32(streamId)
 	end
 )
 
