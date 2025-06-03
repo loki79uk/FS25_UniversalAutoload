@@ -116,8 +116,8 @@ function GlobalSettingsMenuUALSettings:onCreate()
 		self.pricePerLogTextInput:setDisabled(true)
 		self.pricePerBaleTextInput:setDisabled(true)
 		self.pricePerPalletTextInput:setDisabled(true)
-		self.highPriorityCheckBox:setDisabled(false)
 		self.lowRefreshModeCheckBox:setDisabled(true)
+		self.highPriorityCheckBox:setDisabled(false)
 		self.showDebugCheckBox:setDisabled(false)
 	end
 	

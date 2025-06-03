@@ -87,20 +87,20 @@
 						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_global_pricePerPallet" />
 					</Bitmap>
 			
-					<!-- ENABLE/DISABLE HighPriority -->
-					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
-						<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickBinaryOption" id="highPriorityCheckBox">
-							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_global_tooltip_highPriority"/>
-						</BinaryOption>
-						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_global_highPriority"/>
-					</Bitmap>
-					
 					<!-- ENABLE/DISABLE LowRefreshMode -->
 					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
 						<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickBinaryOption" id="lowRefreshModeCheckBox">
 							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_global_tooltip_lowRefreshMode"/>
 						</BinaryOption>
 						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_global_lowRefreshMode"/>
+					</Bitmap>
+					
+					<!-- ENABLE/DISABLE HighPriority -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickBinaryOption" id="highPriorityCheckBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_global_tooltip_highPriority"/>
+						</BinaryOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_global_highPriority"/>
 					</Bitmap>
 
 					<!-- ENABLE/DISABLE ShowDebug -->
