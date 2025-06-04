@@ -2790,10 +2790,11 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 		end
 		
 		-- CHECK IF VEHICLE HAS ACTIVE LOADING REQUIREMENTS
-		local isActiveForLoading = spec.isLoading or spec.isUnloading or spec.doPostLoadDelay or spec.baleCollectionModeDeactivated or spec.autoCollectionMode or spec.aiLoadingActive
+		local isActiveForLoading = spec.isLoading or spec.isUnloading or spec.doPostLoadDelay
+		local isAutoloadingActive = spec.baleCollectionModeDeactivated or spec.autoCollectionMode or spec.aiLoadingActive
 		
 		-- SHOULD UPDATE VEHICLE LOADING (ON SERVER)
-		if isActiveForInputIgnoreSelection or isActiveForLoading or playerTriggerActive then
+		if isActiveForInputIgnoreSelection or isActiveForLoading or isAutoloadingActive or playerTriggerActive then
 			
 			if debugVehicles and playerTriggerActive then
 				UniversalAutoload.testLocation(self)
