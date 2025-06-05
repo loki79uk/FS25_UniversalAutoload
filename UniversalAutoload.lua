@@ -1418,6 +1418,9 @@ function UniversalAutoload:initialiseTransformGroups(actualRootNode)
 				setTranslation(trigger.node, tx or 0, ty or 0, tz or 0)
 				
 				local sx, sy, sz = getScale(trigger.node)
+				trigger.sizeX = width
+				trigger.sizeY = height
+				trigger.sizeZ = length
 				trigger.width = width/sx
 				trigger.height = height/sy
 				trigger.length = length/sz
@@ -1537,6 +1540,9 @@ function UniversalAutoload:updateLoadingTriggers()
 			setTranslation(trigger.node, tx or 0, ty or 0, tz or 0)
 
 			local sx, sy, sz = getScale(trigger.node)
+			trigger.sizeX = width
+			trigger.sizeY = height
+			trigger.sizeZ = length
 			trigger.width = width/sx
 			trigger.height = height/sy
 			trigger.length = length/sz
@@ -2796,8 +2802,31 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 		-- SHOULD UPDATE VEHICLE LOADING (ON SERVER)
 		if isActiveForInputIgnoreSelection or isActiveForLoading or isAutoloadingActive or playerTriggerActive then
 			
-			if debugVehicles and playerTriggerActive then
-				UniversalAutoload.testLocation(self)
+			--if debugVehicles and playerTriggerActive then
+			--	UniversalAutoload.testLocation(self)
+			--end
+			
+			if debugLoading and UniversalAutoload.showDebug then
+				local line = 0
+				renderText(0.55, 0.92-(line*0.015), 0.010, "loadedObjects")
+				for object, _ in pairs(spec.loadedObjects or {}) do
+					line = line + 1
+					renderText(0.45, 0.92-(line*0.015), 0.010, tostring(object.id or object.nodeId))
+				end
+				
+				line = line + 1
+				renderText(0.55, 0.92-(line*0.015), 0.010, "availableObjects")
+				for object, _ in pairs(spec.availableObjects or {}) do
+					line = line + 1
+					renderText(0.45, 0.92-(line*0.015), 0.010, tostring(object.id or object.nodeId))
+				end	
+				
+				line = line + 1
+				renderText(0.55, 0.92-(line*0.015), 0.010, "sortedObjectsToLoad")
+				for i, object in ipairs(spec.sortedObjectsToLoad or {}) do
+					line = line + 1
+					renderText(0.45, 0.92-(line*0.015), 0.010, tostring(object.id or object.nodeId))
+				end
 			end
 		
 			if spec.autoCollectionMode and not isActiveForLoading or spec.aiLoadingActive then
@@ -3954,7 +3983,7 @@ function UniversalAutoload:getLoadPlace(containerType, object)
 				if containerType.isBale and containerType.isRoundbale then
 					if spec.useHorizontalLoading then
 					-- LONGWAYS ROUNDBALE STACKING
-						containerSizeY = containerType.sizeZ * UniversalAutoload.ROTATED_BALE_FACTOR
+						containerSizeY = containerType.sizeZ * UniversalAutoload.ROTATED_BALE_FACTOR + UniversalAutoload.DELTA
 						containerSizeZ = containerType.sizeY
 					end
 				end
@@ -4334,7 +4363,7 @@ function UniversalAutoload:testLocationIsEmpty(loadPlace, object, offset, mask)
 	end
 	
 	if loadPlace.isRoundbale and loadPlace.useRoundbalePacking == false then
-		dy = dy + (sizeY * (1 - UniversalAutoload.ROTATED_BALE_FACTOR) / 2)
+		dy = dy + (sizeY * (1 - UniversalAutoload.ROTATED_BALE_FACTOR) / 2) + UniversalAutoload.DELTA
 		sizeX = sizeX * UniversalAutoload.ROTATED_BALE_FACTOR
 		sizeY = sizeY * UniversalAutoload.ROTATED_BALE_FACTOR
 		sizeZ = sizeZ * UniversalAutoload.ROTATED_BALE_FACTOR
@@ -4353,12 +4382,6 @@ function UniversalAutoload:testLocationIsEmpty(loadPlace, object, offset, mask)
 			rx = rx, ry = ry, rz = rz,
 			sizeX = sizeX, sizeY = sizeY, sizeZ = sizeZ,
 		}
-		-- spec.testLocation = {
-			-- node = loadPlace.node,
-			-- sizeX = 2*sizeX,
-			-- sizeY = 2*sizeY,
-			-- sizeZ = 2*sizeZ,
-		-- }
 	end
 
 	return not spec.foundObject
@@ -4447,7 +4470,7 @@ function UniversalAutoload:ualTestUnloadLocation_Callback(hitObjectId, x, y, z, 
 	return true
 end
 --
-function UniversalAutoload:testLocation(loadPlace)
+function UniversalAutoload:testLocation(location, object)
 	local spec = self.spec_universalAutoload
 	local i = spec.currentLoadAreaIndex or 1
 	local r = 0.025
@@ -4456,7 +4479,7 @@ function UniversalAutoload:testLocation(loadPlace)
 	local x, y, z
 	local rx, ry, rz
 	local dx, dy, dz
-	if loadPlace == nil then
+	if location == nil then
 		if not spec.loadArea or #spec.loadArea == 0 then
 			return
 		end
@@ -4465,53 +4488,54 @@ function UniversalAutoload:testLocation(loadPlace)
 		rx, ry, rz = UniversalAutoload.getWorldRotation(spec.loadArea[i].rootNode)
 		dx, dy, dz = UniversalAutoload.localDirectionToWorld(spec.loadArea[i].rootNode, 0, sizeY, 0)
 	else
-		sizeX, sizeY, sizeZ = (loadPlace.sizeX/2)-r, (loadPlace.sizeY/2)-r, (loadPlace.sizeZ/2)-r
-		x, y, z = UniversalAutoload.localToWorld(loadPlace.node)
-		rx, ry, rz = UniversalAutoload.getWorldRotation(loadPlace.node)
-		dx, dy, dz = UniversalAutoload.localDirectionToWorld(loadPlace.node, 0, sizeY, 0)
-	end
-
-	local FLAGS = {}
-	for name, value in pairs(CollisionFlag) do
-		if type(value) == 'number' then
-			local flag = {}
-			flag.name = name
-			flag.value = value
-			table.insert(FLAGS, flag)
-		end
-	end
-	table.sort(FLAGS, function (a, b) return a.value < b.value end)
-	
-	if UniversalAutoload.showDebug then
-		renderText(0.45, 0.925, 0.015, tostring(self:getFullName()))
+		sizeX, sizeY, sizeZ = (location.sizeX/2)-r, (location.sizeY/2)-r, (location.sizeZ/2)-r
+		x, y, z = UniversalAutoload.localToWorld(location.node)
+		rx, ry, rz = UniversalAutoload.getWorldRotation(location.node)
+		dx, dy, dz = UniversalAutoload.localDirectionToWorld(location.node) -- no Y offset needed for triggers
 	end
 	
-	spec.foundAnyObject = false
-	for i, flag in ipairs(FLAGS) do
-		spec.foundObject = false
+	spec.target = object
+	spec.foundTarget = false
+	spec.foundObject = false
 		
-		local collisionMask = flag.value
-		local hitCount = overlapBox(x+dx, y+dy, z+dz, rx, ry, rz, sizeX, sizeY, sizeZ, "ualTestLocation_Callback", self, collisionMask, true, true, true, true)
-		
-		if UniversalAutoload.showDebug then
-			renderText(0.45, 0.92-(i*0.015), 0.010, tostring(flag.name) .. " = " .. tostring(spec.foundObject):upper() .. " (" .. tostring(hitCount) .. ")")
-		end
-		
-		if spec.foundObject then
-			spec.foundAnyObject = true
-		end
-	end	
+	local collisionMask = UniversalAutoload.MASK.object
+	local hitCount = overlapBox(x+dx, y+dy, z+dz, rx, ry, rz, sizeX, sizeY, sizeZ, "ualTestLocation_Callback", self, collisionMask, true, true, true, true)
 
-	if loadPlace and UniversalAutoload.showDebug then
-		spec.testLocation = {
-			node = loadPlace.node,
-			sizeX = 2*sizeX,
-			sizeY = 2*sizeY,
-			sizeZ = 2*sizeZ,
+	-- if UniversalAutoload.showDebug then
+		-- local FLAGS = {}
+		-- for name, value in pairs(CollisionFlag) do
+			-- if type(value) == 'number' then
+				-- local flag = {}
+				-- flag.name = name
+				-- flag.value = value
+				-- table.insert(FLAGS, flag)
+			-- end
+		-- end
+		-- table.sort(FLAGS, function (a, b) return a.value < b.value end)
+	
+		-- print(tostring(self:getFullName()))
+		-- renderText(0.45, 0.925, 0.015, tostring(self:getFullName()))
+	
+		-- for i, flag in ipairs(FLAGS) do
+			
+			-- local collisionMask = flag.value
+			-- local hitCount = overlapBox(x+dx, y+dy, z+dz, rx, ry, rz, sizeX, sizeY, sizeZ, "ualTestLocation_Callback", self, collisionMask, true, true, true, true)
+			
+			-- print(tostring(flag.name) .. " = " .. tostring(hitCount))
+			-- renderText(0.45, 0.92-(i*0.015), 0.010, tostring(flag.name) .. " = " .. tostring(hitCount))
+		-- end
+	-- end
+
+	if location and UniversalAutoload.showDebug then
+		spec.lastOverlapBox = {
+			x = x, y = y, z = z,
+			dx = dx, dy = dy, dz = dz,
+			rx = rx, ry = ry, rz = rz,
+			sizeX = sizeX, sizeY = sizeY, sizeZ = sizeZ,
 		}
 	end
 
-	return spec.foundAnyObject
+	return spec.foundTarget, spec.foundObject
 end
 --
 function UniversalAutoload:ualTestLocation_Callback(hitObjectId, x, y, z, distance)
@@ -4529,6 +4553,9 @@ function UniversalAutoload:ualTestLocation_Callback(hitObjectId, x, y, z, distan
 				end
 			end
 			spec.foundObject = true
+			if spec.target and spec.target == object then
+				spec.foundTarget = true
+			end
 		end
 	end
 end
@@ -4872,6 +4899,16 @@ function UniversalAutoload:ualLoadingTrigger_Callback(triggerId, otherActorId, o
 					UniversalAutoload.addAvailableObject(self, object)
 				elseif onLeave then
 					UniversalAutoload.removeAvailableObject(self, object)
+					
+					-- ADD AS LOADED ONLY WHEN OBJECT MOVES ONTO TRAILER
+					local isAlreadyLoaded = spec.loadedObjects[object] ~= nil
+					if not isAlreadyLoaded then
+						local trigger = spec.triggers["unloadingTrigger"]
+						local foundTarget, _ = UniversalAutoload.testLocation(self, trigger, object)
+						if foundTarget then
+							UniversalAutoload.addLoadedObject(self, object)
+						end
+					end
 				end
 			end
 		end
@@ -4885,15 +4922,41 @@ function UniversalAutoload:ualUnloadingTrigger_Callback(triggerId, otherActorId,
 		if object then
 			if UniversalAutoload.getIsValidObject(self, object) then
 				if onEnter then
-					UniversalAutoload.debugPrint(" UnloadingTrigger ENTER: " .. tostring(object.id), debugLoading)
-					UniversalAutoload.addLoadedObject(self, object)
-				elseif onLeave then
-					UniversalAutoload.debugPrint(" UnloadingTrigger LEAVE: " .. tostring(object.id), debugLoading)
-					if self.spec_tensionBelts.areAllBeltsFastened and self:ualGetIsMoving() then
-						-- UniversalAutoload.debugPrint("** DID WE ACTUALLY UNLOAD THIS? **")
-					else
-						UniversalAutoload.removeLoadedObject(self, object)
+					
+					-- DON'T ADD AS LOADED IF OBJECT INTERSECTS WITH BOTH TRIGGERS
+					local isPartiallyLoaded = spec.availableObjects[object] ~= nil
+					if not isPartiallyLoaded then
+						for _, trigger in pairs(spec.triggers or {}) do
+							if string.find(trigger.name, "PickupTrigger") then
+								local foundTarget, _ = UniversalAutoload.testLocation(self, trigger, object)
+								if foundTarget then
+									isPartiallyLoaded = true
+									break
+								end
+							end
+						end
+						if not isPartiallyLoaded then
+							UniversalAutoload.addLoadedObject(self, object)
+						end
 					end
+					
+				elseif onLeave then
+					UniversalAutoload.removeLoadedObject(self, object)
+					
+					-- ADD AS AVAILABLE ONLY WHEN OBJECT MOVES FROM TRAILER
+					local isAlreadyAvaialble = spec.availableObjects[object] ~= nil
+					if not isAlreadyAvaialble then
+						for _, trigger in pairs(spec.triggers or {}) do
+							if string.find(trigger.name, "PickupTrigger") then
+								local foundTarget, _ = UniversalAutoload.testLocation(self, trigger, object)
+								if foundTarget then
+									UniversalAutoload.addAvailableObject(self, object)
+									break
+								end
+							end
+						end
+					end
+					
 				end
 			end
 		end
@@ -5831,12 +5894,6 @@ function UniversalAutoload:drawDebugDisplay()
 			local place = spec.currentLoadingPlace
 			UniversalAutoload.DrawDebugPallet( place.node, place.sizeX, place.sizeY, place.sizeZ, true, false, GREY)
 		end
-		if UniversalAutoload.showDebug and spec.testLocation then
-			local place = spec.testLocation
-			-- DebugUtil.drawDebugNode(spec.testLocation.node, getName(place.node))
-			local X, Y, Z = UniversalAutoload.getWorldTranslation(spec.testLocation.node)
-			UniversalAutoload.DrawDebugPallet( place.node, place.sizeX, place.sizeY, place.sizeZ, true, false, WHITE)
-		end
 
 		if UniversalAutoload.showDebug then
 			for _, trigger in pairs(spec.triggers or {}) do
@@ -5976,10 +6033,6 @@ function UniversalAutoload:drawDebugDisplay()
 	
 		g_currentMission:addExtraPrintText(tostring(self:getName() .. " # " .. (spec.validUnloadCount or "-") .. " / " .. (spec.totalAvailableCount or "-")
 			.. ((spec.useHorizontalLoading and " : L" .. (spec.currentLayerCount or "-")  .. "") or "" )))
-		
-		if self.isServer then
-			-- UniversalAutoload.testLoadAreaIsEmpty(self)
-		end
 		
 	end
 end
