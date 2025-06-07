@@ -337,6 +337,7 @@ end
 ActivatableObjectsSystem.updateObjects = Utils.overwrittenFunction(ActivatableObjectsSystem.updateObjects, UniversalAutoload.OverwrittenUpdateObjects)
 
 function UniversalAutoloadManager:update(dt)
+	
 	if g_currentMission:getIsServer() then
 		local activeVehicles = {}
 		for vehicle, _ in pairs(UniversalAutoload.VEHICLES) do
@@ -354,6 +355,37 @@ function UniversalAutoloadManager:update(dt)
 			renderText(0.21, 0.925, 0.015, "UAL Active Vehicles:")
 			for i, vehicle in ipairs(activeVehicles) do
 				renderText(0.21, 0.92 - (i * 0.015), 0.012, tostring(vehicle:getFullName()))
+			end
+		end
+		
+		if not UniversalAutoloadManager.checkedForConflictingTriggers then
+			UniversalAutoloadManager.checkedForConflictingTriggers = true
+			
+			local function removeBit(nodeId, placeable, name, group, flag)
+				if CollisionFlag[flag] and bitAND(CollisionFlag[flag], group) > 0 then
+					print("UAL - removing "..flag.." collision flag from ".. tostring(placeable.customEnvironment) .. 
+					":" .. tostring(placeable.configFileNameClean) .. ":" .. tostring(name) )
+					local newFilterGroup = bitAND(bitNOT(CollisionFlag[flag]), group)
+					setCollisionFilterGroup(nodeId, newFilterGroup)
+				end
+			end
+			for i, placeable in pairs(g_currentMission.placeableSystem.placeables or {}) do		
+				for name, i3d in pairs(placeable.i3dMappings or {}) do
+					local nodeId = i3d.nodeId
+					if string.find(name, "trigger") or string.find(name, "Trigger") then
+						if nodeId and entityExists(nodeId) then
+							local group = getCollisionFilterGroup(nodeId)
+							local isShape = getHasClassId(nodeId, ClassIds.SHAPE)
+							if isShape and group and bitAND(UniversalAutoload.MASK.everything, group) > 0 then
+								removeBit(nodeId, placeable, name, group, 'PLAYER')
+								removeBit(nodeId, placeable, name, group, 'VEHICLE')
+								removeBit(nodeId, placeable, name, group, 'STATIC_OBJECT')
+								removeBit(nodeId, placeable, name, group, 'DYNAMIC_OBJECT')
+								removeBit(nodeId, placeable, name, group, 'TREE')
+							end
+						end
+					end
+				end
 			end
 		end
 	end
