@@ -59,6 +59,7 @@ function(_, placeable, loadingState)
 				local newFilterGroup = bitOR(CollisionFlag[flag], group)
 				setCollisionFilterGroup(nodeId, newFilterGroup)
 			end
+			return getCollisionFilterGroup(nodeId)
 		end
 		local function removeBit(nodeId, group, flag)
 			if CollisionFlag[flag] and bitAND(CollisionFlag[flag], group) > 0 then
@@ -66,6 +67,7 @@ function(_, placeable, loadingState)
 				local newFilterGroup = bitAND(bitNOT(CollisionFlag[flag]), group)
 				setCollisionFilterGroup(nodeId, newFilterGroup)
 			end
+			return getCollisionFilterGroup(nodeId)
 		end
 		for name, i3d in pairs(placeable.i3dMappings or {}) do
 			local nodeId = i3d.nodeId
@@ -74,15 +76,15 @@ function(_, placeable, loadingState)
 					local group = getCollisionFilterGroup(nodeId)
 					local isShape = getHasClassId(nodeId, ClassIds.SHAPE)
 					if isShape and group and bitAND(UniversalAutoload.MASK.everything, group) > 0 then
-						addBit(nodeId, group, 'TRIGGER')
-						removeBit(nodeId, group, 'PLAYER')
-						removeBit(nodeId, group, 'VEHICLE')
-						removeBit(nodeId, group, 'STATIC_OBJECT')
-						removeBit(nodeId, group, 'DYNAMIC_OBJECT')
-						removeBit(nodeId, group, 'TREE')
 						local item = tostring(placeable.customEnvironment) .. ":" .. tostring(placeable.configFileNameClean) .. ":" .. tostring(name)
-						local newGroup = getCollisionFilterGroup(nodeId)
-						print(string.format("UAL: MODIFY CollisionFilterGroup from 0x%X -> 0x%X for %s", group, newGroup, item))
+						local originalGroup = getCollisionFilterGroup(nodeId)
+						group = addBit(nodeId, group, 'TRIGGER')
+						group = removeBit(nodeId, group, 'PLAYER')
+						group = removeBit(nodeId, group, 'VEHICLE')
+						group = removeBit(nodeId, group, 'STATIC_OBJECT')
+						group = removeBit(nodeId, group, 'DYNAMIC_OBJECT')
+						group = removeBit(nodeId, group, 'TREE')
+						print(string.format("UAL: MODIFY CollisionFilterGroup from 0x%X -> 0x%X for %s", originalGroup, group, item))
 					end
 				end
 			end
