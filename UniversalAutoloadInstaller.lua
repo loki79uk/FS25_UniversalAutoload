@@ -52,11 +52,17 @@ end)
 -- FIX PLACEABLES WITH CONFLICTING TRIGGERS
 PlaceableLoadingData.onPlacableLoaded = Utils.appendedFunction(PlaceableLoadingData.onPlacableLoaded,
 function(_, placeable, loadingState)
-	if loadingState == PlaceableLoadingState.OK then
-		local function removeBit(nodeId, placeable, name, group, flag)
+	if placeable and loadingState == PlaceableLoadingState.OK then
+		local function addBit(nodeId, group, flag)
+			if CollisionFlag[flag] and bitAND(CollisionFlag[flag], group) == 0 then
+				-- print("  adding flag: ".. tostring(flag) )
+				local newFilterGroup = bitOR(CollisionFlag[flag], group)
+				setCollisionFilterGroup(nodeId, newFilterGroup)
+			end
+		end
+		local function removeBit(nodeId, group, flag)
 			if CollisionFlag[flag] and bitAND(CollisionFlag[flag], group) > 0 then
-				print("UAL - removing "..flag.." collision flag from ".. tostring(placeable.customEnvironment) .. 
-				":" .. tostring(placeable.configFileNameClean) .. ":" .. tostring(name) )
+				-- print("  removing flag: ".. tostring(flag) )
 				local newFilterGroup = bitAND(bitNOT(CollisionFlag[flag]), group)
 				setCollisionFilterGroup(nodeId, newFilterGroup)
 			end
@@ -68,11 +74,15 @@ function(_, placeable, loadingState)
 					local group = getCollisionFilterGroup(nodeId)
 					local isShape = getHasClassId(nodeId, ClassIds.SHAPE)
 					if isShape and group and bitAND(UniversalAutoload.MASK.everything, group) > 0 then
-						removeBit(nodeId, placeable, name, group, 'PLAYER')
-						removeBit(nodeId, placeable, name, group, 'VEHICLE')
-						removeBit(nodeId, placeable, name, group, 'STATIC_OBJECT')
-						removeBit(nodeId, placeable, name, group, 'DYNAMIC_OBJECT')
-						removeBit(nodeId, placeable, name, group, 'TREE')
+						addBit(nodeId, group, 'TRIGGER')
+						removeBit(nodeId, group, 'PLAYER')
+						removeBit(nodeId, group, 'VEHICLE')
+						removeBit(nodeId, group, 'STATIC_OBJECT')
+						removeBit(nodeId, group, 'DYNAMIC_OBJECT')
+						removeBit(nodeId, group, 'TREE')
+						local item = tostring(placeable.customEnvironment) .. ":" .. tostring(placeable.configFileNameClean) .. ":" .. tostring(name)
+						local newGroup = getCollisionFilterGroup(nodeId)
+						print(string.format("UAL: MODIFY CollisionFilterGroup from 0x%X -> 0x%X for %s", group, newGroup, item))
 					end
 				end
 			end
