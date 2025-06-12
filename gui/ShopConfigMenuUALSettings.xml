@@ -68,6 +68,14 @@
 						</BinaryOption>
 						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_enableRearLoading"/>
 					</Bitmap>
+
+					<!-- EXTENDED RANGE -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickBinaryOption" id="extendPickupRangeCheckBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_extendPickupRange"/>
+						</BinaryOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_extendPickupRange"/>
+					</Bitmap>
 					
 					<!-- AUTO STRAP -->
 					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">

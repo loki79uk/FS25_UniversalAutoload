@@ -1582,7 +1582,7 @@ function UniversalAutoload:updateLoadingTriggers()
 	local leftPickupTrigger = spec.triggers["leftPickupTrigger"]
 	local rightPickupTrigger = spec.triggers["rightPickupTrigger"]
 	if leftPickupTrigger and rightPickupTrigger then
-		local width = 1.66*spec.loadVolume.width
+		local width = (spec.extendPickupRange and 3 or 1.66) * spec.loadVolume.width
 		local height = 3*spec.loadVolume.height
 		local length = spec.loadVolume.length+spec.loadVolume.width/2
 		local tx, ty, tz = 1.1*(width+spec.loadVolume.width)/2, 0, 0
@@ -1590,21 +1590,23 @@ function UniversalAutoload:updateLoadingTriggers()
 		doUpdateTrigger("rightPickupTrigger", width, height, length, -tx, ty, tz)
 	end
 
-	if spec.rearUnloadingOnly then
+	if spec.rearUnloadingOnly or spec.extendPickupRange then
 		local width = spec.loadVolume.length+spec.loadVolume.width
 		local height = 3*spec.loadVolume.height
 		local length = 0.8*width
-		local tx, ty, tz = 0, 0, -1.1*(length+spec.loadVolume.length)/2
+		if spec.extendPickupRange then width = math.max(width, 7.4 * spec.loadVolume.width) end
+		local tx, ty, tz = 0, 0, -0.5*(length+spec.loadVolume.length+spec.loadVolume.width/2)
 		doUpdateTrigger("rearPickupTrigger", width, height, length, tx, ty, tz)
 	else
 		doRemoveTrigger("rearPickupTrigger")
 	end
 	
-	if spec.frontUnloadingOnly then
+	if spec.frontUnloadingOnly or spec.extendPickupRange then
 		local width = spec.loadVolume.length+spec.loadVolume.width
 		local height = 3*spec.loadVolume.height
 		local length = 0.8*width
-		local tx, ty, tz = 0, 0, 1.1*(length+spec.loadVolume.length)/2
+		if spec.extendPickupRange then width = math.max(width, 7.4 * spec.loadVolume.width) end
+		local tx, ty, tz = 0, 0, 0.5*(length+spec.loadVolume.length+spec.loadVolume.width/2)
 		doUpdateTrigger("frontPickupTrigger", width, height, length, tx, ty, tz)
 	else
 		doRemoveTrigger("frontPickupTrigger")
