@@ -3084,6 +3084,12 @@ function UniversalAutoload:determineTipside()
 		UniversalAutoload.setCurrentTipside(self, "front")
 		UniversalAutoload.setCurrentLoadside(self, "front")	
 	end
+	if not spec.rearUnloadingOnly and not spec.frontUnloadingOnly then
+		if spec.currentTipside == "rear" or spec.currentTipside == "front" then
+			UniversalAutoload.setCurrentTipside(self, "left")
+			UniversalAutoload.setCurrentLoadside(self, "left")	
+		end
+	end
 end
 --
 function UniversalAutoload:isValidForLoading(object)
