@@ -53,38 +53,38 @@ end)
 PlaceableLoadingData.onPlacableLoaded = Utils.appendedFunction(PlaceableLoadingData.onPlacableLoaded,
 function(_, placeable, loadingState)
 	if placeable and loadingState == PlaceableLoadingState.OK then
-		local function addBit(nodeId, group, flag)
+		local function addCollisionFilterGroupBit(nodeId, flag)
+			local group = getCollisionFilterGroup(nodeId)
 			if CollisionFlag[flag] and bitAND(CollisionFlag[flag], group) == 0 then
 				-- print("  adding flag: ".. tostring(flag) )
 				local newFilterGroup = bitOR(CollisionFlag[flag], group)
 				setCollisionFilterGroup(nodeId, newFilterGroup)
 			end
-			return getCollisionFilterGroup(nodeId)
 		end
-		local function removeBit(nodeId, group, flag)
+		local function removeCollisionFilterGroupBit(nodeId, flag)
+			local group = getCollisionFilterGroup(nodeId)
 			if CollisionFlag[flag] and bitAND(CollisionFlag[flag], group) > 0 then
 				-- print("  removing flag: ".. tostring(flag) )
 				local newFilterGroup = bitAND(bitNOT(CollisionFlag[flag]), group)
 				setCollisionFilterGroup(nodeId, newFilterGroup)
 			end
-			return getCollisionFilterGroup(nodeId)
 		end
 		for name, i3d in pairs(placeable.i3dMappings or {}) do
 			local nodeId = i3d.nodeId
 			if string.find(name, "trigger") or string.find(name, "Trigger") then
 				if nodeId and entityExists(nodeId) then
-					local group = getCollisionFilterGroup(nodeId)
+					local originalGroup = getCollisionFilterGroup(nodeId)
 					local isShape = getHasClassId(nodeId, ClassIds.SHAPE)
-					if isShape and group and bitAND(UniversalAutoload.MASK.everything, group) > 0 then
+					if isShape and originalGroup and bitAND(UniversalAutoload.MASK.everything, originalGroup) > 0 then
 						local item = tostring(placeable.customEnvironment) .. ":" .. tostring(placeable.configFileNameClean) .. ":" .. tostring(name)
-						local originalGroup = getCollisionFilterGroup(nodeId)
-						group = addBit(nodeId, group, 'TRIGGER')
-						group = removeBit(nodeId, group, 'PLAYER')
-						group = removeBit(nodeId, group, 'VEHICLE')
-						group = removeBit(nodeId, group, 'STATIC_OBJECT')
-						group = removeBit(nodeId, group, 'DYNAMIC_OBJECT')
-						group = removeBit(nodeId, group, 'TREE')
-						print(string.format("UAL: MODIFY CollisionFilterGroup from 0x%X -> 0x%X for %s", originalGroup, group, item))
+						addCollisionFilterGroupBit(nodeId, 'TRIGGER')
+						removeCollisionFilterGroupBit(nodeId, 'PLAYER')
+						removeCollisionFilterGroupBit(nodeId, 'VEHICLE')
+						removeCollisionFilterGroupBit(nodeId, 'STATIC_OBJECT')
+						removeCollisionFilterGroupBit(nodeId, 'DYNAMIC_OBJECT')
+						removeCollisionFilterGroupBit(nodeId, 'TREE')
+						local finalGroup = getCollisionFilterGroup(nodeId)
+						print(string.format("UAL: MODIFY CollisionFilterGroup from 0x%X -> 0x%X for %s", originalGroup, finalGroup, item))
 					end
 				end
 			end
