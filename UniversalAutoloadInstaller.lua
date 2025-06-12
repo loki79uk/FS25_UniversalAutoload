@@ -200,6 +200,7 @@ UniversalAutoload.OPTIONS_DEFAULTS = {
 	{id="isCurtainTrailer", default=false, valueType="BOOL", key="#isCurtainTrailer"}, --Automatically detect the available load side (if the trailer has curtain sides)
 	{id="enableRearLoading", default=false, valueType="BOOL", key="#enableRearLoading"}, --Use the automatic rear loading trigger
 	{id="enableSideLoading", default=false, valueType="BOOL", key="#enableSideLoading"}, --Use the automatic side loading triggers
+	{id="extendPickupRange", default=false, valueType="BOOL", key="#extendPickupRange"}, --Increase the detection range of the pickup triggers
 	{id="noLoadingIfFolded", default=false, valueType="BOOL", key="#noLoadingIfFolded"}, --Prevent loading when folded
 	{id="noLoadingIfUnfolded", default=false, valueType="BOOL", key="#noLoadingIfUnfolded"}, --Prevent loading when unfolded
 	{id="noLoadingIfCovered", default=false, valueType="BOOL", key="#noLoadingIfCovered"}, --Prevent loading when covered

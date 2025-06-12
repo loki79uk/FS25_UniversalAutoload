@@ -61,6 +61,7 @@
 		<text name="ui_option_isCurtainTrailer" text="帘式拖车"/>
 		<text name="ui_option_enableRearLoading" text="启用后方装载"/>
 		<text name="ui_option_enableSideLoading" text="启用前方装载"/>
+		<text name="ui_option_extendPickupRange" text="扩展拾取范围"/>
 
 		<text name="ui_option_rearUnloadingOnly" text="仅限后方装载"/>
 		<text name="ui_option_frontUnloadingOnly" text="仅限前方装载"/>
@@ -84,6 +85,7 @@
 		<text name="ui_option_tooltip_isCurtainTrailer" text="自动检测可用的负载侧(如果拖车有侧帘)"/>
 		<text name="ui_option_tooltip_enableRearLoading" text="使用自动后装载触发器"/>
 		<text name="ui_option_tooltip_enableSideLoading" text="使用自动侧面加载触发器"/>
+		<text name="ui_option_tooltip_extendPickupRange" text="增加装载触发器的检测范围"/>
 
 		<text name="ui_option_tooltip_rearUnloadingOnly" text="仅使用后方卸货区(无侧面区域)"/>
 		<text name="ui_option_tooltip_frontUnloadingOnly" text="仅使用前方卸货区(无侧面区域)"/>

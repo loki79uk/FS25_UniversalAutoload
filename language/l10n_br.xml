@@ -59,6 +59,7 @@
 		<text name="ui_option_isCurtainTrailer" text="Reboque de Cortina"/>
 		<text name="ui_option_enableRearLoading" text="Ativar carga traseiro"/>
 		<text name="ui_option_enableSideLoading" text="Ativar carga lateral"/>
+		<text name="ui_option_extendPickupRange" text="Aumentar alcance de coleta"/>
 
 		<text name="ui_option_rearUnloadingOnly" text="Somente descarga na traseira"/>
 		<text name="ui_option_frontUnloadingOnly" text="Somente descarga na frente"/>
@@ -82,6 +83,7 @@
 		<text name="ui_option_tooltip_isCurtainTrailer" text="Detectar automaticamente o lado para carga disponível (se o reboque tiver laterais de cortina)"/>
 		<text name="ui_option_tooltip_enableRearLoading" text="Utilize o gatilho automático de carga traseiro"/>
 		<text name="ui_option_tooltip_enableSideLoading" text="Utilize os gatilhos automáticos de carga lateral"/>
+		<text name="ui_option_tooltip_extendPickupRange" text="Aumenta o alcance de detecção dos gatilhos de carregamento"/>
 
 		<text name="ui_option_tooltip_rearUnloadingOnly" text="Utilize apenas a zona de descarga traseira (sem zonas laterais)"/>
 		<text name="ui_option_tooltip_frontUnloadingOnly" text="Utilize apenas a zona de descarga frontal (sem zonas laterais)"/>

@@ -59,6 +59,7 @@
 		<text name="ui_option_isCurtainTrailer" text="Ponyvás"/>
 		<text name="ui_option_enableRearLoading" text="Hátsó rakodás engedélyezése"/>
 		<text name="ui_option_enableSideLoading" text="Oldalsó rakodás engedélyezése"/>
+		<text name="ui_option_extendPickupRange" text="Felvételi tartomány kiterjesztése"/>
 
 		<text name="ui_option_rearUnloadingOnly" text="Csak hátsó kirakodás"/>
 		<text name="ui_option_frontUnloadingOnly" text="Csak első kirakodás"/>
@@ -82,6 +83,7 @@
 		<text name="ui_option_tooltip_isCurtainTrailer" text="Automatikusan felismeri a rakodási oldalt (ha van ponyvás oldala)"/>
 		<text name="ui_option_tooltip_enableRearLoading" text="Hátsó rakodási trigger engedélyezése"/>
 		<text name="ui_option_tooltip_enableSideLoading" text="Oldalsó rakodási triggerek engedélyezése"/>
+		<text name="ui_option_tooltip_extendPickupRange" text="Növeli a rakodási triggerek érzékelési tartományát"/>
 
 		<text name="ui_option_tooltip_rearUnloadingOnly" text="Kizárólag a hátsó kirakodási zóna használata (oldalsók letiltva)"/>
 		<text name="ui_option_tooltip_frontUnloadingOnly" text="Kizárólag az első kirakodási zóna használata (oldalsók letiltva)"/>

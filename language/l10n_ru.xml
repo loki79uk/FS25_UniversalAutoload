@@ -59,6 +59,7 @@
 		<text name="ui_option_isCurtainTrailer" text="Шторный прицеп"/>
 		<text name="ui_option_enableRearLoading" text="Включить заднюю загрузку"/>
 		<text name="ui_option_enableSideLoading" text="Включить боковую загрузку"/>
+		<text name="ui_option_extendPickupRange" text="Увеличить радиус подбора"/>
 
 		<text name="ui_option_rearUnloadingOnly" text="Только задняя разгрузка"/>
 		<text name="ui_option_frontUnloadingOnly" text="Только передняя разгрузка"/>
@@ -82,6 +83,7 @@
 		<text name="ui_option_tooltip_isCurtainTrailer" text="Автоматическое определение доступной стороны загрузки (если у прицепа есть боковые шторки)"/>
 		<text name="ui_option_tooltip_enableRearLoading" text="Используйте автоматические триггеры задней загрузки"/>
 		<text name="ui_option_tooltip_enableSideLoading" text="Используйте автоматические триггеры боковой загрузки"/>
+		<text name="ui_option_tooltip_extendPickupRange" text="Увеличивает радиус обнаружения загрузочных триггеров"/>
 
 		<text name="ui_option_tooltip_rearUnloadingOnly" text="Используйте только заднюю зону разгрузки (без боковых зон)."/>
 		<text name="ui_option_tooltip_frontUnloadingOnly" text="Используйте только переднюю зону разгрузки (без боковых зон)."/>

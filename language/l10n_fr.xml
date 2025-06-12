@@ -59,6 +59,7 @@
 		<text name="ui_option_isCurtainTrailer" text="Remorque à rideaux"/>
 		<text name="ui_option_enableRearLoading" text="Autoriser le chargement par l'arrière"/>
 		<text name="ui_option_enableSideLoading" text="Autoriser le chargement par les côtés"/>
+		<text name="ui_option_extendPickupRange" text="Étendre la portée de ramassage"/>
 
 		<text name="ui_option_rearUnloadingOnly" text="Déchargement arrière seulement"/>
 		<text name="ui_option_frontUnloadingOnly" text="Déchargement avant seulement"/>
@@ -82,6 +83,7 @@
 		<text name="ui_option_tooltip_isCurtainTrailer" text="Détecte automatiquement les côtés de chargement disponibles (si la remorque est munie de rideaux latéraux)"/>
 		<text name="ui_option_tooltip_enableRearLoading" text="Utilise la trigger arrière de chargement automatique"/>
 		<text name="ui_option_tooltip_enableSideLoading" text="Utilise les triggers latérales de chargement automatique"/>
+		<text name="ui_option_tooltip_extendPickupRange" text="Augmente la portée de détection des déclencheurs de chargement"/>
 
 		<text name="ui_option_tooltip_rearUnloadingOnly" text="Utilise uniquement la zone de déchargement arrière (pas de zones latérales)"/>
 		<text name="ui_option_tooltip_frontUnloadingOnly" text="Utilise uniquement la zone de déchargement avant (pas de zones latérales)"/>

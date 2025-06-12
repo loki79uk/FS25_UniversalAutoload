@@ -59,6 +59,7 @@
 		<text name="ui_option_isCurtainTrailer" text="Przyczepa z plandeką"/>
 		<text name="ui_option_enableRearLoading" text="Włącz załadunek od tyłu"/>
 		<text name="ui_option_enableSideLoading" text="Włącz załadunek z boku"/>
+		<text name="ui_option_extendPickupRange" text="Zwiększ zasięg podnoszenia"/>
 		
 		<text name="ui_option_rearUnloadingOnly" text="Tylko rozładunek od tyłu"/>
 		<text name="ui_option_frontUnloadingOnly" text="Tylko rozładunek od przodu"/>
@@ -82,6 +83,7 @@
 		<text name="ui_option_tooltip_isCurtainTrailer" text="Automatycznie wykrywa dostępne strony załadunku (jeśli przyczepa ma plandeki)"/>
 		<text name="ui_option_tooltip_enableRearLoading" text="Użyj automatycznego wyzwalacza załadunku od tyłu"/>
 		<text name="ui_option_tooltip_enableSideLoading" text="Użyj automatycznych wyzwalaczy załadunku bocznego"/>
+		<text name="ui_option_tooltip_extendPickupRange" text="Zwiększa zasięg wykrywania wyzwalaczy załadunku"/>
 		
 		<text name="ui_option_tooltip_rearUnloadingOnly" text="Użyj tylko tylnej strefy rozładunku (bez bocznych stref)"/>
 		<text name="ui_option_tooltip_frontUnloadingOnly" text="Użyj tylko przedniej strefy rozładunku (bez bocznych stref)"/>

@@ -59,6 +59,7 @@
 		<text name="ui_option_isCurtainTrailer" text="Rimorchio telonato"/>
 		<text name="ui_option_enableRearLoading" text="Abilita caricamento posteriore"/>
 		<text name="ui_option_enableSideLoading" text="Abilita caricamento laterale"/>
+		<text name="ui_option_extendPickupRange" text="Estendi raggio di raccolta"/>
 
 		<text name="ui_option_rearUnloadingOnly" text="Solo scarico posteriore"/>
 		<text name="ui_option_frontUnloadingOnly" text="Solo scarico frontale"/>
@@ -82,6 +83,7 @@
 		<text name="ui_option_tooltip_isCurtainTrailer" text="Rileva automaticamente il lato di carico disponibile (se il rimorchio ha i lati telonati)"/>
 		<text name="ui_option_tooltip_enableRearLoading" text="Utilizzare il grilletto di caricamento posteriore automatico"/>
 		<text name="ui_option_tooltip_enableSideLoading" text="Utilizzare i grilletti di caricamento laterale automatico"/>
+		<text name="ui_option_tooltip_extendPickupRange" text="Aumenta la portata di rilevamento dei trigger di carico"/>
 
 		<text name="ui_option_tooltip_rearUnloadingOnly" text="Utilizzare solo la zona di scarico posteriore (nessuna zona laterale)"/>
 		<text name="ui_option_tooltip_frontUnloadingOnly" text="Utilizzare solo la zona di scarico frontale (nessuna zona laterale)"/>

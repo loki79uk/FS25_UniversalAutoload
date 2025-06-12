@@ -59,6 +59,7 @@
 		<text name="ui_option_isCurtainTrailer" text="Vorhang-Anhänger"/>
 		<text name="ui_option_enableRearLoading" text="Rückwärtige Beladung aktivieren"/>
 		<text name="ui_option_enableSideLoading" text="Seitenbeladung aktivieren"/>
+		<text name="ui_option_extendPickupRange" text="Abholreichweite erweitern"/>
 
 		<text name="ui_option_rearUnloadingOnly" text="Nur Heckentladung"/>
 		<text name="ui_option_frontUnloadingOnly" text="Nur vorne entladen"/>
@@ -82,6 +83,7 @@
 		<text name="ui_option_tooltip_isCurtainTrailer" text="Automatische Erkennung der verfügbaren Ladeseite (wenn der Anhänger Vorhangseiten hat)"/>
 		<text name="ui_option_tooltip_enableRearLoading" text="Verwenden Sie den automatischen Heckladeauslöser"/>
 		<text name="ui_option_tooltip_enableSideLoading" text="Verwenden Sie die automatischen Seitenladeauslöser"/>
+		<text name="ui_option_tooltip_extendPickupRange" text="Erhöht die Erkennungsreichweite der Ladeauslöser"/>
 
 		<text name="ui_option_tooltip_rearUnloadingOnly" text="Nur die hintere Entladezone verwenden (keine seitlichen Zonen)"/>
 		<text name="ui_option_tooltip_frontUnloadingOnly" text="Nur vordere Entladezone verwenden (keine Seitenzonen)"/>

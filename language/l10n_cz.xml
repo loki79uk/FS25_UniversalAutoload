@@ -59,6 +59,7 @@
 		<text name="ui_option_isCurtainTrailer" text="Přívěs s boční plachtou"/>
 		<text name="ui_option_enableRearLoading" text="Povolit zadní nakládku"/>
 		<text name="ui_option_enableSideLoading" text="Povolit boční nakládku"/>
+		<text name="ui_option_extendPickupRange" text="Rozšířit dosah sběru"/>
 
 		<text name="ui_option_rearUnloadingOnly" text="Pouze zadní vykládka"/>
 		<text name="ui_option_frontUnloadingOnly" text="Pouze přední vykládka"/>
@@ -82,6 +83,7 @@
 		<text name="ui_option_tooltip_isCurtainTrailer" text="Automatická detekce dostupné strany nakládky (pokud má přívěs boční plachtu)"/>
 		<text name="ui_option_tooltip_enableRearLoading" text="Použití automatického trigeru pro zadní nakládku"/>
 		<text name="ui_option_tooltip_enableSideLoading" text="Použití automatických trigerů pro boční nakládku"/>
+		<text name="ui_option_tooltip_extendPickupRange" text="Zvyšuje detekční dosah spouštěčů nakládání"/>
 
 		<text name="ui_option_tooltip_rearUnloadingOnly" text="Použití pouze zadní vykládací plochy (žádné boční plochy)"/>
 		<text name="ui_option_tooltip_frontUnloadingOnly" text="Použití pouze přední vykládací plochy (žádné boční plochy)"/>
