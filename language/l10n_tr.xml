@@ -177,6 +177,8 @@
 		<text name="universalAutoload_tipside" text="Boşaltma bölgesi"/>
 		<text name="universalAutoload_left" text="Sol"/>
 		<text name="universalAutoload_right" text="Sağ"/>
+		<text name="universalAutoload_front" text="Ön"/>
+		<text name="universalAutoload_rear" text="Arka"/>
 		<text name="universalAutoload_none" text="Hiçbiri"/>
 		<text name="universalAutoload_loadingFilter" text="Yükleme filtresi"/>
 		<text name="universalAutoload_loadingMethod" text="Yükleme yöntemi"/>

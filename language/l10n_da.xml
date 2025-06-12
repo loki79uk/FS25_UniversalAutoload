@@ -177,6 +177,8 @@
 		<text name="universalAutoload_tipside" text="Aflæsningsside"/>
 		<text name="universalAutoload_left" text="Venstre"/>
 		<text name="universalAutoload_right" text="Højre"/>
+		<text name="universalAutoload_front" text="Foran"/>
+		<text name="universalAutoload_rear" text="Bageste"/>
 		<text name="universalAutoload_none" text="Ingen"/>
 		<text name="universalAutoload_loadingFilter" text="Læssefilter"/>
 		<text name="universalAutoload_loadingMethod" text="Læssemetode"/>

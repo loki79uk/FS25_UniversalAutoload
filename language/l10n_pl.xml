@@ -177,6 +177,8 @@
 		<text name="universalAutoload_tipside" text="Strona wyładunku"/>
 		<text name="universalAutoload_left" text="Lewa"/>
 		<text name="universalAutoload_right" text="Prawa"/>
+		<text name="universalAutoload_front" text="Przód"/>
+		<text name="universalAutoload_rear" text="Tył"/>
 		<text name="universalAutoload_none" text="Żadna"/>
 		<text name="universalAutoload_loadingFilter" text="Filtr ładowania"/>
 		<text name="universalAutoload_loadingMethod" text="Metoda ładowania"/>

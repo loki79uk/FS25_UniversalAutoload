@@ -177,6 +177,8 @@
 		<text name="universalAutoload_tipside" text="Lossningssida"/>
 		<text name="universalAutoload_left" text="Vänster"/>
 		<text name="universalAutoload_right" text="Höger"/>
+		<text name="universalAutoload_front" text="Fram"/>
+		<text name="universalAutoload_rear" text="Bak"/>
 		<text name="universalAutoload_none" text="Ingen"/>
 		<text name="universalAutoload_loadingFilter" text="Lastningsfilter"/>
 		<text name="universalAutoload_loadingMethod" text="Lastningsmetod"/>

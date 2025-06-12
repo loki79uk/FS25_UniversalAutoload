@@ -179,6 +179,8 @@
 		<text name="universalAutoload_tipside" text="卸货端"/>
 		<text name="universalAutoload_left" text="左"/>
 		<text name="universalAutoload_right" text="右"/>
+		<text name="universalAutoload_front" text="前面"/>
+		<text name="universalAutoload_rear" text="后面"/>
 		<text name="universalAutoload_none" text="空"/>
 		<text name="universalAutoload_loadingFilter" text="装载过滤器"/>
 		<text name="universalAutoload_loadingMethod" text="装载方法"/>

@@ -177,6 +177,8 @@
 		<text name="universalAutoload_tipside" text="Unloading side"/>
 		<text name="universalAutoload_left" text="Left"/>
 		<text name="universalAutoload_right" text="Right"/>
+		<text name="universalAutoload_front" text="Front"/>
+		<text name="universalAutoload_rear" text="Rear"/>
 		<text name="universalAutoload_none" text="None"/>
 		<text name="universalAutoload_loadingFilter" text="Loading filter"/>
 		<text name="universalAutoload_loadingMethod" text="Loading Method"/>

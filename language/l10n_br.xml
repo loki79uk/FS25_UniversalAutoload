@@ -177,6 +177,8 @@
 		<text name="universalAutoload_tipside" text="Lado de descarga"/>
 		<text name="universalAutoload_left" text="Esquerda"/>
 		<text name="universalAutoload_right" text="Direita"/>
+		<text name="universalAutoload_front" text="Frente"/>
+		<text name="universalAutoload_rear" text="Traseira"/>
 		<text name="universalAutoload_none" text="Nenhum"/>
 		<text name="universalAutoload_loadingFilter" text="Filtro de carga"/>
 		<text name="universalAutoload_loadingMethod" text="Modo de carga"/>

@@ -177,6 +177,8 @@
 		<text name="universalAutoload_tipside" text="Vykládací strana"/>
 		<text name="universalAutoload_left" text="Vlevo"/>
 		<text name="universalAutoload_right" text="Vpravo"/>
+		<text name="universalAutoload_front" text="Přední"/>
+		<text name="universalAutoload_rear" text="Zadní"/>
 		<text name="universalAutoload_none" text="Žádná"/>
 		<text name="universalAutoload_loadingFilter" text="Filtr nakládky"/>
 		<text name="universalAutoload_loadingMethod" text="Způsob nakládky"/>

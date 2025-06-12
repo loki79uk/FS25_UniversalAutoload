@@ -177,6 +177,8 @@
 		<text name="universalAutoload_tipside" text="Сторона разгрузки"/>
 		<text name="universalAutoload_left" text="Слева"/>
 		<text name="universalAutoload_right" text="Справа"/>
+		<text name="universalAutoload_front" text="Перед"/>
+		<text name="universalAutoload_rear" text="Зад"/>
 		<text name="universalAutoload_none" text="Нет"/>
 		<text name="universalAutoload_loadingFilter" text="Фильтр загрузки"/>
 		<text name="universalAutoload_loadingMethod" text="Способ загрузки"/>

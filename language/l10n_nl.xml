@@ -177,6 +177,8 @@
 		<text name="universalAutoload_tipside" text="Loszijde"/>
 		<text name="universalAutoload_left" text="Links"/>
 		<text name="universalAutoload_right" text="Rechts"/>
+		<text name="universalAutoload_front" text="Voorin"/>
+		<text name="universalAutoload_rear" text="Achterin"/>
 		<text name="universalAutoload_none" text="Niks"/>
 		<text name="universalAutoload_loadingFilter" text="Laad filter"/>
 		<text name="universalAutoload_loadingMethod" text="Laadmethode"/>

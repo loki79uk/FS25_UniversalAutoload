@@ -177,6 +177,8 @@
 		<text name="universalAutoload_tipside" text="Aktive Entladeseite"/>
 		<text name="universalAutoload_left" text="Links"/>
 		<text name="universalAutoload_right" text="Rechts"/>
+		<text name="universalAutoload_front" text="Vorne"/>
+		<text name="universalAutoload_rear" text="Hinten"/>
 		<text name="universalAutoload_none" text="Keine"/>
 		<text name="universalAutoload_loadingFilter" text="Ladefilter"/>
 		<text name="universalAutoload_loadingMethod" text="Ladeverfahren"/>

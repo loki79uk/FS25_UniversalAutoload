@@ -178,6 +178,8 @@
 		<text name="universalAutoload_tipside" text="Бік розвантаження"/>
 		<text name="universalAutoload_left" text="Лівий"/>
 		<text name="universalAutoload_right" text="Правий"/>
+		<text name="universalAutoload_front" text="Перед"/>
+		<text name="universalAutoload_rear" text="Зад"/>
 		<text name="universalAutoload_none" text="Ніяка"/>
 		<text name="universalAutoload_loadingFilter" text="фільтр завантаження"/>
 		<text name="universalAutoload_loadingMethod" text="Метод завантаження"/>

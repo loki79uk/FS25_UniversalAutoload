@@ -177,6 +177,8 @@
 		<text name="universalAutoload_tipside" text="Kirakodási oldal" />
 		<text name="universalAutoload_left" text="Bal" />
 		<text name="universalAutoload_right" text="Jobb" />
+		<text name="universalAutoload_front" text="Első" />
+		<text name="universalAutoload_rear" text="Hátsó" />
 		<text name="universalAutoload_none" text="Egyik sem" />
 		<text name="universalAutoload_loadingFilter" text="Rakodási szűrő" />
 		<text name="universalAutoload_loadingMethod" text="Rakodási metódus" />
