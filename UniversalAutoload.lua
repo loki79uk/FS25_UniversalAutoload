@@ -4906,15 +4906,28 @@ function UniversalAutoload:ualLoadingTrigger_Callback(triggerId, otherActorId, o
 				if onEnter then
 					UniversalAutoload.addAvailableObject(self, object)
 				elseif onLeave then
-					UniversalAutoload.removeAvailableObject(self, object)
-					
-					-- ADD AS LOADED ONLY WHEN OBJECT MOVES ONTO TRAILER
-					local isAlreadyLoaded = spec.loadedObjects[object] ~= nil
-					if not isAlreadyLoaded then
-						local trigger = spec.triggers["unloadingTrigger"]
-						local foundTarget, _ = UniversalAutoload.testLocation(self, trigger, object)
-						if foundTarget then
-							UniversalAutoload.addLoadedObject(self, object)
+					local foundTargetInOtherTrigger = false
+					if spec.extendPickupRange then -- not efficient - could store flag for each trigger id
+						for _, trigger in pairs(spec.triggers or {}) do
+							if trigger.name ~= triggerId and string.find(trigger.name, "PickupTrigger") then
+								local foundTarget, _ = UniversalAutoload.testLocation(self, trigger, object)
+								if foundTarget then
+									foundTargetInOtherTrigger = true
+									break
+								end
+							end
+						end
+					end
+					if not foundTargetInOtherTrigger then
+						UniversalAutoload.removeAvailableObject(self, object)
+						-- ADD AS LOADED ONLY WHEN OBJECT MOVES ONTO TRAILER
+						local isAlreadyLoaded = spec.loadedObjects[object] ~= nil
+						if not isAlreadyLoaded then
+							local trigger = spec.triggers["unloadingTrigger"]
+							local foundTarget, _ = UniversalAutoload.testLocation(self, trigger, object)
+							if foundTarget then
+								UniversalAutoload.addLoadedObject(self, object)
+							end
 						end
 					end
 				end
