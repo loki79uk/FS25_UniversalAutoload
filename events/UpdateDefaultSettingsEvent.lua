@@ -17,7 +17,7 @@ function UpdateDefaultSettingsEvent.new(exportSpec)
 end
 
 function UpdateDefaultSettingsEvent:readStream(streamId, connection)
-	print("Update Default Settings Event - readStream")
+	UniversalAutoload.debugPrint("Update Default Settings Event - readStream")
 
 	local function recieveValues(k, v, parentKey, currentKey, currentValue, finalValue)
 		if currentKey then
@@ -38,28 +38,28 @@ function UpdateDefaultSettingsEvent:readStream(streamId, connection)
 					newValue = {x, y, z} 
 				end
 				currentValue[v.id] = newValue
-				print("  << " .. tostring(currentKey) .. " = " .. tostring(newValue))
+				UniversalAutoload.debugPrint("  << " .. tostring(currentKey) .. " = " .. tostring(newValue))
 			end
 		end
 	end
 	
-	print("RECEIVE SETTINGS")
+	UniversalAutoload.debugPrint("RECEIVE SETTINGS")
 	local configFileName = streamReadString(streamId)
-	print("configFileName: " .. tostring(configFileName))
+	UniversalAutoload.debugPrint("configFileName: " .. tostring(configFileName))
 	local selectedConfigs = streamReadString(streamId)
-	print("selectedConfigs: " .. tostring(selectedConfigs))
+	UniversalAutoload.debugPrint("selectedConfigs: " .. tostring(selectedConfigs))
 	local useConfigName = streamReadString(streamId)
 	useConfigName = useConfigName ~= "" and useConfigName or nil
-	print("useConfigName: " .. tostring(useConfigName))
+	UniversalAutoload.debugPrint("useConfigName: " .. tostring(useConfigName))
 
 	local config = {}
 	config.configFileName = configFileName
 	config.selectedConfigs = selectedConfigs
 	config.useConfigName = useConfigName
-	print("options:")
+	UniversalAutoload.debugPrint("options:")
 	iterateDefaultsTable(UniversalAutoload.OPTIONS_DEFAULTS, "", ".options", config, recieveValues)
 
-	print("loadingAreas:")
+	UniversalAutoload.debugPrint("loadingAreas:")
 	config.loadArea = {}
 	nAreas = streamReadInt8(streamId) or 0
 	for j=1, nAreas do
@@ -68,15 +68,17 @@ function UpdateDefaultSettingsEvent:readStream(streamId, connection)
 		iterateDefaultsTable(UniversalAutoload.LOADING_AREA_DEFAULTS, configKey, loadAreaKey, config.loadArea[j], recieveValues)
 	end
 	
-	print("CONFIG RECIEVED ON SERVER:")
-	DebugUtil.printTableRecursively(config, "--", 0, 2)
+	if UniversalAutoload.showDebug then
+		print("CONFIG RECIEVED ON SERVER:")
+		DebugUtil.printTableRecursively(config, "--", 0, 2)
+	end
 	
 	UniversalAutoloadManager.saveConfigurationToSettings(config, noEventSend)
 	
 end
 
 function UpdateDefaultSettingsEvent:writeStream(streamId, connection)
-	print("Update Default Settings Event - writeStream")
+	UniversalAutoload.debugPrint("Update Default Settings Event - writeStream")
 
 	local function sendValues(k, v, parentKey, currentKey, currentValue, finalValue)
 		if currentKey then
@@ -98,25 +100,25 @@ function UpdateDefaultSettingsEvent:writeStream(streamId, connection)
 					streamWriteFloat32(streamId, y)
 					streamWriteFloat32(streamId, z)
 				end
-				print("  >> " .. tostring(currentKey) .. " = " .. tostring(finalValue))
+				UniversalAutoload.debugPrint("  >> " .. tostring(currentKey) .. " = " .. tostring(finalValue))
 			end
 		end
 	end
 	
-	print("SEND VEHICLE CONFIG TO SERVER")
+	UniversalAutoload.debugPrint("SEND VEHICLE CONFIG TO SERVER")
 	local spec = self.exportSpec or {}
 
-	print("configFileName: " .. tostring(spec.configFileName))
+	UniversalAutoload.debugPrint("configFileName: " .. tostring(spec.configFileName))
 	streamWriteString(streamId, spec.configFileName or "")
-	print("selectedConfigs: " .. tostring(spec.selectedConfigs))
+	UniversalAutoload.debugPrint("selectedConfigs: " .. tostring(spec.selectedConfigs))
 	streamWriteString(streamId, spec.selectedConfigs or "")
-	print("useConfigName: " .. tostring(spec.useConfigName))
+	UniversalAutoload.debugPrint("useConfigName: " .. tostring(spec.useConfigName))
 	streamWriteString(streamId, spec.useConfigName or "")
 	
-	print("options:")
+	UniversalAutoload.debugPrint("options:")
 	iterateDefaultsTable(UniversalAutoload.OPTIONS_DEFAULTS, "", ".options", spec, sendValues)
 
-	print("loadingAreas:")
+	UniversalAutoload.debugPrint("loadingAreas:")
 	local nAreas = #(spec.loadArea or {})
 	streamWriteInt8(streamId, nAreas)
 	for j, loadArea in pairs(spec.loadArea or {}) do
@@ -129,7 +131,7 @@ end
 function UpdateDefaultSettingsEvent.sendEvent(exportSpec, noEventSend)
 	if noEventSend == nil or noEventSend == false then
 		if g_server == nil then
-			print("client: Change Settings Event")
+			--print("client: Change Settings Event")
 			g_client:getServerConnection():sendEvent(UpdateDefaultSettingsEvent.new(exportSpec))
 		end
 	end

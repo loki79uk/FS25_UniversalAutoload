@@ -2429,8 +2429,9 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 				UniversalAutoload.updateLoadAreaTransformGroups(self)
 				UniversalAutoload.updateLoadingTriggers(self)
 				spec.initialised = true
-				
-				DebugUtil.printTableRecursively(spec, "--", 0, 2)
+				if UniversalAutoload.showDebug then
+					DebugUtil.printTableRecursively(spec, "--", 0, 2)
+				end
 			end
 		end
 		return

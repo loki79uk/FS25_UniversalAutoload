@@ -84,7 +84,7 @@ function(_, placeable, loadingState)
 						removeCollisionFilterGroupBit(nodeId, 'DYNAMIC_OBJECT')
 						removeCollisionFilterGroupBit(nodeId, 'TREE')
 						local finalGroup = getCollisionFilterGroup(nodeId)
-						print(string.format("UAL: MODIFY CollisionFilterGroup from 0x%X -> 0x%X for %s", originalGroup, finalGroup, item))
+						UniversalAutoload.debugPrint(string.format("UAL: MODIFY CollisionFilterGroup from 0x%X -> 0x%X for %s", originalGroup, finalGroup, item))
 					end
 				end
 			end
