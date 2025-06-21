@@ -1691,7 +1691,7 @@ function UniversalAutoload:onLoad(savegame)
 		else
 			if not spec.loadAreaMissing then
 				spec.loadAreaMissing = true
-				print("WARNING: load area missing - check settings file")
+				print("WARNING: UAL load area missing - check settings file for " .. tostring(self:getFullName()))
 				
 				local configFileName = UniversalAutoloadManager.cleanConfigFileName(self.configFileName)
 				UniversalAutoload.debugPrint("  g_modsDirectory: " .. tostring(g_modsDirectory))
