@@ -1514,6 +1514,13 @@ function UniversalAutoload:updateLoadAreaTransformGroups()
 	setTranslation(spec.loadVolume.rootNode, offsetX, offsetY, offsetZ)
 	setTranslation(spec.loadVolume.startNode, offsetX, offsetY, offsetZ+(spec.loadVolume.length/2))
 	setTranslation(spec.loadVolume.endNode, offsetX, offsetY, offsetZ-(spec.loadVolume.length/2))
+	
+	if self.spec_tensionBelts then
+		if self.spec_tensionBelts.defaultHeight < spec.loadVolume.height then
+			UniversalAutoload.debugPrint("UAL - set tension belt height: " .. tostring(spec.loadVolume.height))
+			self.spec_tensionBelts.defaultHeight = spec.loadVolume.height
+		end
+	end
 
 end
 
