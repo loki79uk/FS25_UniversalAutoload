@@ -4020,8 +4020,9 @@ function UniversalAutoload:getLoadPlace(containerType, object)
 							if density > 0.5 then
 								maxLoadAreaHeight = maxLoadAreaHeight * (7-(2*density))/6
 							end
-							if maxLoadAreaHeight > UniversalAutoload.MAX_STACK * containerSizeY then
-								maxLoadAreaHeight = UniversalAutoload.MAX_STACK * containerSizeY
+							local maxStackHeight = UniversalAutoload.MAX_STACK * (containerSizeY + UniversalAutoload.DELTA)
+							if maxLoadAreaHeight > maxStackHeight then
+								maxLoadAreaHeight = maxStackHeight
 							end
 						end
 					end
