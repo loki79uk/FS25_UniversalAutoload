@@ -2381,12 +2381,11 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 			end
 			
 			if not spec.loadingVolume or spec.loadingVolume.state < LoadingVolume.STATE.SHOP_CONFIG then
-				UniversalAutoload.debugPrint("doUpdate: " .. tostring(netGetTime()), not UniversalAutoloadManager.pauseOnNextStep)
 				if spec.loadArea and not spec.wasResetToDefault then
-					UniversalAutoload.debugPrint("resetLoadingVolumeForShopEdit")
+					-- UniversalAutoload.debugPrint("resetLoadingVolumeForShopEdit")
 					UniversalAutoloadManager.resetLoadingVolumeForShopEdit(self)
 				else
-					UniversalAutoload.debugPrint("createLoadingVolumeInsideShop", not UniversalAutoloadManager.pauseOnNextStep)
+					-- UniversalAutoload.debugPrint("createLoadingVolumeInsideShop")
 					UniversalAutoloadManager.createLoadingVolumeInsideShop(self)
 					if spec.wasResetToDefault then
 						local configFileName = spec.configFileName
@@ -2401,7 +2400,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 				end
 			end
 
-			if spec.loadingVolume then
+			if spec.isAutoloadAvailable and spec.loadingVolume and not spec.autoloadDisabled then
 				spec.loadingVolume:draw(true)
 				if spec.loadingVolume.state == LoadingVolume.STATE.ERROR then
 					print("*** ERROR DETECTING LOADING AREA - ABORTING ***")
