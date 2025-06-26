@@ -91,27 +91,6 @@ function(_, placeable, loadingState)
 		end
 	end
 end)
--- FIX TENSION BELTS broken in V1.9.0.1
-local brokenTensionBeltObjects = {}
-TensionBelts.lockTensionBeltObject = Utils.appendedFunction(TensionBelts.lockTensionBeltObject,
-function(self, objectId, objectsToJointTable, isDynamic, jointNode, object)
-	if g_currentMission.missionDynamicInfo.isMultiplayer and g_gameVersionNotification == "1.9.0.1" then
-		if object and (object.lastSpeedReal or object.rootVehicle) then
-			-- print("lockTensionBeltObject: " .. tostring(objectId))
-			brokenTensionBeltObjects[objectId] = nil
-		end
-	end
-end)
-	
-TensionBelts.freeTensionBeltObject = Utils.appendedFunction(TensionBelts.freeTensionBeltObject,
-function(self, objectId, objectsToJointTable, isDynamic, object)
-	if g_currentMission.missionDynamicInfo.isMultiplayer and g_gameVersionNotification == "1.9.0.1" then
-		if object and (object.lastSpeedReal or object.rootVehicle) then
-			-- print("freeTensionBeltObject: " .. tostring(objectId))
-			brokenTensionBeltObjects[objectId] = object
-		end
-	end
-end)
 
 -- Create a new store pack to group all UAL supported vehicles
 g_storeManager:addModStorePack("UNIVERSALAUTOLOAD", g_i18n:getText("configuration_universalAutoload", g_currentModName), "icons/storePack_ual.dds", g_currentModDirectory)
@@ -401,30 +380,6 @@ function UniversalAutoloadManager:update(dt)
 			-- end
 		-- end
 	end
-	
-	for id, object in pairs(brokenTensionBeltObjects or {}) do
-		if object and entityExists(id) then
-			if object.lastSpeedReal then
-				if object.lastSpeedReal < 0.0005 then
-					-- print("fixTensionBeltObject " .. id)
-					brokenTensionBeltObjects[id] = nil
-					UniversalAutoload.unlinkObject(object)
-					if  g_currentMission:getIsServer() and object.raiseActive ~= nil then
-						object:raiseActive()
-						object.networkTimeInterpolator:reset()
-						UniversalAutoload.raiseObjectDirtyFlags(object)
-					end
-				end
-			else
-				-- print("TensionBeltObject is NOT A PALLET: " .. id)
-				brokenTensionBeltObjects[id] = nil
-			end
-		else
-			-- print("TensionBeltObject is UNKNOWN: " .. id)
-			brokenTensionBeltObjects[id] = nil
-		end
-	end
-	
 end
 
 function UniversalAutoloadManager.openUserSettingsXMLFile(xmlFilename)
