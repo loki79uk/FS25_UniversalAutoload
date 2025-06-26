@@ -2,7 +2,7 @@
 <modDesc descVersion="97">
 
     <author>loki_79</author>
-    <version>0.4.9.8</version>
+    <version>0.4.9.9</version>
     
     <title>
         <en>Universal Autoload</en>
@@ -31,6 +31,7 @@ Features:
 - Objects are loaded in size order for best packing efficiency
 - Integrated with AutoDrive and CoursePlay
 
+GitHub-Link: https://github.com/loki79uk/FS25_UniversalAutoload
 ]]>
 </en>
 
@@ -46,6 +47,7 @@ Eigenschaften:
 - Die Objekte werden in der Reihenfolge ihrer Größe geladen, um die beste Packeffizienz zu erzielen
 - Integriert mit AutoDrive und CoursePlay
 
+GitHub-Link: https://github.com/loki79uk/FS25_UniversalAutoload
 ]]>
 </de>
     </description>
