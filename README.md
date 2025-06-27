@@ -1,6 +1,10 @@
 # FS25_UniversalAutoload
 ---------------------------------------------------
-Please get the latest release from https://github.com/loki79uk/FS25_UniversalAutoload/releases
+
+Please get the latest ModHub release from: https://www.farming-simulator.com/mod.php?mod_id=325409
+
+Or the latest development release from: https://github.com/loki79uk/FS25_UniversalAutoload/releases
+
 ---------------------------------------------------
 
 **READ THIS FIRST**
