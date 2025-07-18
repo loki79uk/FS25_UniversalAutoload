@@ -1333,6 +1333,9 @@ function UniversalAutoload:updateVelocityCorrection()
 	spec.velocityCorrection = { dx, dy, dz }
 
 	if not spec.autoCollectionMode then
+		if not (spec.loadVolume and spec.loadVolume.transformGroup) then
+			return
+		end
 		local nxx, nxy, nxz = UniversalAutoload.localDirectionToWorld(self.rootNode, 1, 0, 0)
 		local nyx, nyy, nyz = UniversalAutoload.localDirectionToWorld(self.rootNode, 0, 1, 0)
 		local nzx, nzy, nzz = UniversalAutoload.localDirectionToWorld(self.rootNode, 0, 0, 1)
@@ -4504,6 +4507,9 @@ function UniversalAutoload:testLocation(location, object)
 		rx, ry, rz = UniversalAutoload.getWorldRotation(spec.loadArea[i].rootNode)
 		dx, dy, dz = UniversalAutoload.localDirectionToWorld(spec.loadArea[i].rootNode, 0, sizeY, 0)
 	else
+		if not (location.sizeX and location.sizeY and location.sizeZ) then
+			return
+		end
 		sizeX, sizeY, sizeZ = (location.sizeX/2)-r, (location.sizeY/2)-r, (location.sizeZ/2)-r
 		x, y, z = UniversalAutoload.localToWorld(location.node)
 		rx, ry, rz = UniversalAutoload.getWorldRotation(location.node)

@@ -288,10 +288,10 @@ function GlobalSettingsMenuUALSettings.inputEvent(self, action, value, direction
 		self:onClickClose()
 		return true
 	end
-	if action == InputAction.MENU_ACCEPT then
-		self:onClickSave()
-		return true
-	end
+	-- if action == InputAction.MENU_ACCEPT then
+		-- self:onClickSave()
+		-- return true
+	-- end
 	-- UniversalAutoload.debugPrint("action: " .. tostring(action), debugMenus)
 end
 
