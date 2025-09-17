@@ -35,6 +35,22 @@ GitHub-Link: https://github.com/loki79uk/FS25_UniversalAutoload
 ]]>
 </en>
 
+<es><![CDATA[Especialización de autoload para remolques. Esto modifica automáticamente los remolques base del juego y se aplicará a cualquier remolque nuevo o existente en tu granja. Los remolques compatibles pueden configurarse con una interfaz gráfica al comprarlos en la tienda. Consulta el archivo read-me incluido para obtener instrucciones completas de configuración.
+
+Características:
+- Carga todo tipo de palets/contenedores
+- Carga madera en vehículos forestales
+- Carga y descarga por tipo de material o contenedor seleccionado
+- Puede restringir la carga solo a palets completos
+- Selecciona 'ALL' para cargar tipos mixtos en secuencia
+- Opción para cargar en pilas o capas
+- Los objetos se cargan por orden de tamaño para mayor eficiencia de embalaje
+- Integrado con AutoDrive y CoursePlay
+
+Enlace de GitHub: https://github.com/loki79uk/FS25_UniversalAutoload
+]]>
+</es>
+
 <de><![CDATA[Autoloading-Spezialisierung für Anhänger.  Dies modifiziert automatisch die aktuellen Anhänger des Basisspiels und wird auf alle neuen oder bestehenden Anhänger auf eurer Farm angewendet.  Unterstützte Anhänger können über eine grafische Benutzeroberfläche beim Kauf im Shop konfiguriert werden.  Eine ausführliche Anleitung zur Konfiguration finden Sie in der mitgelieferten Read-me-Datei.
 
 Eigenschaften:
