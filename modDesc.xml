@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="99">
+<modDesc descVersion="101">
 
     <author>loki_79</author>
-    <version>1.0.0.1</version>
+    <version>1.0.1.0</version>
     
     <title>
         <en>Universal Autoload</en>
@@ -31,6 +31,11 @@ Features:
 - Objects are loaded in size order for best packing efficiency
 - Integrated with AutoDrive and CoursePlay
 
+Changelog:
+v1.0.1.0
+- Prevented some runtime errors
+- Improved loading of shipping containers
+
 GitHub-Link: https://github.com/loki79uk/FS25_UniversalAutoload
 ]]>
 </en>
@@ -46,6 +51,11 @@ Eigenschaften:
 - Option zum Laden in Stapeln oder Schichten
 - Die Objekte werden in der Reihenfolge ihrer Größe geladen, um die beste Packeffizienz zu erzielen
 - Integriert mit AutoDrive und CoursePlay
+
+Changelog:
+v1.0.1.0
+- Einige Laufzeitfehler wurden behoben
+- Das Laden von Versandcontainern wurde verbessert
 
 GitHub-Link: https://github.com/loki79uk/FS25_UniversalAutoload
 ]]>
