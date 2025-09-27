@@ -4855,6 +4855,14 @@ function UniversalAutoload:moveObjectNodes( object, position, isLoading, rotateL
 			n[1].rz = rz
 		end
 		
+		-- SHIPPING CONTAINER ROTATION
+		if UniversalAutoload.isShippingContainer(object) and isLoading then
+			local rx,ry,rz = localRotationToWorld(position.node, 0, math.pi, 0)
+			n[1].rx = rx
+			n[1].ry = ry
+			n[1].rz = rz
+		end
+		
 		for i = 1, #rootNodes do
 			UniversalAutoload.moveObjectNode(rootNodes[i], n[i])
 		end
@@ -5133,6 +5141,10 @@ end
 --
 function UniversalAutoload:addAutoLoadingObject(object)
 	local spec = self.spec_universalAutoload
+	
+	if UniversalAutoload.isShippingContainer(object) then
+		return false
+	end
 
 	if UniversalAutoload.isValidForManualLoading(object) or (object.isSplitShape and self.isLogTrailer) then
 		if spec.autoLoadingObjects[object] == nil and spec.loadedObjects[object] == nil then
@@ -5530,10 +5542,20 @@ function UniversalAutoload.getContainerType(object)
 	local itemIsFull = UniversalAutoload.getPalletIsFull(object)
 	UniversalAutoload.PARTIAL_OBJECTS = UniversalAutoload.PARTIAL_OBJECTS or {}
 	UniversalAutoload.OBJECT_FILL_LEVEL = UniversalAutoload.OBJECT_FILL_LEVEL or {}
+	UniversalAutoload.CONTAINER_FOLD_STATE = UniversalAutoload.CONTAINER_FOLD_STATE or {}
 	
 	local shouldUpdateSize = objectType == nil and not UniversalAutoload.INVALID_OBJECTS[name]
 	
-	if itemIsFull == false then
+	if UniversalAutoload.isShippingContainer(object) then
+		local newFoldState = object:getIsUnfolded()
+		local oldFoldState = UniversalAutoload.CONTAINER_FOLD_STATE[object]
+		if (oldFoldState == nil) or oldFoldState ~= newFoldState then
+			UniversalAutoload.CONTAINER_FOLD_STATE[object] = newFoldState
+			shouldUpdateSize = true
+		else
+			return UniversalAutoload.OBJECTS_LOOKUP[object]
+		end
+	elseif itemIsFull == false then
 		local oldFillLevel = UniversalAutoload.OBJECT_FILL_LEVEL[object]
 		local newFillLevel = UniversalAutoload.getPalletFillLevel(object)
 		if not oldFillLevel or oldFillLevel ~= newFillLevel then
@@ -5675,7 +5697,7 @@ function UniversalAutoload.getContainerType(object)
 			newType.width = math.min(newType.sizeX, newType.sizeZ)
 			newType.length = math.max(newType.sizeX, newType.sizeZ)
 			
-			if objectIsInitialised and itemIsFull then
+			if objectIsInitialised and itemIsFull and not UniversalAutoload.isShippingContainer(object) then
 				UniversalAutoload.debugPrint(string.format("  >> %s [%.3f, %.3f, %.3f] - %s", newType.name,
 					newType.sizeX, newType.sizeY, newType.sizeZ, containerType ))
 				
@@ -5885,6 +5907,11 @@ function UniversalAutoload:getMaxSingleLength()
 	end
 	return maxSingleLength
 end				
+--
+function UniversalAutoload.isShippingContainer(object)
+
+	return object.spec_woodContainer ~= nil
+end
 --
 function UniversalAutoload.raiseObjectDirtyFlags(object)
 	if object.raiseDirtyFlags then
