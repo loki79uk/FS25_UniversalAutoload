@@ -730,7 +730,17 @@ end
 
 function UniversalAutoloadManager.consoleResetConfigurations()
 	-- UniversalAutoload.debugPrint("UAL - RESET CONFIGS")
-	UniversalAutoloadManager.importLocalConfigurations(true)
+	
+	local userSettingsFile = Utils.getFilename(UniversalAutoload.userSettingsFile, getUserProfileAppPath())
+	local defaultSettingsFile = Utils.getFilename("xml/UniversalAutoloadDefaults.xml", UniversalAutoload.path)
+
+	UniversalAutoload.debugPrint("CREATING backup of current settings file")
+	copyFile(userSettingsFile, userSettingsFile.."_"..getDate("%Y-%m-%d_%H-%M-%S")..".old", true)
+	copyFile(defaultSettingsFile, userSettingsFile, true)
+	
+	UniversalAutoload.VEHICLE_CONFIGURATIONS = {}
+	UniversalAutoloadManager.importVehicleConfigurations(userSettingsFile)
+	
 	print("UNIVERSAL AUTOLOAD: Configurations were RESET to defaults")
 	print("New configurations will be used for new vehicles, please restart game to apply to all vehicles")
 end
@@ -2299,7 +2309,7 @@ function UniversalAutoloadManager:loadMap(name)
 	
 	if g_currentMission:getIsServer() and not g_currentMission.missionDynamicInfo.isMultiplayer then
 		UniversalAutoload.debugPrint("ADD console commands:")
-		addConsoleCommand("ualResetConfigurations", "Reset the mod settings file to defaults (requires restart to apply)", "consoleResetConfigurations", UniversalAutoloadManager)
+		addConsoleCommand("ualRestoreDefaultConfigs", "Restore the mod settings file to defaults only (requires restart to apply)", "consoleResetConfigurations", UniversalAutoloadManager)
 		addConsoleCommand("ualAddBales", "Fill current vehicle with specified bales", "consoleAddBales", UniversalAutoloadManager)
 		addConsoleCommand("ualAddRoundBales_125", "Fill current vehicle with small round bales", "consoleAddRoundBales_125", UniversalAutoloadManager)
 		addConsoleCommand("ualAddRoundBales_150", "Fill current vehicle with medium round bales", "consoleAddRoundBales_150", UniversalAutoloadManager)
@@ -2324,6 +2334,7 @@ end
 
 function UniversalAutoloadManager:deleteMap()
 	UniversalAutoload.debugPrint("UNIVERSAL AUTOLOAD: CLEAN UP")
+	removeConsoleCommand("ualRestoreDefaultConfigs")
 	removeConsoleCommand("ualAddBales")
 	removeConsoleCommand("ualAddRoundBales_125")
 	removeConsoleCommand("ualAddRoundBales_150")
