@@ -182,5 +182,22 @@
                 <loadingArea offset="0 1.400 -10.615" width="3.10" height="3.55" length="23.5"/>
             </configuration>
         </vehicle>
+        <vehicle configFileName="highlandsFishingPack/vehicles/lizard/aquacultureVessel/aquacultureVessel.xml">
+            <configuration selectedConfigs="ALL" disableHeightLimit="true">
+                <loadingArea offset="0.000 2.915 0.150" width="6.000" length="9.000" height="4.000"/>
+            </configuration>
+        </vehicle>
+		<vehicle configFileName="highlandsFishingPack/vehicles/train/wagonVehicles/wagonVehicles.xml">
+            <configuration selectedConfigs="ALL">
+                <options isBaleTrailer="false" disableHeightLimit="true"/>
+                <loadingArea offset="0 1.335 -5.996" width="2.70" height="3.35" length="17.80" baleHeight="4.00"/>
+            </configuration>
+        </vehicle>
+        <vehicle configFileName="highlandsFishingPack/vehicles/train/wagonTimber/wagonTimber.xml">
+            <configuration selectedConfigs="ALL">
+                <options isLogTrailer="true" disableHeightLimit="true"/>
+                <loadingArea offset="0 1.425 -5.40" width="2.45" height="2.85" length="15.0"/>
+            </configuration>
+        </vehicle>
     </vehicleConfigurations>
 </universalAutoload>
