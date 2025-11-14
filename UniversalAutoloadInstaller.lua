@@ -715,15 +715,16 @@ function UniversalAutoloadManager.importLocalConfigurations(forceOverwrite)
 	-- UniversalAutoload.debugPrint("UAL - IMPORT CONFIGS")
 	local forceOverwrite = forceOverwrite or false
 	local userSettingsFile = Utils.getFilename(UniversalAutoload.userSettingsFile, getUserProfileAppPath())
+	local defaultSettingsFile = Utils.getFilename("xml/UniversalAutoloadDefaults.xml", UniversalAutoload.path)
 
 	if not fileExists(userSettingsFile) or forceOverwrite then
 		UniversalAutoload.debugPrint("CREATING default settings file")
-		local defaultSettingsFile = Utils.getFilename("xml/UniversalAutoloadDefaults.xml", UniversalAutoload.path)
 		copyFile(defaultSettingsFile, userSettingsFile, forceOverwrite)
 	end
 
 	UniversalAutoloadManager.importGlobalSettings(userSettingsFile)
 	UniversalAutoloadManager.importVehicleConfigurations(userSettingsFile)
+	UniversalAutoloadManager.importVehicleConfigurations(defaultSettingsFile)
 	
 end
 
@@ -803,10 +804,10 @@ function UniversalAutoloadManager.importGlobalSettings(xmlFilename)
 end
 --
 function UniversalAutoloadManager.importVehicleConfigurations(xmlFilename)
-	UniversalAutoload.debugPrint("UAL - IMPORT VEHICLE CONFIGS")
+	UniversalAutoload.debugPrint("UAL - IMPORT VEHICLE CONFIGS " .. xmlFilename)
 	-- TODO: could clean incompatible settings here..
 
-	UniversalAutoload.VEHICLE_CONFIGURATIONS = {}
+	UniversalAutoload.VEHICLE_CONFIGURATIONS = UniversalAutoload.VEHICLE_CONFIGURATIONS or {}
 	local xmlFile = UniversalAutoloadManager.openUserSettingsXMLFile(xmlFilename)
 	
 	if xmlFile then
