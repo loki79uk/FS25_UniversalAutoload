@@ -1508,8 +1508,8 @@ end
 function UniversalAutoloadManager.createLoadingVolumeInsideShop(vehicle)
 	local spec = vehicle.spec_universalAutoload
 	
-	if not spec.skipFirstUpdate then
-		spec.skipFirstUpdate = true
+	if not spec.skipFirstUpdate or spec.skipFirstUpdate < 10 then
+		spec.skipFirstUpdate = (spec.skipFirstUpdate or 0) + 1
 		return
 	end
 	
