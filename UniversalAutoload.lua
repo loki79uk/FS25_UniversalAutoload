@@ -1659,6 +1659,10 @@ function UniversalAutoload:onLoad(savegame)
 
 	UniversalAutoload.debugPrint("onLoad START: " .. tostring(netGetTime()), debugVehicles)
 	if UniversalAutoloadManager.getIsValidForAutoload(self) then
+		if self:getFullName() == 'SugarBeet Wagon' and string.find(self.configFileName, "wagonTimber") then
+			self.getName = Utils.overwrittenFunction(self.getName, function(self, superFunc) return "Timber Wagon" end)
+		end
+		
 		if UniversalAutoloadManager.handleNewVehicleCreation(self) then
 			UniversalAutoload.debugPrint(self:getFullName() .. ": UAL ACTIVATED", debugVehicles)
 		elseif self.propertyState ~= VehiclePropertyState.SHOP_CONFIG then
