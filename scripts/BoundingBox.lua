@@ -268,9 +268,10 @@ function BoundingBox:addPoints(points, doEvaluate)
 	end
 end
 
-function BoundingBox:evaluate(minSize)
+function BoundingBox:evaluate(minSize, delta)
 	if self.limits.min_x ~= math.huge and self.limits.max_x ~= -math.huge then
 		local minSize = minSize or 0
+		local delta = delta or UniversalAutoload.DELTA
 		local size = self:getSize()
 		local offset = self:getOffset()
 		size.x = math.max(math.abs(self.limits.max_x - self.limits.min_x), minSize)
@@ -279,9 +280,9 @@ function BoundingBox:evaluate(minSize)
 		offset.x = (self.limits.min_x + self.limits.max_x) / 2
 		offset.y = (self.limits.min_y + self.limits.max_y) / 2
 		offset.z = (self.limits.min_z + self.limits.max_z) / 2
-		offset.x = math.abs(offset.x) > UniversalAutoload.DELTA and offset.x or 0
-		offset.y = math.abs(offset.y) > UniversalAutoload.DELTA and offset.y or 0
-		offset.z = math.abs(offset.z) > UniversalAutoload.DELTA and offset.z or 0
+		offset.x = math.abs(offset.x) > delta and offset.x or 0
+		offset.y = math.abs(offset.y) > delta and offset.y or 0
+		offset.z = math.abs(offset.z) > delta and offset.z or 0
 		return true
 	end
 end
