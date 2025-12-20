@@ -327,7 +327,7 @@ function UniversalAutoload:updateActionEventKeys()
 			else
 				topPriority = GS_PRIO_HIGH
 				midPriority = GS_PRIO_NORMAL
-				lowPriority = GS_PRIO_LOW
+				lowPriority = GS_PRIO_VERY_LOW
 				InputHelpDisplay.MAX_NUM_ELEMENTS = UniversalAutoload.MAX_NUM_ELEMENTS
 			end
 
