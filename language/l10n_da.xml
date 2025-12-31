@@ -1,154 +1,154 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
 	<texts>
-		<text name="shop_configuration_text" text="Autoload"/>
-		<text name="configuration_universalAutoload" text="Universal Autoload"/>
+		<text name="shop_configuration_text" text="Auto læsning"/>
+		<text name="configuration_universalAutoload" text="Universal Auto Læsning"/>
 		
 		<!-- TITLES -->
-		<text name="ui_global_settings_ual" text="Global Settings"/>
-		<text name="ui_config_settings_ual" text="Autoload Settings"/>
-		<text name="ui_vehicle_options_ual" text="Vehicle Options"/>
-		<text name="ui_loading_area_options_ual" text="Loading Area Options"/>
-		<text name="ui_save_options_ual" text="Save Options"/>
-		<text name="ui_button_save_config_ual" text="Save Vehicle Settings"/>
-		<text name="ui_confirm_save_config_ual" text="Do you want to overwrite the default autoload configuration for this vehicle?"/>
-		<text name="ui_confirm_save_config2_ual" text="(Purchase new vehicle or restart game to apply the new settings)"/>
+		<text name="ui_global_settings_ual" text="Global Indstillinger"/>
+		<text name="ui_config_settings_ual" text="Autolæsning Indstillinger"/>
+		<text name="ui_vehicle_options_ual" text="Maskine Muligheder"/>
+		<text name="ui_loading_area_options_ual" text="Læsnings Område Muligheder"/>
+		<text name="ui_save_options_ual" text="Gem Muligheder"/>
+		<text name="ui_button_save_config_ual" text="Gem Maskin Indstillinger"/>
+		<text name="ui_confirm_save_config_ual" text="Ønsker du at overskrive standard autolæsning-konfigurationen for dette køretøj?"/>
+		<text name="ui_confirm_save_config2_ual" text="(Køb nyt køretøj eller genstart spillet for at anvende de nye indstillinger)"/>
 		
 		<!-- GLOBAL -->
-		<text name="ui_global_showDebug" text="Show Debug"/>
-		<text name="ui_global_highPriority" text="High Priority"/>
-		<text name="ui_global_lowRefreshMode" text="Low Refresh Mode"/>
-		<text name="ui_global_disableAutoStrap" text="Automatic Tension Belts"/>
-		<text name="ui_global_pricePerLog" text="Price Per Log"/>
-		<text name="ui_global_pricePerBale" text="Price Per Bale"/>
-		<text name="ui_global_pricePerPallet" text="Price Per Pallet"/>
-		<text name="ui_global_minLogLength" text="Min Log Length"/>
-		<text name="ui_global_loadingSpeed" text="Loading Speed"/>
-		<text name="ui_global_objectSpacing" text="Object Spacing"/>
+		<text name="ui_global_showDebug" text="Vis Debug"/>
+		<text name="ui_global_highPriority" text="Menu Høj Prioritet"/>
+		<text name="ui_global_lowRefreshMode" text="Lav Opdater Mode"/>
+		<text name="ui_global_disableAutoStrap" text="Automatisk Spænde Stropper"/>
+		<text name="ui_global_pricePerLog" text="Pris Per Stamme"/>
+		<text name="ui_global_pricePerBale" text="Pris Per Balle"/>
+		<text name="ui_global_pricePerPallet" text="Pris Per Palle"/>
+		<text name="ui_global_minLogLength" text="Min Stamme Længde"/>
+		<text name="ui_global_loadingSpeed" text="Læsnings Fart"/>
+		<text name="ui_global_objectSpacing" text="Objekt Mellemrum"/>
 		
-		<text name="ui_global_tooltip_showDebug" text="Show the full graphical debugging display for all vehicles in game"/>
-		<text name="ui_global_tooltip_highPriority" text="Apply high priority to all UAL key bindings in the F1 menu"/>
-		<text name="ui_global_tooltip_lowRefreshMode" text="Update less frequently - enable this setting if you experience lag when using autoload"/>
-		<text name="ui_global_tooltip_disableAutoStrap" text="Automatic application of tension belts after loading or unloading"/>
-		<text name="ui_global_tooltip_pricePerLog" text="The price charged for each auto-loaded log"/>
-		<text name="ui_global_tooltip_pricePerBale" text="The price charged for each auto-loaded bale"/>
-		<text name="ui_global_tooltip_pricePerPallet" text="The price charged for each auto-loaded pallet"/>
-		<text name="ui_global_tooltip_minLogLength" text="The global minimum length for logs that will be autoloaded"/>
-		<text name="ui_global_tooltip_loadingSpeed" text="Time delay between loading each object (ms)"/>
-		<text name="ui_global_tooltip_objectSpacing" text="Additional spacing between loaded objects (m)"/>
+		<text name="ui_global_tooltip_showDebug" text="Vis det fulde grafiske debug display for alle køretøjer i spillet"/>
+		<text name="ui_global_tooltip_highPriority" text="Anvend høj prioritet til alle UAL taste bindinger i F1-menuen"/>
+		<text name="ui_global_tooltip_lowRefreshMode" text="Opdater sjældnere - aktiver denne indstilling hvis du oplever lag ved autolæsning"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="Automatisk tilføjning af spænde stropper efter læsning eller aflæsning"/>
+		<text name="ui_global_tooltip_pricePerLog" text="Pris for hver auto-læsset stamme (tryk enter for bekræftelse)"/>
+		<text name="ui_global_tooltip_pricePerBale" text="Pris for hver auto-læsset balle (tryk enter for bekræftelse)"/>
+		<text name="ui_global_tooltip_pricePerPallet" text="Pris for hver auto-læsset palle (tryk enter for bekræftelse)"/>
+		<text name="ui_global_tooltip_minLogLength" text="Den globale minimum længde for stammer som vil blive autolæsset"/>
+		<text name="ui_global_tooltip_loadingSpeed" text="Tid forsinkelse mellem læsning af hvert objekt (ms)"/>
+		<text name="ui_global_tooltip_objectSpacing" text="Ekstra mellemrum mellem læsset objekter (m)"/>
 
 		<!-- OPTIONS -->
-		<text name="ui_option_enableAutoload" text="Enable Autoload"/>
+		<text name="ui_option_enableAutoload" text="Aktiver Auto læsning"/>
 		<text name="ui_option_trailerType" text="Trailer Type"/>
-		<text name="ui_option_unloadingType" text="Unloading Position"/>
-		<text name="ui_option_rearOnly" text="Rear Only"/>
-		<text name="ui_option_frontOnly" text="Front Only"/>
+		<text name="ui_option_unloadingType" text="Aflæsnings Position"/>
+		<text name="ui_option_rearOnly" text="Bag Kun"/>
+		<text name="ui_option_frontOnly" text="Front Kun"/>
 		
-		<text name="ui_option_noLoadingFolded" text="No Loading If Folded"/>
-		<text name="ui_option_folded" text="Folded"/>
-		<text name="ui_option_unfolded" text="Unfolded"/>
+		<text name="ui_option_noLoadingFolded" text="Ingen Læsning Hvis Foldet"/>
+		<text name="ui_option_folded" text="Foldet"/>
+		<text name="ui_option_unfolded" text="Udfoldet"/>
 		
-		<text name="ui_option_noLoadingCovered" text="No Loading If Covered"/>
-		<text name="ui_option_covered" text="Covered"/>
-		<text name="ui_option_uncovered" text="Uncovered"/>
+		<text name="ui_option_noLoadingCovered" text="Ingen Læsning Hvis Overdækket"/>
+		<text name="ui_option_covered" text="Overdækket"/>
+		<text name="ui_option_uncovered" text="Ikke Overdækket"/>
 
-		<text name="ui_option_isBoxTrailer" text="Box Trailer"/>
-		<text name="ui_option_isLogTrailer" text="Log Trailer"/>
-		<text name="ui_option_isBaleTrailer" text="Bale Trailer"/>
-		<text name="ui_option_isBaleProcessor" text="Bale Processor"/>
-		<text name="ui_option_isCurtainTrailer" text="Curtain Trailer"/>
-		<text name="ui_option_enableRearLoading" text="Enable Rear Loading"/>
-		<text name="ui_option_enableSideLoading" text="Enable Side Loading"/>
-		<text name="ui_option_extendPickupRange" text="Extend Pickup Range"/>
+		<text name="ui_option_isBoxTrailer" text="Boks Trailer"/>
+		<text name="ui_option_isLogTrailer" text="Tømmer Trailer"/>
+		<text name="ui_option_isBaleTrailer" text="Balle Trailer"/>
+		<text name="ui_option_isBaleProcessor" text="Balle Processor"/>
+		<text name="ui_option_isCurtainTrailer" text="Gardin Trailer"/>
+		<text name="ui_option_enableRearLoading" text="Aktiver Bag Læsning"/>
+		<text name="ui_option_enableSideLoading" text="Aktiver Side Læsning"/>
+		<text name="ui_option_extendPickupRange" text="Udvid Pickup Rækkevidde"/>
 
-		<text name="ui_option_rearUnloadingOnly" text="Rear Unloading Only"/>
-		<text name="ui_option_frontUnloadingOnly" text="Front Unloading Only"/>
-		<text name="ui_option_horizontalLoading" text="Horizontal Loading"/>
-		<text name="ui_option_disableAutoStrap" text="Automatic Tension Belts"/>
-		<text name="ui_option_disableHeightLimit" text="Limit Stacking Height"/>
-		<text name="ui_option_zonesOverlap" text="Zones Overlap"/>
-		<text name="ui_option_offsetRoot" text="Offset Root"/>
-		<text name="ui_option_minLogLength" text="Min Log Length"/>
+		<text name="ui_option_rearUnloadingOnly" text="Bag Aflæsning Kun"/>
+		<text name="ui_option_frontUnloadingOnly" text="Front Aflæsning Kun"/>
+		<text name="ui_option_horizontalLoading" text="Horizontal Læsning"/>
+		<text name="ui_option_disableAutoStrap" text="Automatisk Spænde Stropper"/>
+		<text name="ui_option_disableHeightLimit" text="Begræns Stable Højde"/>
+		<text name="ui_option_zonesOverlap" text="Zoner Overlap"/>
+		<text name="ui_option_offsetRoot" text="Centerforskydnings Rod"/>
+		<text name="ui_option_minLogLength" text="Min Stamme Længde"/>
 		
-		<text name="ui_option_tooltip_enableAutoload" text="If Autoload is enabled or disabled for this vehicle"/>
-		<text name="ui_option_tooltip_trailerType" text="The special type of trailer, e.g. bale, log, curtain"/>
-		<text name="ui_option_tooltip_unloadingType" text="Use a special unloading position (front or rear)"/>
-		<text name="ui_option_tooltip_noLoadingFolded" text="Prevent loading when either folded or unfolded"/>
-		<text name="ui_option_tooltip_noLoadingCovered" text="Prevent loading when either covered or uncovered"/>
+		<text name="ui_option_tooltip_enableAutoload" text="Hvis Autolæsning er aktiv eller deaktiv for denne maskine"/>
+		<text name="ui_option_tooltip_trailerType" text="Special type af trailer, F.eks. balle, tømmer, gardin"/>
+		<text name="ui_option_tooltip_unloadingType" text="Brug en special aflæsnings position (front eller bag)"/>
+		<text name="ui_option_tooltip_noLoadingFolded" text="Forhindre læsning med enten foldet eller udfoldet"/>
+		<text name="ui_option_tooltip_noLoadingCovered" text="Forhindre læsning med enten overdækker eller ikke overdækket"/>
 		
-		<text name="ui_option_tooltip_isBoxTrailer" text="If trailer is enclosed with a rear door"/>
-		<text name="ui_option_tooltip_isLogTrailer" text="If trailer is a logging trailer - will load only logs dropped from above"/>
-		<text name="ui_option_tooltip_isBaleTrailer" text="If trailer should use an automatic bale collection mode"/>	
-		<text name="ui_option_tooltip_isBaleProcessor" text="If trailer should consume bales (e.g. TMR Mixer or Straw Blower)"/>
-		<text name="ui_option_tooltip_isCurtainTrailer" text="Automatically detect the available load side (if the trailer has curtain sides)"/>
-		<text name="ui_option_tooltip_enableRearLoading" text="Use the automatic rear loading trigger"/>
-		<text name="ui_option_tooltip_enableSideLoading" text="Use the automatic side loading triggers"/>
-		<text name="ui_option_tooltip_extendPickupRange" text="Increase the detection range of the loading triggers"/>
+		<text name="ui_option_tooltip_isBoxTrailer" text="Hvis trailer er lukket med en bag dør"/>
+		<text name="ui_option_tooltip_isLogTrailer" text="Hvis trailer er en tømmer trailer - vil kun læsse stammer smidt fra oven"/>
+		<text name="ui_option_tooltip_isBaleTrailer" text="Hvis trailer skulle bruge en automatisk balle samle mode"/>	
+		<text name="ui_option_tooltip_isBaleProcessor" text="Hvis trailer skulle forbruge baller (F.eks. Foder Blander eller Halm Blæser)"/>
+		<text name="ui_option_tooltip_isCurtainTrailer" text="Automatisk registrer tilgængelig læsse side (hvis trailer har gardin sider)"/>
+		<text name="ui_option_tooltip_enableRearLoading" text="Brug automatisk bag læsnings trigger"/>
+		<text name="ui_option_tooltip_enableSideLoading" text="Brug automatisk side læsnings triggere"/>
+		<text name="ui_option_tooltip_extendPickupRange" text="Øger detektions rækkevidde af læsnings triggere"/>
 
-		<text name="ui_option_tooltip_rearUnloadingOnly" text="Use rear unloading zone only (no side zones)"/>
-		<text name="ui_option_tooltip_frontUnloadingOnly" text="Use front unloading zone only (no side zones)"/>
-		<text name="ui_option_tooltip_horizontalLoading" text="Start with horizontal loading enabled (can be toggled if key is bound)"/>
-		<text name="ui_option_tooltip_disableAutoStrap" text="Automatic application of tension belts after loading or unloading"/>
-		<text name="ui_option_tooltip_disableHeightLimit" text="Limit the height of pallet stacking based on density "/>
-		<text name="ui_option_tooltip_zonesOverlap" text="Flag to identify when the loading areas overlap each other"/>
-		<text name="ui_option_tooltip_offsetRoot" text="Vehicle i3d node that area offsets are relative to"/>
-		<text name="ui_option_tooltip_minLogLength" text="The minimum length for logs that will be autoloaded"/>
+		<text name="ui_option_tooltip_rearUnloadingOnly" text="Brug bag aflæsnings zone kun (ingen side zoner)"/>
+		<text name="ui_option_tooltip_frontUnloadingOnly" text="Brug front aflæsnings zone kun (ingen side zoner)"/>
+		<text name="ui_option_tooltip_horizontalLoading" text="Start med horizontal læsning aktiv (kan skiftes hvis taste er sat)"/>
+		<text name="ui_option_tooltip_disableAutoStrap" text="Automatisk tilføjning af spænde stropper efter læsning eller aflæsning"/>
+		<text name="ui_option_tooltip_disableHeightLimit" text="Begræns højden af palle stabling baseret på vægt "/>
+		<text name="ui_option_tooltip_zonesOverlap" text="Flag til identificering når læsnings områder overlapper hinanden"/>
+		<text name="ui_option_tooltip_offsetRoot" text="Maskine i3d node som område enterforskydninger er relativ til"/>
+		<text name="ui_option_tooltip_minLogLength" text="Minimum længde på stammer som vil blive autolæsset"/>
 
-		<text name="ui_option_addRemoveAreas" text="Number of Loading Areas"/>
-		<text name="ui_option_selectedArea" text="Selected Area"/>
-		<text name="ui_option_tooltip_addRemoveAreas" text="Adjust value here to add or remove loading areas"/>
-		<text name="ui_option_tooltip_selectedArea" text="The area selected (to modify in the settings below)"/>
+		<text name="ui_option_addRemoveAreas" text="Antal af Læsnings Områder"/>
+		<text name="ui_option_selectedArea" text="Valgte Område"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="Juster værdien her for at tilføje eller fjerne læsnings områder"/>
+		<text name="ui_option_tooltip_selectedArea" text="Valgte område (at ændre i indstillingerne nedenfor)"/>
 		
-		<text name="ui_option_selectedConfigSet" text="Selected Configuration Set"/>
-		<text name="ui_option_useConfigName" text="Use Configuration Name"/>
-		<text name="ui_option_useConfigIndex" text="Use Configuration Index"/>
-		<text name="ui_option_tooltip_selectedConfigSet" text="The 'configuration set' to which the saved settings will apply"/>
-		<text name="ui_option_tooltip_useConfigName" text="The configuration to be indexed (optional)"/>
-		<text name="ui_option_tooltip_useConfigIndex" text="The index for the configuration (optional)"/>
+		<text name="ui_option_selectedConfigSet" text="Valgte Konfiguration Sæt"/>
+		<text name="ui_option_useConfigName" text="Brug Konfiguration Navn"/>
+		<text name="ui_option_useConfigIndex" text="Brug Konfiguration Index"/>
+		<text name="ui_option_tooltip_selectedConfigSet" text="'Konfiguration sæt' hvor de gemte indstillinger vil gælde"/>
+		<text name="ui_option_tooltip_useConfigName" text="Konfiguration som skal indexeres (valgfri)"/>
+		<text name="ui_option_tooltip_useConfigIndex" text="Index til konfiguration (valgfri)"/>
 		
 		<!-- LOADING_AREA -->
-		<text name="ui_loadArea_offset" text="Offset"/>
-		<text name="ui_loadArea_offsetRoot" text="Offset Root"/>
-		<text name="ui_loadArea_width" text="Width"/>
-		<text name="ui_loadArea_length" text="Length"/>
-		<text name="ui_loadArea_height" text="Height"/>
-		<text name="ui_loadArea_baleHeight" text="Bale Height"/>
-		<text name="ui_loadArea_widthAxis" text="Width Axis"/>
-		<text name="ui_loadArea_lengthAxis" text="Length Axis"/>
-		<text name="ui_loadArea_heightAxis" text="Height Axis"/>
-		<text name="ui_loadArea_offsetFrontAxis" text="Offset Front Axis"/>
-		<text name="ui_loadArea_offsetRearAxis" text="Offset Rear Axis"/>
-		<text name="ui_loadArea_reverseWidthAxis" text="Reverse Width Axis"/>
-		<text name="ui_loadArea_reverseLengthAxis" text="Reverse Length Axis"/>
-		<text name="ui_loadArea_reverseHeightAxis" text="Reverse Height Axis"/>
-		<text name="ui_loadArea_noLoadingIfFolded" text="No Loading If Folded"/>
-		<text name="ui_loadArea_noLoadingIfUnfolded" text="No Loading If Unfolded"/>
-		<text name="ui_loadArea_noLoadingIfCovered" text="No Loading If Covered"/>
-		<text name="ui_loadArea_noLoadingIfUncovered" text="No Loading If Uncovered"/>
+		<text name="ui_loadArea_offset" text="Centerforskydning"/>
+		<text name="ui_loadArea_offsetRoot" text="Centerforskydnings Rod"/>
+		<text name="ui_loadArea_width" text="Bredde"/>
+		<text name="ui_loadArea_length" text="Længde"/>
+		<text name="ui_loadArea_height" text="Højde"/>
+		<text name="ui_loadArea_baleHeight" text="Balle Højde"/>
+		<text name="ui_loadArea_widthAxis" text="Bredde Akse"/>
+		<text name="ui_loadArea_lengthAxis" text="Længde Akse"/>
+		<text name="ui_loadArea_heightAxis" text="Højde Akse"/>
+		<text name="ui_loadArea_offsetFrontAxis" text="Centerforskydning Front Akse"/>
+		<text name="ui_loadArea_offsetRearAxis" text="Centerforskydning Bag Akse"/>
+		<text name="ui_loadArea_reverseWidthAxis" text="Omvend Bredde Akse"/>
+		<text name="ui_loadArea_reverseLengthAxis" text="Omvend Længde Akse"/>
+		<text name="ui_loadArea_reverseHeightAxis" text="Omvend Højde Akse"/>
+		<text name="ui_loadArea_noLoadingIfFolded" text="Ingen Læsning Hvis Foldet"/>
+		<text name="ui_loadArea_noLoadingIfUnfolded" text="Ingen Læsning Hvis Udfoldet"/>
+		<text name="ui_loadArea_noLoadingIfCovered" text="Ingen Læsning Hvis Overdækket"/>
+		<text name="ui_loadArea_noLoadingIfUncovered" text="Ingen Læsning Hvis Ikke Overdækket"/>
 		
-		<text name="ui_loadArea_tooltip_offset" text="Offset to the centre of the loading area"/>
-		<text name="ui_loadArea_tooltip_offsetRoot" text="Vehicle i3d node that this area offset is relative to"/>
-		<text name="ui_loadArea_tooltip_width" text="Width of the loading area"/>
-		<text name="ui_loadArea_tooltip_length" text="Length of the loading area"/>
-		<text name="ui_loadArea_tooltip_height" text="Height of the loading area"/>
-		<text name="ui_loadArea_tooltip_baleHeight" text="Height of the loading area for BALES only"/>
-		<text name="ui_loadArea_tooltip_widthAxis" text="Axis name to extend width of the loading area"/>
-		<text name="ui_loadArea_tooltip_lengthAxis" text="Axis name to extend length of the loading area"/>
-		<text name="ui_loadArea_tooltip_heightAxis" text="Axis name to extend height of the loading area"/>
-		<text name="ui_loadArea_tooltip_offsetFrontAxis" text="Axis name to adjust the front position of the loading area"/>
-		<text name="ui_loadArea_tooltip_offsetRearAxis" text="Axis name to adjust the rear position of the loading area"/>
-		<text name="ui_loadArea_tooltip_reverseWidthAxis" text="Reverses direction of width extension if true"/>
-		<text name="ui_loadArea_tooltip_reverseLengthAxis" text="Reverses direction of length extension if true"/>
-		<text name="ui_loadArea_tooltip_reverseHeightAxis" text="Reverses direction of height extension if true"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfFolded" text="Prevent loading when folded (for this area only)"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfUnfolded" text="Prevent loading when unfolded (for this area only)"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfCovered" text="Prevent loading when covered (for this area only)"/>
-		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Prevent loading when uncovered (for this area only)"/>
+		<text name="ui_loadArea_tooltip_offset" text="Centerforskydning til center af læsning område"/>
+		<text name="ui_loadArea_tooltip_offsetRoot" text="Maskine i3d node som dette områdes Centerforskydning er relativ til"/>
+		<text name="ui_loadArea_tooltip_width" text="Bredde af læsnings område"/>
+		<text name="ui_loadArea_tooltip_length" text="Længde af læsnings område"/>
+		<text name="ui_loadArea_tooltip_height" text="Højde af læsnings område"/>
+		<text name="ui_loadArea_tooltip_baleHeight" text="Højde af læsnings område kun for BALLER"/>
+		<text name="ui_loadArea_tooltip_widthAxis" text="Akse navn til at udvide bredde på læsnings område"/>
+		<text name="ui_loadArea_tooltip_lengthAxis" text="Akse navn til at udvide længde på læsnings område"/>
+		<text name="ui_loadArea_tooltip_heightAxis" text="Akse navn til at udvide højde på læsnings område"/>
+		<text name="ui_loadArea_tooltip_offsetFrontAxis" text="Akse navn for justering af front position af læsnings område"/>
+		<text name="ui_loadArea_tooltip_offsetRearAxis" text="Akse navn for justering af bag position af læsnings område"/>
+		<text name="ui_loadArea_tooltip_reverseWidthAxis" text="Omvender retning af bredde udvidelse hvis true"/>
+		<text name="ui_loadArea_tooltip_reverseLengthAxis" text="Omvender retning af længde udvidelse hvis true"/>
+		<text name="ui_loadArea_tooltip_reverseHeightAxis" text="Omvender retning af højde udvidelse hvis true"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfFolded" text="Forhindre læsning når foldet (kun for dette område)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfUnfolded" text="Forhindre læsning når udfoldet (kun for dette område)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfCovered" text="Forhindre læsning når overdækket (kun for dette område)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Forhindre læsning når ikke overdækket (kun for dette område)"/>
 
 		<!-- KEY BINDINGS -->
-		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Open global settings menu"/>
-		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Open configuration settings menu (in shop)"/>
-		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Enable editing of loading volume (in shop)"/>
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Åben global indstilling menu"/>
+		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Åben konfiguration indstilling menu (i butik)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Aktiver redigering af læsnings mængde (i butik)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Til/fra læsning"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" text="Automatisk samlemodus"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Aflæsning"/>
@@ -191,8 +191,8 @@
 		<text name="universalAutoload_unloadAll" text="Aflæsning"/>
 		<text name="universalAutoload_unloadAllForce" text="Tving aflæsning"/>
 		<text name="universalAutoload_logMode" text="Træstammemodus"/>
-		<text name="universalAutoload_baleMode" text="Ballelåg"/>
-		<text name="universalAutoload_palletMode" text="Pallereg"/>
+		<text name="universalAutoload_baleMode" text="Baller"/>
+		<text name="universalAutoload_palletMode" text="Paller"/>
 		<text name="universalAutoload_collectionMode" text="Indsamlingsmode"/>
 		<text name="universalAutoload_enabled" text="Til"/>
 		<text name="universalAutoload_disabled" text="Fra"/>
