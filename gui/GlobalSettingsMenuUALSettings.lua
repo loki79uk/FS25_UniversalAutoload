@@ -71,10 +71,12 @@ function GlobalSettingsMenuUALSettings:updateSettings()
 	UniversalAutoload.debugPrint(" highPriority: " .. tostring(UniversalAutoload.highPriority), debugMenus)
 	UniversalAutoload.debugPrint(" lowRefreshMode: " .. tostring(UniversalAutoload.lowRefreshMode), debugMenus)
 	UniversalAutoload.debugPrint(" disableAutoStrap: " .. tostring(UniversalAutoload.disableAutoStrap), debugMenus)
+	UniversalAutoload.debugPrint(" removePhysics: " .. tostring(UniversalAutoload.removePhysics), debugMenus)
 	setChecked('showDebugCheckBox', UniversalAutoload.showDebug)
 	setChecked('highPriorityCheckBox', UniversalAutoload.highPriority)
 	setChecked('lowRefreshModeCheckBox', UniversalAutoload.lowRefreshMode)
 	setChecked('disableAutoStrapCheckBox', not UniversalAutoload.disableAutoStrap)
+	setChecked('removePhysicsCheckBox', UniversalAutoload.removePhysics)
 	
 	self.pricePerLogTextInput:setText(tostring(UniversalAutoload.pricePerLog))
 	self.pricePerBaleTextInput:setText(tostring(UniversalAutoload.pricePerBale))
@@ -110,6 +112,7 @@ function GlobalSettingsMenuUALSettings:onCreate()
 	
 	if g_currentMission.missionDynamicInfo.isMultiplayer then
 		self.disableAutoStrapCheckBox:setDisabled(true)
+		self.removePhysicsCheckBox:setDisabled(true)
 		self.minLogLengthListBox:setDisabled(true)
 		self.loadingSpeedListBox:setDisabled(true)
 		self.objectSpacingListBox:setDisabled(true)
@@ -228,6 +231,10 @@ function GlobalSettingsMenuUALSettings:onClickBinaryOption(id, control, directio
 	elseif control == self.disableAutoStrapCheckBox then
 		UniversalAutoload.disableAutoStrap = direction
 		UniversalAutoload.debugPrint(" disableAutoStrap: " .. tostring(UniversalAutoload.disableAutoStrap), debugMenus)
+	elseif control == self.removePhysicsCheckBox then
+		UniversalAutoload.lastRemovePhysics = UniversalAutoload.removePhysics or false
+		UniversalAutoload.removePhysics = not direction
+		UniversalAutoload.debugPrint(" removePhysics: " .. tostring(UniversalAutoload.removePhysics), debugMenus)
 	end
 
 end
@@ -288,11 +295,6 @@ function GlobalSettingsMenuUALSettings.inputEvent(self, action, value, direction
 		self:onClickClose()
 		return true
 	end
-	-- if action == InputAction.MENU_ACCEPT then
-		-- self:onClickSave()
-		-- return true
-	-- end
-	-- UniversalAutoload.debugPrint("action: " .. tostring(action), debugMenus)
 end
 
 function GlobalSettingsMenuUALSettings:onOpen()
@@ -310,6 +312,7 @@ function GlobalSettingsMenuUALSettings:onClose()
 		UniversalAutoload.clearActionEvents(self.vehicle)
 		UniversalAutoload.updateActionEventKeys(self.vehicle)
 	end
+	UniversalAutoloadManager.updatePhysicsForLoadedObjects()
 	UniversalAutoloadManager.exportGlobalSettings()
 end
 

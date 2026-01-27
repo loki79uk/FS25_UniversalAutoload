@@ -1059,6 +1059,14 @@ function UniversalAutoload:startLoading(force, noEventSend)
 	
 	if (not spec.isLoading or spec.activeLoading) and UniversalAutoload.getIsLoadingVehicleAllowed(self) then
 		-- UniversalAutoload.debugPrint("Start Loading: "..self:getFullName() )
+		
+		if spec.palletsRemovedFromPhysics then
+			-- print("startLoading - add pallets back to Physics")
+			self:setAllTensionBeltsActive(false)
+			UniversalAutoload.togglePhysicsForLoadedObjects(self)
+			self.delayStartLoading = true
+			return
+		end
 
 		spec.isLoading = true
 		spec.firstAttemptToLoad = true
@@ -1175,6 +1183,10 @@ function UniversalAutoload:startUnloading(force, noEventSend)
 		if self.isServer then
 
 			if spec.loadedObjects then
+				
+				self:setAllTensionBeltsActive(false)
+				UniversalAutoload.togglePhysicsForLoadedObjects(self)
+				
 				if force and spec.forceUnloadPosition then
 					UniversalAutoload.debugPrint("USING UNLOADING POSITION: " .. tostring(spec.forceUnloadPosition), debugLoading)
 					UniversalAutoload.buildObjectsToUnloadTable(self, spec.forceUnloadPosition)
@@ -1332,7 +1344,7 @@ function UniversalAutoload:updateVelocityCorrection()
 	local dx, dy, dz = (vx or 0)*dt, (vy or 0)*dt, (vz or 0)*dt
 	spec.velocityCorrection = { dx, dy, dz }
 
-	if not spec.autoCollectionMode then
+	if not (spec.autoCollectionMode or spec.palletsRemovedFromPhysics) then
 		if not (spec.loadVolume and spec.loadVolume.transformGroup) then
 			return
 		end
@@ -2548,7 +2560,15 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 				UniversalAutoload.updateActionEventText(self)
 			end
 		end
-
+		
+		-- DETECT WHEN STRAPS STATE CHANGES
+		if self.spec_tensionBelts then
+			if spec.lastStrapState ~= self.spec_tensionBelts.areAllBeltsFastened then
+				-- UniversalAutoload.debugPrint("*** STRAPS CHANGED STATE ***")
+				spec.lastStrapState = self.spec_tensionBelts.areAllBeltsFastened
+				spec.lastStrapStateChanged = true
+			end
+		end
 
 		-- ALWAYS LOAD THE AUTO LOADING PALLETS
 		if spec.autoLoadingObjects then
@@ -2966,6 +2986,32 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 					UniversalAutoload.resetLoadingState(self)
 				else
 					spec.postLoadDelayTime = spec.postLoadDelayTime + dt
+				end
+			end
+			
+			if spec.lastStrapStateChanged then
+				spec.postStrapDelayTime = spec.postStrapDelayTime or 0
+				local logDelay = spec.isLogTrailer and UniversalAutoload.LOG_DELAY or 0
+				local mpDelay = g_currentMission.missionDynamicInfo.isMultiplayer and UniversalAutoload.MP_DELAY or 0
+				if spec.postStrapDelayTime > UniversalAutoload.loadingSpeed + mpDelay + logDelay then
+					-- print("DO DELAY AFTER STRAPPING")
+					UniversalAutoload.togglePhysicsForLoadedObjects(self)
+					spec.postStrapDelayTime = 0
+					spec.lastStrapStateChanged = false
+				else
+					spec.postStrapDelayTime = spec.postStrapDelayTime + dt
+				end
+			end
+			
+			if self.delayStartLoading then
+				spec.delayStartLoadingTime = spec.delayStartLoadingTime or 0
+				if spec.delayStartLoadingTime > UniversalAutoload.loadingSpeed then
+					print("start loading after delay")
+					self.delayStartLoading = false
+					spec.delayStartLoadingTime = 0
+					UniversalAutoload.startLoading(self)
+				else
+					spec.delayStartLoadingTime = spec.delayStartLoadingTime + dt
 				end
 			end
 
@@ -3452,58 +3498,60 @@ function UniversalAutoload.buildObjectsToUnloadTable(vehicle, forceUnloadPositio
 				
 				local unloadPlace = {}
 				local containerType = UniversalAutoload.getContainerType(object)
-				local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType, true)
-				unloadPlace.sizeX = w
-				unloadPlace.sizeY = h
-				unloadPlace.sizeZ = l
-				if containerType.flipXY then
-					unloadPlace.wasFlippedXY = true
-				end
-				if containerType.flipYZ then
-					unloadPlace.wasFlippedYZ = true
-				end
-				
-				local offsetX = 0
-				local offsetY = 0
-				local offsetZ = 0
-				
-				if forceUnloadPosition then
-					if forceUnloadPosition == "rear" or forceUnloadPosition == "behind" then
-						offsetZ = -spec.loadVolume.length - spec.loadVolume.width/2
-					elseif forceUnloadPosition == "left" then
-						offsetX = 1.5*spec.loadVolume.width
-					elseif forceUnloadPosition == "right" then
-						offsetX = -1.5*spec.loadVolume.width
+				if containerType then
+					local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType, true)
+					unloadPlace.sizeX = w
+					unloadPlace.sizeY = h
+					unloadPlace.sizeZ = l
+					if containerType.flipXY then
+						unloadPlace.wasFlippedXY = true
 					end
-				else
-					if spec.frontUnloadingOnly then
-						offsetZ = spec.loadVolume.length + spec.loadVolume.width/2
-					elseif spec.rearUnloadingOnly then
-						offsetZ = -spec.loadVolume.length - spec.loadVolume.width/2
-					else
-						if spec.isLogTrailer then
-							offsetX = 2*spec.loadVolume.width
-						else
+					if containerType.flipYZ then
+						unloadPlace.wasFlippedYZ = true
+					end
+					
+					local offsetX = 0
+					local offsetY = 0
+					local offsetZ = 0
+					
+					if forceUnloadPosition then
+						if forceUnloadPosition == "rear" or forceUnloadPosition == "behind" then
+							offsetZ = -spec.loadVolume.length - spec.loadVolume.width/2
+						elseif forceUnloadPosition == "left" then
 							offsetX = 1.5*spec.loadVolume.width
+						elseif forceUnloadPosition == "right" then
+							offsetX = -1.5*spec.loadVolume.width
 						end
-						if spec.currentTipside == "right" then offsetX = -offsetX end
+					else
+						if spec.frontUnloadingOnly then
+							offsetZ = spec.loadVolume.length + spec.loadVolume.width/2
+						elseif spec.rearUnloadingOnly then
+							offsetZ = -spec.loadVolume.length - spec.loadVolume.width/2
+						else
+							if spec.isLogTrailer then
+								offsetX = 2*spec.loadVolume.width
+							else
+								offsetX = 1.5*spec.loadVolume.width
+							end
+							if spec.currentTipside == "right" then offsetX = -offsetX end
+						end
 					end
+					
+					offsetX = offsetX - containerType.offset.x
+					offsetY = offsetY - containerType.offset.y
+					offsetZ = offsetZ - containerType.offset.z
+
+					unloadPlace.node = createTransformGroup("unloadPlace")
+					link(spec.loadVolume.rootNode, unloadPlace.node)
+					setTranslation(unloadPlace.node, x+offsetX, y+offsetY, z+offsetZ)
+					setRotation(unloadPlace.node, rx, ry, rz)
+
+					local X, Y, Z = UniversalAutoload.getWorldTranslation(unloadPlace.node)
+					local heightAboveGround = DensityMapHeightUtil.getCollisionHeightAtWorldPos(X, Y, Z) + 0.1
+					unloadPlace.heightAbovePlace = math.max(0, y)
+					unloadPlace.heightAboveGround = math.max(-(HEIGHT+y), heightAboveGround-Y)
+					spec.objectsToUnload[object] = unloadPlace
 				end
-				
-				offsetX = offsetX - containerType.offset.x
-				offsetY = offsetY - containerType.offset.y
-				offsetZ = offsetZ - containerType.offset.z
-
-				unloadPlace.node = createTransformGroup("unloadPlace")
-				link(spec.loadVolume.rootNode, unloadPlace.node)
-				setTranslation(unloadPlace.node, x+offsetX, y+offsetY, z+offsetZ)
-				setRotation(unloadPlace.node, rx, ry, rz)
-
-				local X, Y, Z = UniversalAutoload.getWorldTranslation(unloadPlace.node)
-				local heightAboveGround = DensityMapHeightUtil.getCollisionHeightAtWorldPos(X, Y, Z) + 0.1
-				unloadPlace.heightAbovePlace = math.max(0, y)
-				unloadPlace.heightAboveGround = math.max(-(HEIGHT+y), heightAboveGround-Y)
-				spec.objectsToUnload[object] = unloadPlace
 			end
 		end
 	end
@@ -3971,6 +4019,11 @@ end
 function UniversalAutoload:getLoadPlace(containerType, object)
 	local spec = self.spec_universalAutoload
 	
+	if spec.palletsRemovedFromPhysics then
+		-- print("getLoadPlace - add pallets back to Physics")
+		return
+	end
+	
 	if containerType==nil or (spec.trailerIsFull and not spec.partiallyUnloaded) then
 		UniversalAutoload.debugPrint("containerType==nil or trailerIsFull", debugLoading)
 		return
@@ -4354,7 +4407,12 @@ function UniversalAutoload:testLocationIsFull(loadPlace, offset)
 	local x, y, z = UniversalAutoload.localToWorld(loadPlace.node, 0, offset or 0, 0, spec.velocityCorrection)
 	local rx, ry, rz = UniversalAutoload.getWorldRotation(loadPlace.node)
 	local dx, dy, dz = UniversalAutoload.localDirectionToWorld(loadPlace.node, 0, sizeY, 0)
-		
+	
+	if spec.palletsRemovedFromPhysics then
+		-- print("Test Location Full: palletsRemovedFromPhysics")
+		return false
+	end
+	
 	spec.foundObject = false
 	spec.currentObject = self
 	
@@ -4377,6 +4435,11 @@ function UniversalAutoload:testLocationIsEmpty(loadPlace, object, offset, mask)
 	local x, y, z = UniversalAutoload.localToWorld(loadPlace.node, 0, offset or 0, 0, spec.velocityCorrection)
 	local rx, ry, rz = UniversalAutoload.getWorldRotation(loadPlace.node)
 	local dx, dy, dz = UniversalAutoload.localDirectionToWorld(loadPlace.node, 0, loadPlace.sizeY/2, 0)
+	
+	if spec.palletsRemovedFromPhysics then
+		-- print("Test Location Empty: palletsRemovedFromPhysics")
+		return false
+	end
 	
 	spec.foundObject = false
 	spec.currentObject = object
@@ -4429,6 +4492,10 @@ function UniversalAutoload:testLoadAreaIsEmpty()
 	local i = spec.currentLoadAreaIndex or 1
 	
 	if not spec.loadArea or #spec.loadArea == 0 then
+		return false
+	end
+	
+	if spec.palletsRemovedFromPhysics then
 		return false
 	end
 	
@@ -5420,6 +5487,39 @@ function UniversalAutoload:clearLoadedObjects()
 	return palletCount, balesCount, logCount
 end
 --
+function UniversalAutoload:togglePhysicsForLoadedObjects(force)
+	local spec = self.spec_universalAutoload
+	local objectCount = 0
+	
+	local removedFromPhysics = spec.palletsRemovedFromPhysics or false
+	local beltState = self.spec_tensionBelts.areAllBeltsFastened
+	if beltState == removedFromPhysics and not force then
+		return
+	end
+	
+	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled and spec.loadedObjects then
+		for object, _ in pairs(spec.loadedObjects or {}) do
+			if not object.spec_bigBag then
+				if removedFromPhysics then
+					UniversalAutoload.unlinkObject(object)
+					UniversalAutoload.addToPhysics(self, object)
+				else
+					if UniversalAutoload.removePhysics then
+						UniversalAutoload.unmountDynamicMount(object)
+						UniversalAutoload.removeFromPhysics(object)
+						local node = UniversalAutoload.getObjectRootNode(object)
+						UniversalAutoload.addBaleModeBale(self, node)
+					end
+				end
+				objectCount = objectCount + 1
+			end
+		end
+	end
+	
+	spec.palletsRemovedFromPhysics = UniversalAutoload.removePhysics and not removedFromPhysics
+	-- print("palletsRemovedFromPhysics: " .. tostring(spec.palletsRemovedFromPhysics))
+	return objectCount
+end
 
 -- PALLET IDENTIFICATION AND SELECTION FUNCTIONS
 function UniversalAutoload.getObjectNameFromI3d(i3d_path)

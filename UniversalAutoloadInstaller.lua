@@ -162,6 +162,7 @@ UniversalAutoload.GLOBAL_DEFAULTS = {
 	{id="highPriority", default=true, valueType="BOOL", key="#highPriority"}, --Apply high priority to all UAL key bindings in the F1 menu
 	{id="lowRefreshMode", default=false, valueType="BOOL", key="#lowRefreshMode"}, --Update less frequently - set to 'true' if you experience lag when using autoload
 	{id="disableAutoStrap", default=false, valueType="BOOL", key="#disableAutoStrap"}, --Disable the automatic application of tension belts
+	{id="removePhysics", default=false, valueType="BOOL", key="#removePhysics"}, --Remove pallets from physics when tension belts are applied
 	{id="pricePerLog", default=0, valueType="INT", key="#pricePerLog"}, --The price charged for each auto-loaded log (default is zero)
 	{id="pricePerBale", default=0, valueType="INT", key="#pricePerBale"}, --The price charged for each auto-loaded bale (default is zero)
 	{id="pricePerPallet", default=0, valueType="INT", key="#pricePerPallet"}, --The price charged for each auto-loaded pallet (default is zero)
@@ -2106,6 +2107,24 @@ function UniversalAutoloadManager:consoleClearLoadedObjects()
 	return string.format("REMOVED: %d pallets, %d bales, %d logs", palletCount, balesCount, logCount)
 end
 --
+function UniversalAutoloadManager:consoleTogglePhysicsForLoadedObjects()
+	
+	local objectCount = 0
+	local controlledVehicle = g_localPlayer and g_localPlayer.getCurrentVehicle()
+	if controlledVehicle then
+		local vehicles = UniversalAutoloadManager.getAttachedVehicles(controlledVehicle)
+		if next(vehicles) ~= nil then
+			for vehicle, hasAutoload in pairs(vehicles) do
+				if hasAutoload and vehicle:getIsActiveForInput() then
+					count = UniversalAutoload.togglePhysicsForLoadedObjects(vehicle)
+					objectCount = objectCount + count
+				end
+			end
+		end
+	end
+
+	return string.format("REMOVED from physics: %d objects", objectCount)
+end
 -- function UniversalAutoloadManager:consoleSpawnTestPallets()
 	-- local usage = "Usage: consoleSpawnTestPallets"
 	
@@ -2151,6 +2170,24 @@ end
 	
 -- end
 --
+function UniversalAutoloadManager.updatePhysicsForLoadedObjects()
+	
+	if g_currentMission:getIsServer() then
+		if UniversalAutoload.lastRemovePhysics == nil then
+			-- UniversalAutoload.debugPrint("GLOBAL REMOVE FROM PHYSICS HAS NEVER CHANGED")
+			UniversalAutoload.lastRemovePhysics = UniversalAutoload.removePhysics
+			return
+		end
+		if UniversalAutoload.lastRemovePhysics ~= UniversalAutoload.removePhysics then
+			-- UniversalAutoload.debugPrint("GLOBAL REMOVE FROM PHYSICS CHANGED")
+			UniversalAutoload.lastRemovePhysics = UniversalAutoload.removePhysics
+			for vehicle, _ in pairs(UniversalAutoload.VEHICLES) do
+				local spec = vehicle and vehicle.spec_universalAutoload
+				UniversalAutoload.togglePhysicsForLoadedObjects(vehicle, true)
+			end
+		end
+	end
+end	
 function UniversalAutoloadManager.addAttachedVehicles(vehicle, vehicles)
 
 	if vehicle.getAttachedImplements ~= nil then
@@ -2320,6 +2357,7 @@ function UniversalAutoloadManager:loadMap(name)
 		addConsoleCommand("ualAddPallets", "Fill current vehicle with specified pallets (fill type)", "consoleAddPallets", UniversalAutoloadManager)
 		addConsoleCommand("ualAddLogs", "Fill current vehicle with specified logs (length / fill type)", "consoleAddLogs", UniversalAutoloadManager)
 		addConsoleCommand("ualClearLoadedObjects", "Remove all loaded objects from current vehicle", "consoleClearLoadedObjects", UniversalAutoloadManager)
+		addConsoleCommand("ualTogglePhysicsForLoadedObjects", "Toggle physics for all loaded objects on current vehicle", "consoleTogglePhysicsForLoadedObjects", UniversalAutoloadManager)
 		-- addConsoleCommand("ualResetVehicles", "Reset all vehicles with autoload (and any attached) to the shop", "consoleResetVehicles", UniversalAutoloadManager)
 		-- addConsoleCommand("ualSpawnTestPallets", "Create one of each pallet type (not loaded)", "consoleSpawnTestPallets", UniversalAutoloadManager)
 		-- addConsoleCommand("ualFullTest", "Test all the different loading types", "consoleFullTest", UniversalAutoloadManager)
@@ -2345,6 +2383,7 @@ function UniversalAutoloadManager:deleteMap()
 	removeConsoleCommand("ualAddPallets")
 	removeConsoleCommand("ualAddLogs")
 	removeConsoleCommand("ualClearLoadedObjects")
+	removeConsoleCommand("ualTogglePhysicsForLoadedObjects")
 	-- removeConsoleCommand("ualResetVehicles")
 	-- removeConsoleCommand("ualSpawnTestPallets")
 	-- removeConsoleCommand("ualFullTest")

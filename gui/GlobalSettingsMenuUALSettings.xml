@@ -28,6 +28,14 @@
 						</BinaryOption>
 						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_global_disableAutoStrap"/>
 					</Bitmap>
+					
+					<!-- ENABLE/DISABLE AutoStrap -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<BinaryOption profile="fs25_settingsBinaryOption" focusInit="onOpen" onClick="onClickBinaryOption" id="removePhysicsCheckBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_global_tooltip_removePhysics"/>
+						</BinaryOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_global_removePhysics"/>
+					</Bitmap>
 
 					<!-- MINIMUM LOG LENGTH -->
 					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
