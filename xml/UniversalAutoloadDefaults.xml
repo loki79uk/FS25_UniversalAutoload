@@ -64,7 +64,7 @@
             </configuration>
             <configuration selectedConfigs="ALL|2" useConfigName="design">
                 <options isBaleTrailer="true" horizontalLoading="true"/>
-                <loadingArea offset="0.000 1.144 -0.820" width="2.400" length="9.330" height="2.403"/>
+                <loadingArea offset="0.000 1.144 -0.820" width="2.400" length="9.530" height="3.203"/>
             </configuration>
         </vehicle>
         <vehicle configFileName="data/vehicles/kroeger/pwo24/pwo24.xml">
