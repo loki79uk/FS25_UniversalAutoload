@@ -4149,10 +4149,11 @@ function UniversalAutoload:getLoadPlace(containerType, object)
 			if spec.autoCollectionMode then
 				UniversalAutoload.debugPrint("autoCollectionMode: trailerIsFull", debugSpecial)
 				UniversalAutoload.setAutoCollectionMode(self, false)
-			end
-			if UniversalAutoload.testLoadAreaIsEmpty(self) then
-				UniversalAutoload.debugPrint("*** FAILED TO LOAD - BUT LOAD AREA WAS EMPTY ***")
-				UniversalAutoload.resetLoadingArea(self)
+			else
+				if UniversalAutoload.testLoadAreaIsEmpty(self) then
+					UniversalAutoload.debugPrint("*** FAILED TO LOAD - BUT LOAD AREA WAS EMPTY ***")
+					UniversalAutoload.resetLoadingArea(self)
+				end
 			end
 		end
 		UniversalAutoload.debugPrint("===============================", debugLoading)
