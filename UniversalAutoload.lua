@@ -1062,9 +1062,11 @@ function UniversalAutoload:startLoading(force, noEventSend)
 		
 		if spec.palletsRemovedFromPhysics then
 			-- print("startLoading - add pallets back to Physics")
-			self:setAllTensionBeltsActive(false)
-			UniversalAutoload.togglePhysicsForLoadedObjects(self)
-			self.delayStartLoading = true
+			if not self:ualGetIsMoving() then
+				self:setAllTensionBeltsActive(false)
+				UniversalAutoload.togglePhysicsForLoadedObjects(self)
+				self.delayStartLoading = true
+			end
 			return
 		end
 
