@@ -3008,7 +3008,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 			if self.delayStartLoading then
 				spec.delayStartLoadingTime = spec.delayStartLoadingTime or 0
 				if spec.delayStartLoadingTime > UniversalAutoload.loadingSpeed then
-					print("start loading after delay")
+					-- print("start loading after delay")
 					self.delayStartLoading = false
 					spec.delayStartLoadingTime = 0
 					UniversalAutoload.startLoading(self)
