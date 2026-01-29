@@ -2868,7 +2868,7 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 			end
 		
 			if spec.autoCollectionMode and not isActiveForLoading or spec.aiLoadingActive then
-				if spec.totalAvailableCount > 0 and not spec.trailerIsFull then
+				if spec.totalAvailableCount > 0 and not spec.trailerIsFull and not self.delayStartLoading then
 					UniversalAutoload.startLoading(self)
 				end
 			end
