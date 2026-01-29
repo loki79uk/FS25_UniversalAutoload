@@ -19,6 +19,7 @@
 		<text name="ui_global_highPriority" text="Menu Høj Prioritet"/>
 		<text name="ui_global_lowRefreshMode" text="Lav Opdater Mode"/>
 		<text name="ui_global_disableAutoStrap" text="Automatisk Spænde Stropper"/>
+		<text name="ui_global_removePhysics" text="Fjern fra fysiksimulering"/>
 		<text name="ui_global_pricePerLog" text="Pris Per Stamme"/>
 		<text name="ui_global_pricePerBale" text="Pris Per Balle"/>
 		<text name="ui_global_pricePerPallet" text="Pris Per Palle"/>
@@ -30,6 +31,7 @@
 		<text name="ui_global_tooltip_highPriority" text="Anvend høj prioritet til alle UAL taste bindinger i F1-menuen"/>
 		<text name="ui_global_tooltip_lowRefreshMode" text="Opdater sjældnere - aktiver denne indstilling hvis du oplever lag ved autolæsning"/>
 		<text name="ui_global_tooltip_disableAutoStrap" text="Automatisk tilføjning af spænde stropper efter læsning eller aflæsning"/>
+		<text name="ui_global_tooltip_removePhysics" text="Fjern paller fra fysiksimulering, når der anvendes spændebånd"/>
 		<text name="ui_global_tooltip_pricePerLog" text="Pris for hver auto-læsset stamme (tryk enter for bekræftelse)"/>
 		<text name="ui_global_tooltip_pricePerBale" text="Pris for hver auto-læsset balle (tryk enter for bekræftelse)"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Pris for hver auto-læsset palle (tryk enter for bekræftelse)"/>

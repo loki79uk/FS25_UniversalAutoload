@@ -19,6 +19,7 @@
 		<text name="ui_global_highPriority" text="Высокий приоритет"/>
 		<text name="ui_global_lowRefreshMode" text="Режим низкой частоты обновления"/>
 		<text name="ui_global_disableAutoStrap" text="Автоматические натяжные ремни"/>
+		<text name="ui_global_removePhysics" text="Удалить из физической симуляции"/>
 		<text name="ui_global_pricePerLog" text="Цена за бревно"/>
 		<text name="ui_global_pricePerBale" text="Цена за тюк"/>
 		<text name="ui_global_pricePerPallet" text="Цена за поддон"/>
@@ -30,6 +31,7 @@
 		<text name="ui_global_tooltip_highPriority" text="Примените высокий приоритет ко всем привязкам клавиш UAL в меню F1"/>
 		<text name="ui_global_tooltip_lowRefreshMode" text="Обновлять реже — включите этот параметр, если возникает задержка при автозагрузке"/>
 		<text name="ui_global_tooltip_disableAutoStrap" text="Автоматическое применение натяжных лент после погрузки или разгрузки"/>
+		<text name="ui_global_tooltip_removePhysics" text="Удалить поддоны из физической симуляции при использовании натяжных ремней"/>
 		<text name="ui_global_tooltip_pricePerLog" text="Цена, взимаемая за каждый автоматически загружаемое бревно"/>
 		<text name="ui_global_tooltip_pricePerBale" text="Цена, взимаемая за каждый автоматически загружаемый тюк"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Цена, взимаемая за каждый автоматически загружаемый поддон"/>

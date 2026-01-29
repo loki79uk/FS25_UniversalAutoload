@@ -19,6 +19,7 @@
 		<text name="ui_global_highPriority" text="Alta priorità"/>
 		<text name="ui_global_lowRefreshMode" text="Modalità di aggiornamento ridotto"/>
 		<text name="ui_global_disableAutoStrap" text="Cinghie di tensione automatica"/>
+		<text name="ui_global_removePhysics" text="Rimuovi dalla simulazione fisica"/>
 		<text name="ui_global_pricePerLog" text="Prezzo per tronco"/>
 		<text name="ui_global_pricePerBale" text="Prezzo per balla"/>
 		<text name="ui_global_pricePerPallet" text="Prezzo per pallet"/>
@@ -30,6 +31,7 @@
 		<text name="ui_global_tooltip_highPriority" text="Applica alta priorità a tutti i tasti di scelta rapida UAL nel menu F1"/>
 		<text name="ui_global_tooltip_lowRefreshMode" text="Aggiorna meno frequentemente – attiva questa opzione se riscontri rallentamenti con il caricamento automatico"/>
 		<text name="ui_global_tooltip_disableAutoStrap" text="Applicazione automatica delle cinghie di tensione dopo il carico o lo scarico"/>
+		<text name="ui_global_tooltip_removePhysics" text="Rimuovi i pallet dalla simulazione fisica quando vengono applicate le cinghie di tensione"/>
 		<text name="ui_global_tooltip_pricePerLog" text="Il prezzo addebitato per ogni tronco caricato automaticamente"/>
 		<text name="ui_global_tooltip_pricePerBale" text="Il prezzo addebitato per ogni balla caricata automaticamente"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Il prezzo addebitato per ogni pallet caricato automaticamente"/>

@@ -19,6 +19,7 @@
 		<text name="ui_global_highPriority" text="Vysoká priorita"/>
 		<text name="ui_global_lowRefreshMode" text="Režim nízké obnovovací frekvence"/>
 		<text name="ui_global_disableAutoStrap" text="Automatické upínací pásy"/>
+		<text name="ui_global_removePhysics" text="Odebrat z fyzikální simulace"/>
 		<text name="ui_global_pricePerLog" text="Cena za kmen"/>
 		<text name="ui_global_pricePerBale" text="Cena za balík"/>
 		<text name="ui_global_pricePerPallet" text="Cena za paletu"/>
@@ -30,6 +31,7 @@
 		<text name="ui_global_tooltip_highPriority" text="Použití vysoké priority pro všechny vazby kláves UAL v nabídce F1"/>
 		<text name="ui_global_tooltip_lowRefreshMode" text="Aktualizovat méně často – povolte tuto možnost, pokud dochází ke zpoždění při automatickém načítání"/>
 		<text name="ui_global_tooltip_disableAutoStrap" text="Automatické nasazení upínacích řemenů po nakládce nebo vykládce"/>
+		<text name="ui_global_tooltip_removePhysics" text="Odebrat palety z fyzikální simulace, když jsou použity napínací pásy"/>
 		<text name="ui_global_tooltip_pricePerLog" text="Cena účtovaná za každý automaticky naložený kmen"/>
 		<text name="ui_global_tooltip_pricePerBale" text="Cena účtovaná za každý automaticky naložený balík"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Cena účtovaná za každou automaticky naloženou paletu"/>

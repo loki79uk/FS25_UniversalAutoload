@@ -19,6 +19,7 @@
 		<text name="ui_global_highPriority" text="Wysoki priorytet"/>
 		<text name="ui_global_lowRefreshMode" text="Tryb niskiego odświeżania"/>
 		<text name="ui_global_disableAutoStrap" text="Wyłącz automatyczne pasy"/>
+		<text name="ui_global_removePhysics" text="Usuń z symulacji fizycznej"/>
 		<text name="ui_global_pricePerLog" text="Koszt za kłodę"/>
 		<text name="ui_global_pricePerBale" text="Koszt za belę"/>
 		<text name="ui_global_pricePerPallet" text="Koszt za paletę"/>
@@ -30,6 +31,7 @@
 		<text name="ui_global_tooltip_highPriority" text="Zastosuj wysoki priorytet dla wszystkich przypisań klawiszy UAL w menu F1"/>
 		<text name="ui_global_tooltip_lowRefreshMode" text="Rzadziej aktualizuj – włącz tę opcję, jeśli występują opóźnienia podczas automatycznego ładowania"/>
 		<text name="ui_global_tooltip_disableAutoStrap" text="Wyłącz automatyczne stosowanie pasów transportowych"/>
+		<text name="ui_global_tooltip_removePhysics" text="Usuń palety z symulacji fizycznej, gdy zastosowano pasy napinające"/>
 		<text name="ui_global_tooltip_pricePerLog" text="Kwota pobierana za każdą automatycznie załadowaną kłodę"/>
 		<text name="ui_global_tooltip_pricePerBale" text="Kwota pobierana za każdą automatycznie załadowaną belę"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Kwota pobierana za każdą automatycznie załadowaną paletę"/>

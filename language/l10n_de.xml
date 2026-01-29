@@ -19,6 +19,7 @@
 		<text name="ui_global_highPriority" text="Hohe Priorität"/>
 		<text name="ui_global_lowRefreshMode" text="Reduzierter Refresh-Modus"/>
 		<text name="ui_global_disableAutoStrap" text="Automatische Spanngurte"/>
+		<text name="ui_global_removePhysics" text="Aus der Physik entfernen"/>
 		<text name="ui_global_pricePerLog" text="Preis pro Stamm"/>
 		<text name="ui_global_pricePerBale" text="Preis pro Ballen"/>
 		<text name="ui_global_pricePerPallet" text="Preis pro Palette"/>
@@ -30,6 +31,7 @@
 		<text name="ui_global_tooltip_highPriority" text="Wendet hohe Priorität auf alle UAL-Tastenbelegungen im F1-Menü an"/>
 		<text name="ui_global_tooltip_lowRefreshMode" text="Seltener aktualisieren – aktiviere diese Einstellung bei Verzögerungen mit Autoload"/>
 		<text name="ui_global_tooltip_disableAutoStrap" text="Automatisches Anlegen von Spanngurten nach dem Laden oder Entladen"/>
+		<text name="ui_global_tooltip_removePhysics" text="Paletten aus der Physiksimulation entfernen, wenn Spanngurte angebracht sind"/>
 		<text name="ui_global_tooltip_pricePerLog" text="Der Preis, der für jeden automatisch geladenen Stamm berechnet wird"/>
 		<text name="ui_global_tooltip_pricePerBale" text="Der Preis, der für jeden automatisch geladenen Ballen berechnet wird"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Der Preis, der für jede automatisch geladene Palette berechnet wird"/>

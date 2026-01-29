@@ -19,6 +19,7 @@
 		<text name="ui_global_highPriority" text="Menu : Priorité élevée"/>
 		<text name="ui_global_lowRefreshMode" text="Mode de rafraîchissement réduit"/>
 		<text name="ui_global_disableAutoStrap" text="Sangles automatiques"/>
+		<text name="ui_global_removePhysics" text="Supprimer de la simulation physique"/>
 		<text name="ui_global_pricePerLog" text="Tarif par grume"/>
 		<text name="ui_global_pricePerBale" text="Tarif par balle"/>
 		<text name="ui_global_pricePerPallet" text="Tarif par palette"/>
@@ -30,6 +31,7 @@
 		<text name="ui_global_tooltip_highPriority" text="Appliquer une priorité élevée à toutes les combinaisons de touches du mod dans le menu F1"/>
 		<text name="ui_global_tooltip_lowRefreshMode" text="Mettre à jour moins fréquemment – activez ce paramètre si vous constatez un ralentissement avec le chargement automatique"/>
 		<text name="ui_global_tooltip_disableAutoStrap" text="Attache automatique des sangles après chargement ou déchargement"/>
+		<text name="ui_global_tooltip_removePhysics" text="Supprimer les palettes de la simulation physique lorsque des sangles de tension sont appliquées"/>
 		<text name="ui_global_tooltip_pricePerLog" text="Le montant facturé pour chaque grume chargée automatiquement (appuyer sur Entrée pour confirmer)"/>
 		<text name="ui_global_tooltip_pricePerBale" text="Le montant facturé pour chaque balle chargée automatiquement (appuyer sur Entrée pour confirmer)"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Le montant facturé pour chaque palette chargée automatiquement (appuyer sur Entrée pour confirmer)"/>

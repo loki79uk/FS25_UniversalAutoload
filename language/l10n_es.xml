@@ -19,6 +19,7 @@
 		<text name="ui_global_highPriority" text="Alta prioridad"/>
 		<text name="ui_global_lowRefreshMode" text="Modo de refresco bajo"/>
 		<text name="ui_global_disableAutoStrap" text="Cintas tensoras automáticas"/>
+		<text name="ui_global_removePhysics" text="Eliminar de simulación física"/>
 		<text name="ui_global_pricePerLog" text="Precio por tronco"/>
 		<text name="ui_global_pricePerBale" text="Precio por paca"/>
 		<text name="ui_global_pricePerPallet" text="Precio por palé"/>
@@ -30,6 +31,7 @@
 		<text name="ui_global_tooltip_highPriority" text="Aplica alta prioridad a todas las teclas de UAL en el menú F1"/>
 		<text name="ui_global_tooltip_lowRefreshMode" text="Actualiza con menor frecuencia; activá esta opción si tenés lag al usar autocarga"/>
 		<text name="ui_global_tooltip_disableAutoStrap" text="Aplicación automática de cintas tensoras después de cargar o descargar"/>
+		<text name="ui_global_tooltip_removePhysics" text="Eliminar palés de la simulación física cuando se aplican correas de tensión"/>
 		<text name="ui_global_tooltip_pricePerLog" text="Precio cobrado por cada tronco autocargado"/>
 		<text name="ui_global_tooltip_pricePerBale" text="Precio cobrado por cada paca autocargada"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Precio cobrado por cada palé autocargado"/>
