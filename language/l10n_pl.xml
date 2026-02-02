@@ -19,7 +19,7 @@
 		<text name="ui_global_highPriority" text="Wysoki priorytet"/>
 		<text name="ui_global_lowRefreshMode" text="Tryb niskiego odświeżania"/>
 		<text name="ui_global_disableAutoStrap" text="Wyłącz automatyczne pasy"/>
-		<text name="ui_global_removePhysics" text="Usuń z symulacji fizycznej"/>
+		<text name="ui_global_removePhysics" text="Usuń fizykę"/>
 		<text name="ui_global_pricePerLog" text="Koszt za kłodę"/>
 		<text name="ui_global_pricePerBale" text="Koszt za belę"/>
 		<text name="ui_global_pricePerPallet" text="Koszt za paletę"/>
@@ -27,11 +27,11 @@
 		<text name="ui_global_loadingSpeed" text="Prędkość ładowania"/>
 		<text name="ui_global_objectSpacing" text="Odstępy między obiektami"/>
 		
-		<text name="ui_global_tooltip_showDebug" text="Pokaż pełny graficzny wyświetlacz debugowania dla wszystkich pojazdów w grze"/>
-		<text name="ui_global_tooltip_highPriority" text="Zastosuj wysoki priorytet dla wszystkich przypisań klawiszy UAL w menu F1"/>
-		<text name="ui_global_tooltip_lowRefreshMode" text="Rzadziej aktualizuj – włącz tę opcję, jeśli występują opóźnienia podczas automatycznego ładowania"/>
-		<text name="ui_global_tooltip_disableAutoStrap" text="Wyłącz automatyczne stosowanie pasów transportowych"/>
-		<text name="ui_global_tooltip_removePhysics" text="Usuń palety z symulacji fizycznej, gdy zastosowano pasy napinające"/>
+		<text name="ui_global_tooltip_showDebug" text="Wyświetl pełne graficzne informacje debugowania dla wszystkich pojazdów w grze"/>
+		<text name="ui_global_tooltip_highPriority" text="Zastosuj wysoki priorytet dla wszystkich skrótów klawiszowych UAL w menu F1"/>
+		<text name="ui_global_tooltip_lowRefreshMode" text="Rzadziej aktualizuj - włącz tę opcję, jeśli występują opóźnienia podczas automatycznego ładowania"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="Wyłącz automatyczne zapinanie pasów transportowych"/>
+		<text name="ui_global_tooltip_removePhysics" text="Usuń fizykę palet po zapięciu pasów transportowych"/>
 		<text name="ui_global_tooltip_pricePerLog" text="Kwota pobierana za każdą automatycznie załadowaną kłodę"/>
 		<text name="ui_global_tooltip_pricePerBale" text="Kwota pobierana za każdą automatycznie załadowaną belę"/>
 		<text name="ui_global_tooltip_pricePerPallet" text="Kwota pobierana za każdą automatycznie załadowaną paletę"/>
@@ -73,7 +73,7 @@
 		<text name="ui_option_minLogLength" text="Minimalna długość kłody"/>
 		
 		<text name="ui_option_tooltip_enableAutoload" text="Jeśli funkcja autoload jest włączona lub wyłączona dla tego pojazdu"/>
-		<text name="ui_option_tooltip_trailerType" text="Specjalny typ przyczepy, np. do przewozu bel, kłód, plandeka"/>
+		<text name="ui_option_tooltip_trailerType" text="Specjalny typ przyczepy, np. do bel, kłód, z plandeką"/>
 		<text name="ui_option_tooltip_unloadingType" text="Użyj specjalnej pozycji rozładunku (z przodu lub z tyłu)"/>
 		<text name="ui_option_tooltip_noLoadingFolded" text="Zapobiegaj ładowaniu, gdy jest zarówno złożone, jak i rozłożone"/>
 		<text name="ui_option_tooltip_noLoadingCovered" text="Zapobiegaj ładowaniu, gdy jest zakryte lub odkryte."/>
@@ -90,7 +90,7 @@
 		<text name="ui_option_tooltip_rearUnloadingOnly" text="Użyj tylko tylnej strefy rozładunku (bez bocznych stref)"/>
 		<text name="ui_option_tooltip_frontUnloadingOnly" text="Użyj tylko przedniej strefy rozładunku (bez bocznych stref)"/>
 		<text name="ui_option_tooltip_horizontalLoading" text="Rozpocznij z włączonym załadunkiem poziomym (można przełączyć, jeśli klawisz jest przypisany)"/>
-		<text name="ui_option_tooltip_disableAutoStrap" text="Wyłącz automatyczne stosowanie pasów transportowych"/>
+		<text name="ui_option_tooltip_disableAutoStrap" text="Wyłącz automatyczne zapinanie pasów transportowych"/>
 		<text name="ui_option_tooltip_disableHeightLimit" text="Wyłącz limit wysokości oparty na gęstości stosu"/>
 		<text name="ui_option_tooltip_zonesOverlap" text="Flaga identyfikująca, kiedy strefy załadunku się nakładają"/>
 		<text name="ui_option_tooltip_offsetRoot" text="Węzeł i3d pojazdu, względem którego określane są przesunięcia stref"/>
