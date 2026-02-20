@@ -1346,7 +1346,7 @@ function UniversalAutoload:updateVelocityCorrection()
 	local dx, dy, dz = (vx or 0)*dt, (vy or 0)*dt, (vz or 0)*dt
 	spec.velocityCorrection = { dx, dy, dz }
 
-	if not (spec.autoCollectionMode or spec.palletsRemovedFromPhysics) then
+	if not (spec.autoCollectionMode or spec.baleCollectionModeDeactivated or spec.palletsRemovedFromPhysics) then
 		if not (spec.loadVolume and spec.loadVolume.transformGroup) then
 			return
 		end
@@ -3322,6 +3322,7 @@ function UniversalAutoload:countActivePallets()
 	-- UniversalAutoload.debugPrint("COUNT ACTIVE PALLETS")
 	local spec = self.spec_universalAutoload
 	local isActiveForLoading = spec.isLoading or spec.isUnloading or spec.doPostLoadDelay
+	local isAutoloadingActive = spec.baleCollectionModeDeactivated or spec.autoCollectionMode or spec.aiLoadingActive
 	
 	if spec.countedPallets then
 		return
@@ -3367,7 +3368,7 @@ function UniversalAutoload:countActivePallets()
 			if UniversalAutoload.isValidForUnloading(self, object) then
 				validUnloadCount = validUnloadCount + 1
 			end
-			if isActiveForLoading or spec.autoCollectionMode then
+			if isActiveForLoading or isAutoloadingActive then
 				UniversalAutoload.raiseObjectDirtyFlags(object)
 			end
 		end
