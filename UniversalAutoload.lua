@@ -1871,8 +1871,10 @@ function UniversalAutoload:saveToXMLFile(xmlFile, key, usedModNames)
 	end
 
 	-- UniversalAutoload.debugPrint("UniversalAutoload - saveToXMLFile: "..self:getFullName())
-	if spec.autoCollectionMode then
-		UniversalAutoload.setAutoCollectionMode(self, false)
+	if spec.autoCollectionMode or spec.baleCollectionModeDeactivated or spec.palletsRemovedFromPhysics then
+		if spec.autoCollectionMode then
+			UniversalAutoload.setAutoCollectionMode(self, false)
+		end
 		for object, _ in pairs(spec.loadedObjects or {}) do
 			if object and object.isRoundbale ~= nil then
 				UniversalAutoload.unlinkObject(object)
