@@ -1876,9 +1876,14 @@ function UniversalAutoload:saveToXMLFile(xmlFile, key, usedModNames)
 			UniversalAutoload.setAutoCollectionMode(self, false)
 		end
 		for object, _ in pairs(spec.loadedObjects or {}) do
-			if object and object.isRoundbale ~= nil then
-				UniversalAutoload.unlinkObject(object)
-				UniversalAutoload.addToPhysics(self, object)
+			if object then
+				local isRoundBale = object.isRoundbale ~= nil
+				local isValidPallet = not object.spec_bigBag and not object.isSplitShape
+				if ((spec.autoCollectionMode or spec.baleCollectionModeDeactivated) and isRoundBale)
+				or (spec.palletsRemovedFromPhysics and isValidPallet) then
+					UniversalAutoload.unlinkObject(object)
+					UniversalAutoload.addToPhysics(self, object)
+				end
 			end
 		end
 	end
@@ -5504,7 +5509,7 @@ function UniversalAutoload:togglePhysicsForLoadedObjects(force)
 	
 	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled and spec.loadedObjects then
 		for object, _ in pairs(spec.loadedObjects or {}) do
-			if not object.spec_bigBag then
+			if not object.spec_bigBag and not object.isSplitShape then
 				if removedFromPhysics then
 					UniversalAutoload.unlinkObject(object)
 					UniversalAutoload.addToPhysics(self, object)
