@@ -158,8 +158,8 @@ UniversalAutoload.VEHICLE_TYPES = {} -- vehicleTypes with autoload spec
 UniversalAutoload.LOADING_TYPES = {} -- known container object types
 
 UniversalAutoload.GLOBAL_DEFAULTS = {
-	{id="showDebug", default=false, valueType="BOOL", key="#showDebug"}, --Show the full graphical debugging display for all vehicles in game
-	{id="highPriority", default=true, valueType="BOOL", key="#highPriority"}, --Apply high priority to all UAL key bindings in the F1 menu
+	{id="showDebug", default=false, valueType="BOOL", key="#showDebug"}, --Show the full graphical debugging display for all vehicles in game (LOCAL)
+	{id="highPriority", default=true, valueType="BOOL", key="#highPriority"}, --Apply high priority to all UAL key bindings in the F1 menu (LOCAL)
 	{id="lowRefreshMode", default=false, valueType="BOOL", key="#lowRefreshMode"}, --Update less frequently - set to 'true' if you experience lag when using autoload
 	{id="disableAutoStrap", default=false, valueType="BOOL", key="#disableAutoStrap"}, --Disable the automatic application of tension belts
 	{id="removePhysics", default=false, valueType="BOOL", key="#removePhysics"}, --Remove pallets from physics when tension belts are applied
@@ -791,26 +791,20 @@ end
 function UniversalAutoloadManager.importGlobalSettings(xmlFilename)
 	-- UniversalAutoload.debugPrint("UAL - IMPORT GLOBAL SETTINGS")
 
-	if g_currentMission:getIsServer() then
+	local xmlFile = UniversalAutoloadManager.openUserSettingsXMLFile(xmlFilename)
+	
+	if xmlFile ~= 0 and xmlFile ~= nil then
+		print("IMPORT Universal Autoload global settings")
 
-		local xmlFile = UniversalAutoloadManager.openUserSettingsXMLFile(xmlFilename)
-		
-		if xmlFile ~= 0 and xmlFile ~= nil then
-		
-			print("IMPORT Universal Autoload global settings")
+		iterateDefaultsTable(UniversalAutoload.GLOBAL_DEFAULTS, UniversalAutoload.globalKey, "", UniversalAutoload,
+		function(k, v, parentKey, currentKey, currentValue, finalValue)
+			UniversalAutoload[v.id] = xmlFile:getValue(parentKey..currentKey, v.default)
+			print("  >> " .. tostring(v.id) .. ": " .. tostring(UniversalAutoload[v.id]))
+		end)
 
-			iterateDefaultsTable(UniversalAutoload.GLOBAL_DEFAULTS, UniversalAutoload.globalKey, "", UniversalAutoload,
-			function(k, v, parentKey, currentKey, currentValue, finalValue)
-				UniversalAutoload[v.id] = xmlFile:getValue(parentKey..currentKey, v.default)
-				print("  >> " .. tostring(v.id) .. ": " .. tostring(UniversalAutoload[v.id]))
-			end)
-
-			xmlFile:delete()
-		else
-			print("Universal Autoload - could not open global settings file")
-		end
+		xmlFile:delete()
 	else
-		print("Universal Autoload - global settings are only loaded for the server")
+		print("Universal Autoload - could not open global settings file")
 	end
 end
 --
@@ -2405,6 +2399,7 @@ Player.readStream = Utils.overwrittenFunction(Player.readStream,
 		UniversalAutoload.minLogLength = streamReadFloat32(streamId)
 		UniversalAutoload.loadingSpeed = streamReadInt32(streamId)
 		UniversalAutoload.objectSpacing = streamReadFloat32(streamId)
+		UniversalAutoload.lowRefreshMode = streamReadBool(streamId)
 	end
 )
 Player.writeStream = Utils.overwrittenFunction(Player.writeStream,
@@ -2419,6 +2414,7 @@ Player.writeStream = Utils.overwrittenFunction(Player.writeStream,
 		streamWriteFloat32(streamId, UniversalAutoload.minLogLength or 0)
 		streamWriteInt32(streamId, UniversalAutoload.loadingSpeed or 150)
 		streamWriteFloat32(streamId, UniversalAutoload.objectSpacing or 0)
+		streamWriteBool(streamId, UniversalAutoload.lowRefreshMode or false)
 	end
 )
 
