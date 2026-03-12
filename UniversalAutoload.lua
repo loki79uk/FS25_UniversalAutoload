@@ -2998,20 +2998,6 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 				end
 			end
 			
-			if spec.lastStrapStateChanged then
-				spec.postStrapDelayTime = spec.postStrapDelayTime or 0
-				local logDelay = spec.isLogTrailer and UniversalAutoload.LOG_DELAY or 0
-				local mpDelay = g_currentMission.missionDynamicInfo.isMultiplayer and UniversalAutoload.MP_DELAY or 0
-				if spec.postStrapDelayTime > UniversalAutoload.loadingSpeed + mpDelay + logDelay then
-					-- print("DO DELAY AFTER STRAPPING")
-					UniversalAutoload.togglePhysicsForLoadedObjects(self)
-					spec.postStrapDelayTime = 0
-					spec.lastStrapStateChanged = false
-				else
-					spec.postStrapDelayTime = spec.postStrapDelayTime + dt
-				end
-			end
-			
 			if self.delayStartLoading then
 				spec.delayStartLoadingTime = spec.delayStartLoadingTime or 0
 				if spec.delayStartLoadingTime > UniversalAutoload.loadingSpeed then
@@ -3024,6 +3010,20 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 				end
 			end
 
+		end
+
+		if spec.lastStrapStateChanged then
+			spec.postStrapDelayTime = spec.postStrapDelayTime or 0
+			local logDelay = spec.isLogTrailer and UniversalAutoload.LOG_DELAY or 0
+			local mpDelay = g_currentMission.missionDynamicInfo.isMultiplayer and UniversalAutoload.MP_DELAY or 0
+			if spec.postStrapDelayTime > UniversalAutoload.loadingSpeed + mpDelay + logDelay then
+				-- print("DO DELAY AFTER STRAPPING")
+				UniversalAutoload.togglePhysicsForLoadedObjects(self)
+				spec.postStrapDelayTime = 0
+				spec.lastStrapStateChanged = false
+			else
+				spec.postStrapDelayTime = spec.postStrapDelayTime + dt
+			end
 		end
 		
 		UniversalAutoload.determineTipside(self)
@@ -3375,7 +3375,7 @@ function UniversalAutoload:countActivePallets()
 			if UniversalAutoload.isValidForUnloading(self, object) then
 				validUnloadCount = validUnloadCount + 1
 			end
-			if isActiveForLoading or isAutoloadingActive then
+			if isActiveForLoading or isAutoloadingActive or spec.palletsRemovedFromPhysics then
 				UniversalAutoload.raiseObjectDirtyFlags(object)
 			end
 		end
