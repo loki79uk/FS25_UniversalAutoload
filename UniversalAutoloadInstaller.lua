@@ -750,45 +750,52 @@ function UniversalAutoloadManager.consoleResetConfigurations()
 	print("New configurations will be used for new vehicles, please restart game to apply to all vehicles")
 end
 --
-function UniversalAutoloadManager.exportGlobalSettings()
+function UniversalAutoloadManager.exportGlobalSettings(noEventSend)
 	-- UniversalAutoload.debugPrint("UAL - EXPORT GLOBAL SETTINGS")
 
-	if g_currentMission:getIsServer() then
-
-		local userSettingsFile = Utils.getFilename(UniversalAutoload.userSettingsFile, getUserProfileAppPath())
-		local xmlFile = UniversalAutoloadManager.openUserSettingsXMLFile(userSettingsFile)
+	local userSettingsFile = Utils.getFilename(UniversalAutoload.userSettingsFile, getUserProfileAppPath())
+	local xmlFile = UniversalAutoloadManager.openUserSettingsXMLFile(userSettingsFile)
+	
+	if xmlFile ~= 0 and xmlFile ~= nil then
+	
+		UniversalAutoload.debugPrint("SAVING Universal Autoload settings")
+		local xmlWasChanged = false
+		local adminSettingWasChanged = false
 		
-		if xmlFile ~= 0 and xmlFile ~= nil then
-		
-			UniversalAutoload.debugPrint("SAVING Universal Autoload global settings")
-			
-			local xmlWasChanged = false
-			
-			iterateDefaultsTable(UniversalAutoload.GLOBAL_DEFAULTS, UniversalAutoload.globalKey, "", UniversalAutoload,
-			function(k, v, parentKey, currentKey, currentValue, finalValue)
-				local newValue = UniversalAutoload[v.id]
-				local oldValue = xmlFile:getValue(parentKey..currentKey, v.default)
-				if oldValue ~= newValue then
-					UniversalAutoload.debugPrint("  << " .. tostring(v.id) .. ": " .. tostring(newValue))
-					if newValue == v.default then
-						xmlFile:removeProperty(parentKey..currentKey)
-					else
-						xmlFile:setValue(parentKey..currentKey, newValue)
-					end
-					xmlWasChanged = true
+		local function updateValues(k, v, parentKey, currentKey, currentValue, finalValue)
+			local newValue = UniversalAutoload[v.id]
+			local oldValue = xmlFile:getValue(parentKey..currentKey, v.default)
+			if oldValue ~= newValue and (v.valueType ~= "FLOAT" or math.abs(oldValue - newValue) > 1e-5) then
+				UniversalAutoload.debugPrint("  << " .. tostring(v.id) .. ": " .. tostring(newValue))
+				if newValue == v.default then
+					xmlFile:removeProperty(parentKey..currentKey)
+				else
+					xmlFile:setValue(parentKey..currentKey, newValue)
 				end
-			end)
-			
-			if xmlWasChanged then
+				xmlWasChanged = true
+			end
+		end
+		
+		if g_currentMission:getIsServer() or g_currentMission.isMasterUser then
+			iterateDefaultsTable(UniversalAutoload.GLOBAL_DEFAULTS, UniversalAutoload.globalKey, "", UniversalAutoload, updateValues)
+			adminSettingWasChanged = xmlWasChanged
+		end
+		iterateDefaultsTable(UniversalAutoload.LOCAL_DEFAULTS, UniversalAutoload.globalKey, "", UniversalAutoload, updateValues)
+		
+		if xmlWasChanged then
+			if g_currentMission:getIsServer() then
+				UniversalAutoload.debugPrint("SAVE UAL SETTINGS..")
 				xmlFile:save()
 			end
-
-			xmlFile:delete()
-		else
-			print("Universal Autoload - could not open global settings file")
+			if adminSettingWasChanged and g_currentMission.missionDynamicInfo.isMultiplayer then
+				UniversalAutoload.debugPrint("SEND GLOBAL UAL SETTINGS..")
+				UniversalAutoload.UpdateGlobalSettingsEvent.sendEvent(noEventSend)
+			end
 		end
+
+		xmlFile:delete()
 	else
-		print("Universal Autoload - global settings are only loaded for the server")
+		print("Universal Autoload - could not open global settings file")
 	end
 end
 --
@@ -799,12 +806,14 @@ function UniversalAutoloadManager.importGlobalSettings(xmlFilename)
 	
 	if xmlFile ~= 0 and xmlFile ~= nil then
 		print("IMPORT Universal Autoload global settings")
-
-		iterateDefaultsTable(UniversalAutoload.GLOBAL_DEFAULTS, UniversalAutoload.globalKey, "", UniversalAutoload,
-		function(k, v, parentKey, currentKey, currentValue, finalValue)
+		
+		local function setValues(k, v, parentKey, currentKey, currentValue, finalValue)
 			UniversalAutoload[v.id] = xmlFile:getValue(parentKey..currentKey, v.default)
 			print("  >> " .. tostring(v.id) .. ": " .. tostring(UniversalAutoload[v.id]))
-		end)
+		end
+
+		iterateDefaultsTable(UniversalAutoload.LOCAL_DEFAULTS, UniversalAutoload.globalKey, "", UniversalAutoload, setValues)
+		iterateDefaultsTable(UniversalAutoload.GLOBAL_DEFAULTS, UniversalAutoload.globalKey, "", UniversalAutoload, setValues)
 
 		xmlFile:delete()
 	else
@@ -2394,7 +2403,7 @@ end
 Player.readStream = Utils.overwrittenFunction(Player.readStream,
 	function(self, superFunc, streamId, connection, objectId)
 		superFunc(self, streamId, connection, objectId)
-		UniversalAutoload.debugPrint("UAL Player.readStream")
+		UniversalAutoload.debugPrint("UAL Player.readStream", debugMultiplayer)
 		UniversalAutoload.disableAutoStrap = streamReadBool(streamId)
 		UniversalAutoload.removePhysics = streamReadBool(streamId)
 		UniversalAutoload.pricePerLog = streamReadInt32(streamId)
@@ -2409,7 +2418,7 @@ Player.readStream = Utils.overwrittenFunction(Player.readStream,
 Player.writeStream = Utils.overwrittenFunction(Player.writeStream,
 	function(self, superFunc, streamId, connection)
 		superFunc(self, streamId, connection)
-		UniversalAutoload.debugPrint("UAL Player.writeStream")
+		UniversalAutoload.debugPrint("UAL Player.writeStream", debugMultiplayer)
 		streamWriteBool(streamId, UniversalAutoload.disableAutoStrap or false)
 		streamWriteBool(streamId, UniversalAutoload.removePhysics or false)
 		streamWriteInt32(streamId, UniversalAutoload.pricePerLog or 0)
@@ -2428,7 +2437,7 @@ FSBaseMission.sendInitialClientState = Utils.overwrittenFunction(FSBaseMission.s
 		superFunc(self, connection, user, farm)
 		
 		UniversalAutoload.debugPrint("  user: " .. tostring(user.nickname) .. " " .. tostring(farm.name), debugMultiplayer)
-		UniversalAutoload.debugPrint("connectedToDedicatedServer: " .. tostring(g_currentMission.connectedToDedicatedServer))
+		UniversalAutoload.debugPrint("  connectedToDedicatedServer: " .. tostring(g_currentMission.connectedToDedicatedServer))
 	end
 )
 
