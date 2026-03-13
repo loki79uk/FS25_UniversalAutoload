@@ -114,6 +114,8 @@ function UniversalAutoload.initSpecialization()
 
 	UniversalAutoload.xmlSchema = XMLSchema.new(globalKey)
 	UniversalAutoload.debugPrint("*** REGISTER XML SCHEMAS ***", debugSchema)
+	UniversalAutoload.debugPrint("LOCAL_DEFAULTS:", debugSchema)
+	registerConfig(UniversalAutoload.xmlSchema, UniversalAutoload.globalKey, UniversalAutoload.LOCAL_DEFAULTS)
 	UniversalAutoload.debugPrint("GLOBAL_DEFAULTS:", debugSchema)
 	registerConfig(UniversalAutoload.xmlSchema, UniversalAutoload.globalKey, UniversalAutoload.GLOBAL_DEFAULTS)
 	UniversalAutoload.debugPrint("VEHICLE_DEFAULTS:", debugSchema)

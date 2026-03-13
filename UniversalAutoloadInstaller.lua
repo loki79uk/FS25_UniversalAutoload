@@ -157,9 +157,12 @@ UniversalAutoload.VEHICLES = {} -- actual vehicles currently in game
 UniversalAutoload.VEHICLE_TYPES = {} -- vehicleTypes with autoload spec
 UniversalAutoload.LOADING_TYPES = {} -- known container object types
 
-UniversalAutoload.GLOBAL_DEFAULTS = {
+UniversalAutoload.LOCAL_DEFAULTS = {
 	{id="showDebug", default=false, valueType="BOOL", key="#showDebug"}, --Show the full graphical debugging display for all vehicles in game (LOCAL)
 	{id="highPriority", default=true, valueType="BOOL", key="#highPriority"}, --Apply high priority to all UAL key bindings in the F1 menu (LOCAL)
+}
+
+UniversalAutoload.GLOBAL_DEFAULTS = {
 	{id="lowRefreshMode", default=false, valueType="BOOL", key="#lowRefreshMode"}, --Update less frequently - set to 'true' if you experience lag when using autoload
 	{id="disableAutoStrap", default=false, valueType="BOOL", key="#disableAutoStrap"}, --Disable the automatic application of tension belts
 	{id="removePhysics", default=false, valueType="BOOL", key="#removePhysics"}, --Remove pallets from physics when tension belts are applied
@@ -284,6 +287,7 @@ function iterateDefaultsTable(tbl, parentKey, currentKey, currentValue, action)
         end
     end
 end
+UniversalAutoload.debugPrint("LOCAL_DEFAULTS") iterateDefaultsTable(UniversalAutoload.LOCAL_DEFAULTS)
 UniversalAutoload.debugPrint("GLOBAL_DEFAULTS") iterateDefaultsTable(UniversalAutoload.GLOBAL_DEFAULTS)
 UniversalAutoload.debugPrint("VEHICLE_DEFAULTS") iterateDefaultsTable(UniversalAutoload.VEHICLE_DEFAULTS)
 UniversalAutoload.debugPrint("SAVEGAME_STATE_DEFAULTS") iterateDefaultsTable(UniversalAutoload.SAVEGAME_STATE_DEFAULTS)
