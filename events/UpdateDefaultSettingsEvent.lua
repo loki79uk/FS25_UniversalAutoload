@@ -39,6 +39,11 @@ function UpdateDefaultSettingsEvent:readStream(streamId, connection)
 				end
 				currentValue[v.id] = newValue
 				UniversalAutoload.debugPrint("  << " .. tostring(currentKey) .. " = " .. tostring(newValue))
+			else
+				if currentValue[v.id] ~= v.default then
+					currentValue[v.id] = v.default
+					UniversalAutoload.debugPrint("  << " .. tostring(currentKey) .. " = " .. tostring(v.default))
+				end
 			end
 		end
 	end

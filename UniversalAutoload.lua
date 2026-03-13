@@ -83,6 +83,7 @@ source(g_currentModDirectory.."events/StopLoadingEvent.lua")
 source(g_currentModDirectory.."events/UnloadingEvent.lua")
 source(g_currentModDirectory.."events/UpdateActionEvents.lua")
 source(g_currentModDirectory.."events/WarningMessageEvent.lua")
+source(g_currentModDirectory.."events/UpdateGlobalSettingsEvent.lua")
 source(g_currentModDirectory.."events/UpdateDefaultSettingsEvent.lua")
 
 
