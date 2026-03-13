@@ -110,21 +110,6 @@ function GlobalSettingsMenuUALSettings:onCreate()
 		end
 	end
 	
-	if g_currentMission.missionDynamicInfo.isMultiplayer then
-		self.disableAutoStrapCheckBox:setDisabled(true)
-		self.removePhysicsCheckBox:setDisabled(true)
-		self.minLogLengthListBox:setDisabled(true)
-		self.loadingSpeedListBox:setDisabled(true)
-		self.objectSpacingListBox:setDisabled(true)
-		self.pricePerLogTextInput:setDisabled(true)
-		self.pricePerBaleTextInput:setDisabled(true)
-		self.pricePerPalletTextInput:setDisabled(true)
-		self.lowRefreshModeCheckBox:setDisabled(true)
-		self.highPriorityCheckBox:setDisabled(false)
-		self.showDebugCheckBox:setDisabled(false)
-	end
-	
-	
 	local function getIsUnicodeAllowed(self, unicode)
 		if self:getText() == "0" then
 			self:setText("")
@@ -140,7 +125,29 @@ function GlobalSettingsMenuUALSettings:onCreate()
 	self.pricePerLogTextInput.getIsUnicodeAllowed = getIsUnicodeAllowed
 	self.pricePerBaleTextInput.getIsUnicodeAllowed = getIsUnicodeAllowed
 	self.pricePerPalletTextInput.getIsUnicodeAllowed = getIsUnicodeAllowed
-	
+
+	self:updatePermissions()
+end
+
+function GlobalSettingsMenuUALSettings:updatePermissions()
+	UniversalAutoload.debugPrint("GlobalSettingsMenu: updatePermissions", debugMenus)
+		
+	if g_currentMission.missionDynamicInfo.isMultiplayer then
+		local isAdmin = g_currentMission:getIsServer() or g_currentMission.isMasterUser
+		-- server settings:
+		self.disableAutoStrapCheckBox:setDisabled(not isAdmin)
+		self.removePhysicsCheckBox:setDisabled(not isAdmin)
+		self.minLogLengthListBox:setDisabled(not isAdmin)
+		self.loadingSpeedListBox:setDisabled(not isAdmin)
+		self.objectSpacingListBox:setDisabled(not isAdmin)
+		self.pricePerLogTextInput:setDisabled(not isAdmin)
+		self.pricePerBaleTextInput:setDisabled(not isAdmin)
+		self.pricePerPalletTextInput:setDisabled(not isAdmin)
+		self.lowRefreshModeCheckBox:setDisabled(not isAdmin)
+		-- local settings:
+		self.highPriorityCheckBox:setDisabled(false)
+		self.showDebugCheckBox:setDisabled(false)
+	end
 end
 
 function GlobalSettingsMenuUALSettings:onCreateMinLogLength(control)
@@ -300,6 +307,7 @@ end
 function GlobalSettingsMenuUALSettings:onOpen()
 	UniversalAutoload.debugPrint("GlobalSettingsMenu: onOpen", debugMenus)
 	self:updateSettings()
+	self:updatePermissions()
 	self.isActive = true
 	g_inputBinding:setShowMouseCursor(true)
 end
