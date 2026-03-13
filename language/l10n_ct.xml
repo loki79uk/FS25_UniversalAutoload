@@ -4,6 +4,7 @@
 		<text name="shop_configuration_text" text="自動裝載"/>
 		<text name="configuration_universalAutoload" text="通用自動裝載 (UAL)"/>
 		
+		<text name="ui_local_settings_ual" text="區域設定"/>
 		<text name="ui_global_settings_ual" text="全域設定"/>
 		<text name="ui_config_settings_ual" text="自動裝載設定"/>
 		<text name="ui_vehicle_options_ual" text="車輛選項"/>

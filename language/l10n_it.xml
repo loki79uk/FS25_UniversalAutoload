@@ -5,6 +5,7 @@
 		<text name="configuration_universalAutoload" text="Autoload Universale"/>
 		
 		<!-- TITLES -->
+		<text name="ui_local_settings_ual" text="Impostazioni Locali"/>
 		<text name="ui_global_settings_ual" text="Impostazioni Generali"/>
 		<text name="ui_config_settings_ual" text="impostazioni Autoload"/>
 		<text name="ui_vehicle_options_ual" text="Opzioni veicoli"/>

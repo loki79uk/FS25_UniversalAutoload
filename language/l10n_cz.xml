@@ -5,6 +5,7 @@
 		<text name="configuration_universalAutoload" text="Univerzální nakládka"/>
 		
 		<!-- TITLES -->
+		<text name="ui_local_settings_ual" text="Místní nastavení"/>
 		<text name="ui_global_settings_ual" text="Globální nastavení"/>
 		<text name="ui_config_settings_ual" text="Nastavení autoload"/>
 		<text name="ui_vehicle_options_ual" text="Nastavení vozidla"/>

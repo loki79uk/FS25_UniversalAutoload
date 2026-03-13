@@ -6,6 +6,7 @@
 		<text name="configuration_universalAutoload" text="Універсальне Автозавантаження"/>
 		
 		<!-- TITLES -->
+		<text name="ui_local_settings_ual" text="Місцеві Налаштування"/>
 		<text name="ui_global_settings_ual" text="Глобальні Налаштування"/>
 		<text name="ui_config_settings_ual" text="Налаштування Автозавантаження"/>
 		<text name="ui_vehicle_options_ual" text="Налаштування Транспортного Засобу"/>

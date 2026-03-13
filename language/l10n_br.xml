@@ -5,6 +5,7 @@
 		<text name="configuration_universalAutoload" text="Carregamento Automático Universal"/>
 		
 		<!-- TITLES -->
+		<text name="ui_local_settings_ual" text="Conf. locais"/>
 		<text name="ui_global_settings_ual" text="Conf. globais"/>
 		<text name="ui_config_settings_ual" text="Conf. Carregamento. Automático"/>
 		<text name="ui_vehicle_options_ual" text="Opções para veículos"/>

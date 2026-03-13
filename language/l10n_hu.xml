@@ -5,6 +5,7 @@
 		<text name="configuration_universalAutoload" text="Universal Autoload" />
 		
 		<!-- TITLES -->
+		<text name="ui_local_settings_ual" text="Helyi beállítások"/>
 		<text name="ui_global_settings_ual" text="Általános beállítások"/>
 		<text name="ui_config_settings_ual" text="Autoload beállítások"/>
 		<text name="ui_vehicle_options_ual" text="Jármű opciók"/>

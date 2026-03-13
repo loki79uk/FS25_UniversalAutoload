@@ -5,6 +5,7 @@
 		<text name="configuration_universalAutoload" text="Universell Automatisk Lastning"/>
 		
 		<!-- TITLES -->
+		<text name="ui_local_settings_ual" text="Local Settings"/>
 		<text name="ui_global_settings_ual" text="Global Settings"/>
 		<text name="ui_config_settings_ual" text="Autoload Settings"/>
 		<text name="ui_vehicle_options_ual" text="Vehicle Options"/>

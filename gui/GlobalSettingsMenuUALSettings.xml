@@ -103,6 +103,8 @@
 						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_global_lowRefreshMode"/>
 					</Bitmap>
 					
+					<Text profile="fs25_settingsSectionHeader" name="sectionHeader" text="$l10n_ui_local_settings_ual"/>
+					
 					<!-- ENABLE/DISABLE HighPriority -->
 					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
 						<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickBinaryOption" id="highPriorityCheckBox">

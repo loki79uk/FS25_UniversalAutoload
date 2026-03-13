@@ -5,6 +5,7 @@
 		<text name="configuration_universalAutoload" text="Universal Auto Læsning"/>
 		
 		<!-- TITLES -->
+		<text name="ui_local_settings_ual" text="Lokale Indstillinger"/>
 		<text name="ui_global_settings_ual" text="Global Indstillinger"/>
 		<text name="ui_config_settings_ual" text="Autolæsning Indstillinger"/>
 		<text name="ui_vehicle_options_ual" text="Maskine Muligheder"/>

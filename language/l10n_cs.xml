@@ -7,6 +7,7 @@
 		<text name="configuration_universalAutoload" text="通用自动装载"/>
 		
 		<!-- TITLES -->
+		<text name="ui_local_settings_ual" text="本地设置"/>
 		<text name="ui_global_settings_ual" text="全局设置"/>
 		<text name="ui_config_settings_ual" text="自动加载设置"/>
 		<text name="ui_vehicle_options_ual" text="车辆选项"/>
