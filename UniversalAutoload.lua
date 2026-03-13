@@ -2997,21 +2997,9 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 					spec.postLoadDelayTime = spec.postLoadDelayTime + dt
 				end
 			end
-			
-			if self.delayStartLoading then
-				spec.delayStartLoadingTime = spec.delayStartLoadingTime or 0
-				if spec.delayStartLoadingTime > UniversalAutoload.loadingSpeed then
-					-- print("start loading after delay")
-					self.delayStartLoading = false
-					spec.delayStartLoadingTime = 0
-					UniversalAutoload.startLoading(self)
-				else
-					spec.delayStartLoadingTime = spec.delayStartLoadingTime + dt
-				end
-			end
 
 		end
-
+		
 		if spec.lastStrapStateChanged then
 			spec.postStrapDelayTime = spec.postStrapDelayTime or 0
 			local logDelay = spec.isLogTrailer and UniversalAutoload.LOG_DELAY or 0
@@ -3023,6 +3011,18 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 				spec.lastStrapStateChanged = false
 			else
 				spec.postStrapDelayTime = spec.postStrapDelayTime + dt
+			end
+		end
+		
+		if self.delayStartLoading then
+			spec.delayStartLoadingTime = spec.delayStartLoadingTime or 0
+			if spec.delayStartLoadingTime > UniversalAutoload.loadingSpeed then
+				-- print("start loading after delay")
+				self.delayStartLoading = false
+				spec.delayStartLoadingTime = 0
+				UniversalAutoload.startLoading(self)
+			else
+				spec.delayStartLoadingTime = spec.delayStartLoadingTime + dt
 			end
 		end
 		
