@@ -61,7 +61,7 @@ PhysicsObject.delete = Utils.overwrittenFunction(PhysicsObject.delete, function(
 	end
 end)
 MountableObject.delete = Utils.overwrittenFunction(MountableObject.delete, function(self, superFunc, ...)
-	if self.dynamicMountTriggerId and entityExists(self.dynamicMountTriggerId) then
+	if self.nodeId and entityExists(self.nodeId) then
 		superFunc(self, ...)
 	end
 end)
