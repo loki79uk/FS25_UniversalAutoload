@@ -49,6 +49,22 @@ SplitShapeUtil.splitShape = Utils.appendedFunction(SplitShapeUtil.splitShape, fu
 		UniversalAutoload.SPLITSHAPES_LOOKUP[nodeId] = nil
 	end
 end)
+-- FIX ERROR ON EXIT GAME AFTER REMOVE FROM PHYSICS:
+Vehicle.delete = Utils.overwrittenFunction(Vehicle.delete, function(self, superFunc, ...)
+	if self.rootNode and entityExists(self.rootNode) then
+		superFunc(self, ...)
+	end
+end)
+PhysicsObject.delete = Utils.overwrittenFunction(PhysicsObject.delete, function(self, superFunc, ...)
+	if self.nodeId and entityExists(self.nodeId) then
+		superFunc(self, ...)
+	end
+end)
+MountableObject.delete = Utils.overwrittenFunction(MountableObject.delete, function(self, superFunc, ...)
+	if self.dynamicMountTriggerId and entityExists(self.dynamicMountTriggerId) then
+		superFunc(self, ...)
+	end
+end)
 -- FIX PLACEABLES WITH CONFLICTING TRIGGERS
 PlaceableLoadingData.onPlacableLoaded = Utils.appendedFunction(PlaceableLoadingData.onPlacableLoaded,
 function(_, placeable, loadingState)
