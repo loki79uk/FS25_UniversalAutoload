@@ -2180,7 +2180,7 @@ function UniversalAutoloadManager.updatePhysicsForLoadedObjects()
 			UniversalAutoload.lastRemovePhysics = UniversalAutoload.removePhysics
 			for vehicle, _ in pairs(UniversalAutoload.VEHICLES) do
 				local spec = vehicle and vehicle.spec_universalAutoload
-				UniversalAutoload.togglePhysicsForLoadedObjects(vehicle)
+				UniversalAutoload.togglePhysicsForLoadedObjects(vehicle, true)
 			end
 		end
 	end

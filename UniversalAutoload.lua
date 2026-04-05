@@ -5540,13 +5540,13 @@ function UniversalAutoload:clearLoadedObjects()
 	return palletCount, balesCount, logCount
 end
 --
-function UniversalAutoload:togglePhysicsForLoadedObjects()
+function UniversalAutoload:togglePhysicsForLoadedObjects(force)
 	local spec = self.spec_universalAutoload
 	
 	local globalSetting = UniversalAutoload.removePhysics
 	local removedFromPhysics = spec.palletsRemovedFromPhysics or false
 	local beltState = self.spec_tensionBelts.areAllBeltsFastened
-	if beltState == removedFromPhysics and globalSetting == removedFromPhysics then
+	if beltState == removedFromPhysics and globalSetting == removedFromPhysics and not force then
 		return
 	end
 	
