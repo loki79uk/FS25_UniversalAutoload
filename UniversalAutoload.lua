@@ -1067,7 +1067,7 @@ function UniversalAutoload:startLoading(force, noEventSend)
 			-- print("startLoading - add pallets back to Physics")
 			if not self:ualGetIsMoving() then
 				self:setAllTensionBeltsActive(false)
-				UniversalAutoload.togglePhysicsForLoadedObjects(self)
+				UniversalAutoload.addPalletsToPhysicsForVehicle(self)
 				self.delayStartLoading = true
 			end
 			return
@@ -1190,7 +1190,7 @@ function UniversalAutoload:startUnloading(force, noEventSend)
 			if spec.loadedObjects then
 				
 				self:setAllTensionBeltsActive(false)
-				UniversalAutoload.togglePhysicsForLoadedObjects(self)
+				UniversalAutoload.addPalletsToPhysicsForVehicle(self)
 				
 				if force and spec.forceUnloadPosition then
 					UniversalAutoload.debugPrint("USING UNLOADING POSITION: " .. tostring(spec.forceUnloadPosition), debugLoading)
@@ -1878,17 +1878,7 @@ function UniversalAutoload:saveToXMLFile(xmlFile, key, usedModNames)
 		if spec.autoCollectionMode then
 			UniversalAutoload.setAutoCollectionMode(self, false)
 		end
-		for object, _ in pairs(spec.loadedObjects or {}) do
-			if object then
-				local isRoundBale = object.isRoundbale ~= nil
-				local isValidPallet = not object.spec_bigBag and not object.isSplitShape
-				if ((spec.autoCollectionMode or spec.baleCollectionModeDeactivated) and isRoundBale)
-				or (spec.palletsRemovedFromPhysics and isValidPallet) then
-					UniversalAutoload.unlinkObject(object)
-					UniversalAutoload.addToPhysics(self, object)
-				end
-			end
-		end
+		UniversalAutoload.addPalletsToPhysicsForVehicle(self)
 	end
 	if spec.resetLoadingLayer ~= false then
 		UniversalAutoload.resetLoadingLayer(self)
@@ -3483,6 +3473,7 @@ function UniversalAutoload:unloadObject(object, unloadPlace)
 	
 		if UniversalAutoload.moveObjectNodes(self, object, unloadPlace, false, false) then
 			UniversalAutoload.clearPalletFromAllVehicles(self, object)
+			if unloadPlace.node then delete(unloadPlace.node) end
 			return true
 		end
 	end
@@ -3498,7 +3489,10 @@ function UniversalAutoload.buildObjectsToUnloadTable(vehicle, forceUnloadPositio
 	end
 
 	spec.unloadingAreaClear = true
-	
+	if not spec.unloadGroup then
+		spec.unloadGroup = createTransformGroup("unloadGroup")
+		link(spec.loadVolume.rootNode, spec.unloadGroup)
+	end
 	
 	local _, HEIGHT, _ = getTranslation(spec.loadVolume.rootNode)
 	for object, _ in pairs(spec.loadedObjects) do
@@ -3506,10 +3500,10 @@ function UniversalAutoload.buildObjectsToUnloadTable(vehicle, forceUnloadPositio
 		
 			local node = UniversalAutoload.getObjectPositionNode(object)
 			if node then
-				x, y, z = localToLocal(node, spec.loadVolume.rootNode, 0, 0, 0)
-				rx, ry, rz = localRotationToLocal(node, spec.loadVolume.rootNode, 0, 0, 0)
+				local x, y, z = localToLocal(node, spec.loadVolume.rootNode, 0, 0, 0)
+				local rx, ry, rz = localRotationToLocal(node, spec.loadVolume.rootNode, 0, 0, 0)
 				
-				local unloadPlace = {}
+				local unloadPlace = spec.objectsToUnload[object] or {}
 				local containerType = UniversalAutoload.getContainerType(object)
 				if containerType then
 					local w, h, l = UniversalAutoload.getContainerTypeDimensions(containerType, true)
@@ -3554,8 +3548,10 @@ function UniversalAutoload.buildObjectsToUnloadTable(vehicle, forceUnloadPositio
 					offsetY = offsetY - containerType.offset.y
 					offsetZ = offsetZ - containerType.offset.z
 
-					unloadPlace.node = createTransformGroup("unloadPlace")
-					link(spec.loadVolume.rootNode, unloadPlace.node)
+					if not unloadPlace.node then
+						unloadPlace.node = createTransformGroup("unloadPlace")
+						link(spec.unloadGroup, unloadPlace.node)
+					end
 					setTranslation(unloadPlace.node, x+offsetX, y+offsetY, z+offsetZ)
 					setRotation(unloadPlace.node, rx, ry, rz)
 
@@ -3592,6 +3588,50 @@ function UniversalAutoload.buildObjectsToUnloadTable(vehicle, forceUnloadPositio
 			spec.unloadingAreaClear = false
 		end
 	end
+end
+--
+function UniversalAutoload.addPalletsToPhysicsForVehicle(self)
+	local spec = self and self.spec_universalAutoload
+	if spec==nil or not spec.isAutoloadAvailable then
+		UniversalAutoload.debugPrint(self:getFullName() .. ": UAL DISABLED - addPalletsToPhysicsForVehicle", debugVehicles)
+		return
+	end
+	local objectCount = 0
+	for object, _ in pairs(spec.loadedObjects or {}) do
+		if object and not object.spec_bigBag and not object.isSplitShape then
+			local isRoundBale = object.isRoundbale ~= nil
+			local isValidPallet = not object.spec_bigBag and not object.isSplitShape
+			if ((spec.autoCollectionMode or spec.baleCollectionModeDeactivated) and isRoundBale)
+			or (spec.palletsRemovedFromPhysics and isValidPallet) then
+				UniversalAutoload.unlinkObject(object)
+				UniversalAutoload.addToPhysics(self, object)
+				objectCount = objectCount + 1
+			end
+		end
+	end
+	spec.palletsRemovedFromPhysics = false
+	UniversalAutoload.debugPrint(self:getFullName() .. ": " .. tostring(objectCount) .. " pallets added to physics")
+	return objectCount
+end
+function UniversalAutoload.removePalletsFromPhysicsForVehicle(self)
+	local spec = self and self.spec_universalAutoload
+	if spec==nil or not spec.isAutoloadAvailable then
+		UniversalAutoload.debugPrint(self:getFullName() .. ": UAL DISABLED - removePalletsFromPhysicsForVehicle", debugVehicles)
+		return
+	end
+	local objectCount = 0
+	for object, _ in pairs(spec.loadedObjects or {}) do
+		if object and not object.spec_bigBag and not object.isSplitShape then
+			UniversalAutoload.unmountDynamicMount(object)
+			UniversalAutoload.removeFromPhysics(object)
+			local node = UniversalAutoload.getObjectRootNode(object)
+			UniversalAutoload.addBaleModeBale(self, node)
+			objectCount = objectCount + 1
+		end
+	end
+	spec.palletsRemovedFromPhysics = true
+	UniversalAutoload.debugPrint(self:getFullName() .. ": " .. tostring(objectCount) .. " pallets removed from physics")
+	return objectCount
 end
 --
 function UniversalAutoload.clearPalletFromAllVehicles(self, object)
@@ -5500,38 +5540,25 @@ function UniversalAutoload:clearLoadedObjects()
 	return palletCount, balesCount, logCount
 end
 --
-function UniversalAutoload:togglePhysicsForLoadedObjects(force)
+function UniversalAutoload:togglePhysicsForLoadedObjects()
 	local spec = self.spec_universalAutoload
-	local objectCount = 0
 	
+	local globalSetting = UniversalAutoload.removePhysics
 	local removedFromPhysics = spec.palletsRemovedFromPhysics or false
 	local beltState = self.spec_tensionBelts.areAllBeltsFastened
-	if beltState == removedFromPhysics and not force then
+	if beltState == removedFromPhysics and globalSetting == removedFromPhysics then
 		return
 	end
 	
 	if spec and spec.isAutoloadAvailable and not spec.autoloadDisabled and spec.loadedObjects then
-		for object, _ in pairs(spec.loadedObjects or {}) do
-			if not object.spec_bigBag and not object.isSplitShape then
-				if removedFromPhysics then
-					UniversalAutoload.unlinkObject(object)
-					UniversalAutoload.addToPhysics(self, object)
-				else
-					if UniversalAutoload.removePhysics then
-						UniversalAutoload.unmountDynamicMount(object)
-						UniversalAutoload.removeFromPhysics(object)
-						local node = UniversalAutoload.getObjectRootNode(object)
-						UniversalAutoload.addBaleModeBale(self, node)
-					end
-				end
-				objectCount = objectCount + 1
+		if removedFromPhysics then
+			UniversalAutoload.addPalletsToPhysicsForVehicle(self)
+		else
+			if globalSetting and beltState == true then
+				UniversalAutoload.removePalletsFromPhysicsForVehicle(self)
 			end
 		end
 	end
-	
-	spec.palletsRemovedFromPhysics = UniversalAutoload.removePhysics and not removedFromPhysics
-	-- print("palletsRemovedFromPhysics: " .. tostring(spec.palletsRemovedFromPhysics))
-	return objectCount
 end
 
 -- PALLET IDENTIFICATION AND SELECTION FUNCTIONS

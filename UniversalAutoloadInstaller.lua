@@ -50,21 +50,14 @@ SplitShapeUtil.splitShape = Utils.appendedFunction(SplitShapeUtil.splitShape, fu
 	end
 end)
 -- FIX ERROR ON EXIT GAME AFTER REMOVE FROM PHYSICS:
-Vehicle.delete = Utils.overwrittenFunction(Vehicle.delete, function(self, superFunc, ...)
-	if self.rootNode and entityExists(self.rootNode) then
-		superFunc(self, ...)
+ROOT.OnInGameMenuMenu = Utils.prependedFunction(ROOT.OnInGameMenuMenu,
+	function(...)
+		print("UAL QUIT SAVEGAME")
+		for vehicle, _ in pairs(UniversalAutoload.VEHICLES) do
+			UniversalAutoload.addPalletsToPhysicsForVehicle(vehicle)
+		end
 	end
-end)
-PhysicsObject.delete = Utils.overwrittenFunction(PhysicsObject.delete, function(self, superFunc, ...)
-	if self.nodeId and entityExists(self.nodeId) then
-		superFunc(self, ...)
-	end
-end)
-MountableObject.delete = Utils.overwrittenFunction(MountableObject.delete, function(self, superFunc, ...)
-	if self.nodeId and entityExists(self.nodeId) then
-		superFunc(self, ...)
-	end
-end)
+)
 -- FIX PLACEABLES WITH CONFLICTING TRIGGERS
 PlaceableLoadingData.onPlacableLoaded = Utils.appendedFunction(PlaceableLoadingData.onPlacableLoaded,
 function(_, placeable, loadingState)
@@ -2129,25 +2122,6 @@ function UniversalAutoloadManager:consoleClearLoadedObjects()
 	end
 	return string.format("REMOVED: %d pallets, %d bales, %d logs", palletCount, balesCount, logCount)
 end
---
-function UniversalAutoloadManager:consoleTogglePhysicsForLoadedObjects()
-	
-	local objectCount = 0
-	local controlledVehicle = g_localPlayer and g_localPlayer.getCurrentVehicle()
-	if controlledVehicle then
-		local vehicles = UniversalAutoloadManager.getAttachedVehicles(controlledVehicle)
-		if next(vehicles) ~= nil then
-			for vehicle, hasAutoload in pairs(vehicles) do
-				if hasAutoload and vehicle:getIsActiveForInput() then
-					count = UniversalAutoload.togglePhysicsForLoadedObjects(vehicle)
-					objectCount = objectCount + count
-				end
-			end
-		end
-	end
-
-	return string.format("REMOVED from physics: %d objects", objectCount)
-end
 -- function UniversalAutoloadManager:consoleSpawnTestPallets()
 	-- local usage = "Usage: consoleSpawnTestPallets"
 	
@@ -2206,11 +2180,11 @@ function UniversalAutoloadManager.updatePhysicsForLoadedObjects()
 			UniversalAutoload.lastRemovePhysics = UniversalAutoload.removePhysics
 			for vehicle, _ in pairs(UniversalAutoload.VEHICLES) do
 				local spec = vehicle and vehicle.spec_universalAutoload
-				UniversalAutoload.togglePhysicsForLoadedObjects(vehicle, true)
+				UniversalAutoload.togglePhysicsForLoadedObjects(vehicle)
 			end
 		end
 	end
-end	
+end
 function UniversalAutoloadManager.addAttachedVehicles(vehicle, vehicles)
 
 	if vehicle.getAttachedImplements ~= nil then
@@ -2380,7 +2354,6 @@ function UniversalAutoloadManager:loadMap(name)
 		addConsoleCommand("ualAddPallets", "Fill current vehicle with specified pallets (fill type)", "consoleAddPallets", UniversalAutoloadManager)
 		addConsoleCommand("ualAddLogs", "Fill current vehicle with specified logs (length / fill type)", "consoleAddLogs", UniversalAutoloadManager)
 		addConsoleCommand("ualClearLoadedObjects", "Remove all loaded objects from current vehicle", "consoleClearLoadedObjects", UniversalAutoloadManager)
-		addConsoleCommand("ualTogglePhysicsForLoadedObjects", "Toggle physics for all loaded objects on current vehicle", "consoleTogglePhysicsForLoadedObjects", UniversalAutoloadManager)
 		-- addConsoleCommand("ualResetVehicles", "Reset all vehicles with autoload (and any attached) to the shop", "consoleResetVehicles", UniversalAutoloadManager)
 		-- addConsoleCommand("ualSpawnTestPallets", "Create one of each pallet type (not loaded)", "consoleSpawnTestPallets", UniversalAutoloadManager)
 		-- addConsoleCommand("ualFullTest", "Test all the different loading types", "consoleFullTest", UniversalAutoloadManager)
@@ -2406,7 +2379,6 @@ function UniversalAutoloadManager:deleteMap()
 	removeConsoleCommand("ualAddPallets")
 	removeConsoleCommand("ualAddLogs")
 	removeConsoleCommand("ualClearLoadedObjects")
-	removeConsoleCommand("ualTogglePhysicsForLoadedObjects")
 	-- removeConsoleCommand("ualResetVehicles")
 	-- removeConsoleCommand("ualSpawnTestPallets")
 	-- removeConsoleCommand("ualFullTest")
