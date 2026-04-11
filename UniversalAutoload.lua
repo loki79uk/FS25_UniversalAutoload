@@ -1879,6 +1879,7 @@ function UniversalAutoload:saveToXMLFile(xmlFile, key, usedModNames)
 			UniversalAutoload.setAutoCollectionMode(self, false)
 		end
 		UniversalAutoload.addPalletsToPhysicsForVehicle(self)
+		spec.needsBeltResetAfterSave = true
 	end
 	if spec.resetLoadingLayer ~= false then
 		UniversalAutoload.resetLoadingLayer(self)
@@ -2532,6 +2533,16 @@ function UniversalAutoload:doUpdate(dt, isActiveForInput, isActiveForInputIgnore
 	end
 	
 	if self.isServer then
+		
+		-- RESET TENSION BELTS AND REMOVE FROM PHYSICS IF NEEDED
+		if spec.needsBeltResetAfterSave then
+			spec.needsBeltResetAfterSave = false
+			if self.spec_tensionBelts.areAllBeltsFastened then
+				self:setAllTensionBeltsActive(false)
+				self:setAllTensionBeltsActive(true)
+			end
+			UniversalAutoload.togglePhysicsForLoadedObjects(self)
+		end
 		
 		-- CALCULATE AND APPLY VELOCITY CORRECTION
 		UniversalAutoload.updateVelocityCorrection(self)
