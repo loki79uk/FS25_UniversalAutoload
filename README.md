@@ -1,26 +1,22 @@
 # FS25_UniversalAutoload
 ---------------------------------------------------
-DEVELOPMENT RELEASE - Please test and leave any bug reports or feedback.
+
+Please get the latest ModHub release from: https://www.farming-simulator.com/mod.php?mod_id=325409
+
+Or the latest development release from: https://github.com/loki79uk/FS25_UniversalAutoload/releases
+
 ---------------------------------------------------
 
 **READ THIS FIRST**
 
-There seems to be a lot of confusion around how the settings are saved and loaded:
-- If you already have a vehicle on a savegame before adding UAL, then you ned to purchase another copy of the same vehicle to create the setting, and then restart the save game you want to use. You can buy it in any savegame, just the act of buying it will create a global default for that vehicle.
-- At the moment the configuration file is updated/saved (in mod settings) when you BUY a vehicle **or** when you apply changes to a vehicle in the workshop (e.g. just change the number plate).  This is a temprary workaround until I add a proper button to "apply" the new settings.
-- In multiplayer games all clients can edit vehicles when they buy one, but the configuration is saved ON THE SERVER only.  So the server default will be set by the last player to adjust it.  Invividual vehicle settings should persist for the rest of that game until the server is restarted, after that the default is applied to all.  I need to design a better system with permissions and a proper GUI menu.
+- If you already have a vehicle on a savegame before adding UAL, then you either need to save the settings from the shop UAL menu OR you can purchase another copy of the same vehicle to create the setting.  In either case, you must then restart the save game you want to use.  Note that you can do this in any savegame, the act of buying it will create a global default for the vehicle.
+- The configuration file is updated/saved (in mod settings) when you BUY a vehicle **OR** when you apply changes to a vehicle in the workshop. Changes applied from the workshop will apply only to the edited vehicle for that session, but will become the default for all vehicles of the same type after the next restart.
+- In multiplayer games all clients can edit vehicles when they buy one, but the configuration is saved ON THE SERVER only.  So the server default will be set by the last player to adjust it.  As with single player, individual vehicle settings will persist for the rest of that game until the server is restarted, after that the default is applied to all vehicles of the same type.
 
 If you are having issues with a vehicle not loading pallets at all then there are a few things to check
-- If you do not see a loading zone with the debug display (shift-ctrl-F12) then the most likely thing is that the entry for that vehicle is corrupted in your mod settings file.  Try deleting the file completely, or look for the vehicle you are having trouble with and delete the entry for that one.
-- There is an issue saving configurations when the game installation path has wide chars in the path (unicode/non-ascii) e.g. Russian or chinese characters.  When this happens, you will get the issue of loading volume not showing up at all.  I don't fuly understnad the cause, but I will work out a solution.
+- If you cant load LOGS then check that the logs are too long for you trailer.  Make the zone longer or cut the logs shorter.
+- If you do not see a loading zone with the debug display (shift-ctrl-F12) then the most likely thing is that the entry for that vehicle is corrupted in your mod settings file.  Try deleting the file completely (a new one will be created), or manually delete the entry for the vehicle you are having trouble with in a text editor.
 - It is also possible you simply don't have the trailer selected/active in game.  Press "G" to cycle the selected implement from your tractor/truck.
-
----------------------------------------------------
-SUMMARY:
-- Single player is working as it should for BALES, PALLETS and BIG-BAGS
-- Multiplayer loads without crashing so far BUT I have only done basic testing. **USE AT YOUR OWN RISK**
-- Any new vehicles will get autoload after purchasing in the shop (see below)
-- Any valid vehicles in a savegame will load settings if available
 
 ---------------------------------------------------
 NEW FEATURES:
@@ -40,17 +36,5 @@ TO CONFIGURE LOADING ZONES:
 - Configuration can be edited in mod settings XML (if you know what you are doing)
 
 ---------------------------------------------------
-PLANNED FEATURES:
-- Menu for global settings (in shop)
-- Set vehicle options in the shop before purchase
-- Bale collection mode (already works with xml edit)
-- Log trailers (can be configured, but do not load anything yet)
-- Multiplayer synchronisation of ALL settings
-- Show debugging display in multiplayer
-- Custom key bindings
-
----------------------------------------------------
 KNOWN ISSUES:
 - Existing trailers on a savegame will not get autoload added (until restart with valid settings)
-- Object positions slow to update in multiplayer
-- Trigger detection of objects is poor in multiplayer (it helps to move them)

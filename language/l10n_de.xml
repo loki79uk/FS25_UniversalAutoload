@@ -3,10 +3,163 @@
 	<texts>
 		<text name="shop_configuration_text" text="Autoload"/>
 		<text name="configuration_universalAutoload" text="Universal Autoload"/>
+		
+		<!-- TITLES -->
+		<text name="ui_local_settings_ual" text="Lokale Einstellungen"/>
+		<text name="ui_global_settings_ual" text="Globale Einstellungen"/>
+		<text name="ui_config_settings_ual" text="Autoload Einstellungen"/>
+		<text name="ui_vehicle_options_ual" text="Fahrzeugoptionen"/>
+		<text name="ui_loading_area_options_ual" text="Optionen für den Ladebereich"/>
+		<text name="ui_save_options_ual" text="Speicher Optionen"/>
+		<text name="ui_button_save_config_ual" text="Fahrzeugeinstellungen speichern"/>
+		<text name="ui_confirm_save_config_ual" text="Möchten Sie die Standardkonfiguration der automatischen Ladung für dieses Fahrzeug überschreiben?"/>
+		<text name="ui_confirm_save_config2_ual" text="(Kaufen Sie ein neues Fahrzeug oder starten Sie das Spiel neu, um die neuen Einstellungen zu übernehmen)"/>
+		
+		<!-- GLOBAL -->
+		<text name="ui_global_showDebug" text="Debug anzeigen"/>
+		<text name="ui_global_highPriority" text="Hohe Priorität"/>
+		<text name="ui_global_lowRefreshMode" text="Reduzierter Refresh-Modus"/>
+		<text name="ui_global_disableAutoStrap" text="Automatische Spanngurte"/>
+		<text name="ui_global_removePhysics" text="Aus der Physik entfernen"/>
+		<text name="ui_global_pricePerLog" text="Preis pro Stamm"/>
+		<text name="ui_global_pricePerBale" text="Preis pro Ballen"/>
+		<text name="ui_global_pricePerPallet" text="Preis pro Palette"/>
+		<text name="ui_global_minLogLength" text="Min. Länge des Stammes"/>
+		<text name="ui_global_loadingSpeed" text="Ladegeschwindigkeit"/>
+		<text name="ui_global_objectSpacing" text="Objektabstand"/>
+		
+		<text name="ui_global_tooltip_showDebug" text="Zeigt die vollständige grafische Fehlersuchanzeige für alle Fahrzeuge im Spiel an"/>
+		<text name="ui_global_tooltip_highPriority" text="Wendet hohe Priorität auf alle UAL-Tastenbelegungen im F1-Menü an"/>
+		<text name="ui_global_tooltip_lowRefreshMode" text="Seltener aktualisieren – aktiviere diese Einstellung bei Verzögerungen mit Autoload"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="Automatisches Anlegen von Spanngurten nach dem Laden oder Entladen"/>
+		<text name="ui_global_tooltip_removePhysics" text="Paletten aus der Physiksimulation entfernen, wenn Spanngurte angebracht sind"/>
+		<text name="ui_global_tooltip_pricePerLog" text="Der Preis, der für jeden automatisch geladenen Stamm berechnet wird"/>
+		<text name="ui_global_tooltip_pricePerBale" text="Der Preis, der für jeden automatisch geladenen Ballen berechnet wird"/>
+		<text name="ui_global_tooltip_pricePerPallet" text="Der Preis, der für jede automatisch geladene Palette berechnet wird"/>
+		<text name="ui_global_tooltip_minLogLength" text="Die globale Mindestlänge für Stämme, die automatisch gegeladen werden"/>
+		<text name="ui_global_tooltip_loadingSpeed" text="Zeit zwischen dem Laden von zwei Objekten (ms)"/>
+		<text name="ui_global_tooltip_objectSpacing" text="Zusätzlicher Abstand zwischen Objekten (m)"/>
+
+		<!-- OPTIONS -->
+		<text name="ui_option_enableAutoload" text="Autoload einschalten"/>
+		<text name="ui_option_trailerType" text="Anhängertyp"/>
+		<text name="ui_option_unloadingType" text="Abladeposition"/>
+		<text name="ui_option_rearOnly" text="Nur hinten"/>
+		<text name="ui_option_frontOnly" text="Nur vorne"/>
+		
+		<text name="ui_option_noLoadingFolded" text="Nicht laden, wenn eingeklappt"/>
+		<text name="ui_option_folded" text="Geklappt"/>
+		<text name="ui_option_unfolded" text="Unfolded"/>
+		
+		<text name="ui_option_noLoadingCovered" text="Nicht laden, wenn abgedeckt"/>
+		<text name="ui_option_covered" text="Abgedeckt"/>
+		<text name="ui_option_uncovered" text="Nicht abgedeckt"/>
+
+		<text name="ui_option_isBoxTrailer" text="Box-Anhänger"/>
+		<text name="ui_option_isLogTrailer" text="Baum-Anhänger"/>
+		<text name="ui_option_isBaleTrailer" text="Ballen-Anhänger"/>
+		<text name="ui_option_isBaleProcessor" text="Ballen-Prozessor"/>
+		<text name="ui_option_isCurtainTrailer" text="Vorhang-Anhänger"/>
+		<text name="ui_option_enableRearLoading" text="Rückwärtige Beladung aktivieren"/>
+		<text name="ui_option_enableSideLoading" text="Seitenbeladung aktivieren"/>
+		<text name="ui_option_extendPickupRange" text="Ladereichweite erweitern"/>
+
+		<text name="ui_option_rearUnloadingOnly" text="Nur Heckentladung"/>
+		<text name="ui_option_frontUnloadingOnly" text="Nur vorne entladen"/>
+		<text name="ui_option_horizontalLoading" text="Horizontales Laden"/>
+		<text name="ui_option_disableAutoStrap" text="Automatische Spanngurte"/>
+		<text name="ui_option_disableHeightLimit" text="Stapelhöhe begrenzen"/>
+		<text name="ui_option_zonesOverlap" text="Zonen überlappen"/>
+		<text name="ui_option_offsetRoot" text="Versatz Start"/>
+		<text name="ui_option_minLogLength" text="Minimale Länge des Stammes"/>
+		
+		<text name="ui_option_tooltip_enableAutoload" text="Ob Autoload für dieses Fahrzeug aktiviert oder deaktiviert ist"/>
+		<text name="ui_option_tooltip_trailerType" text="Der spezielle Typ des Anhängers, z.B. Ballen, Baumstamm, Vorhang"/>
+		<text name="ui_option_tooltip_unloadingType" text="Verwenden Sie eine spezielle Entladeposition (vorne oder hinten)"/>
+		<text name="ui_option_tooltip_noLoadingFolded" text="Verhindern des Beladens im gefalteten oder ungefalteten Zustand"/>
+		<text name="ui_option_tooltip_noLoadingCovered" text="Verhindern des Beladens, wenn es entweder abgedeckt oder nicht abgedeckt ist"/>
+		
+		<text name="ui_option_tooltip_isBoxTrailer" text="Wenn der Anhänger mit einer Hecktür versehen ist"/>
+		<text name="ui_option_tooltip_isLogTrailer" text="Wenn es sich bei dem Anhänger um einen Holzfälleranhänger handelt, werden nur Stämme geladen, die von oben fallen."/>
+		<text name="ui_option_tooltip_isBaleTrailer" text="Wenn der Anhänger einen automatischen Ballensammelmodus verwenden soll"/>    
+		<text name="ui_option_tooltip_isBaleProcessor" text="Wenn der Anhänger Ballen verbrauchen soll (z. B. TMR-Mixer oder Strohgebläse)"/>
+		<text name="ui_option_tooltip_isCurtainTrailer" text="Automatische Erkennung der verfügbaren Ladeseite (wenn der Anhänger Vorhangseiten hat)"/>
+		<text name="ui_option_tooltip_enableRearLoading" text="Verwenden Sie den automatischen Heckladeauslöser"/>
+		<text name="ui_option_tooltip_enableSideLoading" text="Verwenden Sie die automatischen Seitenladeauslöser"/>
+		<text name="ui_option_tooltip_extendPickupRange" text="Erhöht die Erkennungsreichweite des Ladevorgangs"/>
+
+		<text name="ui_option_tooltip_rearUnloadingOnly" text="Nur die hintere Entladezone verwenden (keine seitlichen Zonen)"/>
+		<text name="ui_option_tooltip_frontUnloadingOnly" text="Nur vordere Entladezone verwenden (keine Seitenzonen)"/>
+		<text name="ui_option_tooltip_horizontalLoading" text="Start mit aktivierter horizontaler Beladung (kann umgeschaltet werden, wenn die Taste gebunden ist)"/>
+		<text name="ui_option_tooltip_disableAutoStrap" text="Automatische Anwendung von Spanngurten nach dem Be- oder Entladen"/>
+		<text name="ui_option_tooltip_disableHeightLimit" text="Begrenzung der Höhe des Palettenstapels basierend auf der Dichte"/>
+		<text name="ui_option_tooltip_zonesOverlap" text="Flagge zur Erkennung, wenn sich die Ladebereiche überschneiden"/>
+		<text name="ui_option_tooltip_offsetRoot" text="Fahrzeug-i3d-Knoten, auf den sich die Flächenverschiebungen beziehen"/>
+		<text name="ui_option_tooltip_minLogLength" text="Die Mindestlänge für Stämme, die automatisch geladen werden"/>
+
+		<text name="ui_option_addRemoveAreas" text="Anzahl der Ladeflächen"/>
+		<text name="ui_option_selectedArea" text="Ausgewählter Bereich"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="Passen Sie den Wert hier an, um Ladebereiche hinzuzufügen oder zu entfernen"/>
+		<text name="ui_option_tooltip_selectedArea" text="Ausgewählter Bereich (in den Einstellungen unten zu ändern)"/>
+		
+		<text name="ui_option_selectedConfigSet" text="Ausgewählter Konfigurationssatz"/>
+		<text name="ui_option_useConfigName" text="Konfigurationsname verwenden"/>
+		<text name="ui_option_useConfigIndex" text="Konfigurationsindex verwenden"/>
+		<text name="ui_option_tooltip_selectedConfigSet" text="Die „Konfigurationsgruppe“, für die die gespeicherten Einstellungen gelten sollen"/>
+		<text name="ui_option_tooltip_useConfigName" text="Die zu indizierende Konfiguration (optional)"/>
+		<text name="ui_option_tooltip_useConfigIndex" text="Der Index für die Konfiguration (optional)"/>
+		
+		<!-- LOADING_AREA -->
+		<text name="ui_loadArea_offset" textt="Versatz"/>
+		<text name="ui_loadArea_offsetRoot" textt="Versatz Start"/>
+		<text name="ui_loadArea_width" text="Breite"/>
+		<text name="ui_loadArea_length" text="Länge"/>
+		<text name="ui_loadArea_height" text="Höhe"/>
+		<text name="ui_loadArea_baleHeight" text="Ballenhöhe"/>
+		<text name="ui_loadArea_widthAxis" text="Breite-Achse"/>
+		<text name="ui_loadArea_lengthAxis" text="Länge Achse"/>
+		<text name="ui_loadArea_heightAxis" text="Höhe-Achse"/>
+		<text name="ui_loadArea_offsetFrontAxis" text="Versatz Vorderachse"/>
+		<text name="ui_loadArea_offsetRearAxis" text="Versetzte Hinterachse"/>
+		<text name="ui_loadArea_reverseWidthAxis" text="Umgekehrte Breitenachse"/>
+		<text name="ui_loadArea_reverseLengthAxis" text="Umgekehrte Längenachse"/>
+		<text name="ui_loadArea_reverseHeightAxis" text="Umgekehrte Höhenachse"/>
+		<text name="ui_loadArea_noLoadingIfFolded" text="Keine Belastung im zusammengeklappten Zustand"/>
+		<text name="ui_loadArea_noLoadingIfUnfolded" text="Keine Belastung im ausgeklappten Zustand"/>
+		<text name="ui_loadArea_noLoadingIfCovered" text="Nicht beladen, wenn abgedeckt"/>
+		<text name="ui_loadArea_noLoadingIfUncovered" text="Nicht beladen, wenn unbedeckt"/>
+		
+		<text name="ui_loadArea_tooltip_offset" text="Versatz zum Zentrum der Ladefläche"/>
+		<text name="ui_loadArea_tooltip_offsetRoot" text="Fahrzeug-i3d-Knoten, auf den sich dieser Flächenversatz bezieht"/>
+		<text name="ui_loadArea_tooltip_width" text="Breite der Ladefläche"/>
+		<text name="ui_loadArea_tooltip_length" text="Länge der Ladefläche"/>
+		<text name="ui_loadArea_tooltip_height" text="Höhe der Ladefläche"/>
+		<text name="ui_loadArea_tooltip_baleHeight" text="Höhe der Ladefläche nur für BALES"/>
+		<text name="ui_loadArea_tooltip_widthAxis" text="Name der Achse, um die Breite der Ladefläche zu erweitern"/>
+		<text name="ui_loadArea_tooltip_lengthAxis" text="Achsenname zur Verlängerung der Länge der Ladefläche"/>
+		<text name="ui_loadArea_tooltip_heightAxis" text="Name der Achse zur Verlängerung der Höhe der Ladefläche"/>
+		<text name="ui_loadArea_tooltip_offsetFrontAxis" text="Achsenname zum Einstellen der vorderen Position der Ladefläche"/>
+		<text name="ui_loadArea_tooltip_offsetRearAxis" text="Achsenname zur Einstellung der hinteren Position der Ladefläche"/>
+		<text name="ui_loadArea_tooltip_reverseWidthAxis" text="Kehrt die Richtung der Breitenausdehnung um, wenn wahr"/>
+		<text name="ui_loadArea_tooltip_reverseLengthAxis" text="Kehrt die Richtung der Längenausdehnung um, falls zutreffend"/>
+		<text name="ui_loadArea_tooltip_reverseHeightAxis" text="Kehrt die Richtung der Höhenausdehnung um, falls zutreffend"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfFolded" text="Beladung im eingeklappten Zustand verhindern (nur für diesen Bereich)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfUnfolded" text="Beladung im ausgeklappten Zustand verhindern (nur für diesen Bereich)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfCovered" text="Beladung verhindern, wenn abgedeckt (nur für diesen Bereich)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Beladung verhindern, wenn sie nicht abgedeckt ist (nur für diesen Bereich)"/>
+
+		<!-- KEY BINDINGS -->
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Menü „Globale Einstellungen“ öffnen"/>
+		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Menü Konfigurationseinstellungen öffnen (im Shop)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Bearbeitung des Ladevolumens ermöglichen (im Shop)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Laden umschalten"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Automatischer Ballensammel-Modus"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" text="Automatischer Sammelmodus"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Abladen"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Abladen erzwingen"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_POSITION" text="Entladeposition einstellen"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_POSITION_LEFT" text="Entladeposition nach links verschieben"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_POSITION_RIGHT" text="Entladeposition nach rechts verschieben"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_POSITION_ROTATE" text="Entladeposition drehen"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Aktive Entladeseite umschalten"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Ladefilter umschalten"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Horizontales Laden umschalten"/>
@@ -31,6 +184,8 @@
 		<text name="universalAutoload_tipside" text="Aktive Entladeseite"/>
 		<text name="universalAutoload_left" text="Links"/>
 		<text name="universalAutoload_right" text="Rechts"/>
+		<text name="universalAutoload_front" text="Vorne"/>
+		<text name="universalAutoload_rear" text="Hinten"/>
 		<text name="universalAutoload_none" text="Keine"/>
 		<text name="universalAutoload_loadingFilter" text="Ladefilter"/>
 		<text name="universalAutoload_loadingMethod" text="Ladeverfahren"/>
@@ -42,7 +197,10 @@
 		<text name="universalAutoload_stopLoading" text="Laden stoppen"/>
 		<text name="universalAutoload_unloadAll" text="Abladen"/>
 		<text name="universalAutoload_unloadAllForce" text="Abladen erzwingen"/>
-		<text name="universalAutoload_baleMode" text="Auto-Ballen-Modus"/>
+		<text name="universalAutoload_logMode" text="Stämme-Modus"/>
+		<text name="universalAutoload_baleMode" text="Ballen-Modus"/>
+		<text name="universalAutoload_palletMode" text="Pallet-Modus"/>
+		<text name="universalAutoload_collectionMode" text="Sammel-Modus"/>
 		<text name="universalAutoload_enabled" text="Aktiviert"/>
 		<text name="universalAutoload_disabled" text="Deaktiviert"/>
 		<text name="universalAutoload_activate" text="Aktivieren"/>

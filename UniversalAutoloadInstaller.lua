@@ -13,8 +13,91 @@ g_specializationManager:addSpecialization('universalAutoload', 'UniversalAutoloa
 
 TypeManager.validateTypes = Utils.appendedFunction(TypeManager.validateTypes, function(self)
 	if self.typeName == "vehicle" then
-		print("UAL - VALIDATE TYPES")
+		UniversalAutoload.debugPrint("UAL - VALIDATE TYPES")
 		UniversalAutoloadManager.injectSpecialisation()
+	end
+end)
+
+local ROOT = getmetatable(_G).__index
+-- DETECT SOLD LOGS/OBJECTS
+ROOT.delete = Utils.appendedFunction(ROOT.delete, function(nodeId)
+	if UniversalAutoload.OBJECTS_LOOKUP[nodeId] then
+		local object = UniversalAutoload.OBJECTS_LOOKUP[nodeId] 
+		UniversalAutoload.clearPalletFromAllVehicles(nil, object)
+		UniversalAutoload.OBJECTS_LOOKUP[nodeId] = nil
+	elseif UniversalAutoload.SPLITSHAPES_LOOKUP[nodeId] then
+		local object = UniversalAutoload.SPLITSHAPES_LOOKUP[nodeId] 
+		UniversalAutoload.clearPalletFromAllVehicles(nil, object)
+		UniversalAutoload.SPLITSHAPES_LOOKUP[nodeId] = nil
+	end
+end)
+-- DETECT SPAWNED LOGS
+ROOT.addToPhysics = Utils.appendedFunction(ROOT.addToPhysics, function(nodeId)
+	if nodeId ~= 0 and nodeId ~= nil then
+		if getHasClassId(nodeId, ClassIds.MESH_SPLIT_SHAPE) and getSplitType(nodeId) ~= 0 and getRigidBodyType(nodeId) == RigidBodyType.DYNAMIC then
+			if not UniversalAutoload.createdLogId and UniversalAutoload.createdTreeId and nodeId > UniversalAutoload.createdTreeId then
+				UniversalAutoload.createdLogId = nodeId
+			end
+		end
+	end
+end)
+-- DETECT CUT LOGS
+SplitShapeUtil.splitShape = Utils.appendedFunction(SplitShapeUtil.splitShape, function(nodeId)
+	if UniversalAutoload.SPLITSHAPES_LOOKUP[nodeId] then
+		local object = UniversalAutoload.SPLITSHAPES_LOOKUP[nodeId] 
+		UniversalAutoload.clearPalletFromAllVehicles(nil, object)
+		UniversalAutoload.SPLITSHAPES_LOOKUP[nodeId] = nil
+	end
+end)
+-- FIX ERROR ON EXIT GAME AFTER REMOVE FROM PHYSICS:
+ROOT.OnInGameMenuMenu = Utils.prependedFunction(ROOT.OnInGameMenuMenu,
+	function(...)
+		print("UAL QUIT SAVEGAME")
+		for vehicle, _ in pairs(UniversalAutoload.VEHICLES) do
+			UniversalAutoload.addPalletsToPhysicsForVehicle(vehicle)
+		end
+	end
+)
+-- FIX PLACEABLES WITH CONFLICTING TRIGGERS
+PlaceableLoadingData.onPlacableLoaded = Utils.appendedFunction(PlaceableLoadingData.onPlacableLoaded,
+function(_, placeable, loadingState)
+	if placeable and loadingState == PlaceableLoadingState.OK then
+		local function addCollisionFilterGroupBit(nodeId, flag)
+			local group = getCollisionFilterGroup(nodeId)
+			if CollisionFlag[flag] and bitAND(CollisionFlag[flag], group) == 0 then
+				-- print("  adding flag: ".. tostring(flag) )
+				local newFilterGroup = bitOR(CollisionFlag[flag], group)
+				setCollisionFilterGroup(nodeId, newFilterGroup)
+			end
+		end
+		local function removeCollisionFilterGroupBit(nodeId, flag)
+			local group = getCollisionFilterGroup(nodeId)
+			if CollisionFlag[flag] and bitAND(CollisionFlag[flag], group) > 0 then
+				-- print("  removing flag: ".. tostring(flag) )
+				local newFilterGroup = bitAND(bitNOT(CollisionFlag[flag]), group)
+				setCollisionFilterGroup(nodeId, newFilterGroup)
+			end
+		end
+		for name, i3d in pairs(placeable.i3dMappings or {}) do
+			local nodeId = i3d.nodeId
+			if string.find(name, "trigger") or string.find(name, "Trigger") then
+				if nodeId and entityExists(nodeId) then
+					local originalGroup = getCollisionFilterGroup(nodeId)
+					local isShape = getHasClassId(nodeId, ClassIds.SHAPE)
+					if isShape and originalGroup and bitAND(UniversalAutoload.MASK.everything, originalGroup) > 0 then
+						local item = tostring(placeable.customEnvironment) .. ":" .. tostring(placeable.configFileNameClean) .. ":" .. tostring(name)
+						addCollisionFilterGroupBit(nodeId, 'TRIGGER')
+						removeCollisionFilterGroupBit(nodeId, 'PLAYER')
+						removeCollisionFilterGroupBit(nodeId, 'VEHICLE')
+						removeCollisionFilterGroupBit(nodeId, 'STATIC_OBJECT')
+						removeCollisionFilterGroupBit(nodeId, 'DYNAMIC_OBJECT')
+						removeCollisionFilterGroupBit(nodeId, 'TREE')
+						local finalGroup = getCollisionFilterGroup(nodeId)
+						UniversalAutoload.debugPrint(string.format("UAL: MODIFY CollisionFilterGroup from 0x%X -> 0x%X for %s", originalGroup, finalGroup, item))
+					end
+				end
+			end
+		end
 	end
 end)
 
@@ -24,7 +107,9 @@ g_storeManager:addModStorePack("UNIVERSALAUTOLOAD", g_i18n:getText("configuratio
 -- external classes
 source(UniversalAutoload.path .. "scripts/BoundingBox.lua")
 source(UniversalAutoload.path .. "scripts/LoadingVolume.lua")
-source(UniversalAutoload.path .. "gui/InGameMenuUALSettings.lua")
+source(UniversalAutoload.path .. "gui/ModSettingsMenu.lua")
+source(UniversalAutoload.path .. "gui/ShopConfigMenuUALSettings.lua")
+source(UniversalAutoload.path .. "gui/GlobalSettingsMenuUALSettings.lua")
 
 -- class variables
 UniversalAutoload.userSettingsFile = "modSettings/UniversalAutoload.xml"
@@ -32,8 +117,13 @@ UniversalAutoload.SHOP_ICON = UniversalAutoload.path .. "icons/shop_icon.dds"
 
 -- class tables
 UniversalAutoload.ACTIONS = {
+	["GLOBAL_MENU"]          = "UNIVERSALAUTOLOAD_GLOBAL_MENU",
 	["TOGGLE_LOADING"]		 = "UNIVERSALAUTOLOAD_TOGGLE_LOADING",
 	["UNLOAD_ALL"]			 = "UNIVERSALAUTOLOAD_UNLOAD_ALL",
+	["UNLOAD_POSITION"]		 = "UNIVERSALAUTOLOAD_UNLOAD_POSITION",
+	["UNLOAD_POSITION_LEFT"] = "UNIVERSALAUTOLOAD_UNLOAD_POSITION_LEFT",
+	["UNLOAD_POSITION_RIGHT"] = "UNIVERSALAUTOLOAD_UNLOAD_POSITION_RIGHT",
+	["UNLOAD_POSITION_ROTATE"] = "UNIVERSALAUTOLOAD_UNLOAD_POSITION_ROTATE",
 	["TOGGLE_TIPSIDE"]		 = "UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE",
 	["TOGGLE_FILTER"]		  = "UNIVERSALAUTOLOAD_TOGGLE_FILTER",
 	["TOGGLE_HORIZONTAL"]	  = "UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL",
@@ -48,7 +138,7 @@ UniversalAutoload.ACTIONS = {
 	-- ["TOGGLE_CURTAIN"]		   = "UNIVERSALAUTOLOAD_TOGGLE_CURTAIN",
 	["TOGGLE_SHOW_DEBUG"]	   = "UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG",
 	["TOGGLE_SHOW_LOADING"]	   = "UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING",
-	["TOGGLE_BALE_COLLECTION"] = "UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION",
+	["TOGGLE_COLLECTION"]	   = "UNIVERSALAUTOLOAD_TOGGLE_COLLECTION",
 }
 
 UniversalAutoload.WARNINGS = {
@@ -76,80 +166,75 @@ UniversalAutoload.CONTAINERS = {
 	[7] = "LOGS",
 }
 
--- DEFINE DEFAULTS FOR CONTAINER TYPES
--- UniversalAutoload.ALL			= { sizeX = 1.250, sizeY = 0.850, sizeZ = 0.850 }
--- UniversalAutoload.EURO_PALLET	= { sizeX = 1.250, sizeY = 0.790, sizeZ = 0.850 }
--- UniversalAutoload.BIGBAG_PALLET  = { sizeX = 1.525, sizeY = 1.075, sizeZ = 1.200 }
--- UniversalAutoload.LIQUID_TANK	= { sizeX = 1.433, sizeY = 1.500, sizeZ = 1.415 }
--- UniversalAutoload.BIGBAG		 = { sizeX = 1.050, sizeY = 1.666, sizeZ = 0.866, neverStack=true }
--- UniversalAutoload.BALE		   = { isBale=true }
-
 UniversalAutoload.VEHICLES = {} -- actual vehicles currently in game
-UniversalAutoload.VEHICLE_CONFIGURATIONS = {} -- settings for each vehicle configuration
-
 UniversalAutoload.VEHICLE_TYPES = {} -- vehicleTypes with autoload spec
 UniversalAutoload.LOADING_TYPES = {} -- known container object types
-UniversalAutoload.INVALID_OBJECTS = {} -- objects that cannot be loaded
+
+UniversalAutoload.LOCAL_DEFAULTS = {
+	{id="showDebug", default=false, valueType="BOOL", key="#showDebug"}, --Show the full graphical debugging display for all vehicles in game (LOCAL)
+	{id="highPriority", default=true, valueType="BOOL", key="#highPriority"}, --Apply high priority to all UAL key bindings in the F1 menu (LOCAL)
+}
 
 UniversalAutoload.GLOBAL_DEFAULTS = {
-	{id="showDebug", default=false, valueType="BOOL", key="#showDebug", description="Show the full graphical debugging display for all vehicles in game"},
-	{id="highPriority", default=true, valueType="BOOL", key="#highPriority", description="Apply high priority to all UAL key bindings in the F1 menu"},
-	{id="manualLoadingOnly", default=false, valueType="BOOL", key="#manualLoadingOnly", description="Prevent autoloading (automatic unloading is allowed)"},
-	{id="disableManualLoading", default=false, valueType="BOOL", key="#disableManualLoading", description="Prevent use of manual loading triggers"},
-	{id="disableAutoStrap", default=false, valueType="BOOL", key="#disableAutoStrap", description="Disable the automatic application of tension belts"},
-	{id="pricePerLog", default=0, valueType="FLOAT", key="#pricePerLog", description="The price charged for each auto-loaded log (default is zero)"},
-	{id="pricePerBale", default=0, valueType="FLOAT", key="#pricePerBale", description="The price charged for each auto-loaded bale (default is zero)"},
-	{id="pricePerPallet", default=0, valueType="FLOAT", key="#pricePerPallet", description="The price charged for each auto-loaded pallet (default is zero)"},
-	{id="minLogLength", default=0, valueType="FLOAT", key="#minLogLength", description="The global minimum length for logs that will be autoloaded (default is zero)"},
+	{id="lowRefreshMode", default=false, valueType="BOOL", key="#lowRefreshMode"}, --Update less frequently - set to 'true' if you experience lag when using autoload
+	{id="disableAutoStrap", default=false, valueType="BOOL", key="#disableAutoStrap"}, --Disable the automatic application of tension belts
+	{id="removePhysics", default=false, valueType="BOOL", key="#removePhysics"}, --Remove pallets from physics when tension belts are applied
+	{id="pricePerLog", default=0, valueType="INT", key="#pricePerLog"}, --The price charged for each auto-loaded log (default is zero)
+	{id="pricePerBale", default=0, valueType="INT", key="#pricePerBale"}, --The price charged for each auto-loaded bale (default is zero)
+	{id="pricePerPallet", default=0, valueType="INT", key="#pricePerPallet"}, --The price charged for each auto-loaded pallet (default is zero)
+	{id="minLogLength", default=0, valueType="FLOAT", key="#minLogLength"}, --The global minimum length for logs that will be autoloaded (default is zero)
+	{id="loadingSpeed", default=150, valueType="INT", key="#loadingSpeed"}, --Time delay between loading each object (ms)
+	{id="objectSpacing", default=0, valueType="FLOAT", key="#objectSpacing"}, --Additional spacing between loaded objects (m)
 }
 
 UniversalAutoload.OPTIONS_DEFAULTS = {
-	{id="isBoxTrailer", default=false, valueType="BOOL", key="#isBoxTrailer", description="If trailer is enclosed with a rear door"},
-	{id="isLogTrailer", default=false, valueType="BOOL", key="#isLogTrailer", description="If trailer is a logging trailer - will load only logs, dropped from above"},
-	{id="isBaleTrailer", default=false, valueType="BOOL", key="#isBaleTrailer", description="If trailer should use an automatic bale collection mode"},	
-	{id="isBaleProcessor", default=false, valueType="BOOL", key="#isBaleProcessor", description="If trailer should consume bales (e.g. TMR Mixer or Straw Blower)"},
-	{id="isCurtainTrailer", default=false, valueType="BOOL", key="#isCurtainTrailer", description="Automatically detect the available load side (if the trailer has curtain sides)"},
-	{id="enableRearLoading", default=false, valueType="BOOL", key="#enableRearLoading", description="Use the automatic rear loading trigger"},
-	{id="enableSideLoading", default=false, valueType="BOOL", key="#enableSideLoading", description="Use the automatic side loading triggers"},
-	{id="noLoadingIfFolded", default=false, valueType="BOOL", key="#noLoadingIfFolded", description="Prevent loading when folded"},
-	{id="noLoadingIfUnfolded", default=false, valueType="BOOL", key="#noLoadingIfUnfolded", description="Prevent loading when unfolded"},
-	{id="noLoadingIfCovered", default=false, valueType="BOOL", key="#noLoadingIfCovered", description="Prevent loading when covered"},
-	{id="noLoadingIfUncovered", default=false, valueType="BOOL", key="#noLoadingIfUncovered", description="Prevent loading when uncovered"},
-	{id="rearUnloadingOnly", default=false, valueType="BOOL", key="#rearUnloadingOnly", description="Use rear unloading zone only (not side zones)"},
-	{id="frontUnloadingOnly", default=false, valueType="BOOL", key="#frontUnloadingOnly", description="Use front unloading zone only (not side zones)"},
-	{id="horizontalLoading", default=false, valueType="BOOL", key="#horizontalLoading", description="Start with horizontal loading enabled (can be toggled if key is bound)"},
-	{id="disableAutoStrap", default=false, valueType="BOOL", key="#disableAutoStrap", description="Disable the automatic application of tension belts"},
-	{id="disableHeightLimit", default=false, valueType="BOOL", key="#disableHeightLimit", description="Disable the density based stacking height limit"},
-	{id="zonesOverlap", default=false, valueType="BOOL", key="#zonesOverlap", description="Flag to identify when the loading areas overlap each other"},
-	{id="offsetRoot", default=nil, valueType="STRING", key="#offsetRoot", description="Vehicle i3d node that area offsets are relative to"},
-	{id="minLogLength", default=0, valueType="FLOAT", key="#minLogLength", description="The minimum length for logs that will be autoloaded (default is zero)"},
-	{id="showDebug", default=false, valueType="BOOL", key="#showDebug", description="Show the full graphical debugging display for this vehicle"},
+	{id="autoloadDisabled", default=false, valueType="BOOL", key="#autoloadDisabled"}, --If autoload features are disabled for this trailer
+	{id="isBoxTrailer", default=false, valueType="BOOL", key="#isBoxTrailer"}, --If trailer is enclosed with a rear door
+	{id="isLogTrailer", default=false, valueType="BOOL", key="#isLogTrailer"}, --If trailer is a logging trailer - will load only logs, dropped from above
+	{id="isBaleTrailer", default=false, valueType="BOOL", key="#isBaleTrailer"}, --If trailer should use an automatic bale collection mode
+	{id="isBaleProcessor", default=false, valueType="BOOL", key="#isBaleProcessor"}, --If trailer should consume bales (e.g. TMR Mixer or Straw Blower)
+	{id="isCurtainTrailer", default=false, valueType="BOOL", key="#isCurtainTrailer"}, --Automatically detect the available load side (if the trailer has curtain sides)
+	{id="enableRearLoading", default=false, valueType="BOOL", key="#enableRearLoading"}, --Use the automatic rear loading trigger
+	{id="enableSideLoading", default=false, valueType="BOOL", key="#enableSideLoading"}, --Use the automatic side loading triggers
+	{id="extendPickupRange", default=false, valueType="BOOL", key="#extendPickupRange"}, --Increase the detection range of the pickup triggers
+	{id="noLoadingIfFolded", default=false, valueType="BOOL", key="#noLoadingIfFolded"}, --Prevent loading when folded
+	{id="noLoadingIfUnfolded", default=false, valueType="BOOL", key="#noLoadingIfUnfolded"}, --Prevent loading when unfolded
+	{id="noLoadingIfCovered", default=false, valueType="BOOL", key="#noLoadingIfCovered"}, --Prevent loading when covered
+	{id="noLoadingIfUncovered", default=false, valueType="BOOL", key="#noLoadingIfUncovered"}, --Prevent loading when uncovered
+	{id="rearUnloadingOnly", default=false, valueType="BOOL", key="#rearUnloadingOnly"}, --Use rear unloading zone only (not side zones)
+	{id="frontUnloadingOnly", default=false, valueType="BOOL", key="#frontUnloadingOnly"}, --Use front unloading zone only (not side zones)
+	{id="horizontalLoading", default=false, valueType="BOOL", key="#horizontalLoading"}, --Start with horizontal loading enabled (can be toggled if key is bound)
+	{id="disableAutoStrap", default=false, valueType="BOOL", key="#disableAutoStrap"}, --Disable the automatic application of tension belts
+	{id="disableHeightLimit", default=false, valueType="BOOL", key="#disableHeightLimit"}, --Disable the density based stacking height limit
+	{id="zonesOverlap", default=false, valueType="BOOL", key="#zonesOverlap"}, --Flag to identify when the loading areas overlap each other
+	{id="offsetRoot", default=nil, valueType="STRING", key="#offsetRoot"}, --Vehicle i3d node that area offsets are relative to
+	{id="minLogLength", default=nil, valueType="FLOAT", key="#minLogLength"}, --The minimum length for logs that will be autoloaded (default is global)
 }
 
 UniversalAutoload.LOADING_AREA_DEFAULTS = {
-	{id="offset", default="0 0 0", valueType="VECTOR_TRANS", key="#offset", description="Offset to the centre of the loading area"},
-	{id="offsetRoot", default=nil, valueType="STRING", key="#offsetRoot", description="Vehicle i3d node that this area offset is relative to"},
-	{id="width", default=0, valueType="FLOAT", key="#width", description="Width of the loading area"},
-	{id="length", default=0, valueType="FLOAT", key="#length", description="Length of the loading area"},
-	{id="height", default=0, valueType="FLOAT", key="#height", description="Height of the loading area"},
-	{id="baleHeight", default=nil, valueType="FLOAT", key="#baleHeight", description="Height of the loading area for BALES only"},
-	{id="widthAxis", default=nil, valueType="STRING", key="#widthAxis", description="Axis name to extend width of the loading area"},
-	{id="lengthAxis", default=nil, valueType="STRING", key="#lengthAxis", description="Axis name to extend length of the loading area"},
-	{id="heightAxis", default=nil, valueType="STRING", key="#heightAxis", description="Axis name to extend height of the loading area"},
-	{id="offsetFrontAxis", default=nil, valueType="STRING", key="#offsetFrontAxis", description="Axis name to adjust the front position of the loading area"},
-	{id="offsetRearAxis", default=nil, valueType="STRING", key="#offsetRearAxis", description="Axis name to adjust the rear position of the loading area"},
-	{id="reverseWidthAxis", default=false, valueType="BOOL", key="#reverseWidthAxis", description="Reverses direction of width extension if true"},
-	{id="reverseLengthAxis", default=false, valueType="BOOL", key="#reverseLengthAxis", description="Reverses direction of length extension if true"},
-	{id="reverseHeightAxis", default=false, valueType="BOOL", key="#reverseHeightAxis", description="Reverses direction of height extension if true"},
-	{id="noLoadingIfFolded", default=false, valueType="BOOL", key="#noLoadingIfFolded", description="Prevent loading when folded (for this area only)"},
-	{id="noLoadingIfUnfolded", default=false, valueType="BOOL", key="#noLoadingIfUnfolded", description="Prevent loading when unfolded (for this area only)"},
-	{id="noLoadingIfCovered", default=false, valueType="BOOL", key="#noLoadingIfCovered", description="Prevent loading when covered (for this area only)"},
-	{id="noLoadingIfUncovered", default=false, valueType="BOOL", key="#noLoadingIfUncovered", description="Prevent loading when uncovered (for this area only)"},
+	{id="offset", default="0 0 0", valueType="VECTOR_TRANS", key="#offset"}, --Offset to the centre of the loading area
+	{id="offsetRoot", default=nil, valueType="STRING", key="#offsetRoot"}, --Vehicle i3d node that this area offset is relative to
+	{id="width", default=0, valueType="FLOAT", key="#width"}, --Width of the loading area
+	{id="length", default=0, valueType="FLOAT", key="#length"}, --Length of the loading area
+	{id="height", default=0, valueType="FLOAT", key="#height"}, --Height of the loading area
+	{id="baleHeight", default=nil, valueType="FLOAT", key="#baleHeight"}, --Height of the loading area for BALES only
+	{id="widthAxis", default=nil, valueType="STRING", key="#widthAxis"}, --Axis name to extend width of the loading area
+	{id="lengthAxis", default=nil, valueType="STRING", key="#lengthAxis"}, --Axis name to extend length of the loading area
+	{id="heightAxis", default=nil, valueType="STRING", key="#heightAxis"}, --Axis name to extend height of the loading area
+	{id="offsetFrontAxis", default=nil, valueType="STRING", key="#offsetFrontAxis"}, --Axis name to adjust the front position of the loading area
+	{id="offsetRearAxis", default=nil, valueType="STRING", key="#offsetRearAxis"}, --Axis name to adjust the rear position of the loading area
+	{id="reverseWidthAxis", default=false, valueType="BOOL", key="#reverseWidthAxis"}, --Reverses direction of width extension if true
+	{id="reverseLengthAxis", default=false, valueType="BOOL", key="#reverseLengthAxis"}, --Reverses direction of length extension if true
+	{id="reverseHeightAxis", default=false, valueType="BOOL", key="#reverseHeightAxis"}, --Reverses direction of height extension if true
+	{id="noLoadingIfFolded", default=false, valueType="BOOL", key="#noLoadingIfFolded"}, --Prevent loading when folded (for this area only)
+	{id="noLoadingIfUnfolded", default=false, valueType="BOOL", key="#noLoadingIfUnfolded"}, --Prevent loading when unfolded (for this area only)
+	{id="noLoadingIfCovered", default=false, valueType="BOOL", key="#noLoadingIfCovered"}, --Prevent loading when covered (for this area only)
+	{id="noLoadingIfUncovered", default=false, valueType="BOOL", key="#noLoadingIfUncovered"}, --Prevent loading when uncovered (for this area only)
 }
 
 UniversalAutoload.CONFIG_DEFAULTS = {
-	{id="selectedConfigs", default="ALL", valueType="STRING", key="#selectedConfigs", description="Selected Configuration Names"},
-	{id="useConfigName", default=nil, valueType="STRING", key="#useConfigName", description="Specific configuration to be used for selected configs"},
+	{id="selectedConfigs", default="ALL", valueType="STRING", key="#selectedConfigs"}, --Selected Configuration Names
+	{id="useConfigName", default=nil, valueType="STRING", key="#useConfigName"}, --Specific configuration to be used for selected configs
 	{
 		key = ".loadingArea(?)",
 		name = "loadingArea",
@@ -163,7 +248,7 @@ UniversalAutoload.CONFIG_DEFAULTS = {
 }
 	
 UniversalAutoload.VEHICLE_DEFAULTS = {
-	{id="configFileName", default=nil, valueType="STRING", key="#configFileName", description="Vehicle config file xml full path - used to identify supported vehicles"},
+	{id="configFileName", default=nil, valueType="STRING", key="#configFileName"}, --Vehicle config file xml full path - used to identify supported vehicles
 	{
 		key = ".configuration(?)",
 		name = "spec",
@@ -171,41 +256,31 @@ UniversalAutoload.VEHICLE_DEFAULTS = {
 	},
 }
 
-UniversalAutoload.CONTAINER_DEFAULTS = {
-	{id="configFileName", default="UNKNOWN", valueType="STRING", key="#configFileName", description="Pallet Configuration Filename"},
-	{id="containerType", default="ANY", valueType="STRING", key="#containerType", description="The loading type category to group under in the menu)"},
-	{id="isBale", default=false, valueType="BOOL", key="#isBale", description="If the object is either a round bale or square bale"},
-	{id="flipYZ", default=false, valueType="BOOL", key="#flipYZ", description="Should always rotate 90 degrees to stack on end - e.g. for round bales"},
-	{id="neverStack", default=false, valueType="BOOL", key="#neverStack", description="Should never load another pallet on top of this one when loading"},
-	{id="neverRotate", default=false, valueType="BOOL", key="#neverRotate", description="Should never rotate object when loading"},
-	{id="alwaysRotate", default=false, valueType="BOOL", key="#alwaysRotate", description="Should always rotate to face outwards for manual unloading"},
-	{id="frontOffset", default=0, valueType="FLOAT", key="#frontOffset", description="Offset from the front of trailer (only when loaded first)"},
-}
-
 UniversalAutoload.SAVEGAME_STATE_DEFAULTS = {
-	{id="tipside", default="none", valueType="STRING", key="#tipside", description="Last used tip side"},
-	{id="loadside", default="both", valueType="STRING", key="#loadside", description="Last used load side"},
-	{id="loadWidth", default=0, valueType="FLOAT", key="#loadWidth", description="Last used load width"},
-	{id="loadLength", default=0, valueType="FLOAT", key="#loadLength", description="Last used load length"},
-	{id="loadHeight", default=0, valueType="FLOAT", key="#loadHeight", description="Last used load height"},
-	{id="actualWidth", default=0, valueType="FLOAT", key="#actualWidth", description="Last used expected load width"},
-	{id="actualLength", default=0, valueType="FLOAT", key="#actualLength", description="Last used complete load length"},
-	{id="layerCount", default=0, valueType="INT", key="#layerCount", description="Number of layers that are currently loaded"},
-	{id="layerHeight", default=0, valueType="FLOAT", key="#layerHeight", description="Total height of the currently loaded layers"},
-	{id="nextLayerHeight", default=0, valueType="FLOAT", key="#nextLayerHeight", description="Height for the next layer (highest point in previous layer)"},
-	{id="loadAreaIndex", default=1, valueType="INT", key="#loadAreaIndex", description="Last used load area"},
-	{id="materialIndex", default=1, valueType="INT", key="#materialIndex", description="Last used material type"},
-	{id="containerIndex", default=1, valueType="INT", key="#containerIndex", description="Last used container type"},
-	{id="loadingFilter", default=false, valueType="BOOL", key="#loadingFilter", description="TRUE=Load full pallets only; FALSE=Load any pallets"},
-	{id="useHorizontalLoading", default=false, valueType="BOOL", key="#useHorizontalLoading", description="Last used horizontal loading state"},
-	{id="baleCollectionMode", default=false, valueType="BOOL", key="#baleCollectionMode", description="Enable manual toggling of the automatic bale collection mode"},
+	{id="tipside", default="none", valueType="STRING", key="#tipside"}, --Last used tip side
+	{id="loadside", default="both", valueType="STRING", key="#loadside"}, --Last used load side
+	{id="loadWidth", default=0, valueType="FLOAT", key="#loadWidth"}, --Last used load width
+	{id="loadLength", default=0, valueType="FLOAT", key="#loadLength"}, --Last used load length
+	{id="loadHeight", default=0, valueType="FLOAT", key="#loadHeight"}, --Last used load height
+	{id="actualWidth", default=0, valueType="FLOAT", key="#actualWidth"}, --Last used expected load width
+	{id="actualLength", default=0, valueType="FLOAT", key="#actualLength"}, --Last used complete load length
+	{id="layerCount", default=0, valueType="INT", key="#layerCount"}, --Number of layers that are currently loaded
+	{id="layerHeight", default=0, valueType="FLOAT", key="#layerHeight"}, --Total height of the currently loaded layers
+	{id="nextLayerHeight", default=0, valueType="FLOAT", key="#nextLayerHeight"}, --Height for the next layer (highest point in previous layer)
+	{id="lastLoadLength", default=0, valueType="FLOAT", key="#lastLoadLength"}, --Length of the last loaded object
+	{id="loadAreaIndex", default=1, valueType="INT", key="#loadAreaIndex"}, --Last used load area
+	{id="materialIndex", default=1, valueType="INT", key="#materialIndex"}, --Last used material type
+	{id="containerIndex", default=1, valueType="INT", key="#containerIndex"}, --Last used container type
+	{id="loadingFilter", default=false, valueType="BOOL", key="#loadingFilter"}, --TRUE=Load full pallets only; FALSE=Load any pallets
+	{id="useHorizontalLoading", default=false, valueType="BOOL", key="#useHorizontalLoading"}, --Last used horizontal loading state
+	{id="autoCollectionMode", default=false, valueType="BOOL", key="#autoCollectionMode"}, --Enable manual toggling of the automatic collection mode
 }
 
 function iterateDefaultsTable(tbl, parentKey, currentKey, currentValue, action)
     parentKey = parentKey or ""
     currentKey = currentKey or ""
     action = action or function(k, v, parentKey, currentKey, currentValue, finalValue) 
-        if debugSchema then print("  " .. currentKey .. ": " .. tostring(finalValue)) end
+        UniversalAutoload.debugPrint("  " .. currentKey .. ": " .. tostring(finalValue), debugSchema)
     end
 
     for k, v in pairs(tbl) do
@@ -225,17 +300,112 @@ function iterateDefaultsTable(tbl, parentKey, currentKey, currentValue, action)
         end
     end
 end
-print("GLOBAL_DEFAULTS") iterateDefaultsTable(UniversalAutoload.GLOBAL_DEFAULTS)
-print("VEHICLE_DEFAULTS") iterateDefaultsTable(UniversalAutoload.VEHICLE_DEFAULTS)
-print("CONTAINER_DEFAULTS") iterateDefaultsTable(UniversalAutoload.CONTAINER_DEFAULTS)
-print("SAVEGAME_STATE_DEFAULTS") iterateDefaultsTable(UniversalAutoload.SAVEGAME_STATE_DEFAULTS)
+UniversalAutoload.debugPrint("LOCAL_DEFAULTS") iterateDefaultsTable(UniversalAutoload.LOCAL_DEFAULTS)
+UniversalAutoload.debugPrint("GLOBAL_DEFAULTS") iterateDefaultsTable(UniversalAutoload.GLOBAL_DEFAULTS)
+UniversalAutoload.debugPrint("VEHICLE_DEFAULTS") iterateDefaultsTable(UniversalAutoload.VEHICLE_DEFAULTS)
+UniversalAutoload.debugPrint("SAVEGAME_STATE_DEFAULTS") iterateDefaultsTable(UniversalAutoload.SAVEGAME_STATE_DEFAULTS)
+
+--
+function UniversalAutoload:printHelpText()
+	local spec = self.spec_universalAutoload
+	local textExists = false
+	if #g_currentMission.hud.inputHelp.extraHelpTexts > 0 then
+		for _, text in ipairs(g_currentMission.hud.inputHelp.extraHelpTexts) do
+			if text == self:getFullName() then
+				textExists = true
+			end
+		end
+	end
+	if not textExists then
+		g_currentMission:addExtraPrintText(self:getFullName())
+	end
+end
+
+-- HOOK PLAYER ON FOOT UPDATE OBJECTS/TRIGGERS
+UniversalAutoload.lastClosestVehicle = nil
+function UniversalAutoload:OverwrittenUpdateObjects(superFunc, ...)
+
+	superFunc(self, ...)
+
+	if g_localPlayer and g_localPlayer.isControlled and not g_gui:getIsGuiVisible() then
+	
+		-- g_currentMission:addExtraPrintText("Player Is Controlled")
+		local player = g_localPlayer
+		local playerId = player.userId
+	
+		local closestVehicle = nil
+		local closestVehicleDistance = math.huge
+		for vehicle, _ in pairs(UniversalAutoload.VEHICLES) do
+			if vehicle ~= nil then
+				local SPEC = vehicle.spec_universalAutoload
+				if SPEC.playerInTrigger~=nil and SPEC.playerInTrigger[playerId] == true and
+				g_currentMission.nodeToObject[vehicle.rootNode]~=nil then
+					local distance = calcDistanceFrom(player.rootNode, vehicle.rootNode)
+					if distance < closestVehicleDistance then
+						closestVehicle = vehicle
+						closestVehicleDistance = distance
+					end
+				end
+			end
+		end
+		
+		local lastVehicle = UniversalAutoload.lastClosestVehicle
+		if lastVehicle ~= closestVehicle then
+			if lastVehicle ~= nil then
+				-- print("Move away from " .. lastVehicle:getFullName())
+			end
+			if closestVehicle ~= nil then
+				-- print("Move close to " .. closestVehicle:getFullName())
+				UniversalAutoload.lastClosestVehicle = closestVehicle
+			elseif lastVehicle ~= nil then
+				-- print("No closest vehicle")
+				UniversalAutoload.lastClosestVehicle = nil
+			end
+		end
+	
+		if UniversalAutoload.lastClosestVehicle ~= nil then
+			UniversalAutoload.printHelpText(UniversalAutoload.lastClosestVehicle)
+		end
+	else
+		if UniversalAutoload.lastClosestVehicle ~= nil then
+			-- print("Not on foot")
+			local lastVehicle = UniversalAutoload.lastClosestVehicle
+			UniversalAutoload.lastClosestVehicle = nil
+		end
+	end
+end
+ActivatableObjectsSystem.updateObjects = Utils.overwrittenFunction(ActivatableObjectsSystem.updateObjects, UniversalAutoload.OverwrittenUpdateObjects)
+
+function UniversalAutoloadManager:update(dt)
+	
+	if g_currentMission:getIsServer() then
+		-- local activeVehicles = {}
+		for vehicle, _ in pairs(UniversalAutoload.VEHICLES) do
+			local spec = vehicle and vehicle.spec_universalAutoload
+			local doActivateExtra = spec and spec.autoCollectionMode or vehicle == UniversalAutoload.lastClosestVehicle
+			if doActivateExtra then
+				UniversalAutoload.doUpdate(vehicle, dt)
+				UniversalAutoload.onDraw(vehicle)
+				-- table.insert(activeVehicles, vehicle)
+			-- elseif vehicle:getIsActiveForInput(true, true) then
+				-- table.insert(activeVehicles, vehicle)
+			end
+		end
+		-- if UniversalAutoload.showDebug and next(activeVehicles) ~= nil then
+			-- renderText(0.21, 0.925, 0.015, "UAL Active Vehicles:")
+			-- for i, vehicle in ipairs(activeVehicles) do
+				-- renderText(0.21, 0.92 - (i * 0.015), 0.012, tostring(vehicle:getFullName()))
+			-- end
+		-- end
+	end
+end
 
 function UniversalAutoloadManager.openUserSettingsXMLFile(xmlFilename)
 	
 	local xmlFilename = xmlFilename or Utils.getFilename(UniversalAutoload.userSettingsFile, getUserProfileAppPath())
 	local xmlFile = XMLFile.loadIfExists("settings", xmlFilename, UniversalAutoload.xmlSchema)
 	if not xmlFile then
-		print("Creating NEW settings file " .. xmlFilename)
+		UniversalAutoload.debugPrint("Creating NEW settings file " .. xmlFilename)
 		xmlFile = XMLFile.create("settings", xmlFilename, "universalAutoload", UniversalAutoload.xmlSchema)
 	end
 	
@@ -245,7 +415,7 @@ end
 function UniversalAutoloadManager.getVehicleConfigFromSettingsXML(configKey, xmlFile)
 	
 	if not configKey then
-		print("configuration key required for getVehicleConfigFromSettingsXML")
+		UniversalAutoload.debugPrint("configuration key required for getVehicleConfigFromSettingsXML")
 		return
 	end
 
@@ -261,13 +431,13 @@ function UniversalAutoloadManager.getVehicleConfigFromSettingsXML(configKey, xml
 				else
 					currentValue[v.id] = xmlFile:getValue(currentKey, v.default)
 				end
-				-- print("  << " .. tostring(currentKey) .. " = " .. tostring(currentValue[v.id]))
+				-- UniversalAutoload.debugPrint("  << " .. tostring(currentKey) .. " = " .. tostring(currentValue[v.id]))
 			end
 		end
 
 		local config = {}
-		local selectedConfigs = xmlFile:getValue(configKey.."#selectedConfigs", "ALL")
-		local useConfigName = xmlFile:getValue(configKey.."#useConfigName", nil)
+		config.selectedConfigs = xmlFile:getValue(configKey.."#selectedConfigs", UniversalAutoload.ALL)
+		config.useConfigName = xmlFile:getValue(configKey.."#useConfigName", nil)
 		iterateDefaultsTable(UniversalAutoload.OPTIONS_DEFAULTS, "", configKey..".options", config, readSettingFromFile)
 
 		local j = 1
@@ -297,7 +467,7 @@ function UniversalAutoloadManager.getVehicleConfigFromSettingsXML(configKey, xml
 		
 		return config
 	else
-		print("ERROR: no settings file " .. tostring(xmlFile))
+		UniversalAutoload.debugPrint("ERROR: no settings file " .. tostring(xmlFile))
 	end
 end
 --
@@ -348,9 +518,11 @@ function UniversalAutoloadManager.getConfigSettingsPosition(targetFileName, targ
 				break
 			end
 			local configFileName = xmlFile:getValue(vehicleKey .. "#configFileName", "MISSING")
-			if tostring(configFileName):gsub(g_modsDirectory, ""):lower() == tostring(targetFileName):gsub(g_modsDirectory, ""):lower() then
+			configFileName = UniversalAutoloadManager.cleanConfigFileName(configFileName)
+			targetFileName = UniversalAutoloadManager.cleanConfigFileName(targetFileName)
+			if tostring(configFileName):lower() == tostring(targetFileName):lower() then
 				
-				print("targetConfigId: " .. tostring(targetConfigId))
+				UniversalAutoload.debugPrint("targetConfigId: " .. tostring(targetConfigId))
 				local j = 0
 				while true do
 					local configKey = string.format(UniversalAutoload.vehicleConfigKey, i, j)
@@ -358,12 +530,16 @@ function UniversalAutoloadManager.getConfigSettingsPosition(targetFileName, targ
 						break
 					end
 					local selectedConfigs = xmlFile:getValue(configKey .. "#selectedConfigs", "MISSING")
-					print("selectedConfigs: " .. selectedConfigs)
-					if selectedConfigs == UniversalAutoload.ALL then
-						print("FOUND 'ALL' CONFIG AT #" .. j+1)
+					UniversalAutoload.debugPrint("selectedConfigs: " .. selectedConfigs)
+					local isMatchAny = selectedConfigs == UniversalAutoload.ALL
+					-- local hasPipeChar = tostring(targetConfigId):find("|")
+					-- local isMatchFull = hasPipeChar and targetConfigId == selectedConfigs
+					-- local isMatchPart = not hasPipeChar and tostring(targetConfigId):find(selectedConfigs)
+					if isMatchAny then
+						UniversalAutoload.debugPrint("FOUND 'ALL' CONFIG AT #" .. j+1)
 						break
 					elseif selectedConfigs:find(tostring(targetConfigId)) then
-						print("FOUND SELECTED CONFIG AT #" .. j+1)
+						UniversalAutoload.debugPrint("FOUND SELECTED CONFIG AT #" .. j+1)
 						break
 					end
 					j = j + 1
@@ -382,36 +558,58 @@ function UniversalAutoloadManager.getConfigSettingsPosition(targetFileName, targ
 	end
 end
 --
-function UniversalAutoloadManager.getVehicleConfigIndexesForSaving(vehicle, configId, xmlFile)
-	local spec = vehicle.spec_universalAutoload
+function UniversalAutoloadManager.getVehicleConfigIndexesForSaving(exportSpec, xmlFile)
 
-	local configFileName = vehicle.configFileName --:gsub(g_modsDirectory, "")
+	local configFileName = exportSpec.configFileName
+	local selectedConfigs = exportSpec.selectedConfigs
+	local configId = selectedConfigs or exportSpec.configId
+	
 	local index, subIndex, size = UniversalAutoloadManager.getConfigSettingsPosition(configFileName, configId, xmlFile)
 
 	if index then
+		local key = string.format(UniversalAutoload.vehicleKey, index)
 		local configKey = string.format(UniversalAutoload.vehicleConfigKey, index, subIndex)
-		configId = xmlFile:getValue(configKey .. "#selectedConfigs") or configId
-		print("UPDATE CONFIG #" .. index + 1 .. " == " .. configId .. " (#" ..subIndex + 1 .. ")")
+		
+		local fileSelectedConfigs = xmlFile:getValue(configKey .. "#selectedConfigs")
+		if fileSelectedConfigs == UniversalAutoload.ALL and exportSpec.useConfigName then
+			UniversalAutoload.debugPrint("SETTINGS FILE using: " .. fileSelectedConfigs)
+			UniversalAutoload.debugPrint(" configId: " .. configId)
+			UniversalAutoload.debugPrint(" useConfigName: " .. exportSpec.useConfigName)
+		end
+
+		UniversalAutoload.debugPrint("UPDATE CONFIG #" .. index + 1 .. " == " .. configId .. " (#" ..subIndex + 1 .. ")")
+		while true do
+			local loadAreaKey = string.format("%s.loadingArea(%d)", configKey, 0)
+			if not xmlFile:hasProperty(loadAreaKey) then
+				break
+			end
+			xmlFile:removeProperty(loadAreaKey)
+		end
 	else
 		index = size or 0
 		subIndex = 0
-		print("INSERT CONFIG INDEX #" .. index)
+		UniversalAutoload.debugPrint("INSERT CONFIG INDEX #" .. index)
 		local key = string.format(UniversalAutoload.vehicleKey, index)
 		xmlFile:setValue(key.."#configFileName", configFileName)
+	end
+	
+	if exportSpec.useConfigName then
+		local key = string.format(UniversalAutoload.vehicleConfigKey, index, subIndex)
+		xmlFile:setValue(key.."#useConfigName", exportSpec.useConfigName)
+	end
+
+	UniversalAutoload.debugPrint("USING CONFIG SUB-INDEX: #" .. subIndex .. " (" .. configId .. ")")
+	local key = string.format(UniversalAutoload.vehicleConfigKey, index, subIndex)
+	xmlFile:setValue(key.."#selectedConfigs", tostring(configId))
+	if exportSpec.useConfigName then
+		UniversalAutoload.debugPrint("useConfigName: " .. tostring(exportSpec.useConfigName))
+		xmlFile:setValue(key.."#useConfigName", tostring(exportSpec.useConfigName))
 	end
 	
 	if not UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName] then
 		UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName] = {}
 	end
-
 	if not UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName][configId] then
-		print("USING CONFIG SUB-INDEX: #" .. subIndex .. " (" .. configId .. ")")
-		local key = string.format(UniversalAutoload.vehicleConfigKey, index, subIndex)
-		xmlFile:setValue(key.."#selectedConfigs", tostring(configId))
-		if spec.useConfigName then
-			print("useConfigName: " .. tostring(spec.useConfigName))
-			xmlFile:setValue(key.."#useConfigName", tostring(spec.useConfigName))
-		end
 		UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName][configId] = {}
 	end
 	
@@ -421,45 +619,35 @@ end
 function UniversalAutoloadManager.getVehicleConfigNames(vehicle)
 	local spec = vehicle and vehicle.spec_universalAutoload
 	if not spec or not vehicle.configFileName then
-		print("Invalid vehicle supplied: " .. tostring(vehicle))
+		UniversalAutoload.debugPrint("Invalid vehicle supplied: " .. tostring(vehicle))
 		return
 	end
-
-	local configFileName, configId
 	
-	if spec.selectedConfigs and spec.configFileName then
-		print("ALREADY SET WITH:")
-		configId = spec.selectedConfigs
-		configFileName = spec.configFileName
+	if not spec.configFileName then
+		UniversalAutoload.debugPrint("warning: config file name was missing..")
+	end
+	spec.configFileName = UniversalAutoloadManager.cleanConfigFileName(vehicle.configFileName)
+	
+	if not spec.selectedConfigs then
+		UniversalAutoload.debugPrint("FIND CORRECT SETTINGS FILE POSITION:")
+		spec.selectedConfigs = UniversalAutoloadManager.getValidConfigurationId(vehicle)
 	end
 	
-	if not configId or not configFileName then
-		print("FIND CORRECT SETTINGS FILE POSITION:")
-		configFileName = vehicle.configFileName --:gsub(g_modsDirectory, "")
-		configId = UniversalAutoloadManager.getValidConfigurationId(vehicle)
-	end
-	
-	print("useConfigName = " .. tostring(spec.useConfigName))
-	print("selectedConfig = " .. tostring(configId))
-	
-	return configFileName, configId
+	return spec.configFileName, spec.selectedConfigs
 end
 --
-function UniversalAutoloadManager.saveVehicleConfigToSettingsXML(vehicle, xmlFile)
-	local spec = vehicle and vehicle.spec_universalAutoload
-	if not spec or not vehicle.configFileName then
-		print("Invalid vehicle supplied: " .. tostring(vehicle))
+function UniversalAutoloadManager.saveVehicleConfigToSettingsXML(exportSpec)
+	if not exportSpec or not exportSpec.configFileName or not exportSpec.selectedConfigs then
+		UniversalAutoload.debugPrint("Invalid vehicle spec supplied: " .. tostring(exportSpec.configFileName))
 		return
 	end
 
-	local shouldCloseFile = not xmlFile and true
-	local xmlFile = xmlFile or UniversalAutoloadManager.openUserSettingsXMLFile()
+	local xmlFile = UniversalAutoloadManager.openUserSettingsXMLFile()
 	
 	if xmlFile then
 
 		local function writeSettingToFile(k, v, parentKey, currentKey, currentValue, finalValue)
-			if currentKey and finalValue ~= nil and finalValue ~= v.default then
-				print("  >> " .. tostring(currentKey) .. " = " .. tostring(finalValue) .. " - " .. tostring(v.default))
+			if currentKey and finalValue ~= nil then
 				if v.valueType == "VECTOR_TRANS" then
 					if type(finalValue) == "string" then
 						local vector = {}
@@ -471,104 +659,190 @@ function UniversalAutoloadManager.saveVehicleConfigToSettingsXML(vehicle, xmlFil
 						error("Unexpected type for VECTOR_TRANS: " .. tostring(finalValue))
 					end
 				end
-				if type(finalValue) == "table" and v.valueType == "VECTOR_TRANS" then
-					xmlFile:setValue(parentKey..currentKey, unpack(finalValue))
+				
+				if finalValue == v.default then
+					xmlFile:removeProperty(parentKey..currentKey)
 				else
-					xmlFile:setValue(parentKey..currentKey, finalValue)
-				end
-			end
-		end
-
-		if spec.loadArea and #spec.loadArea > 0 then
-		
-			local configFileName, configId = UniversalAutoloadManager.getVehicleConfigNames(vehicle)
-			
-			if configFileName and configId and UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName] then
-				local oldConfig = UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName][configId]
-				if oldConfig and oldConfig.loadArea and #oldConfig.loadArea > 0 then
-					print("UPDATE CONFIG IN MEMORY")
-					local newConfig = deepCopy(spec)
-					for k, v in pairs(oldConfig) do
-						oldConfig[k] = newConfig[k]
+					UniversalAutoload.debugPrint("  >> " .. tostring(currentKey) .. " = " .. tostring(finalValue))
+					if type(finalValue) == "table" and v.valueType == "VECTOR_TRANS" then
+						xmlFile:setValue(parentKey..currentKey, unpack(finalValue))
+					else
+						xmlFile:setValue(parentKey..currentKey, finalValue)
 					end
 				end
 			end
-		
-			print("SAVE TO SETTINGS FILE")
-			local index, subIndex = UniversalAutoloadManager.getVehicleConfigIndexesForSaving(vehicle, configId, xmlFile)
-			
-			print("options:")
-			local configKey = string.format(UniversalAutoload.vehicleConfigKey, index, subIndex)
-			iterateDefaultsTable(UniversalAutoload.OPTIONS_DEFAULTS, configKey, ".options", spec, writeSettingToFile)
+		end
 
-			print("loadingAreas:")
-			for j, loadArea in pairs(spec.loadArea or {}) do
+		if exportSpec.loadArea and #exportSpec.loadArea > 0 then
+
+			UniversalAutoload.debugPrint("SAVE TO SETTINGS FILE")
+			UniversalAutoload.debugPrint("configFileName: " .. tostring(exportSpec.configFileName))
+			UniversalAutoload.debugPrint("selectedConfigs: " .. tostring(exportSpec.selectedConfigs))
+			UniversalAutoload.debugPrint("useConfigName: " .. tostring(exportSpec.useConfigName))
+			UniversalAutoload.debugPrint("configId: " .. tostring(exportSpec.configId))
+			local index, subIndex = UniversalAutoloadManager.getVehicleConfigIndexesForSaving(exportSpec, xmlFile)
+
+			UniversalAutoload.debugPrint("options:")
+			local configKey = string.format(UniversalAutoload.vehicleConfigKey, index, subIndex)
+			iterateDefaultsTable(UniversalAutoload.OPTIONS_DEFAULTS, configKey, ".options", exportSpec, writeSettingToFile)
+			UniversalAutoload.debugPrint("loadingAreas:")
+			for n = 1, UniversalAutoload.MAX_AREAS do
+				local loadAreaKey = string.format(".loadingArea(%d)", n-1)
+				xmlFile:removeProperty(configKey..loadAreaKey)
+			end
+			for j, loadArea in pairs(exportSpec.loadArea or {}) do
 				local loadAreaKey = string.format(".loadingArea(%d)", j-1)
 				iterateDefaultsTable(UniversalAutoload.LOADING_AREA_DEFAULTS, configKey, loadAreaKey, loadArea, writeSettingToFile)
 			end
-
 			xmlFile:save()
 			
+			UniversalAutoload.debugPrint("UPDATE CONFIG IN MEMORY - " .. exportSpec.selectedConfigs)
+			local configFileName = exportSpec.configFileName
+			local selectedConfigs = exportSpec.selectedConfigs
+			local useConfigName = exportSpec.useConfigName
+			local CONFIGS = UniversalAutoload.VEHICLE_CONFIGURATIONS
+			CONFIGS[configFileName] = CONFIGS[configFileName] or {}
+			CONFIGS[configFileName][selectedConfigs] = CONFIGS[configFileName][selectedConfigs] or {}
+			local config = CONFIGS[configFileName][selectedConfigs]
+			for k, v in pairs(UniversalAutoload.OPTIONS_DEFAULTS) do
+				local id = v.id
+				config[id] = exportSpec[id] or v.default
+				UniversalAutoload.debugPrint(" " .. tostring(id) .. " = " .. tostring(config[id]))
+			end
+			config.loadArea = {}
+			for i, loadArea in (exportSpec.loadArea) do
+				config.loadArea[i] = deepCopy(exportSpec.loadArea[i])
+				UniversalAutoload.debugPrint(" [" .. i .. "]")
+				if UniversalAutoload.showDebug then
+					DebugUtil.printTableRecursively(config.loadArea[i] or {}, "--", 0, 1)
+				end
+			end
+			config.configFileName = configFileName
+			config.selectedConfigs = selectedConfigs
+			config.useConfigName = useConfigName
+			
 		else
-			print("DID NOT SAVE SETTINGS - loading area was missing")
+			UniversalAutoload.debugPrint("DID NOT SAVE SETTINGS - loading area was missing")
 		end
 		
-		if shouldCloseFile then
-			xmlFile:delete()
-		end
+		xmlFile:delete()
 	end
 end
 
-function UniversalAutoloadManager.ImportLocalConfigurations(userSettingsFile, overwriteExisting)
-	print("UAL - IMPORT CONFIGS")
+function UniversalAutoloadManager.importLocalConfigurations(forceOverwrite)
+	-- UniversalAutoload.debugPrint("UAL - IMPORT CONFIGS")
+	local forceOverwrite = forceOverwrite or false
+	local userSettingsFile = Utils.getFilename(UniversalAutoload.userSettingsFile, getUserProfileAppPath())
+	local defaultSettingsFile = Utils.getFilename("xml/UniversalAutoloadDefaults.xml", UniversalAutoload.path)
 
-	if not fileExists(userSettingsFile) then
-		print("CREATING settings file")
-		-- local defaultSettingsFile = Utils.getFilename("config/UniversalAutoload.xml", UniversalAutoload.path)
-		-- copyFile(defaultSettingsFile, userSettingsFile, false)
+	if not fileExists(userSettingsFile) or forceOverwrite then
+		UniversalAutoload.debugPrint("CREATING default settings file")
+		copyFile(defaultSettingsFile, userSettingsFile, forceOverwrite)
 	end
 
-	UniversalAutoloadManager.ImportGlobalSettings(userSettingsFile, overwriteExisting)
-	UniversalAutoloadManager.ImportVehicleConfigurations(userSettingsFile, overwriteExisting)
+	UniversalAutoloadManager.importGlobalSettings(userSettingsFile)
+	UniversalAutoloadManager.importVehicleConfigurations(userSettingsFile)
+	UniversalAutoloadManager.importVehicleConfigurations(defaultSettingsFile)
 	
 end
+
+function UniversalAutoloadManager.consoleResetConfigurations()
+	-- UniversalAutoload.debugPrint("UAL - RESET CONFIGS")
+	
+	local userSettingsFile = Utils.getFilename(UniversalAutoload.userSettingsFile, getUserProfileAppPath())
+	local defaultSettingsFile = Utils.getFilename("xml/UniversalAutoloadDefaults.xml", UniversalAutoload.path)
+
+	UniversalAutoload.debugPrint("CREATING backup of current settings file")
+	copyFile(userSettingsFile, userSettingsFile.."_"..getDate("%Y-%m-%d_%H-%M-%S")..".old", true)
+	copyFile(defaultSettingsFile, userSettingsFile, true)
+	
+	UniversalAutoload.VEHICLE_CONFIGURATIONS = {}
+	UniversalAutoloadManager.importVehicleConfigurations(userSettingsFile)
+	
+	print("UNIVERSAL AUTOLOAD: Configurations were RESET to defaults")
+	print("New configurations will be used for new vehicles, please restart game to apply to all vehicles")
+end
 --
-function UniversalAutoloadManager.ImportGlobalSettings(xmlFilename, overwriteExisting)
-	print("UAL - IMPORT GLOBAL SETTINGS")
+function UniversalAutoloadManager.exportGlobalSettings(noEventSend)
+	-- UniversalAutoload.debugPrint("UAL - EXPORT GLOBAL SETTINGS")
 
-	if g_currentMission:getIsServer() then
-
-		local xmlFile = UniversalAutoloadManager.openUserSettingsXMLFile(xmlFilename)
+	local userSettingsFile = Utils.getFilename(UniversalAutoload.userSettingsFile, getUserProfileAppPath())
+	local xmlFile = UniversalAutoloadManager.openUserSettingsXMLFile(userSettingsFile)
+	
+	if xmlFile ~= 0 and xmlFile ~= nil then
+	
+		UniversalAutoload.debugPrint("SAVING Universal Autoload settings")
+		local xmlWasChanged = false
+		local adminSettingWasChanged = false
 		
-		if xmlFile ~= 0 and xmlFile ~= nil then
-		
-			if overwriteExisting or not UniversalAutoload.globalSettingsLoaded then
-				print("IMPORT Universal Autoload global settings")
-				UniversalAutoload.globalSettingsLoaded = true
-
-				iterateDefaultsTable(UniversalAutoload.GLOBAL_DEFAULTS, UniversalAutoload.globalKey, "", UniversalAutoload,
-				function(k, v, parentKey, currentKey, currentValue, finalValue)
-					UniversalAutoload[v.id] = xmlFile:getValue(parentKey..currentKey, v.default)
-					print("  >> " .. tostring(v.id) .. ": " .. tostring(v.default))
-				end)
+		local function updateValues(k, v, parentKey, currentKey, currentValue, finalValue)
+			local newValue = UniversalAutoload[v.id]
+			local oldValue = xmlFile:getValue(parentKey..currentKey, v.default)
+			if oldValue ~= newValue and (v.valueType ~= "FLOAT" or math.abs(oldValue - newValue) > 1e-5) then
+				UniversalAutoload.debugPrint("  << " .. tostring(v.id) .. ": " .. tostring(newValue))
+				if newValue == v.default then
+					xmlFile:removeProperty(parentKey..currentKey)
+				else
+					xmlFile:setValue(parentKey..currentKey, newValue)
+				end
+				xmlWasChanged = true
 			end
-
-			xmlFile:delete()
-		else
-			print("Universal Autoload - could not open global settings file")
 		end
+		
+		if g_currentMission:getIsServer() or g_currentMission.isMasterUser then
+			iterateDefaultsTable(UniversalAutoload.GLOBAL_DEFAULTS, UniversalAutoload.globalKey, "", UniversalAutoload, updateValues)
+			adminSettingWasChanged = xmlWasChanged
+		end
+		iterateDefaultsTable(UniversalAutoload.LOCAL_DEFAULTS, UniversalAutoload.globalKey, "", UniversalAutoload, updateValues)
+		
+		if xmlWasChanged then
+			if g_currentMission:getIsServer() then
+				UniversalAutoload.debugPrint("SAVE UAL SETTINGS..")
+				xmlFile:save()
+			end
+			if adminSettingWasChanged and g_currentMission.missionDynamicInfo.isMultiplayer then
+				UniversalAutoload.debugPrint("SEND GLOBAL UAL SETTINGS..")
+				UniversalAutoload.UpdateGlobalSettingsEvent.sendEvent(noEventSend)
+			end
+		end
+
+		xmlFile:delete()
 	else
-		print("Universal Autoload - global settings are only loaded for the server")
+		print("Universal Autoload - could not open global settings file")
 	end
 end
 --
-function UniversalAutoloadManager.ImportVehicleConfigurations(xmlFilename, overwriteExisting)
-	print("UAL - IMPORT VEHICLE CONFIGS")
+function UniversalAutoloadManager.importGlobalSettings(xmlFilename)
+	-- UniversalAutoload.debugPrint("UAL - IMPORT GLOBAL SETTINGS")
 
 	local xmlFile = UniversalAutoloadManager.openUserSettingsXMLFile(xmlFilename)
 	
+	if xmlFile ~= 0 and xmlFile ~= nil then
+		print("IMPORT Universal Autoload global settings")
+		
+		local function setValues(k, v, parentKey, currentKey, currentValue, finalValue)
+			UniversalAutoload[v.id] = xmlFile:getValue(parentKey..currentKey, v.default)
+			print("  >> " .. tostring(v.id) .. ": " .. tostring(UniversalAutoload[v.id]))
+		end
+
+		iterateDefaultsTable(UniversalAutoload.LOCAL_DEFAULTS, UniversalAutoload.globalKey, "", UniversalAutoload, setValues)
+		iterateDefaultsTable(UniversalAutoload.GLOBAL_DEFAULTS, UniversalAutoload.globalKey, "", UniversalAutoload, setValues)
+
+		xmlFile:delete()
+	else
+		print("Universal Autoload - could not open global settings file")
+	end
+end
+--
+function UniversalAutoloadManager.importVehicleConfigurations(xmlFilename)
+	UniversalAutoload.debugPrint("UAL - IMPORT VEHICLE CONFIGS " .. xmlFilename)
+	-- TODO: could clean incompatible settings here..
+
+	UniversalAutoload.VEHICLE_CONFIGURATIONS = UniversalAutoload.VEHICLE_CONFIGURATIONS or {}
+	local xmlFile = UniversalAutoloadManager.openUserSettingsXMLFile(xmlFilename)
+	
 	if xmlFile then
-		print("IMPORT vehicle configurations")
+		local xmlWasCleaned = false
 		local i = 0
 		while true do
 			local vehicleKey = string.format(UniversalAutoload.vehicleKey, i)
@@ -576,10 +850,18 @@ function UniversalAutoloadManager.ImportVehicleConfigurations(xmlFilename, overw
 				break
 			end
 			
-			local configFileName = xmlFile:getValue(vehicleKey .. "#configFileName") --:gsub(g_modsDirectory, "")
+			local configFileName = xmlFile:getValue(vehicleKey .. "#configFileName")
+			configFileName, removedPart = UniversalAutoloadManager.cleanConfigFileName(configFileName)
+			if removedPart ~= nil then
+				UniversalAutoload.debugPrint("CLEANING CONFIG FILE NAME: " .. configFileName .. removedPart)
+				xmlFile:setValue(vehicleKey .. "#configFileName", configFileName)
+				UniversalAutoload.debugPrint("... replaced with: " .. configFileName)
+				xmlWasCleaned = true
+			end
+			
 			if UniversalAutoloadManager.getValidXmlName(configFileName) then
-				print(" [" .. i + 1 .. "] " .. configFileName)
-				
+				UniversalAutoload.debugPrint(" [" .. i + 1 .. "] " .. configFileName)
+
 				local j = 0
 				while true do
 					local configKey = vehicleKey .. string.format(".configuration(%d)", j)
@@ -589,11 +871,11 @@ function UniversalAutoloadManager.ImportVehicleConfigurations(xmlFilename, overw
 					
 					local configuration = UniversalAutoloadManager.getVehicleConfigFromSettingsXML(configKey, xmlFile)
 					if not configuration then
-						print("could not load UAL configuration for: " .. configKey)
+						UniversalAutoload.debugPrint("could not load UAL configuration for: " .. configKey)
 					end
 
 					if not UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName] then
-						print("ADDING SHOP ITEM " .. configFileName)
+						-- UniversalAutoload.debugPrint("ADDING SHOP ITEM " .. configFileName)
 						UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName] = {}
 						table.addElement(g_storeManager:getPackItems("UNIVERSALAUTOLOAD"), configFileName)
 					end
@@ -601,28 +883,37 @@ function UniversalAutoloadManager.ImportVehicleConfigurations(xmlFilename, overw
 					local configGroup = UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName]
 					local selectedConfigs = xmlFile:getValue(configKey.."#selectedConfigs", UniversalAutoload.ALL)
 					local useConfigName = xmlFile:getValue(configKey.."#useConfigName", nil)
+					
+					if useConfigName == nil and tostring(selectedConfigs):find("|") then
+						configuration.originalSelectedConfigs = selectedConfigs
+						selectedConfigs = tostring(selectedConfigs):match("^(.-)|")
+						UniversalAutoload.debugPrint(" *** SUGGEST REPAIRING CONFIG: '" .. configuration.originalSelectedConfigs
+							.. "' - using '" .. selectedConfigs .. "' OR specify useConfigName='design' ***")
+					end
 
-					if not configGroup[selectedConfigs] or overwriteExisting then
+					if not configGroup[selectedConfigs] then
 						configuration.useConfigName = useConfigName
 						configuration.configFileName = configFileName
 						configuration.selectedConfigs = selectedConfigs
 						configGroup[selectedConfigs] = configuration
 					else
-						if UniversalAutoload.showDebug then print("  ALREADY EXISTS: "..configFileName.." ["..selectedConfigs.."]") end
+						UniversalAutoload.debugPrint("  ALREADY EXISTS: ["..selectedConfigs.."]")
 					end
 
-					print("  >> "..configFileName.." ["..selectedConfigs.."] "
-						.. (useConfigName and ("(" .. useConfigName .. ")") or "")
-						.. (configuration.showDebug and " DEBUG" or "") )
+					UniversalAutoload.debugPrint("  >> ["..selectedConfigs.."] ".. (useConfigName and ("(" .. useConfigName .. ")") or ""))
 
 					j = j + 1
 				end
 				
 			else
-				if UniversalAutoload.showDebug then print("  NOT FOUND: " .. tostring(configFileName)) end
+				UniversalAutoload.debugPrint("  NOT FOUND: " .. tostring(configFileName))
 			end
 
 			i = i + 1
+		end
+		
+		if xmlWasCleaned then
+			xmlFile:save()
 		end
 		
 		xmlFile:delete()
@@ -639,17 +930,17 @@ function UniversalAutoloadManager.getValidConfigurationId(vehicle)
 	
 	local item = g_storeManager:getItemByXMLFilename(vehicle.configFileName)
 	if not item then
-		print("could not get store item for " .. tostring(vehicle.configFileName))
+		UniversalAutoload.debugPrint("could not get store item for " .. tostring(vehicle.configFileName))
 		return
 	end
 	
-    local configName = spec.useConfigName or "design"
-    local configId = vehicle.configurations[configName] and tostring(vehicle.configurations[configName]) or nil
+    local useConfigName = spec.useConfigName
+    local configName = useConfigName and vehicle.configurations[useConfigName] and tostring(vehicle.configurations[useConfigName]) or nil
     local configurationSets = item.configurationSets or {}
 
     if #configurationSets == 0 then
-        local fullConfigId = UniversalAutoload.ALL .. (configId and ("|" .. configId) or "")
-        return fullConfigId, "UNIQUE"
+        local fullConfigId = UniversalAutoload.ALL .. (configName and ("|" .. configName) or "")
+        return fullConfigId, UniversalAutoload.ALL, "UNIQUE" .. (useConfigName and ("|" .. useConfigName) or "")
     end
 
     local bestMatch = { index = nil, count = 0, name = nil }
@@ -665,38 +956,82 @@ function UniversalAutoloadManager.getValidConfigurationId(vehicle)
         end
 
         if match then
-            local fullConfigId = i .. (configId and ("|" .. configId) or "")
-            return fullConfigId, config.name
+            local fullConfigId = i .. (configName and ("|" .. configName) or "")
+            return fullConfigId, i, config.name
         elseif count > bestMatch.count then
             bestMatch = { index = i, count = count, name = config.name }
         end
     end
 
     if bestMatch.index then
-        local fullConfigId = bestMatch.index .. (configId and ("|" .. configId) or "")
-        return fullConfigId, bestMatch.name
+        local fullConfigId = bestMatch.index .. (configName and ("|" .. configName) or "")
+        return fullConfigId, bestMatch.index, bestMatch.name
     end
 end
 
-function UniversalAutoloadManager.saveVehicleConfigurationToSettings(vehicle, noEventSend)
-	print("UAL - SAVE VEHICLE CONFIGURATION")
-	local spec = vehicle and vehicle.spec_universalAutoload
-	if not vehicle or not spec then
-		print("valid UAL vehicle is required to save settings")
+function UniversalAutoloadManager.saveConfigurationToSettings(exportSpec, noEventSend)
+	local serverOrClient = g_currentMission:getIsServer() and "SERVER" or "CLIENT"
+	UniversalAutoload.debugPrint(serverOrClient .. ": SAVE UAL CONFIGURATION for " .. tostring(exportSpec.configFileName))
+	
+	if not exportSpec or not exportSpec.configFileName then
+		UniversalAutoload.debugPrint("valid UAL spec is required to save settings")
 		return
 	end
+	
+	UniversalAutoloadManager.saveVehicleConfigToSettingsXML(exportSpec)
 
-	if g_currentMission:getIsServer() then
-		print("EXPORT VEHICLE SETTINGS: " .. vehicle:getFullName())
-		UniversalAutoloadManager.saveVehicleConfigToSettingsXML(vehicle)
+	if g_currentMission:getIsClient() and not g_currentMission:getIsServer() then
+		UniversalAutoload.UpdateDefaultSettingsEvent.sendEvent(exportSpec, noEventSend)
 	end
 
-	UniversalAutoload.ChangeSettingsEvent.sendEvent(vehicle, noEventSend)
+end
+
+function UniversalAutoloadManager.exportVehicleConfigToServer()
+	
+	if g_localPlayer and g_localPlayer.isClient then
+
+		UniversalAutoload.debugPrint("SAVE SETTINGS FROM SHOP VEHICLE")
+		local shopVolume = UniversalAutoloadManager.shopConfig and UniversalAutoloadManager.shopConfig.loadingVolume
+		if not shopVolume or not shopVolume.bbs then
+			UniversalAutoload.debugPrint("NOTHING TO SAVE: shopVolume or shopVolume.bbs is nil")
+			return
+		end
+		
+		local exportVehicle = nil
+		if UniversalAutoloadManager.shopVehicle then
+			exportVehicle = UniversalAutoloadManager.shopVehicle
+		end
+
+		if exportVehicle and exportVehicle.configFileName then
+			
+			if exportVehicle.spec_universalAutoload.autoloadDisabled then
+				UniversalAutoload.debugPrint("Autoload is DISABLED for this vehicle")
+			end
+
+			UniversalAutoload.debugPrint("..convert shop volume to loading area")
+			local exportSpec = exportVehicle.spec_universalAutoload
+			exportSpec.loadArea = exportSpec.loadArea or {}
+			for i, boundingBox in (shopVolume.bbs) do
+				local s = boundingBox:getSize()
+				local o = boundingBox:getOffset()
+				exportSpec.loadArea[i] = exportSpec.loadArea[i] or {}
+				exportSpec.loadArea[i].width = s.x
+				exportSpec.loadArea[i].height = s.y
+				exportSpec.loadArea[i].length = s.z
+				exportSpec.loadArea[i].offset = {o.x, o.y-s.y/2, o.z}
+			end
+
+			local configFileName, configId = UniversalAutoloadManager.getVehicleConfigNames(exportVehicle)
+			
+			UniversalAutoloadManager.saveConfigurationToSettings(exportSpec)
+
+		end
+	end
 end
 
 function UniversalAutoloadManager:onVehicleBuyEvent(errorCode, leaseVehicle, price)
 	if errorCode == BuyVehicleEvent.STATE_SUCCESS then
-		print("UAL - ON VEHICLE BUY EVENT " .. (leaseVehicle and "(leased)" or "(owned)"))
+		UniversalAutoload.debugPrint("UAL - ON VEHICLE BUY EVENT " .. (leaseVehicle and "(leased)" or "(owned)"))
 		-- do nothing here for now..
 		-- UniversalAutoloadManager.saveShopConfiguration()
 	end
@@ -713,23 +1048,50 @@ function UniversalAutoloadManager.getValidXmlName(ualConfigName)
 		return xmlFilename
 	end
 	
-	xmlFilename = g_modsDirectory..ualConfigName
+	xmlFilename = g_modsDirectory .. ualConfigName
 	if g_storeManager:getItemByXMLFilename(xmlFilename) then
 		return xmlFilename
 	end
 	
 	for i = 1, #g_dlcsDirectories do
 		local dlcsDir = g_dlcsDirectories[i].path
-		xmlFilename = dlcsDir..ualConfigName
+		xmlFilename = dlcsDir .. ualConfigName
 		if g_storeManager:getItemByXMLFilename(xmlFilename) then
 			return xmlFilename
 		end
 	end
+	
+	if string.find(ualConfigName, "data/vehicles/train/") then
+		return ualConfigName
+	end
 
 end
 
+function UniversalAutoloadManager.cleanConfigFileName(configFileName)
+
+	if configFileName == nil then
+		return
+	end
+
+	if configFileName:find(g_modsDirectory, 1, true) then
+		-- UniversalAutoload.debugPrint("CLEANED MOD FILE NAME")
+		return configFileName:sub(#g_modsDirectory + 1), g_modsDirectory
+	end
+	
+	for i = 1, #g_dlcsDirectories do
+		local dlcsDir = g_dlcsDirectories[i].path
+		
+		if configFileName:find(dlcsDir, 1, true) then
+			-- UniversalAutoload.debugPrint("CLEANED DLC FILE NAME")
+			return configFileName:sub(#dlcsDir + 1), dlcsDir
+		end
+	end
+	
+	return configFileName
+end
+
 function UniversalAutoloadManager.injectSpecialisation()
-	print("UAL - INJECT SPEC:")
+	-- UniversalAutoload.debugPrint("UAL - injectSpecialisation")
 	for typeName, vehicleType in pairs(g_vehicleTypeManager.types) do
 		if SpecializationUtil.hasSpecialization(TensionBelts, vehicleType.specializations)
 		and not SpecializationUtil.hasSpecialization(UniversalAutoload, vehicleType.specializations) then
@@ -739,105 +1101,149 @@ function UniversalAutoloadManager.injectSpecialisation()
 	end
 end
 
-function UniversalAutoloadManager.injectMenu()
-	print("UAL - INJECT MENU")
-	
-	local function fixInGameMenu(frame, pageName, position, predicateFunc)
-		local inGameMenu = g_gui.screenControllers[InGameMenu] --g_inGameMenu
-		local aboveSettings = nil;
-
-		--DebugUtil.printTableRecursively(inGameMenu.pagingElement)
-
-		-- remove all to avoid warnings
-		for k, v in pairs({pageName}) do
-			inGameMenu.controlIDs[v] = nil
-		end
-
-		for i = 1, #inGameMenu.pagingElement.elements do
-			local child = inGameMenu.pagingElement.elements[i]
-			if child == inGameMenu["pageSettings"] then
-				aboveSettings = i;
-				print("--- found Settings position - "..tostring(i))
-			end
-		end
-		aboveSettings = aboveSettings or position
-		
-		inGameMenu[pageName] = frame
-		inGameMenu.pagingElement:addElement(inGameMenu[pageName])
-
-		inGameMenu:exposeControlsAsFields(pageName)
-
-		for i = 1, #inGameMenu.pagingElement.elements do
-			local child = inGameMenu.pagingElement.elements[i]
-			if child == inGameMenu[pageName] then
-				table.remove(inGameMenu.pagingElement.elements, i)
-				table.insert(inGameMenu.pagingElement.elements, aboveSettings, child)
-				break
-			end
-		end
-
-		for i = 1, #inGameMenu.pagingElement.pages do
-			local child = inGameMenu.pagingElement.pages[i]
-			if child.element == inGameMenu[pageName] then
-				table.remove(inGameMenu.pagingElement.pages, i)
-				table.insert(inGameMenu.pagingElement.pages, aboveSettings, child)
-				break
-			end
-		end
-
-		inGameMenu.pagingElement:updateAbsolutePosition()
-		inGameMenu.pagingElement:updatePageMapping()
-		
-		inGameMenu:registerPage(inGameMenu[pageName], position, predicateFunc)
-		local iconFileName = Utils.getFilename('gui/menu_modSettings.dds', UniversalAutoload.path)
-		inGameMenu:addPageTab(inGameMenu[pageName], iconFileName, GuiUtils.getUVs({0,0,1024,1024}))
-
-		for i = 1, #inGameMenu.pageFrames do
-			local child = inGameMenu.pageFrames[i]
-			if child == inGameMenu[pageName] then
-				table.remove(inGameMenu.pageFrames, i)
-				table.insert(inGameMenu.pageFrames, aboveSettings, child)
-				break
-			end
-		end
-
-		inGameMenu:rebuildTabList()
-	end
-
-	local guiUALSettings = InGameMenuUALSettings.new(g_i18n)
-	g_gui:loadGui(UniversalAutoload.path .. "gui/InGameMenuUALSettings.xml", "inGameMenuUALSettings", guiUALSettings, true)
-	
-	local function isEnabledPredicate()
-		return function () return true end
-	end
-	fixInGameMenu(guiUALSettings,"inGameMenuUALSettings", 2, isEnabledPredicate())
-	
+function UniversalAutoloadManager:ualInputCallback(target)
+	UniversalAutoload.debugPrint("UAL SHOP INPUT CALLBACK")
+	UniversalAutoloadManager:onOpenSettingsEvent('UNIVERSALAUTOLOAD_SHOP_CONFIG', 1)
 end
+ShopConfigScreen.ualInputCallback = UniversalAutoloadManager.ualInputCallback
+
+function UniversalAutoloadManager:onOpenSettingsEvent(actionName, inputValue, callbackState, isAnalog)
+	-- UniversalAutoload.debugPrint("onOpenSettingsEvent")
+	if UniversalAutoloadManager.shopCongfigMenu then
+		g_gui:showDialog("ShopConfigMenuUALSettings")
+	end
+end
+
+function UniversalAutoloadManager:onOpenGlobalSettingsEvent(actionName, inputValue, callbackState, isAnalog)
+	-- UniversalAutoload.debugPrint("onOpenGlobalSettingsEvent")
+	if UniversalAutoloadManager.globalSettingsMenu then
+		g_gui:showDialog("GlobalSettingsMenuUALSettings")
+	end
+end
+
+function UniversalAutoloadManager:onEditLoadingAreaEvent(actionName, inputValue, callbackState, isAnalog)
+	-- UniversalAutoload.debugPrint("onEditLoadingAreaEvent")
+	if UniversalAutoloadManager.shopVehicle then
+		local spec = UniversalAutoloadManager.shopVehicle.spec_universalAutoload
+		if spec and spec.isInsideShop then
+			local shopConfig = UniversalAutoloadManager.shopConfig or {}
+
+			UniversalAutoloadManager.pauseOnNextStep = nil
+			local ctrl = UniversalAutoloadManager.ctrlHeld
+			local shift = UniversalAutoloadManager.shiftHeld
+			if shift and ctrl then
+				spec.resetToDefault = true
+			else
+				shopConfig.enableEditing = shopConfig.enableEditing or false
+				shopConfig.enableEditing = not shopConfig.enableEditing
+			end
+
+		end
+	end
+end
+
+function UniversalAutoloadManager.onSetStoreItem()
+	
+	local buyButton = g_shopConfigScreen.buyButton
+	local buyButtonCloned = buyButton and buyButton == UniversalAutoloadManager.buyButton
+	if not UniversalAutoloadManager.configButton or not buyButtonCloned then
+		UniversalAutoload.debugPrint("INJECT UAL configButton")
+		local function cloneButton(original, title, callback)
+			local button = original:clone(original.parent)
+			button:setText(title)
+			button:setVisible(false)
+			button:setCallback("onClickCallback", callback)
+			button:setInputAction(InputAction.UNIVERSALAUTOLOAD_SHOP_CONFIG)
+			button.parent:invalidateLayout()
+			return button
+		end
+		local button = cloneButton(buyButton, g_i18n:getText("shop_configuration_text"), "ualInputCallback");
+		UniversalAutoloadManager.configButton = button
+		UniversalAutoloadManager.buyButton = buyButton
+	end
+	if UniversalAutoloadManager.configButton then
+		UniversalAutoloadManager.configButton:setVisible(false)
+	end
+	if UniversalAutoloadManager.shopCongfigMenu then
+		UniversalAutoloadManager.shopCongfigMenu:setNewVehicle(nil)
+	end
+end
+ShopConfigScreen.setStoreItem = Utils.prependedFunction(ShopConfigScreen.setStoreItem, UniversalAutoloadManager.onSetStoreItem)
+
+function UniversalAutoloadManager.onInputEvent(self, superFunc, action, value, eventUsed)
+	if not eventUsed and action == InputAction.UNIVERSALAUTOLOAD_SHOP_CONFIG then
+		UniversalAutoloadManager:ualInputCallback(target)
+		eventUsed = true
+	end
+	return superFunc(self, action, value, eventUsed)
+end
+ShopConfigScreen.inputEvent = Utils.overwrittenFunction(ShopConfigScreen.inputEvent, UniversalAutoloadManager.onInputEvent)
+
+function UniversalAutoloadManager.onBuyEvent(self, yes)
+	if yes == true then
+		UniversalAutoloadManager.exportVehicleConfigToServer()
+	end
+end
+ShopConfigScreen.onYesNoBuy = Utils.prependedFunction(ShopConfigScreen.onYesNoBuy, UniversalAutoloadManager.onBuyEvent)
+ShopConfigScreen.onYesNoLease = Utils.prependedFunction(ShopConfigScreen.onYesNoLease, UniversalAutoloadManager.onBuyEvent)
+
+-- ENABLE WORKSHOP CONFIG BUTTON FOR AUTOLOAD VEHICLES
+-- ShopConfigScreen.getConfigurationCostsAndChanges = Utils.overwrittenFunction(ShopConfigScreen.getConfigurationCostsAndChanges,
+-- function(self, superFunc, storeItem, vehicle, saleItem)
+	-- local basePrice, upgradePrice, hasChanges = superFunc(self, storeItem, vehicle, saleItem)
+	
+	-- if hasChanges == false then
+		-- local spec = vehicle and vehicle.spec_universalAutoload
+		-- if spec and spec.isAutoloadAvailable then
+			-- hasChanges = true
+			-- UniversalAutoloadManager.resetNewVehicle = vehicle
+		-- end
+	-- end
+	-- return basePrice, upgradePrice, hasChanges
+-- end)
+
+-- InGameMenuSettingsFrame.initializeSubCategoryPages = Utils.prependedFunction(InGameMenuSettingsFrame.initializeSubCategoryPages,
+-- function(self)
+	-- if not InGameMenuSettingsFrame.SUB_CATEGORY["MOD_SETTINGS"] then
+		-- UniversalAutoload.debugPrint("initializeSubCategoryPages")
+		-- UniversalAutoload.debugPrint("g_inGameMenu: " .. tostring(g_inGameMenu))
+		-- local N = 1
+		-- for _ in pairs(InGameMenuSettingsFrame.SUB_CATEGORY) do
+			-- N = N + 1
+		-- end
+		-- InGameMenuSettingsFrame.SUB_CATEGORY["MOD_SETTINGS"] = N
+		-- InGameMenuSettingsFrame.HEADER_TITLES[N] = "MOD SETTINGS"
+		-- InGameMenuSettingsFrame.HEADER_SLICES[N] = "gui.icon_options_device"
+		-- local other = g_inGameMenu.subCategoryBox.elements[2]
+		-- local modSettingsMenu = other:clone(other.parent)
+		-- modSettingsMenu.id = string.format("subCategoryTabs[%d]", N)
+		-- modSettingsMenu.text = InGameMenuSettingsFrame.HEADER_TITLES[N]
+		-- modSettingsMenu.sourceText = InGameMenuSettingsFrame.HEADER_TITLES[N]
+		-- modSettingsMenu.focusId = FocusManager:serveAutoFocusId()
+		-- g_inGameMenu.subCategoryBox.elements[N] = modSettingsMenu
+		-- g_inGameMenu.subCategoryBox:invalidateLayout()
+		-- -- UniversalAutoload.debugPrint("*******subCategoryBox.elements[2]*******")
+		-- -- DebugUtil.printTableRecursively(g_inGameMenu.subCategoryBox.elements[2], "--", 0, 1)
+		-- -- UniversalAutoload.debugPrint("*******subCategoryBox.elements[N]*******")
+		-- -- DebugUtil.printTableRecursively(g_inGameMenu.subCategoryBox.elements[N], "--", 0, 1)
+		-- -- UniversalAutoload.debugPrint("******* g_inGameMenu *******")
+		-- -- DebugUtil.printTableRecursively(g_inGameMenu, "--", 0, 2)
+	-- end
+-- end)
+
 
 function UniversalAutoloadManager:mouseEvent(posX, posY, isDown, isUp, button)
 	
 	if UniversalAutoloadManager.shopVehicle then
 
 		local spec = UniversalAutoloadManager.shopVehicle.spec_universalAutoload
-		if spec and spec.isInsideShop then
+		if spec and spec.isInsideShop and not spec.autoloadDisabled then
 			local shopConfig = UniversalAutoloadManager.shopConfig or {}
-			
-			if button == 2 and isDown then
-				UniversalAutoloadManager.pauseOnNextStep = nil
-				local ctrl = UniversalAutoloadManager.ctrlHeld
-				local shift = UniversalAutoloadManager.shiftHeld
-				if shift and ctrl then
-					spec.resetToDefault = true
-				else
-					shopConfig.enableEditing = shopConfig.enableEditing or false
-					shopConfig.enableEditing = not shopConfig.enableEditing
-				end
-			end
 			
 			if button == 3 and isUp then
 				shopConfig.selected = nil
 			end
-
+			
 			if spec.loadingVolume and spec.loadingVolume.state == LoadingVolume.STATE.SHOP_CONFIG then
 				
 				local function isPointSelected(point)
@@ -846,7 +1252,6 @@ function UniversalAutoloadManager:mouseEvent(posX, posY, isDown, isUp, button)
 						return true
 					end
 				end
-
 				
 				for n, bb in pairs(spec.loadingVolume.bbs) do
 					local centre, points, names = bb:getCubeFaces()
@@ -886,19 +1291,118 @@ function UniversalAutoloadManager:keyEvent(unicode, sym, modifier, isDown)
 		
 		local spec = UniversalAutoloadManager.shopVehicle.spec_universalAutoload
 		if spec and spec.isInsideShop then
-			-- print("KEY: " .. tostring(sym) .. " + " .. tostring(modifier))
-			if sym == 308 then
+
+			if sym == Input['KEY_lalt'] then
 				UniversalAutoloadManager.altHeld = isDown
+				return
 			end
-			if sym == 306 then
+			if sym == Input['KEY_lctrl'] then
 				UniversalAutoloadManager.ctrlHeld = isDown
+				return
 			end
-			if sym == 304 then
+			if sym == Input['KEY_lshift'] then
 				UniversalAutoloadManager.shiftHeld = isDown
+				return
 			end
+			
 		end
 	end
+	
+	if sym == Input['KEY_tab'] and UniversalAutoloadManager.pauseOnNextStep then
+		UniversalAutoloadManager.pauseOnNextStep = nil
+		return
+	end
 
+end
+
+function UniversalAutoloadManager.createGlobalGui()
+	-- UniversalAutoload.debugPrint("UAL - createGlobalGui")
+	if not UniversalAutoloadManager.globalSettingsMenu then
+		UniversalAutoloadManager.globalSettingsMenu = GlobalSettingsMenuUALSettings.register()
+	end
+end
+function UniversalAutoloadManager.deleteGlobalGui()
+	-- UniversalAutoload.debugPrint("UAL - deleteGlobalGui")
+	if UniversalAutoloadManager.globalSettingsMenu then
+		-- UniversalAutoload.debugPrint("UAL - DELETE GLOBAL MENU")
+		UniversalAutoloadManager.globalSettingsMenu:delete()
+		UniversalAutoloadManager.globalSettingsMenu = nil
+	end
+end
+
+function UniversalAutoloadManager.createShopGui()
+	-- UniversalAutoload.debugPrint("UAL - createShopGui")
+	if not UniversalAutoloadManager.shopCongfigMenu then
+		UniversalAutoloadManager.shopCongfigMenu = ShopConfigMenuUALSettings.register()
+	end
+end
+function UniversalAutoloadManager.deleteShopGui()
+	-- UniversalAutoload.debugPrint("UAL - deleteShopGui")
+	if UniversalAutoloadManager.configButton then
+		-- UniversalAutoload.debugPrint("UAL - DELETE BUTTON")
+		UniversalAutoloadManager.configButton:delete()
+		UniversalAutoloadManager.configButton = nil
+	end
+	if UniversalAutoloadManager.shopCongfigMenu then
+		-- UniversalAutoload.debugPrint("UAL - DELETE CONFIG MENU")
+		UniversalAutoloadManager.shopCongfigMenu:delete()
+		UniversalAutoloadManager.shopCongfigMenu = nil
+	end
+end
+
+function UniversalAutoloadManager:registerShopActionEvents()
+	-- UniversalAutoload.debugPrint("UAL - registerShopActionEvents")
+	local function registerShopActionEvent(id, callback)
+		local id = id or 'UNIVERSALAUTOLOAD_SHOP_CONFIG'
+		local callback = callback or 'ualInputCallback'
+		local triggerUp = false
+		local triggerDown = true
+		local triggerAlways = false
+		local startActive = true
+		local valid, actionId = g_inputBinding:registerActionEvent(InputAction[id],
+			self, self[callback], triggerUp, triggerDown, triggerAlways, startActive)
+		local nameAction = g_inputBinding.nameActions[id]
+		UniversalAutoloadManager.actionIds = UniversalAutoloadManager.actionIds or {}
+		table.insert(UniversalAutoloadManager.actionIds, actionId)
+	end
+	
+	registerShopActionEvent('UNIVERSALAUTOLOAD_SHOP_CONFIG', 'onOpenSettingsEvent')
+	registerShopActionEvent('UNIVERSALAUTOLOAD_SHOP_ADJUST', 'onEditLoadingAreaEvent')
+end
+function UniversalAutoloadManager:removeShopActionEvents()
+	-- UniversalAutoload.debugPrint("UAL - removeShopActionEvents")
+	UniversalAutoloadManager.actionIds = UniversalAutoloadManager.actionIds or {}
+	for _, actionId in pairs(UniversalAutoloadManager.actionIds) do
+		g_inputBinding:removeActionEvent(actionId)
+		UniversalAutoloadManager.actionIds[actionId] = nil
+	end
+end
+
+function UniversalAutoloadManager.onValidUalShopVehicle(vehicle)
+	if vehicle.propertyState == VehiclePropertyState.SHOP_CONFIG then
+		UniversalAutoloadManager:registerShopActionEvents()
+		if UniversalAutoloadManager.configButton then
+			UniversalAutoloadManager.configButton:setVisible(true)
+			if UniversalAutoloadManager.configButton.parent then
+				UniversalAutoloadManager.configButton.parent:invalidateLayout()
+			end
+		end
+		if UniversalAutoloadManager.shopCongfigMenu then
+			UniversalAutoloadManager.shopCongfigMenu:setNewVehicle(vehicle)
+		end
+	end
+end
+
+function UniversalAutoloadManager.onInvalidUalShopVehicle(vehicle)
+	if vehicle.propertyState == VehiclePropertyState.SHOP_CONFIG then
+		UniversalAutoloadManager:removeShopActionEvents()
+		if UniversalAutoloadManager.configButton then
+			UniversalAutoloadManager.configButton:setVisible(false)
+		end
+		if UniversalAutoloadManager.shopCongfigMenu then
+			UniversalAutoloadManager.shopCongfigMenu:setNewVehicle(nil)
+		end
+	end
 end
 
 -- AUTO CREATE LOADING VOLUMES
@@ -906,7 +1410,7 @@ function UniversalAutoloadManager.editLoadingVolumeInsideShop(vehicle)
 	local spec = vehicle.spec_universalAutoload
 	
 	if spec.loadingVolume.state == LoadingVolume.STATE.SHOP_CONFIG then
-		
+
 		local shopConfig = UniversalAutoloadManager.shopConfig
 		if not shopConfig or not shopConfig.enableEditing then
 			return
@@ -940,6 +1444,11 @@ function UniversalAutoloadManager.editLoadingVolumeInsideShop(vehicle)
 				local pX, pY, pZ = unpack(grabbedPoint)
 				local lx1, ly1, lz1 = unpack(p1)
 				local lx2, ly2, lz2 = unpack(p2)
+				
+				if lx2-lx1 == 0 and ly2-ly1 == 0 and lz2-lz1 == 0 then
+					UniversalAutoload.debugPrint("don't divide by zero")
+					return 0, 0, 0
+				end
 				
 				-- Calculate normalized direction and distance
 				local lineDx, lineDy, lineDz = MathUtil.vector3Normalize(lx2-lx1, ly2-ly1, lz2-lz1)
@@ -1002,14 +1511,16 @@ function UniversalAutoloadManager.editLoadingVolumeInsideShop(vehicle)
 				local dx, dy, dz = expandAxis(points[axisPairs[i][1]], points[axisPairs[i][2]], altHeld or shiftHeld)
 				local delta = (i <= 2 and dx) or (i <= 4 and dy) or dz
 				
-				if not shiftHeld and not altHeld then
-					bb:moveFace(i, delta)
-				elseif shiftHeld and not altHeld then
-					bb:moveFace(axisPairs[i][1], delta/2)
-					bb:moveFace(axisPairs[i][2], delta/2)
-				elseif altHeld and not shiftHeld then
-					bb:moveFace(axisPairs[i][1], delta/2)
-					bb:moveFace(axisPairs[i][2], -delta/2)
+				if delta and delta ~= 0 then
+					if not shiftHeld and not altHeld then
+						bb:moveFace(i, delta)
+					elseif shiftHeld and not altHeld then
+						bb:moveFace(axisPairs[i][1], delta/2)
+						bb:moveFace(axisPairs[i][2], delta/2)
+					elseif altHeld and not shiftHeld then
+						bb:moveFace(axisPairs[i][1], delta/2)
+						bb:moveFace(axisPairs[i][2], -delta/2)
+					end
 				end
 			end
 			
@@ -1029,8 +1540,8 @@ end
 function UniversalAutoloadManager.createLoadingVolumeInsideShop(vehicle)
 	local spec = vehicle.spec_universalAutoload
 	
-	if not spec.skipFirstUpdate then
-		spec.skipFirstUpdate = true
+	if not spec.skipFirstUpdate or spec.skipFirstUpdate < 10 then
+		spec.skipFirstUpdate = (spec.skipFirstUpdate or 0) + 1
 		return
 	end
 	
@@ -1039,20 +1550,20 @@ function UniversalAutoloadManager.createLoadingVolumeInsideShop(vehicle)
 	end
 	
 	if not spec.loadingVolume then
-		print("findTensionBelts")
+		UniversalAutoload.debugPrint("findTensionBelts")
 		spec.loadingVolume = LoadingVolume.new(vehicle)
 		spec.loadingVolume:findTensionBelts()
 		UniversalAutoloadManager.pauseOnNextStep = UniversalAutoloadManager.DEBUG_STEPS
 	elseif spec.loadingVolume.state == LoadingVolume.STATE.FOUND_BELTS then
-		print("findLoadingSurface")
+		UniversalAutoload.debugPrint("findLoadingSurface")
 		spec.loadingVolume:findLoadingSurface()
 		UniversalAutoloadManager.pauseOnNextStep = UniversalAutoloadManager.DEBUG_STEPS
 	elseif spec.loadingVolume.state == LoadingVolume.STATE.FOUND_SURFACE then
-		print("expandLoadingSurface")
+		UniversalAutoload.debugPrint("expandLoadingSurface")
 		spec.loadingVolume:expandLoadingSurface()
 		UniversalAutoloadManager.pauseOnNextStep = UniversalAutoloadManager.DEBUG_STEPS
 	elseif spec.loadingVolume.state == LoadingVolume.STATE.EXPANDED then
-		print("INIT SHOP CONFIG")
+		UniversalAutoload.debugPrint("INIT SHOP CONFIG")
 		spec.loadingVolume:initShopConfig()
 		UniversalAutoloadManager.pauseOnNextStep = nil
 	end
@@ -1067,15 +1578,20 @@ function UniversalAutoloadManager.resetLoadingVolumeForShopEdit(vehicle)
 		return
 	end
 	
+	if not vehicle.rootNode then
+		UniversalAutoload.debugPrint("*** Vehicle Root Node is UNDEFINED ***")
+		return
+	end
+	
 	if not spec.loadArea or #spec.loadArea == 0 then
 		if not spec.printInvalidLocalConfig then
 			spec.printInvalidLocalConfig = true
-			print("INVALID LOCAL CONFIG - load areas missing")
+			UniversalAutoload.debugPrint("INVALID LOCAL CONFIG - load areas missing")
 		end
 	end
 
 	if spec.loadArea and #spec.loadArea > 0 and not spec.loadingVolume then
-		print("CONVERT CURRENT LOCAL CONFIG TO LOADING VOLUME")
+		UniversalAutoload.debugPrint("CONVERT CURRENT LOCAL CONFIG TO LOADING VOLUME")
 		spec.loadingVolume = LoadingVolume.new(vehicle)
 		
 		for i, loadArea in ipairs(spec.loadArea) do
@@ -1098,11 +1614,13 @@ function UniversalAutoloadManager.resetLoadingVolumeForShopEdit(vehicle)
 end
 
 function UniversalAutoloadManager.getIsTrainCarriage(vehicle)
-	local rootVehicle = vehicle:getRootVehicle()
-	if rootVehicle and rootVehicle:getFullName():find("Locomotive")
-		or rootVehicle:getFullName():find("Timber Wagon")
-		or rootVehicle:getFullName():find("Flatbed Wagon")
-		or rootVehicle:getFullName():find("Vehicle Wagon") then
+	if not vehicle then
+		return false
+	end
+
+	if vehicle:getFullName():find("Timber Wagon")
+	or vehicle:getFullName():find("Flatbed Wagon")
+	or vehicle:getFullName():find("Vehicle Wagon") then
 		return true
 	end
 end
@@ -1110,33 +1628,33 @@ end
 function UniversalAutoloadManager.getIsValidForAutoload(vehicle)
 	local spec = vehicle and vehicle.spec_universalAutoload
 	if not spec then
-		print("UAL - new vehicle should have SPEC here" .. tostring(vehicle and vehicle.rootNode))
+		UniversalAutoload.debugPrint("UAL - new vehicle should have SPEC here " .. tostring(vehicle and vehicle.rootNode))
 		return
 	end
 	
 	if UniversalAutoloadManager.getIsTrainCarriage(vehicle) then
-		print(vehicle:getFullName() .. " - don't add UAL to train for now..")
-		return false
+		UniversalAutoload.debugPrint(vehicle:getFullName() .. " - TRAIN CARRIAGE")
+		return true
 	end
 	
 	local isValidForAutoload = nil
 	if vehicle.spec_tensionBelts and vehicle.spec_tensionBelts.hasTensionBelts then
 		local nBelts = #vehicle.spec_tensionBelts.sortedBelts
 		if nBelts >= 2 then
-			print(vehicle:getFullName() .. ": UAL - tension belts (" .. nBelts .. ")")
+			UniversalAutoload.debugPrint(vehicle:getFullName() .. ": UAL - tension belts (" .. nBelts .. ")")
 			spec.hasTensionBelts = true
 			isValidForAutoload = true
 		else
-			print("Not enough tension belts for UAL (" .. nBelts .. ")")
+			UniversalAutoload.debugPrint("Not enough tension belts for UAL (" .. nBelts .. ")")
 		end
 	end
 	
 	if vehicle.spec_fillVolume and #vehicle.spec_fillVolume.volumes > 0 then
 		local nFillVol = #vehicle.spec_fillVolume.volumes
-		print(vehicle:getFullName() .. ": UAL - fill volumes (" .. nFillVol .. ")")
+		UniversalAutoload.debugPrint(vehicle:getFullName() .. ": UAL - fill volumes (" .. nFillVol .. ")")
 		for i, fillVolume in ipairs(vehicle.spec_fillVolume.volumes) do
 			local capacity = vehicle:getFillUnitCapacity(fillVolume.fillUnitIndex)
-			print("  [" .. i .. "] = " .. capacity)
+			UniversalAutoload.debugPrint("  [" .. i .. "] = " .. capacity)
 		end
 		spec.hasFillVolume = true
 		-- isValidForAutoload = false
@@ -1145,199 +1663,162 @@ function UniversalAutoloadManager.getIsValidForAutoload(vehicle)
 	return isValidForAutoload
 end
 
-function UniversalAutoloadManager.handleNewVehicleCreation(vehicle)
+function UniversalAutoloadManager.addLocalConfigIfAvailable(vehicle)
 	local spec = vehicle and vehicle.spec_universalAutoload
-	if not spec then
-		print("UAL - new vehicle should have SPEC here" .. tostring(vehicle and vehicle.rootNode))
-		return
-	end
-	
-	if spec.configFileName == "data/vehicles/international/cvSeries/cvSeries.xml" then
-		spec.useConfigName = "enterablePassenger"
-	end
 	
 	local configurationAdded = nil
-	local configId, description = UniversalAutoloadManager.getValidConfigurationId(vehicle)
-	if configId then
-		print("UniversalAutoload - supported vehicle: "..vehicle:getFullName().." #"..configId.." ("..description..")" )
-		
-		local configFileName = vehicle.configFileName
-		local configGroup = UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName]
-		if configGroup then
-			if debugVehicles then 
-				print("AVAILABLE CONFIGS: (from local settings)")
-				for selectedConfigs, config in pairs(configGroup) do
-					print("  >> " .. tostring(selectedConfigs))
+	
+	local configFileName = UniversalAutoloadManager.cleanConfigFileName(vehicle.configFileName)
+	local availableConfigs = UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName]
+	
+	if availableConfigs then
+		UniversalAutoload.debugPrint("AVAILABLE selectedConfigs: ")
+		local i = 1
+		for selectedConfigs, config in pairs(availableConfigs) do
+			UniversalAutoload.debugPrint(" [".. i .. "] " .. selectedConfigs)
+			local j = 1
+			local selectedConfigsList = tostring(selectedConfigs):split(",")
+			for _, configListItem in pairs(selectedConfigsList) do
+				if configListItem ~= selectedConfigs then
+					UniversalAutoload.debugPrint("  #".. j .. " " .. configListItem)
 				end
+				
+				local isMatchAny = tostring(configListItem):find(UniversalAutoload.ALL)
+				local hasPipeChar = tostring(configListItem):find("|")
+				
+				if hasPipeChar then
+					UniversalAutoload.debugPrint("  useConfigName: " .. tostring(config.useConfigName))
+					if not spec.useConfigName then
+						spec.useConfigName = config.useConfigName
+					end
+				end
+				j = j + 1
+			end
+			i = i + 1
+		end
+	end
+	
+	if spec.useConfigName then
+		UniversalAutoload.debugPrint("SET useConfigName: " .. tostring(spec.useConfigName))
+	end
+
+	local fullConfigId, rootConfigId, description = UniversalAutoloadManager.getValidConfigurationId(vehicle)
+	if fullConfigId then
+		
+		UniversalAutoload.debugPrint("UniversalAutoload - supported vehicle: "..vehicle:getFullName().." #"..fullConfigId.." ("..description..")" )
+		spec.configId = rootConfigId  -- used for shop config setting
+
+		if configFileName == "data/vehicles/krone/profiLiner/profiLiner.xml" then
+			spec.isCurtainTrailer = true
+		end
+	
+		local target = vehicle and vehicle.loadCallbackFunctionTarget
+		local storeItem = target and target.storeItem
+		local category = storeItem and storeItem.categoryName
+		local isBaleLoader = category and category == 'BALELOADERS'
+		local isWoodTransport = category and category == 'WOODTRANSPORT'
+		local isForestryForwarder = category and category == 'FORESTRYFORWARDERS'
+		local isBaleWagon = description and description == g_i18n:getText("configuration_valueLoadingWagon")
+		
+		if isBaleLoader or isBaleWagon then
+			UniversalAutoload.debugPrint("IDENTIFIED BALE TRAILER")
+			spec.isBaleTrailer = true
+			spec.horizontalLoading = true
+		end
+		
+		if isWoodTransport or isForestryForwarder then
+			UniversalAutoload.debugPrint("IDENTIFIED LOG TRAILER")
+			spec.isLogTrailer = true
+		end
+
+		if availableConfigs then
+			UniversalAutoload.debugPrint("DETECTED fullConfigId: " .. fullConfigId)
+			local firstPart, secondPart = string.match(fullConfigId, "([^|]+)|([^|]+)")
+			if not firstPart then
+				firstPart = fullConfigId
+				secondPart = nil
+			end
+			if not firstPart == rootConfigId then
+				UniversalAutoload.debugPrint("WARNING: rootConfigId = " .. rootConfigId)
 			end
 			
-			if not spec.loadArea then	
-				for selectedConfigs, config in pairs(configGroup) do
-					local selectedConfigsList = tostring(selectedConfigs):split(",")
-					for _, configListPart in pairs(selectedConfigsList) do
-						local isMatchAny = configListPart == UniversalAutoload.ALL
-						local hasPipeChar = tostring(configId):find("|")
-						local isMatchFull = hasPipeChar and configId == configListPart
-						local isMatchPart = not hasPipeChar and tostring(configId):find(configListPart)
-						if isMatchAny or isMatchPart or isMatchFull then
+			for selectedConfigs, config in pairs(availableConfigs) do
+				UniversalAutoload.debugPrint("TRY selectedConfigs: " .. selectedConfigs)
+				local selectedConfigsList = tostring(selectedConfigs):split(",")
+				for _, configListItem in pairs(selectedConfigsList) do
+					if configListItem ~= selectedConfigs then
+						UniversalAutoload.debugPrint(" configListItem: " .. configListItem)
+					end
+					local otherFirstPart, otherSecondPart = string.match(configListItem, "([^|]+)|([^|]+)")
+					if not otherFirstPart then
+						otherFirstPart = configListItem
+						otherSecondPart = nil
+					end
+
+					local isMatchFirst = otherFirstPart == firstPart or otherFirstPart == UniversalAutoload.ALL
+					local isMatchSecond = secondPart and otherSecondPart and secondPart == otherSecondPart
+					local ignoreSecondParts = secondPart == nil and otherSecondPart == nil
+					
+					if isMatchFirst and (isMatchSecond or ignoreSecondParts) then
+						if config and config.loadArea and #config.loadArea > 0 then
+							UniversalAutoload.debugPrint("*** USING CONFIG FROM SETTINGS - "..selectedConfigs.." for #"..fullConfigId.." ("..description..") ***")
+							spec.configId = otherFirstPart  -- used for shop config setting
 							
-							if config and config.loadArea and #config.loadArea > 0 then
-								print("*** USING CONFIG FROM SETTINGS - "..selectedConfigs.." for #"..configId.." ("..description..") ***")
-								for id, value in pairs(deepCopy(config)) do
-									spec[id] = value
-								end
-								configurationAdded = true
-							else
-								print("*** LOAD AREA MISSING FROM CONFIG - please check mod settings file ***")
+							for id, value in pairs(deepCopy(config)) do
+								UniversalAutoload.debugPrint(" >> " .. tostring(id) .. " = " .. tostring(value))
+								spec[id] = value
+							end
+							configurationAdded = true
+							break
+						else
+							UniversalAutoload.debugPrint("*** LOAD AREA MISSING FROM CONFIG - please check mod settings file ***")
+							if UniversalAutoload.showDebug then
 								DebugUtil.printTableRecursively(config, "  --", 0, 2)
 							end
 						end
 					end
 				end
+				if configurationAdded == true then
+					break
+				end
 			end
 			
 			if not configurationAdded then
-				print("*** NO MATCHING LOCAL CONFIG - #"..configId.." ("..description..") ***")
+				UniversalAutoload.debugPrint("*** NO MATCHING LOCAL CONFIG - #"..fullConfigId.." ("..description..") ***")
 			end
 		else
-			print("*** NO LOCAL CONFIGS AVAILABLE - #"..configId.." ("..description..") ***")
+			UniversalAutoload.debugPrint("*** NO LOCAL CONFIGS AVAILABLE - #"..fullConfigId.." ("..description..") ***")
 		end
 	else
-		print("*** UNSUPPORTED CONFIG - #"..tostring(configId).." ("..tostring(description)..") ***")
+		UniversalAutoload.debugPrint("*** UNSUPPORTED CONFIG - #"..tostring(fullConfigId).." ("..tostring(description)..") ***")
 	end
+	return configurationAdded
+end
+
+function UniversalAutoloadManager.handleNewVehicleCreation(vehicle)
+	local spec = vehicle and vehicle.spec_universalAutoload
+	if not spec then
+		UniversalAutoload.debugPrint("UAL - new vehicle should have SPEC here " .. tostring(vehicle and vehicle.rootNode))
+		return
+	end
+	UniversalAutoload.debugPrint("handleNewVehicleCreation: " .. tostring(netGetTime()))
+
+	local configurationAdded = UniversalAutoloadManager.addLocalConfigIfAvailable(vehicle)
 		
 	if vehicle.propertyState == VehiclePropertyState.SHOP_CONFIG then
-		print("CREATE SHOP VEHICLE: " .. vehicle:getFullName())
+		UniversalAutoload.debugPrint("CREATE SHOP VEHICLE: " .. vehicle:getFullName())
 		spec.isInsideShop = true
 		UniversalAutoloadManager.shopVehicle = vehicle
-		-- configuration will be handled in onUpdate loop
 		return configurationAdded
 		
 	elseif vehicle.propertyState == VehiclePropertyState.OWNED
-		or vehicle.propertyState == VehiclePropertyState.LEASED then
-		print("CREATE REAL VEHICLE: " .. vehicle:getFullName())
+		or vehicle.propertyState == VehiclePropertyState.LEASED
+		or vehicle.propertyState == VehiclePropertyState.MISSION then
+		UniversalAutoload.debugPrint("CREATE REAL VEHICLE: " .. vehicle:getFullName())
 		spec.isInsideShop = false
-		
-		local importVehicle = nil
-		if UniversalAutoloadManager.shopVehicle then
-			print("SHOP VEHICLE STILL EXISTS " .. UniversalAutoloadManager.shopVehicle.rootNode )
-			importVehicle = UniversalAutoloadManager.shopVehicle
-		elseif UniversalAutoloadManager.lastShopVehicle then
-			print("WORKSHOP VEHICLE STILL EXISTS " .. UniversalAutoloadManager.lastShopVehicle.rootNode )
-			importVehicle = UniversalAutoloadManager.lastShopVehicle
-			UniversalAutoloadManager.lastShopVehicle = nil
-		end
-		
-		local importSpec = importVehicle and importVehicle.spec_universalAutoload
-		if importSpec and UniversalAutoloadManager.shopConfig then
-			local configsMatch = spec.selectedConfigs == importSpec.selectedConfigs
-			local configNamesMatch = spec.useConfigName == nil or importSpec.useConfigName == nil or spec.useConfigName == importSpec.useConfigName
-		
-			if configsMatch and configNamesMatch then
-	
-				print("CLONE SETTINGS FROM SHOP VEHICLE")
-				local shopVolume = UniversalAutoloadManager.shopConfig.loadingVolume
-				if not shopVolume or not shopVolume.bbs then
-					print("ERROR: shopVolume or shopVolume.bbs is nil")
-					return
-				end
-
-				print("TO DO: import the rest of the parameters here...")
-				spec.loadArea = spec.loadArea or {}
-				importSpec.loadArea = importSpec.loadArea or {}
-				for i, boundingBox in (shopVolume.bbs) do
-					local s = boundingBox:getSize()
-					local o = boundingBox:getOffset()
-					importSpec.loadArea[i] = {
-						width = s.x,
-						height = s.y,
-						length = s.z,
-						offset = {o.x, o.y-s.y/2, o.z},
-					}
-					spec.loadArea[i] = {
-						width = s.x,
-						height = s.y,
-						length = s.z,
-						offset = {o.x, o.y-s.y/2, o.z},
-					}
-				end
-				configurationAdded = true
-				-- print("DEBUG: importSpec.loadArea after cloning:")
-				-- DebugUtil.printTableRecursively(importSpec.loadArea, "  --", 0, 2)
-				-- print("DEBUG: spec.loadArea after cloning:")
-				-- DebugUtil.printTableRecursively(spec.loadArea, "  --", 0, 2)
-
-				UniversalAutoloadManager.saveVehicleConfigurationToSettings(vehicle)
-				
-			end
-		end
-		
 		return configurationAdded
 	end
 end
-
--- IMPORT CONTAINER TYPE DEFINITIONS
-function UniversalAutoloadManager.ImportContainerTypeConfigurations(xmlFilename, overwriteExisting)
-
-	local i = 0
-	local xmlFile = UniversalAutoloadManager.openUserSettingsXMLFile(xmlFilename)
-	if xmlFile ~= 0 then
-	
-		local containerRootKey = "universalAutoload.containerConfigurations"
-		local legacyContainerRootKey = "universalAutoload.containerTypeConfigurations"
-		if not xmlFile:hasProperty(containerRootKey) and xmlFile:hasProperty(legacyContainerRootKey) then
-			print("*** OLD VERSION OF CONFIG FILE DETECTED - please use <containerConfigurations> ***")
-			containerRootKey = legacyContainerRootKey
-		end
-
-		while true do
-			local configKey = string.format(containerRootKey..".containerConfiguration(%d)", i)
-			
-			if not xmlFile:hasProperty(configKey) then
-				break
-			end
-
-			local containerType = xmlFile:getValue(configKey.."#containerType", "ALL")
-			if tableContainsValue(UniversalAutoload.CONTAINERS, containerType) then
-			
-				local default = UniversalAutoload[containerType] or {}
-
-				local name = xmlFile:getValue(configKey.."#name")
-				local customEnvironment, _ = name:match( "^(.-):(.+)$" )
-				if customEnvironment==nil or g_modIsLoaded[customEnvironment] then
-					local config = UniversalAutoload.LOADING_TYPES[name]
-					if config == nil or overwriteExisting then
-						UniversalAutoload.LOADING_TYPES[name] = {}
-						newType = UniversalAutoload.LOADING_TYPES[name]
-						newType.name = name
-						newType.type = containerType
-						newType.containerIndex = UniversalAutoload.CONTAINERS_LOOKUP[containerType] or 1
-						newType.sizeX = xmlFile:getValue(configKey.."#sizeX", default.sizeX or 1.5)
-						newType.sizeY = xmlFile:getValue(configKey.."#sizeY", default.sizeY or 1.5)
-						newType.sizeZ = xmlFile:getValue(configKey.."#sizeZ", default.sizeZ or 1.5)
-						newType.isBale = xmlFile:getValue(configKey.."#isBale", default.isBale or false)
-						newType.flipYZ = xmlFile:getValue(configKey.."#flipYZ", default.flipYZ or false)
-						newType.neverStack = xmlFile:getValue(configKey.."#neverStack", default.neverStack or false)
-						newType.neverRotate = xmlFile:getValue(configKey.."#neverRotate", default.neverRotate or false)
-						newType.alwaysRotate = xmlFile:getValue(configKey.."#alwaysRotate", default.alwaysRotate or false)
-						newType.frontOffset = xmlFile:getValue(configKey.."#frontOffset", default.frontOffset or 0)
-						print(string.format("  >> %s %s [%.3f, %.3f, %.3f]", newType.type, newType.name, newType.sizeX, newType.sizeY, newType.sizeZ ))
-					end				
-				end
-
-			else
-				if UniversalAutoload.showDebug then print("  UNKNOWN CONTAINER TYPE: "..tostring(containerType)) end
-			end
-
-			i = i + 1
-		end
-
-		xmlFile:delete()
-	end
-	return i
-
-end
---
 
 -- DETECT CONFLICTS/ISSUES
 function UniversalAutoloadManager.detectKeybindingConflicts()
@@ -1412,7 +1893,7 @@ function UniversalAutoloadManager:consoleResetVehicles()
 	UniversalAutoloadManager.resetCount = 1
 	g_currentMission.isReloadingVehicles = true
 	
-	for _, vehicle in pairs(UniversalAutoload.VEHICLES) do
+	for vehicle, _ in pairs(UniversalAutoload.VEHICLES) do
 		table.insert(UniversalAutoloadManager.resetList, vehicle)
 	end
 	UniversalAutoload.VEHICLES = {}
@@ -1422,340 +1903,236 @@ function UniversalAutoloadManager:consoleResetVehicles()
 	
 end
 --
--- function UniversalAutoloadManager:consoleImportLocalConfigurations()
+function UniversalAutoloadManager:consoleAddPallets(palletType)
+	
+    local pallets = {}
+    for _, fillType in pairs(g_fillTypeManager:getFillTypes()) do
+		local xmlName = fillType.palletFilename
+		if xmlName ~= nil and not xmlName:find("fillablePallet") then
+            pallets[fillType.name] = xmlName
+        end
+    end
 
-	-- local oldVehicleConfigurations = deepCopy(UniversalAutoload.VEHICLE_CONFIGURATIONS)
-	-- local oldContainerConfigurations = deepCopy(UniversalAutoload.LOADING_TYPES)
-	-- local userSettingsFile = Utils.getFilename(UniversalAutoload.userSettingsFile, getUserProfileAppPath())
-	-- local vehicleCount, objectCount = UniversalAutoloadManager.ImportLocalConfigurations(userSettingsFile, true)
+ 	if palletType then
+		palletType = string.upper(palletType or "")
+		local xmlFilename = pallets[palletType]
+		if xmlFilename == nil then
+			return "Error: Invalid pallet type. Valid types are " .. table.concatKeys(pallets, ", ")
+		end
+
+		pallets = {}
+		pallets[palletType] = xmlFilename
+	end
+
+	local currentVehicle = g_localPlayer and g_localPlayer.getCurrentVehicle()
+	if currentVehicle then
+
+		local vehicles = UniversalAutoloadManager.getAttachedVehicles(currentVehicle)
+		local count = 0
+		
+		if next(vehicles) ~= nil then
+			for vehicle, hasAutoload in pairs(vehicles) do
+				if hasAutoload and vehicle:getIsActiveForInput() then
+					if UniversalAutoload.createPallets(vehicle, pallets) then
+						count = count + 1
+					end
+				end
+			end
+		end
 	
-	-- g_currentMission.isReloadingVehicles = true
-	-- if vehicleCount > 0 then
-		-- vehicleCount = 0
-		-- local doResetVehicle = false
-		-- for key, configGroup in pairs(UniversalAutoload.VEHICLE_CONFIGURATIONS) do
-			-- local foundFirstMatch = false
-			-- for index, config in pairs(configGroup) do
-				-- if oldVehicleConfigurations[key] and oldVehicleConfigurations[key][index]
-				-- and not deepCompare(oldVehicleConfigurations[key][index], config) then
-					-- -- FIRST LOOK IF THIS IS THE CURRENT CONTROLLED VECHILE
-					-- for _, vehicle in pairs(UniversalAutoload.VEHICLES) do
-						-- -- print(vehicle.configFileName .. " - " .. tostring(vehicle.spec_universalAutoload.boughtConfig) .. " / " .. index)
-						-- if string.find(vehicle.configFileName, key) and vehicle.spec_universalAutoload.boughtConfig == index then
-							-- local rootVehicle = vehicle:getRootVehicle()
-							-- if rootVehicle == g_currentMission.controlledVehicle then
-								-- foundFirstMatch = true
-								-- print("APPLYING UPDATED SETTINGS: " .. vehicle:getFullName())
-								-- if not UniversalAutoloadManager.resetVehicle(vehicle) then
-									-- print("THIS IS CURRENT CONTROLLED VEHICLE: " .. vehicle:getFullName())
-									-- doResetVehicle = true
-								-- end
-							-- end
-						-- end
-					-- end
-					-- -- THEN CHECK ALL THE OTHERS - but we can only reset one at a time
-					-- for _, vehicle in pairs(UniversalAutoload.VEHICLES) do
-						-- if string.find(vehicle.configFileName, key) and vehicle.spec_universalAutoload.boughtConfig == index then
-							-- if not foundFirstMatch then
-								-- foundFirstMatch = true
-								-- vehicleCount = vehicleCount + 1
-								-- print("APPLYING UPDATED SETTINGS: " .. vehicle:getFullName())
-								-- if not UniversalAutoloadManager.resetVehicle(vehicle) then
-									-- doResetVehicle = true
-								-- end
-							-- else
-								-- print("ONLY ONE OF EACH VEHICLE CONFIGURATION CAN BE RESET USING THIS COMMAND")
-							-- end
-						-- end
-					-- end
-				-- end
-			-- end
-		-- end
-		-- if doResetVehicle then
-			-- g_currentMission:consoleCommandReloadVehicle()
-		-- else
-			-- g_currentMission.isReloadingVehicles = false
-		-- end
-	-- end
-	
-	-- if objectCount > 0 then
-		-- objectCount = 0
-		-- for key, value in pairs(UniversalAutoload.LOADING_TYPES) do
-			-- if not deepCompare(oldContainerConfigurations[key], value) then
-				-- objectCount = objectCount + 1
-			-- end
-		-- end
-	-- end
-	
-	-- if vehicleCount > 0 and objectCount == 0 then
-		-- return string.format("UPDATED: %d vehicle configurations", vehicleCount)
-	-- end
-	-- if objectCount > 0 and vehicleCount == 0 then
-		-- return string.format("UPDATED: %d container configurations", objectCount)
-	-- end
-	-- return string.format("UPDATED: %d vehicle configurations, %d container configurations", vehicleCount, objectCount)
--- end
+		if count>0 then return "Begin adding pallets now.." end
+	end
+	return "Please enter a vehicle with a UAL trailer attached to use this command"
+end
 --
--- function UniversalAutoloadManager:consoleAddPallets(palletType)
+function UniversalAutoloadManager:consoleAddLogs(arg1, arg2)
 
-	-- local pallets = {}
-	-- for _, fillType in pairs(g_fillTypeManager:getFillTypes()) do
-		-- local xmlName = fillType.palletFilename
-		-- if xmlName ~= nil and not xmlName:find("fillablePallet") then
-			-- pallets[fillType.name] = xmlName
-		-- end
-	-- end
-		
-	-- if palletType then
-		-- palletType = string.upper(palletType or "")
-		-- local xmlFilename = pallets[palletType]
-		-- if xmlFilename == nil then
-			-- return "Error: Invalid pallet type. Valid types are " .. table.concatKeys(pallets, ", ")
-		-- end
-
-		-- pallets = {}
-		-- pallets[palletType] = xmlFilename
-	-- end
+	local length = nil
+	local treeTypeName = "LODGEPOLEPINE"
 	
-	-- if g_currentMission.controlledVehicle ~= nil then
-
-		-- local vehicles = UniversalAutoloadManager.getAttachedVehicles(g_currentMission.controlledVehicle)
-		-- local count = 0
-		
-		-- if next(vehicles) ~= nil then
-			-- for vehicle, hasAutoload in pairs(vehicles) do
-				-- if hasAutoload and vehicle:getIsActiveForInput() then
-					-- if UniversalAutoload.createPallets(vehicle, pallets) then
-						-- count = count + 1
-					-- end
-				-- end
-			-- end
-		-- end
+	if tonumber(arg1) then
+		length = tonumber(arg1)
+		treeTypeName = arg2 or treeTypeName
+	elseif tonumber(arg2) then
+		length = tonumber(arg2)
+		treeTypeName = arg1 or treeTypeName
+	else
+		treeTypeName = arg1 or treeTypeName
+	end
 	
-		-- if count>0 then return "Begin adding pallets now.." end
-	-- end
-	-- return "Please enter a vehicle with a UAL trailer attached to use this command"
--- end
+	local availableLogTypes = {
+		OAK = 3.2,
+		ASPEN= 10,
+		BEECH = 10,
+		RAVAGED = 8,
+		DEADWOOD = 16,
+		TRANSPORT = 8,
+		LODGEPOLEPINE = 30,
+		SHAGBARKHICKORY = 4,
+		PINUSTABULIFORMIS = 10,
+	}
+
+	treeTypeName = string.upper(treeTypeName or "")
+	if availableLogTypes[treeTypeName]==nil then
+		return "Error: Invalid lumber type. Valid types are " .. table.concatKeys(availableLogTypes, ", ")
+	end
+	
+	local maxLength = availableLogTypes[treeTypeName]
+	if treeTypeName == 'PINE' then treeTypeName = 'LODGEPOLEPINE' end
+	if treeTypeName == 'HICKORY' then treeTypeName = 'SHAGBARKHICKORY' end
+	if treeTypeName == 'PINUS' then treeTypeName = 'PINUSTABULIFORMIS' end
+	if length == nil then length = maxLength end
+	if length > maxLength then
+		UniversalAutoload.debugPrint("using maximum length " .. maxLength .. "m")
+		length = maxLength
+	end
+	
+	local controlledVehicle = g_localPlayer and g_localPlayer.getCurrentVehicle()
+	if controlledVehicle then
+
+		local vehicles = UniversalAutoloadManager.getAttachedVehicles(controlledVehicle)
+		local count = 0
+		
+		if next(vehicles) ~= nil then
+			for vehicle, hasAutoload in pairs(vehicles) do
+				if hasAutoload and vehicle:getIsActiveForInput() then
+					local maxSingleLength = UniversalAutoload.getMaxSingleLength(vehicle)
+					maxSingleLength = math.floor(10*maxSingleLength)/10
+					if length > maxSingleLength then
+						length = maxSingleLength - 0.1
+						UniversalAutoload.debugPrint("resizing to fit trailer " .. length .. "m")
+					end
+					if UniversalAutoload.createLogs(vehicle, length, treeTypeName) then
+						count = count + 1
+					end
+				end
+			end
+		end
+	
+		if count>0 then return "Begin adding logs now.." end
+	end
+	return "Please enter a vehicle with a UAL trailer attached to use this command"
+end
 --
--- function UniversalAutoloadManager:consoleAddLogs(arg1, arg2)
+function UniversalAutoloadManager:consoleAddBales(fillTypeName, isRoundbale, width, height, length, wrapState, modName)
+	local usage = "ualAddBales fillTypeName isRoundBale [width] [height/diameter] [length] [wrapState] [modName]"
 
-	-- local length = nil
-	-- local treeTypeName = "PINE"
-	
-	-- if tonumber(arg1) then
-		-- length = tonumber(arg1)
-		-- treeTypeName = arg2
-	-- elseif tonumber(arg2) then
-		-- length = tonumber(arg2)
-		-- treeTypeName = arg1
-	-- elseif arg1 ~= nil then
-		-- treeTypeName = arg1
-	-- end
-	
-	-- local availableLogTypes
+	fillTypeName = Utils.getNoNil(fillTypeName, "STRAW")
+	isRoundbale = Utils.stringToBoolean(isRoundbale)
+	width = width ~= nil and tonumber(width) or nil
+	height = height ~= nil and tonumber(height) or nil
+	length = length ~= nil and tonumber(length) or nil
 
-	-- if not g_modIsLoaded["pdlc_forestryPack"] then
-		-- availableLogTypes = {
-			-- OAK = 3.5,
-			-- ELM = 3.5,
-			-- PINE = 30,
-			-- BIRCH = 5,
-			-- MAPLE = 2,
-			-- POPLAR = 18,
-			-- SPRUCE = 34,
-			-- WILLOW = 2.5,
-			-- CYPRESS = 2.5,
-			-- HICKORY = 4.2,
-			-- STONEPINE = 8,
-		-- }
-	-- else
-		-- availableLogTypes = {
-			-- OAK = 3.5,
-			-- ELM = 3.5,
-			-- PINE = 30,
-			-- BIRCH = 5,
-			-- MAPLE = 2,
-			-- POPLAR = 18,
-			-- SPRUCE = 34,
-			-- WILLOW = 2.5,
-			-- CYPRESS = 2.5,
-			-- HICKORY = 4.2,
-			-- DEADWOOD = 20,
-			-- STONEPINE = 8,
-			-- GIANTSEQUOIA = 7,
-			-- PONDEROSAPINE = 32,
-			-- LODGEPOLEPINE = 32
-		-- }
-	-- end
+	if wrapState ~= nil and tonumber(wrapState) == nil then
+		Logging.error("Invalid wrapState '%s'. Number expected", wrapState, usage)
 
-	-- treeTypeName = string.upper(treeTypeName or "")
-	-- if availableLogTypes[treeTypeName]==nil then
-		-- return "Error: Invalid lumber type. Valid types are " .. table.concatKeys(availableLogTypes, ", ")
-	-- end
-	
-	-- local maxLength = availableLogTypes[treeTypeName]
-	-- if treeTypeName == 'ELM' then treeTypeName = 'AMERICANELM' end
-	-- if treeTypeName == 'HICKORY' then treeTypeName = 'SHAGBARKHICKORY' end
-	-- if length == nil then length = maxLength end
-	-- if length > maxLength then
-		-- print("using maximum length " .. maxLength .. "m")
-		-- length = maxLength
-	-- end
-	
-	-- if g_currentMission.controlledVehicle ~= nil then
+		return
+	end
 
-		-- local vehicles = UniversalAutoloadManager.getAttachedVehicles(g_currentMission.controlledVehicle)
-		-- local count = 0
+	wrapState = tonumber(wrapState or 0)
+	local fillTypeIndex = g_fillTypeManager:getFillTypeIndexByName(fillTypeName)
+
+	if fillTypeIndex == nil then
+		Logging.error("Invalid fillTypeName '%s' (e.g. STRAW). Use %s", fillTypeName, usage)
+
+		return
+	end
+
+	local xmlFilename, _ = g_baleManager:getBaleXMLFilename(fillTypeIndex, isRoundbale, width, height, length, height, modName)
+
+	if xmlFilename == nil then
+		Logging.error("Could not find bale for given size attributes! (%s)", usage)
+		g_baleManager:consoleCommandListBales()
+
+		return
+	end
+	
+	bale = {}
+	bale.xmlFile = xmlFilename
+	bale.fillTypeIndex = fillTypeIndex
+	bale.wrapState = wrapState
+	
+	local controlledVehicle = g_localPlayer and g_localPlayer.getCurrentVehicle()
+	if controlledVehicle then
+
+		local vehicles = UniversalAutoloadManager.getAttachedVehicles(controlledVehicle)
+		local count = 0
 		
-		-- if next(vehicles) ~= nil then
-			-- for vehicle, hasAutoload in pairs(vehicles) do
-				-- if hasAutoload and vehicle:getIsActiveForInput() then
-					-- local maxSingleLength = UniversalAutoload.getMaxSingleLength(vehicle)
-					-- if length > maxSingleLength then
-						-- length = maxSingleLength - 0.1
-						-- print("resizing to fit trailer " .. length .. "m")
-					-- end
-					-- if UniversalAutoload.createLogs(vehicle, treeTypeName, length) then
-						-- count = count + 1
-					-- end
-				-- end
-			-- end
-		-- end
-	
-		-- if count>0 then return "Begin adding logs now.." end
-	-- end
-	-- return "Please enter a vehicle with a UAL trailer attached to use this command"
--- end
+		if next(vehicles) ~= nil then
+			for vehicle, hasAutoload in pairs(vehicles) do
+				if hasAutoload and vehicle:getIsActiveForInput() then
+					if UniversalAutoload.createBales(vehicle, bale) then
+						count = count + 1
+					end
+				end
+			end
+		end
+
+		if count>0 then return "Begin adding bales now.." end
+	end
+	return "Please enter a vehicle with a UAL trailer attached to use this command"
+end
+-- --
+function UniversalAutoloadManager:consoleAddRoundBales_125(fillTypeName)
+	return UniversalAutoloadManager:consoleAddBales(fillTypeName or "DRYGRASS_WINDROW", "true", "1.2", "1.25")
+end
 --
--- function UniversalAutoloadManager:consoleAddBales(fillTypeName, isRoundbale, width, height, length, wrapState, modName)
-	-- local usage = "ualAddBales fillTypeName isRoundBale [width] [height/diameter] [length] [wrapState] [modName]"
-
-	-- fillTypeName = Utils.getNoNil(fillTypeName, "STRAW")
-	-- isRoundbale = Utils.stringToBoolean(isRoundbale)
-	-- width = width ~= nil and tonumber(width) or nil
-	-- height = height ~= nil and tonumber(height) or nil
-	-- length = length ~= nil and tonumber(length) or nil
-
-	-- if wrapState ~= nil and tonumber(wrapState) == nil then
-		-- Logging.error("Invalid wrapState '%s'. Number expected", wrapState, usage)
-
-		-- return
-	-- end
-
-	-- wrapState = tonumber(wrapState or 0)
-	-- local fillTypeIndex = g_fillTypeManager:getFillTypeIndexByName(fillTypeName)
-
-	-- if fillTypeIndex == nil then
-		-- Logging.error("Invalid fillTypeName '%s' (e.g. STRAW). Use %s", fillTypeName, usage)
-
-		-- return
-	-- end
-
-	-- local xmlFilename, _ = g_baleManager:getBaleXMLFilename(fillTypeIndex, isRoundbale, width, height, length, height, modName)
-
-	-- if xmlFilename == nil then
-		-- Logging.error("Could not find bale for given size attributes! (%s)", usage)
-		-- g_baleManager:consoleCommandListBales()
-
-		-- return
-	-- end
+function UniversalAutoloadManager:consoleAddRoundBales_150(fillTypeName)
+	return UniversalAutoloadManager:consoleAddBales(fillTypeName or "DRYGRASS_WINDROW", "true", "1.2", "1.5")
+end
+--
+function UniversalAutoloadManager:consoleAddRoundBales_180(fillTypeName)
+	return UniversalAutoloadManager:consoleAddBales(fillTypeName or "DRYGRASS_WINDROW", "true", "1.2", "1.8")
+end
+--
+function UniversalAutoloadManager:consoleAddSquareBales_180(fillTypeName)
+	return UniversalAutoloadManager:consoleAddBales(fillTypeName or "STRAW", "false", "1.2", "0.9", "1.8")
+end
+--
+function UniversalAutoloadManager:consoleAddSquareBales_220(fillTypeName)
+	return UniversalAutoloadManager:consoleAddBales(fillTypeName or "STRAW", "false", "1.2", "0.9", "2.2")
+end
+--
+function UniversalAutoloadManager:consoleAddSquareBales_240(fillTypeName)
+	return UniversalAutoloadManager:consoleAddBales(fillTypeName or "STRAW", "false", "1.2", "0.9", "2.4")
+end
+-- --
+function UniversalAutoloadManager:consoleClearLoadedObjects()
 	
-	-- bale = {}
-	-- bale.xmlFile = xmlFilename
-	-- bale.fillTypeIndex = fillTypeIndex
-	-- bale.wrapState = wrapState
-	
-	-- if g_currentMission.controlledVehicle ~= nil then
+	local palletCount, balesCount, logCount = 0, 0, 0
+	local controlledVehicle = g_localPlayer and g_localPlayer.getCurrentVehicle()
+	if controlledVehicle then
+		local vehicles = UniversalAutoloadManager.getAttachedVehicles(controlledVehicle)
+		if next(vehicles) ~= nil then
+			for vehicle, hasAutoload in pairs(vehicles) do
+				if hasAutoload and vehicle:getIsActiveForInput() then
+					P, B, L = UniversalAutoload.clearLoadedObjects(vehicle)
+					palletCount = palletCount + P
+					balesCount = balesCount + B
+					logCount = logCount + L
+				end
+			end
+		end
+	end
 
-		-- local vehicles = UniversalAutoloadManager.getAttachedVehicles(g_currentMission.controlledVehicle)
-		-- local count = 0
-		
-		-- if next(vehicles) ~= nil then
-			-- for vehicle, hasAutoload in pairs(vehicles) do
-				-- if hasAutoload and vehicle:getIsActiveForInput() then
-					-- if UniversalAutoload.createBales(vehicle, bale) then
-						-- count = count + 1
-					-- end
-				-- end
-			-- end
-		-- end
-
-		-- if count>0 then return "Begin adding bales now.." end
-	-- end
-	-- return "Please enter a vehicle with a UAL trailer attached to use this command"
--- end
--- --
--- function UniversalAutoloadManager:consoleAddRoundBales_125(fillTypeName)
-	-- return UniversalAutoloadManager:consoleAddBales(fillTypeName or "DRYGRASS_WINDROW", "true", "1.2", "1.25")
--- end
--- --
--- function UniversalAutoloadManager:consoleAddRoundBales_150(fillTypeName)
-	-- return UniversalAutoloadManager:consoleAddBales(fillTypeName or "DRYGRASS_WINDROW", "true", "1.2", "1.5")
--- end
--- --
--- function UniversalAutoloadManager:consoleAddRoundBales_180(fillTypeName)
-	-- return UniversalAutoloadManager:consoleAddBales(fillTypeName or "DRYGRASS_WINDROW", "true", "1.2", "1.8")
--- end
--- --
--- function UniversalAutoloadManager:consoleAddSquareBales_180(fillTypeName)
-	-- return UniversalAutoloadManager:consoleAddBales(fillTypeName or "STRAW", "false", "1.2", "0.9", "1.8")
--- end
--- --
--- function UniversalAutoloadManager:consoleAddSquareBales_220(fillTypeName)
-	-- return UniversalAutoloadManager:consoleAddBales(fillTypeName or "STRAW", "false", "1.2", "0.9", "2.2")
--- end
--- --
--- function UniversalAutoloadManager:consoleAddSquareBales_240(fillTypeName)
-	-- return UniversalAutoloadManager:consoleAddBales(fillTypeName or "STRAW", "false", "1.2", "0.9", "2.4")
--- end
--- --
--- function UniversalAutoloadManager:consoleClearLoadedObjects()
-	
-	-- local palletCount, balesCount, logCount = 0, 0, 0
-	-- if g_currentMission.controlledVehicle ~= nil then
-		-- local vehicles = UniversalAutoloadManager.getAttachedVehicles(g_currentMission.controlledVehicle)
-		-- if next(vehicles) ~= nil then
-			-- for vehicle, hasAutoload in pairs(vehicles) do
-				-- if hasAutoload and vehicle:getIsActiveForInput() then
-					-- P, B, L = UniversalAutoload.clearLoadedObjects(vehicle)
-					-- palletCount = palletCount + P
-					-- balesCount = balesCount + B
-					-- logCount = logCount + L
-				-- end
-			-- end
-		-- end
-	-- end
-
-	-- if palletCount > 0 and balesCount == 0 and logCount == 0 then
-		-- return string.format("REMOVED: %d pallets", palletCount)
-	-- end
-	-- if balesCount > 0 and palletCount == 0 and logCount == 0 then
-		-- return string.format("REMOVED: %d bales", balesCount)
-	-- end
-	-- if logCount > 0 and palletCount == 0 and balesCount == 0 then
-		-- return string.format("REMOVED: %d logs", logCount)
-	-- end
-	-- return string.format("REMOVED: %d pallets, %d bales, %d logs", palletCount, balesCount, logCount)
--- end
--- --
--- function UniversalAutoloadManager:consoleCreateBoundingBox()
-	-- local usage = "Usage: ualCreateBoundingBox"
-
-	-- for _, vehicle in pairs(UniversalAutoload.VEHICLES) do
-		-- if vehicle ~= nil then
-			-- print("CREATING BOUNDING BOX: " .. vehicle:getFullName())
-			-- UniversalAutoload.createBoundingBox(vehicle)
-		-- end
-	-- end
-	-- return "Bounding box created successfully"
--- end
--- --
+	if palletCount > 0 and balesCount == 0 and logCount == 0 then
+		return string.format("REMOVED: %d pallets", palletCount)
+	end
+	if balesCount > 0 and palletCount == 0 and logCount == 0 then
+		return string.format("REMOVED: %d bales", balesCount)
+	end
+	if logCount > 0 and palletCount == 0 and balesCount == 0 then
+		return string.format("REMOVED: %d logs", logCount)
+	end
+	return string.format("REMOVED: %d pallets, %d bales, %d logs", palletCount, balesCount, logCount)
+end
 -- function UniversalAutoloadManager:consoleSpawnTestPallets()
 	-- local usage = "Usage: consoleSpawnTestPallets"
 	
-	-- if g_currentMission.controlledVehicle ~= nil then
+	-- local controlledVehicle = g_localPlayer and g_localPlayer.getCurrentVehicle()
+	-- if controlledVehicle then
 	
-		-- local vehicles = UniversalAutoloadManager.getAttachedVehicles(g_currentMission.controlledVehicle)
+		-- local vehicles = UniversalAutoloadManager.getAttachedVehicles(controlledVehicle)
 		
 		-- if next(vehicles) ~= nil then
 			-- for vehicle, hasAutoload in pairs(vehicles) do
@@ -1784,7 +2161,7 @@ end
 					-- -- local mass = UniversalAutoload.getContainerMass(pallet)
 					-- -- local volume = config.sizeX * config.sizeY * config.sizeZ
 					-- -- print(string.format("%s, %f, %f, %f", config.name, volume, mass, mass/volume))
-					-- -- g_currentMission:removeVehicle(pallet, true)
+					-- -- g_currentMission.vehicleSystem:removeVehicle(pallet, true)
 				-- -- end
 				-- -- UniversalAutoload.testPallets = {}
 			-- -- end
@@ -1794,6 +2171,24 @@ end
 	
 -- end
 --
+function UniversalAutoloadManager.updatePhysicsForLoadedObjects()
+	
+	if g_currentMission:getIsServer() then
+		if UniversalAutoload.lastRemovePhysics == nil then
+			-- UniversalAutoload.debugPrint("GLOBAL REMOVE FROM PHYSICS HAS NEVER CHANGED")
+			UniversalAutoload.lastRemovePhysics = UniversalAutoload.removePhysics
+			return
+		end
+		if UniversalAutoload.lastRemovePhysics ~= UniversalAutoload.removePhysics then
+			-- UniversalAutoload.debugPrint("GLOBAL REMOVE FROM PHYSICS CHANGED")
+			UniversalAutoload.lastRemovePhysics = UniversalAutoload.removePhysics
+			for vehicle, _ in pairs(UniversalAutoload.VEHICLES) do
+				local spec = vehicle and vehicle.spec_universalAutoload
+				UniversalAutoload.togglePhysicsForLoadedObjects(vehicle, true)
+			end
+		end
+	end
+end
 function UniversalAutoloadManager.addAttachedVehicles(vehicle, vehicles)
 
 	if vehicle.getAttachedImplements ~= nil then
@@ -1841,7 +2236,7 @@ function UniversalAutoloadManager.resetNextVehicle()
 end
 --
 function UniversalAutoloadManager.resetVehicle(vehicle)
-	print("UAL - RESET vehicle")
+	UniversalAutoload.debugPrint("UAL - RESET vehicle")
 	if UniversalAutoloadManager.resetCount then
 		print(string.format("RESETTING #%d: %s", UniversalAutoloadManager.resetCount, vehicle:getFullName()))
 	else
@@ -1849,7 +2244,7 @@ function UniversalAutoloadManager.resetVehicle(vehicle)
 	end
 
 	local rootVehicle = vehicle:getRootVehicle()
-	if rootVehicle ~= nil then
+	if rootVehicle then
 		if UniversalAutoloadManager.getIsTrainCarriage(vehicle) then
 			print("*** CANNOT RESET TRAIN - terrible things will happen ***")
 			if UniversalAutoloadManager.resetCount then
@@ -1857,7 +2252,8 @@ function UniversalAutoloadManager.resetVehicle(vehicle)
 			end
 			return true
 		end
-		if rootVehicle == g_currentMission.controlledVehicle then
+		local controlledVehicle = g_localPlayer and g_localPlayer.getCurrentVehicle()
+		if controlledVehicle and rootVehicle == controlledVehicle then
 			print("*** Resetting with standard console command ***")
 			UniversalAutoload.clearLoadedObjects(vehicle)
 			return false
@@ -1867,13 +2263,12 @@ function UniversalAutoloadManager.resetVehicle(vehicle)
 	UniversalAutoload.clearLoadedObjects(vehicle)
 
 	local xmlFile = Vehicle.getReloadXML(vehicle)
-	local key = "vehicles.vehicle(0)"
 
 	if xmlFile ~= nil and xmlFile ~= 0 then
 		local function asyncCallbackFunction(_, newVehicle, vehicleLoadState, arguments)
 			if vehicleLoadState == VehicleLoadingUtil.VEHICLE_LOAD_OK then
 				g_messageCenter:publish(MessageType.VEHICLE_RESET, vehicle, newVehicle)
-				g_currentMission:removeVehicle(vehicle)
+				g_currentMission.vehicleSystem:removeVehicle(vehicle)
 				if UniversalAutoloadManager.resetCount then
 					UniversalAutoloadManager.resetCount = UniversalAutoloadManager.resetCount + 1
 				end
@@ -1889,11 +2284,11 @@ function UniversalAutoloadManager.resetVehicle(vehicle)
 				end
 				if vehicle ~= nil then
 					print("ERROR RESETTING OLD VEHICLE: " .. vehicle:getFullName())
-					--g_currentMission:removeVehicle(vehicle)
+					--g_currentMission.vehicleSystem:removeVehicle(vehicle)
 				end
 				if newVehicle ~= nil then
 					print("ERROR RESETTING NEW VEHICLE: " .. newVehicle:getFullName())
-					--g_currentMission:removeVehicle(newVehicle)
+					--g_currentMission.vehicleSystem:removeVehicle(newVehicle)
 				end
 			end
 			
@@ -1901,8 +2296,8 @@ function UniversalAutoloadManager.resetVehicle(vehicle)
 			UniversalAutoloadManager.resetNextVehicle()
 		end
 		
-		VehicleLoadingUtil.loadVehicleFromSavegameXML(xmlFile, key, true, true, nil, true, asyncCallbackFunction, nil, {})
-		--(xmlFile, key, resetVehicle, allowDelayed, xmlFilename, keepPosition, asyncCallbackFunction, asyncCallbackObject, asyncCallbackArguments)
+		local vehicleSystem = g_currentMission.vehicleSystem
+		vehicleSystem:loadFromXMLFile(xmlFile, asyncCallbackFunction, nil, {}, true, true)
 
 	end
 	return true
@@ -1917,8 +2312,9 @@ end
 
 -- MAIN LOAD MAP FUNCTION
 function UniversalAutoloadManager:loadMap(name)
-	print("UAL - LOADMAP")
-	-- UniversalAutoloadManager.injectMenu()
+	-- UniversalAutoload.debugPrint("UAL - LOADMAP")
+	UniversalAutoloadManager.createShopGui()
+	UniversalAutoloadManager.createGlobalGui()
 	UniversalAutoloadManager.injectSpecialisation()
 	
 	g_messageCenter:subscribe(BuyVehicleEvent, UniversalAutoloadManager.onVehicleBuyEvent, UniversalAutoloadManager)
@@ -1941,74 +2337,89 @@ function UniversalAutoloadManager:loadMap(name)
 	
 	UniversalAutoload.MATERIALS_INDEX = {}
 	for i, key in ipairs(UniversalAutoload.MATERIALS) do
-		-- print("  - "..i..": "..key.." = "..UniversalAutoload.MATERIALS_FILLTYPE[i].title)
+		-- UniversalAutoload.debugPrint("  - "..i..": "..key.." = "..UniversalAutoload.MATERIALS_FILLTYPE[i].title)
 		UniversalAutoload.MATERIALS_INDEX[key] = i
 	end
 
 	-- USER SETTINGS FIRST
-	print("IMPORT vehicle configurations")
-	local userSettingsFile = Utils.getFilename(UniversalAutoload.userSettingsFile, getUserProfileAppPath())
-	UniversalAutoloadManager.ImportLocalConfigurations(userSettingsFile)
-
+	UniversalAutoloadManager.importLocalConfigurations()
 	UniversalAutoloadManager.detectKeybindingConflicts()
 	
 	if g_currentMission:getIsServer() and not g_currentMission.missionDynamicInfo.isMultiplayer then
-		-- addConsoleCommand("ualAddBales", "Fill current vehicle with specified bales", "consoleAddBales", UniversalAutoloadManager)
-		-- addConsoleCommand("ualAddRoundBales_125", "Fill current vehicle with small round bales", "consoleAddRoundBales_125", UniversalAutoloadManager)
-		-- addConsoleCommand("ualAddRoundBales_150", "Fill current vehicle with medium round bales", "consoleAddRoundBales_150", UniversalAutoloadManager)
-		-- addConsoleCommand("ualAddRoundBales_180", "Fill current vehicle with large round bales", "consoleAddRoundBales_180", UniversalAutoloadManager)
-		-- addConsoleCommand("ualAddSquareBales_180", "Fill current vehicle with small square bales", "consoleAddSquareBales_180", UniversalAutoloadManager)
-		-- addConsoleCommand("ualAddSquareBales_220", "Fill current vehicle with medium square bales", "consoleAddSquareBales_220", UniversalAutoloadManager)
-		-- addConsoleCommand("ualAddSquareBales_240", "Fill current vehicle with large square bales", "consoleAddSquareBales_240", UniversalAutoloadManager)
-		-- addConsoleCommand("ualAddPallets", "Fill current vehicle with specified pallets (fill type)", "consoleAddPallets", UniversalAutoloadManager)
-		-- addConsoleCommand("ualAddLogs", "Fill current vehicle with specified logs (length / fill type)", "consoleAddLogs", UniversalAutoloadManager)
-		-- addConsoleCommand("ualClearLoadedObjects", "Remove all loaded objects from current vehicle", "consoleClearLoadedObjects", UniversalAutoloadManager)
+		UniversalAutoload.debugPrint("ADD console commands:")
+		addConsoleCommand("ualRestoreDefaultConfigs", "Restore the mod settings file to defaults only (requires restart to apply)", "consoleResetConfigurations", UniversalAutoloadManager)
+		addConsoleCommand("ualAddBales", "Fill current vehicle with specified bales", "consoleAddBales", UniversalAutoloadManager)
+		addConsoleCommand("ualAddRoundBales_125", "Fill current vehicle with small round bales", "consoleAddRoundBales_125", UniversalAutoloadManager)
+		addConsoleCommand("ualAddRoundBales_150", "Fill current vehicle with medium round bales", "consoleAddRoundBales_150", UniversalAutoloadManager)
+		addConsoleCommand("ualAddRoundBales_180", "Fill current vehicle with large round bales", "consoleAddRoundBales_180", UniversalAutoloadManager)
+		addConsoleCommand("ualAddSquareBales_180", "Fill current vehicle with small square bales", "consoleAddSquareBales_180", UniversalAutoloadManager)
+		addConsoleCommand("ualAddSquareBales_220", "Fill current vehicle with medium square bales", "consoleAddSquareBales_220", UniversalAutoloadManager)
+		addConsoleCommand("ualAddSquareBales_240", "Fill current vehicle with large square bales", "consoleAddSquareBales_240", UniversalAutoloadManager)
+		addConsoleCommand("ualAddPallets", "Fill current vehicle with specified pallets (fill type)", "consoleAddPallets", UniversalAutoloadManager)
+		addConsoleCommand("ualAddLogs", "Fill current vehicle with specified logs (length / fill type)", "consoleAddLogs", UniversalAutoloadManager)
+		addConsoleCommand("ualClearLoadedObjects", "Remove all loaded objects from current vehicle", "consoleClearLoadedObjects", UniversalAutoloadManager)
 		-- addConsoleCommand("ualResetVehicles", "Reset all vehicles with autoload (and any attached) to the shop", "consoleResetVehicles", UniversalAutoloadManager)
-		-- addConsoleCommand("ualImportLocalConfigurations", "Force reload configurations from mod settings", "consoleImportLocalConfigurations", UniversalAutoloadManager)
-		-- addConsoleCommand("ualCreateBoundingBox", "Create a bounding box around all loaded pallets", "consoleCreateBoundingBox", UniversalAutoloadManager)
 		-- addConsoleCommand("ualSpawnTestPallets", "Create one of each pallet type (not loaded)", "consoleSpawnTestPallets", UniversalAutoloadManager)
 		-- addConsoleCommand("ualFullTest", "Test all the different loading types", "consoleFullTest", UniversalAutoloadManager)
-		
-		-- local oldCleanUp = getmetatable(_G).__index.cleanUp
-		-- getmetatable(_G).__index.cleanUp = function()
-			-- print("UNIVERSAL AUTOLOAD: CLEAN UP")
-			-- removeConsoleCommand("ualAddBales")
-			-- removeConsoleCommand("ualAddRoundBales_125")
-			-- removeConsoleCommand("ualAddRoundBales_150")
-			-- removeConsoleCommand("ualAddRoundBales_180")
-			-- removeConsoleCommand("ualAddSquareBales_180")
-			-- removeConsoleCommand("ualAddSquareBales_220")
-			-- removeConsoleCommand("ualAddSquareBales_240")
-			-- removeConsoleCommand("ualAddPallets")
-			-- removeConsoleCommand("ualAddLogs")
-			-- removeConsoleCommand("ualClearLoadedObjects")
-			-- removeConsoleCommand("ualResetVehicles")
-			-- removeConsoleCommand("ualImportLocalConfigurations")
-			-- removeConsoleCommand("ualCreateBoundingBox")
-			-- removeConsoleCommand("ualSpawnTestPallets")
-			-- removeConsoleCommand("ualFullTest")
-			-- oldCleanUp()
-		-- end
 	end
+	
+	if tostring(UniversalAutoload.name) ~= "FS25_UniversalAutoload" then
+		--InfoDialog.show("PLEASE DON'T USE SCUMMY THIRD-PARTY MOD SITES")
+		-- previous save-games will not load correctly if the mod name is changed
+		print("WARNING: altered mod name detected - %s")
+	end
+end
+
+function UniversalAutoloadManager:deleteMap()
+	UniversalAutoload.debugPrint("UNIVERSAL AUTOLOAD: CLEAN UP")
+	removeConsoleCommand("ualRestoreDefaultConfigs")
+	removeConsoleCommand("ualAddBales")
+	removeConsoleCommand("ualAddRoundBales_125")
+	removeConsoleCommand("ualAddRoundBales_150")
+	removeConsoleCommand("ualAddRoundBales_180")
+	removeConsoleCommand("ualAddSquareBales_180")
+	removeConsoleCommand("ualAddSquareBales_220")
+	removeConsoleCommand("ualAddSquareBales_240")
+	removeConsoleCommand("ualAddPallets")
+	removeConsoleCommand("ualAddLogs")
+	removeConsoleCommand("ualClearLoadedObjects")
+	-- removeConsoleCommand("ualResetVehicles")
+	-- removeConsoleCommand("ualSpawnTestPallets")
+	-- removeConsoleCommand("ualFullTest")
+	
+	UniversalAutoloadManager.deleteShopGui()
+	UniversalAutoloadManager.deleteGlobalGui()
 end
 
 -- SYNC SETTINGS:
 Player.readStream = Utils.overwrittenFunction(Player.readStream,
 	function(self, superFunc, streamId, connection, objectId)
 		superFunc(self, streamId, connection, objectId)
-		print("UAL Player.readStream")
+		UniversalAutoload.debugPrint("UAL Player.readStream", debugMultiplayer)
 		UniversalAutoload.disableAutoStrap = streamReadBool(streamId)
-		UniversalAutoload.manualLoadingOnly = streamReadBool(streamId)
-		UniversalAutoload.disableManualLoading = streamReadBool(streamId)
+		UniversalAutoload.removePhysics = streamReadBool(streamId)
+		UniversalAutoload.pricePerLog = streamReadInt32(streamId)
+		UniversalAutoload.pricePerBale = streamReadInt32(streamId)
+		UniversalAutoload.pricePerPallet = streamReadInt32(streamId)
+		UniversalAutoload.minLogLength = streamReadFloat32(streamId)
+		UniversalAutoload.loadingSpeed = streamReadInt32(streamId)
+		UniversalAutoload.objectSpacing = streamReadFloat32(streamId)
+		UniversalAutoload.lowRefreshMode = streamReadBool(streamId)
 	end
 )
 Player.writeStream = Utils.overwrittenFunction(Player.writeStream,
 	function(self, superFunc, streamId, connection)
 		superFunc(self, streamId, connection)
-		print("UAL Player.writeStream")
+		UniversalAutoload.debugPrint("UAL Player.writeStream", debugMultiplayer)
 		streamWriteBool(streamId, UniversalAutoload.disableAutoStrap or false)
-		streamWriteBool(streamId, UniversalAutoload.manualLoadingOnly or false)
-		streamWriteBool(streamId, UniversalAutoload.disableManualLoading or false)
+		streamWriteBool(streamId, UniversalAutoload.removePhysics or false)
+		streamWriteInt32(streamId, UniversalAutoload.pricePerLog or 0)
+		streamWriteInt32(streamId, UniversalAutoload.pricePerBale or 0)
+		streamWriteInt32(streamId, UniversalAutoload.pricePerPallet or 0)
+		streamWriteFloat32(streamId, UniversalAutoload.minLogLength or 0)
+		streamWriteInt32(streamId, UniversalAutoload.loadingSpeed or 150)
+		streamWriteFloat32(streamId, UniversalAutoload.objectSpacing or 0)
+		streamWriteBool(streamId, UniversalAutoload.lowRefreshMode or false)
 	end
 )
 
@@ -2017,37 +2428,10 @@ FSBaseMission.sendInitialClientState = Utils.overwrittenFunction(FSBaseMission.s
 	function(self, superFunc, connection, user, farm)
 		superFunc(self, connection, user, farm)
 		
-		if debugMultiplayer then print("  user: " .. tostring(user.nickname) .. " " .. tostring(farm.name)) end
-		print("connectedToDedicatedServer: " .. tostring(g_currentMission.connectedToDedicatedServer))
-
-		-- UniversalAutoload.disableAutoStrap = UniversalAutoload.disableAutoStrap or false
-		-- UniversalAutoload.manualLoadingOnly = UniversalAutoload.manualLoadingOnly or false
-		-- UniversalAutoload.disableManualLoading = UniversalAutoload.disableManualLoading or false
-		-- UniversalAutoload.pricePerLog = UniversalAutoload.pricePerLog or 0
-		-- UniversalAutoload.pricePerBale = UniversalAutoload.pricePerBale or 0
-		-- UniversalAutoload.pricePerPallet = UniversalAutoload.pricePerPallet or 0
-		
-		-- streamWriteBool(streamId, UniversalAutoload.disableAutoStrap)
-		-- streamWriteBool(streamId, UniversalAutoload.manualLoadingOnly)
-		-- streamWriteBool(streamId, UniversalAutoload.disableManualLoading)
-		-- streamWriteInt32(streamId, spec.pricePerLog)
-		-- streamWriteInt32(streamId, spec.pricePerBale)
-		-- streamWriteInt32(streamId, spec.pricePerPallet)
-		-- streamWriteInt32(streamId, spec.minLogLength)
-
-		-- UniversalAutoload.disableAutoStrap = streamReadBool(streamId)
-		-- UniversalAutoload.manualLoadingOnly = streamReadBool(streamId)
-		-- UniversalAutoload.disableManualLoading = streamReadBool(streamId)
-		-- spec.pricePerLog = streamReadInt32(streamId)
-		-- spec.pricePerBale = streamReadInt32(streamId)
-		-- spec.pricePerPallet = streamReadInt32(streamId)
-		-- spec.minLogLength = streamReadInt32(streamId)
+		UniversalAutoload.debugPrint("  user: " .. tostring(user.nickname) .. " " .. tostring(farm.name), debugMultiplayer)
+		UniversalAutoload.debugPrint("  connectedToDedicatedServer: " .. tostring(g_currentMission.connectedToDedicatedServer))
 	end
 )
-
-
-function UniversalAutoloadManager:deleteMap()
-end
 
 function tableContainsValue(container, value)
 	for k, v in pairs(container) do
@@ -2127,6 +2511,7 @@ ShopConfigScreen.processAttributeData = Utils.overwrittenFunction(ShopConfigScre
 			if vehicle.spec_universalAutoload.isLogTrailer then
 				local maxSingleLengthString
 				local maxSingleLength = UniversalAutoload.getMaxSingleLength(vehicle)
+				maxSingleLength = math.floor(10*maxSingleLength)/10
 				local nearestHalfValue = math.floor(2*maxSingleLength)/2
 				if nearestHalfValue % 1 < 0.1 then
 					maxSingleLengthString = string.format("  %dm", nearestHalfValue)

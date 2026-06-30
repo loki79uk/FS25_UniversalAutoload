@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
-<modDesc descVersion="92">
+<modDesc descVersion="101">
 
     <author>loki_79</author>
-    <version>0.0.0.15</version>
+    <version>1.0.2.9</version>
     
     <title>
         <en>Universal Autoload</en>
@@ -19,43 +19,45 @@
     </title>
     
     <description>
-<en><![CDATA[Autoloading specialisation for flatbed trailers.  This automatically modifies the actual base game trailers, and will be applied to any new or existing trailers on your farm.  Please see the included read-me file for instructions on adding to your own mod trailers or pallets.
+<en><![CDATA[Autoloading specialisation for trailers.  This automatically modifies the actual base game trailers, and will be applied to any new or existing trailers on your farm.  Supported trailers can be configured with a GUI when purchasing in the shop.  Please see the included read-me file for full instructions on configuration.
 
 Features:
-- Loads any compatible pallet/container types (see list below)
-- Loads lumber to any supported forestry vehicles
-- Installed automatically on any compatible trailers (see list below)
+- Loads all pallet/container types
+- Loads lumber to forestry vehicles
 - Load and Unload by selected material or container type
 - Can also restrict loading to full pallets only
-- Select 'ALL' to load mixed types in sequence 
-- Mixed pallets are loaded in size order for best packing efficiency
-- Can interact with trailers when player is on foot (even when not attached to a vehicle)
+- Select 'ALL' to load mixed types in sequence
+- Option to load in stacks or layers
+- Objects are loaded in size order for best packing efficiency
+- Integrated with AutoDrive and CoursePlay
 
-Special Features for 'KRONE Trailer Profi Liner'
-- Load/Unload only available on the side that curtain is open
-- Rear loading directly from forklift
-- Rear door and curtain can be opened and closed by player on foot
+Changelog:
+v1.0.1.0
+- Prevented some runtime errors
+- Improved loading of shipping containers
 
+GitHub-Link: https://github.com/loki79uk/FS25_UniversalAutoload
 ]]>
 </en>
 
-<de><![CDATA[Fügt die automatische Ladefähigkeit für Transportanhänger und Pritschen hinzu.  Die Änderung gilt automatisch für alle kompatiblen Grundausrüstungen im Spiel. Sie wird sowohl für die bereits auf deiner Farm vorhandenen Geräte als auch für zukünftige Käufe angewendet. Die README-Datei enthält die notwendigen Hinweise, um Ihre eigenen modellierten Anhänger oder Paletten hinzuzufügen.
+<de><![CDATA[Autoloading-Spezialisierung für Anhänger.  Dies modifiziert automatisch die aktuellen Anhänger des Basisspiels und wird auf alle neuen oder bestehenden Anhänger auf eurer Farm angewendet.  Unterstützte Anhänger können über eine grafische Benutzeroberfläche beim Kauf im Shop konfiguriert werden.  Eine ausführliche Anleitung zur Konfiguration finden Sie in der mitgelieferten Read-me-Datei.
 
-Funktionen:
-- Lädt jede Art von kompatiblen Paletten oder Containern (siehe Liste unten)
-- Lädt Holz auf beliebige Forstfahrzeuge
-- Wird automatisch auf allen kompatiblen Anhängern installiert (siehe Liste unten)
-- Be- und Entladen durch Auswahl der Warenart oder des Containertyps
-- Möglichkeit, nur vollständig gefüllte Paletten zu laden
-- Modus 'Alle', um alle gemischten Typen nacheinander zu laden
-- Die Paletten werden in der Reihenfolge ihrer Größe geladen, um den Lagerraum zu optimieren
-- Kann auch verwendet werden, wenn man zu Fuß neben dem Gerät steht (auch wenn das Gerät nicht angehängt ist)
+Eigenschaften:
+- Lädt alle Paletten-/Containertypen
+- Lädt Holz auf Forstfahrzeuge
+- Laden und Entladen nach ausgewähltem Material oder Containertyp
+- Kann das Laden auch auf volle Paletten beschränken
+- Wählen Sie 'ALL', um gemischte Typen nacheinander zu laden
+- Option zum Laden in Stapeln oder Schichten
+- Die Objekte werden in der Reihenfolge ihrer Größe geladen, um die beste Packeffizienz zu erzielen
+- Integriert mit AutoDrive und CoursePlay
 
-Sonderfunktionen für den Anhänger 'KRONE Trailer Profi Liner'
-- Be- und Entladen nur von der Öffnungsseite der Plane aus nutzbar
-- Beladen von der Rückseite bei Verwendung eines Gabelstaplers
-- Die Hecktür und die Plane können auch bedient werden, wenn man zu Fuß daneben steht
+Changelog:
+v1.0.1.0
+- Einige Laufzeitfehler wurden behoben
+- Das Laden von Versandcontainern wurde verbessert
 
+GitHub-Link: https://github.com/loki79uk/FS25_UniversalAutoload
 ]]>
 </de>
     </description>
@@ -70,8 +72,15 @@ Sonderfunktionen für den Anhänger 'KRONE Trailer Profi Liner'
     <l10n filenamePrefix="language/l10n" />
     
     <actions>
+        <action name="UNIVERSALAUTOLOAD_SHOP_CONFIG" category="MENU_SHOP_CONFIG" axisType="HALF" ignoreComboMask="false"/>
+        <action name="UNIVERSALAUTOLOAD_SHOP_ADJUST" category="MENU_SHOP_CONFIG" axisType="HALF" ignoreComboMask="false"/>
+        <action name="UNIVERSALAUTOLOAD_GLOBAL_MENU" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
         <action name="UNIVERSALAUTOLOAD_TOGGLE_LOADING" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
         <action name="UNIVERSALAUTOLOAD_UNLOAD_ALL" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
+        <action name="UNIVERSALAUTOLOAD_UNLOAD_POSITION" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
+        <action name="UNIVERSALAUTOLOAD_UNLOAD_POSITION_LEFT" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
+        <action name="UNIVERSALAUTOLOAD_UNLOAD_POSITION_RIGHT" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
+        <action name="UNIVERSALAUTOLOAD_UNLOAD_POSITION_ROTATE" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
         <action name="UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
         <action name="UNIVERSALAUTOLOAD_TOGGLE_FILTER" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
         <action name="UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
@@ -86,15 +95,36 @@ Sonderfunktionen für den Anhänger 'KRONE Trailer Profi Liner'
         <action name="UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
         <action name="UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
         <action name="UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
-        <action name="UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
+        <action name="UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" category="VEHICLE" axisType="HALF" ignoreComboMask="false"/>
     </actions>
     
     <inputBinding>
+        <actionBinding action="UNIVERSALAUTOLOAD_SHOP_CONFIG" >
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_a" />
+        </actionBinding>
+        <actionBinding action="UNIVERSALAUTOLOAD_SHOP_ADJUST" >
+            <binding device="KB_MOUSE_DEFAULT" input="MOUSE_BUTTON_MIDDLE" />
+        </actionBinding>
+        <actionBinding action="UNIVERSALAUTOLOAD_GLOBAL_MENU" >
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lshift KEY_a" />
+        </actionBinding>
         <actionBinding action="UNIVERSALAUTOLOAD_TOGGLE_LOADING" >
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lshift KEY_r" />
         </actionBinding>
         <actionBinding action="UNIVERSALAUTOLOAD_UNLOAD_ALL" >
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lshift KEY_i" />
+        </actionBinding>
+        <actionBinding action="UNIVERSALAUTOLOAD_UNLOAD_POSITION" >
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lshift KEY_i" />
+        </actionBinding>
+        <actionBinding action="UNIVERSALAUTOLOAD_UNLOAD_POSITION_LEFT" >
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_KP_4" />
+        </actionBinding>
+        <actionBinding action="UNIVERSALAUTOLOAD_UNLOAD_POSITION_RIGHT" >
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_KP_6" />
+        </actionBinding>
+        <actionBinding action="UNIVERSALAUTOLOAD_UNLOAD_POSITION_ROTATE" >
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_KP_0" />
         </actionBinding>
         <actionBinding action="UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" >
             <binding device="KB_MOUSE_DEFAULT" input="KEY_u" />
@@ -138,7 +168,7 @@ Sonderfunktionen für den Anhänger 'KRONE Trailer Profi Liner'
         <actionBinding action="UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" >
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lshift KEY_f12" />
         </actionBinding>
-        <actionBinding action="UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" >
+        <actionBinding action="UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" >
             <binding device="KB_MOUSE_DEFAULT" input="KEY_lctrl KEY_lshift KEY_r" />
         </actionBinding>
     </inputBinding>

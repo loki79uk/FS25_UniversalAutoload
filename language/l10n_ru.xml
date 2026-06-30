@@ -1,12 +1,165 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <l10n>
 	<texts>
-		<text name="shop_configuration_text" text="Autoload"/>
+		<text name="shop_configuration_text" text="Автозагрузка"/>
 		<text name="configuration_universalAutoload" text="Универсальная Автозагрузка"/>
+		
+		<!-- TITLES -->
+		<text name="ui_local_settings_ual" text="Локальные настройки"/>
+		<text name="ui_global_settings_ual" text="Глобальные настройки"/>
+		<text name="ui_config_settings_ual" text="Настройки автоматической загрузки"/>
+		<text name="ui_vehicle_options_ual" text="Варианты транспортного средства"/>
+		<text name="ui_loading_area_options_ual" text="Варианты погрузочной площадки"/>
+		<text name="ui_save_options_ual" text="Сохранить параметры"/>
+		<text name="ui_button_save_config_ual" text="Сохранение настроек автомобиля"/>
+		<text name="ui_confirm_save_config_ual" text="Вы хотите перезаписать конфигурацию автозагрузки по умолчанию для этого автомобиля?"/>
+		<text name="ui_confirm_save_config2_ual" text="(Приобретите новое транспортное средство или перезапустите игру, чтобы применить новые настройки)"/>
+		
+		<!-- GLOBAL -->
+		<text name="ui_global_showDebug" text="Показать отладку"/>
+		<text name="ui_global_highPriority" text="Высокий приоритет"/>
+		<text name="ui_global_lowRefreshMode" text="Режим низкой частоты обновления"/>
+		<text name="ui_global_disableAutoStrap" text="Автоматические натяжные ремни"/>
+		<text name="ui_global_removePhysics" text="Удалить из физической симуляции"/>
+		<text name="ui_global_pricePerLog" text="Цена за бревно"/>
+		<text name="ui_global_pricePerBale" text="Цена за тюк"/>
+		<text name="ui_global_pricePerPallet" text="Цена за поддон"/>
+		<text name="ui_global_minLogLength" text="Минимальная длина бревна"/>
+		<text name="ui_global_loadingSpeed" text="Скорость загрузки"/>
+		<text name="ui_global_objectSpacing" text="Расстояние между объектами"/>
+		
+		<text name="ui_global_tooltip_showDebug" text="Отображение полного графического отображения отладки для всех транспортных средств в игре"/>
+		<text name="ui_global_tooltip_highPriority" text="Примените высокий приоритет ко всем привязкам клавиш UAL в меню F1"/>
+		<text name="ui_global_tooltip_lowRefreshMode" text="Обновлять реже — включите этот параметр, если возникает задержка при автозагрузке"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="Автоматическое применение натяжных лент после погрузки или разгрузки"/>
+		<text name="ui_global_tooltip_removePhysics" text="Удалить поддоны из физической симуляции при использовании натяжных ремней"/>
+		<text name="ui_global_tooltip_pricePerLog" text="Цена, взимаемая за каждый автоматически загружаемое бревно"/>
+		<text name="ui_global_tooltip_pricePerBale" text="Цена, взимаемая за каждый автоматически загружаемый тюк"/>
+		<text name="ui_global_tooltip_pricePerPallet" text="Цена, взимаемая за каждый автоматически загружаемый поддон"/>
+		<text name="ui_global_tooltip_minLogLength" text="Глобальная минимальная длина бревна, которые будут загружаться автоматически"/>
+		<text name="ui_global_tooltip_loadingSpeed" text="Задержка между загрузкой каждого объекта (мс)"/>
+		<text name="ui_global_tooltip_objectSpacing" text="Дополнительное расстояние между загруженными объектами (м)"/>
+
+		<!-- OPTIONS -->
+		<text name="ui_option_enableAutoload" text="Включить автозагрузку"/>
+		<text name="ui_option_trailerType" text="Тип прицепа"/>
+		<text name="ui_option_unloadingType" text="Положение разгрузки"/>
+		<text name="ui_option_rearOnly" text="Только сзади"/>
+		<text name="ui_option_frontOnly" text="Только спереди"/>
+		
+		<text name="ui_option_noLoadingFolded" text="Не загружаться, если состояние"/>
+		<text name="ui_option_folded" text="Сложенный"/>
+		<text name="ui_option_unfolded" text="Разложенный"/>
+		
+		<text name="ui_option_noLoadingCovered" text="Не загружаться, если крышка"/>
+		<text name="ui_option_covered" text="Закрыта"/>
+		<text name="ui_option_uncovered" text="Открыта"/>
+
+		<text name="ui_option_isBoxTrailer" text="Фургон"/>
+		<text name="ui_option_isLogTrailer" text="Прицеп для перевозки бревен"/>
+		<text name="ui_option_isBaleTrailer" text="Прицеп для тюков"/>
+		<text name="ui_option_isBaleProcessor" text="Устройство для обработки тюков"/>
+		<text name="ui_option_isCurtainTrailer" text="Шторный прицеп"/>
+		<text name="ui_option_enableRearLoading" text="Включить заднюю загрузку"/>
+		<text name="ui_option_enableSideLoading" text="Включить боковую загрузку"/>
+		<text name="ui_option_extendPickupRange" text="Увеличить радиус подбора"/>
+
+		<text name="ui_option_rearUnloadingOnly" text="Только задняя разгрузка"/>
+		<text name="ui_option_frontUnloadingOnly" text="Только передняя разгрузка"/>
+		<text name="ui_option_horizontalLoading" text="Горизонтальная загрузка"/>
+		<text name="ui_option_disableAutoStrap" text="Автоматические натяжные ремни"/>
+		<text name="ui_option_disableHeightLimit" text="Предельная высота штабелирования"/>
+		<text name="ui_option_zonesOverlap" text="Зоны перекрываются"/>
+		<text name="ui_option_offsetRoot" text="Смещенный корнеплод"/>
+		<text name="ui_option_minLogLength" text="Минимальная длина бревна"/>
+		
+		<text name="ui_option_tooltip_enableAutoload" text="Если автозагрузка включена или отключена для данного автомобиля"/>
+		<text name="ui_option_tooltip_trailerType" text="Специальный тип прицепа, например, для перевозки тюков, бревен, навесов"/>
+		<text name="ui_option_tooltip_unloadingType" text="Используйте специальное место для разгрузки (спереди или сзади)."/>
+		<text name="ui_option_tooltip_noLoadingFolded" text="Отключает загрузку в сложенном или разложенном виде"/>
+		<text name="ui_option_tooltip_noLoadingCovered" text="Отключает загрузку при закрытом или открытом положениии крышки"/>
+		
+		<text name="ui_option_tooltip_isBoxTrailer" text="Если прицеп - фургон с задней дверью"/>
+		<text name="ui_option_tooltip_isLogTrailer" text="Если прицеп является лесовозным - будут загружены только бревна, сброшенные сверху"/>
+		<text name="ui_option_tooltip_isBaleTrailer" text="Если прицеп должен использовать автоматический режим сбора тюков,"/>	
+		<text name="ui_option_tooltip_isBaleProcessor" text="Если прицеп должен использовать тюки (например, смеситель TMR или воздуходувку для соломы)"/>
+		<text name="ui_option_tooltip_isCurtainTrailer" text="Автоматическое определение доступной стороны загрузки (если у прицепа есть боковые шторки)"/>
+		<text name="ui_option_tooltip_enableRearLoading" text="Используйте автоматические триггеры задней загрузки"/>
+		<text name="ui_option_tooltip_enableSideLoading" text="Используйте автоматические триггеры боковой загрузки"/>
+		<text name="ui_option_tooltip_extendPickupRange" text="Увеличивает радиус обнаружения загрузочных триггеров"/>
+
+		<text name="ui_option_tooltip_rearUnloadingOnly" text="Используйте только заднюю зону разгрузки (без боковых зон)."/>
+		<text name="ui_option_tooltip_frontUnloadingOnly" text="Используйте только переднюю зону разгрузки (без боковых зон)."/>
+		<text name="ui_option_tooltip_horizontalLoading" text="Начните с включенной горизонтальной загрузки (можно переключать, если клавиша привязана)"/>
+		<text name="ui_option_tooltip_disableAutoStrap" text="Автоматическое применение натяжных лент после погрузки или разгрузки"/>
+		<text name="ui_option_tooltip_disableHeightLimit" text="Ограничьте высоту укладки поддонов в зависимости от плотности "/>
+		<text name="ui_option_tooltip_zonesOverlap" text="Флажок, указывающий, когда области загрузки перекрывают друг друга"/>
+		<text name="ui_option_tooltip_offsetRoot" text="Узел i3d транспортного средства, относительно которого смещены области"/>
+		<text name="ui_option_tooltip_minLogLength" text="Минимальная длина бревна, которые будут загружаться автоматически"/>
+
+		<text name="ui_option_addRemoveAreas" text="Число зон загрузки"/>
+		<text name="ui_option_selectedArea" text="Выбранная зона"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="Измени это число для добавления или удаления зон загрузки"/>
+		<text name="ui_option_tooltip_selectedArea" text="Выбранная зона загрузки (для изменения настроек ниже)"/>
+		
+		<text name="ui_option_selectedConfigSet" text="Выбранный набор конфигураций"/>
+		<text name="ui_option_useConfigName" text="Использовать имя конфигурации"/>
+		<text name="ui_option_useConfigIndex" text="Использовать индекс конфигурации"/>
+		<text name="ui_option_tooltip_selectedConfigSet" text="'Набор настроек'  к которому будут применены сохраненные настройки"/>
+		<text name="ui_option_tooltip_useConfigName" text="Конфигурация для индексации (по желанию)"/>
+		<text name="ui_option_tooltip_useConfigIndex" text="Индекс для конфигурации (по желанию)"/>
+		
+		<!-- LOADING_AREA -->
+		<text name="ui_loadArea_offset" text="Смещение"/>
+		<text name="ui_loadArea_offsetRoot" text="Смещенный корнеплод"/>
+		<text name="ui_loadArea_width" text="Ширина"/>
+		<text name="ui_loadArea_length" text="Длина"/>
+		<text name="ui_loadArea_height" text="Высота"/>
+		<text name="ui_loadArea_baleHeight" text="Высота тюка"/>
+		<text name="ui_loadArea_widthAxis" text="Ось ширины"/>
+		<text name="ui_loadArea_lengthAxis" text="Ось длины"/>
+		<text name="ui_loadArea_heightAxis" text="Ось высоты"/>
+		<text name="ui_loadArea_offsetFrontAxis" text="Смещение передней оси"/>
+		<text name="ui_loadArea_offsetRearAxis" text="Смещение задней оси"/>
+		<text name="ui_loadArea_reverseWidthAxis" text="Обратная ось ширины"/>
+		<text name="ui_loadArea_reverseLengthAxis" text="Обратная ось длины"/>
+		<text name="ui_loadArea_reverseHeightAxis" text="Обратная ось высоты"/>
+		<text name="ui_loadArea_noLoadingIfFolded" text="В сложенном виде не загружается"/>
+		<text name="ui_loadArea_noLoadingIfUnfolded" text="В разложенном виде загрузка не производится"/>
+		<text name="ui_loadArea_noLoadingIfCovered" text="Нет загрузки, если она закрыта"/>
+		<text name="ui_loadArea_noLoadingIfUncovered" text="Без крышки не загружаются"/>
+		
+		<text name="ui_loadArea_tooltip_offset" text="Смещение к центру погрузочной площадки"/>
+		<text name="ui_loadArea_tooltip_offsetRoot" text="Узел i3d транспортного средства, относительно которого смещено это поле"/>
+		<text name="ui_loadArea_tooltip_width" text="Ширина погрузочной площадки"/>
+		<text name="ui_loadArea_tooltip_length" text="Длина погрузочной площадки"/>
+		<text name="ui_loadArea_tooltip_height" text="Высота погрузочной площадки"/>
+		<text name="ui_loadArea_tooltip_baleHeight" text="Высота погрузочной площадки только для тюков"/>
+		<text name="ui_loadArea_tooltip_widthAxis" text="Название оси для увеличения ширины зоны загрузки"/>
+		<text name="ui_loadArea_tooltip_lengthAxis" text="Название оси для увеличения длины зоны загрузки"/>
+		<text name="ui_loadArea_tooltip_heightAxis" text="Название оси для увеличения высоты зоны загрузки"/>
+		<text name="ui_loadArea_tooltip_offsetFrontAxis" text="Название оси для регулировки переднего положения зоны загрузки"/>
+		<text name="ui_loadArea_tooltip_offsetRearAxis" text="Название оси для регулировки заднего положения погрузочной площадки"/>
+		<text name="ui_loadArea_tooltip_reverseWidthAxis" text="Изменяет направление увеличения ширины на противоположное, если задано значение true"/>
+		<text name="ui_loadArea_tooltip_reverseLengthAxis" text="Изменяет направление увеличения длины на противоположное, если задано значение true"/>
+		<text name="ui_loadArea_tooltip_reverseHeightAxis" text="Изменяет направление увеличения высоты на противоположное, если задано значение true"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfFolded" text="Предотвращение загрузки в сложенном виде (только для этой области)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfUnfolded" text="Предотвращение загрузки в разложенном виде (только для этой области)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfCovered" text="Не допускайте погрузки в закрытом состоянии (только для этой зоны)"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Предотвращать загрузку в открытом виде (только для этой области)"/>
+
+		<!-- KEY BINDINGS -->
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Открыть меню глобальных настроек"/>
+		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Откройте меню настроек конфигурации (в магазине)."/>
+		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Включить редактирование объема загрузки (в магазине)"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Переключить загрузку"/>
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Автоматический сбор тюков"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" text="Автоматический режим загрузки"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Разгрузка"/>
 		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Принудительная разгрузка"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_POSITION" text="Установить положение разгрузки"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_POSITION_LEFT" text="Сдвинуть положение разгрузки влево"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_POSITION_RIGHT" text="Сдвинуть положение разгрузки вправо"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_POSITION_ROTATE" text="Повернуть положение разгрузки"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Сменить сторону разгрузки"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Переключить фильтр загрузки"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Переключение горизонтальной загрузки"/>
@@ -31,6 +184,8 @@
 		<text name="universalAutoload_tipside" text="Сторона разгрузки"/>
 		<text name="universalAutoload_left" text="Слева"/>
 		<text name="universalAutoload_right" text="Справа"/>
+		<text name="universalAutoload_front" text="Перед"/>
+		<text name="universalAutoload_rear" text="Зад"/>
 		<text name="universalAutoload_none" text="Нет"/>
 		<text name="universalAutoload_loadingFilter" text="Фильтр загрузки"/>
 		<text name="universalAutoload_loadingMethod" text="Способ загрузки"/>
@@ -42,7 +197,10 @@
 		<text name="universalAutoload_stopLoading" text="Остановить загрузку"/>
 		<text name="universalAutoload_unloadAll" text="Разгрузка"/>
 		<text name="universalAutoload_unloadAllForce" text="Принудительная разгрузка"/>
+		<text name="universalAutoload_logMode" text="Режим Бревна"/>
 		<text name="universalAutoload_baleMode" text="Автосбор тюков"/>
+		<text name="universalAutoload_palletMode" text="Режим поддонов"/>
+		<text name="universalAutoload_collectionMode" text="Режим сбора"/>
 		<text name="universalAutoload_enabled" text="Включено"/>
 		<text name="universalAutoload_disabled" text="Отключено"/>
 		<text name="universalAutoload_activate" text="Активировать"/>

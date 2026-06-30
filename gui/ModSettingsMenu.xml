@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<GUI name="modSettingsMenu">
+    <GuiElement profile="fs25_menuContainer">
+        <!-- Static page header -->
+        <GuiElement profile="fs25_menuHeaderPanel">
+			<Bitmap profile="fs25_menuHeaderIconBg">
+				<Bitmap profile="fs25_menuHeaderIcon" imageSliceId="gui.icon_options_generalSettings2"/>
+			</Bitmap>
+			<Text profile="fs25_menuHeaderTitle" id="categoryHeaderText" text="MOD SETTINGS"/>
+			<!-- $l10n_ui_inGameMenuModeSettings -->
+		</GuiElement>
+        <BoxLayout profile="fs25_subCategorySelectorTabbedBox" id="subCategoryBox">
+            <Button profile="fs25_subCategorySelectorTabbedTab" id="subCategoryTabs[1]" text="MOD #1" onClick="onClickModSlot1">
+                <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
+            </Button>
+            <Button profile="fs25_subCategorySelectorTabbedTab" id="subCategoryTabs[2]" text="MOD #2" onClick="onClickModSlot2">
+                <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
+            </Button>
+            <Button profile="fs25_subCategorySelectorTabbedTab" id="subCategoryTabs[3]" text="MOD #3" onClick="onClickModSlot3">
+                <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
+            </Button>
+            <Button profile="fs25_subCategorySelectorTabbedTab" id="subCategoryTabs[4]" text="MOD #4" onClick="onClickModSlot4">
+                <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
+            </Button>
+            <Button profile="fs25_subCategorySelectorTabbedTab" id="subCategoryTabs[5]" text="MOD #5" onClick="onClickModSlot5">
+                <ThreePartBitmap profile="fs25_subCategorySelectorTabbedTabBg" name="background" />
+            </Button>
+        </BoxLayout>
+		<ThreePartBitmap profile="fs25_lineSeparatorTopHighlighted" position="0px -57px"/>
+		<MultiTextOption profile="fs25_subCategorySelectorTabbed" id="modSelectionPaging" position="0px -10px" onClick="updateModPages" />
+        
+		<!-- <GuiElement profile="fs25_subCategorySelectorTabbedContainer" id="settingsFrame"> -->
+			<!-- <ScrollingLayout profile="fs25_settingsLayout" id="ualGeneralSettingsLayout"> -->
+				<!-- <Bitmap profile="fs25_multiTextOptionContainer"> -->
+					<!-- <BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickBinaryOption" id="checkAutoHelp"> -->
+						<!-- <Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_toolTip_autoHelp"/> -->
+					<!-- </BinaryOption> -->
+					<!-- <Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_setting_helpWindow"/> -->
+				<!-- </Bitmap> -->
+			<!-- </ScrollingLayout> -->
+		<!-- </GuiElement> -->
+		
+    </GuiElement>
+</GUI>

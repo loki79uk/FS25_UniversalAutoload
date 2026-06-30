@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<GUI name="shopConfigUALSettingsFrame" onOpen="onOpen" onClose="onClose" onCreate="onCreate">
+    <GuiElement profile="newLayer"/>
+	<Bitmap profile="dialogFullscreenBg"/>
+
+	<GuiElement profile="fs25_dialogBg" id="dialogElement" size="1600px 900px">
+		<ThreePartBitmap profile="fs25_dialogBgMiddleSmall"/>
+		<ThreePartBitmap profile="fs25_dialogBgTopSmall"/>
+		<ThreePartBitmap profile="fs25_dialogBgBottom"/>
+		<GuiElement profile="fs25_dialogContentContainer">
+			
+			<GuiElement profile="fs25_shopHeaderPanel" position="30px -35px">
+				<Bitmap profile="fs25_menuHeaderIconBg">
+					<Bitmap profile="fs25_menuHeaderIcon" imageSliceId="gui.icon_options_device"/>
+				</Bitmap>
+				<Text profile="fs25_menuHeaderTitle" id="guiTitle" text="$l10n_ui_config_settings_ual"/>
+			</GuiElement>
+			
+			<GuiElement profile="fs25_menuContainer">
+				<ScrollingLayout profile="fs25_settingsLayout" id="ualShopConfigSettingsLayout">
+				
+					<Text profile="fs25_settingsSectionHeader" name="enableAutoload" text="$l10n_ui_option_enableAutoload"/>
+					
+					<!-- ENABLE/DISABLE AUTOLOAD -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox" name="enableAutoload">
+						<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickBinaryOption" id="enableAutoloadCheckBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_enableAutoload"/>
+						</BinaryOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_enableAutoload"/>
+					</Bitmap>
+					
+					<Text profile="fs25_settingsSectionHeader" name="sectionHeader" text="$l10n_ui_vehicle_options_ual"/>
+					
+					<!-- TRAILER TYPE -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<MultiTextOption profile="fs25_settingsMultiTextOption" focusInit="onOpen" onClick="onClickMultiOption" onCreate="onCreateTrailerType" id="trailerTypeListBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_trailerType"/>
+						</MultiTextOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_trailerType"/>
+					</Bitmap>
+					
+					<!-- FRONT/REAR UNLOADING POSITION -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickMultiOption" onCreate="onCreateUnloadingType" id="unloadingTypeListBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_unloadingType"/>
+						</MultiTextOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_unloadingType"/>
+					</Bitmap>
+					
+					<!-- HORIZONTAL LOADING -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickBinaryOption" id="horizontalLoadingCheckBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_horizontalLoading"/>
+						</BinaryOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_horizontalLoading"/>
+					</Bitmap>
+					
+					<!-- SIDE/REAR LOADING -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickBinaryOption" id="enableSideLoadingCheckBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_enableSideLoading"/>
+						</BinaryOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_enableSideLoading"/>
+					</Bitmap>
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickBinaryOption" id="enableRearLoadingCheckBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_enableRearLoading"/>
+						</BinaryOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_enableRearLoading"/>
+					</Bitmap>
+
+					<!-- EXTENDED RANGE -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickBinaryOption" id="extendPickupRangeCheckBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_extendPickupRange"/>
+						</BinaryOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_extendPickupRange"/>
+					</Bitmap>
+					
+					<!-- AUTO STRAP -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickBinaryOption" id="disableAutoStrapCheckBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_disableAutoStrap"/>
+						</BinaryOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_disableAutoStrap"/>
+					</Bitmap>
+					<!-- HEIGHT LIMIT -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickBinaryOption" id="disableHeightLimitCheckBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_disableHeightLimit"/>
+						</BinaryOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_disableHeightLimit"/>
+					</Bitmap>
+					
+					<!-- NO LOADING FOLDED/UNFOLDED -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickMultiOption" onCreate="onCreateNoLoadingFolded" id="noLoadingFoldedListBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_noLoadingFolded"/>
+						</MultiTextOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_noLoadingFolded"/>
+					</Bitmap>
+					
+					<!-- NO LOADING COVERED/UNCOVERED -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickMultiOption" onCreate="onCreateNoLoadingCovered" id="noLoadingCoveredListBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_noLoadingCovered"/>
+						</MultiTextOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_noLoadingCovered"/>
+					</Bitmap>
+					
+					<!-- ZONES OVERLAP -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<BinaryOption profile="fs25_settingsBinaryOption" onClick="onClickBinaryOption" id="zonesOverlapCheckBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_zonesOverlap"/>
+						</BinaryOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_zonesOverlap"/>
+					</Bitmap>
+					
+					<Text profile="fs25_settingsSectionHeader" name="sectionHeader" text="$l10n_ui_loading_area_options_ual"/>
+					
+					<!-- NUMBER OF LOADING AREAS -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickAreaMultiOption" onCreate="onCreateAddRemoveAreas" id="addRemoveAreasListBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_addRemoveAreas"/>
+						</MultiTextOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_addRemoveAreas"/>
+					</Bitmap>
+					
+					<!-- SELECT LOADING AREA -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickAreaMultiOption" onCreate="onCreateSelectedArea" id="selectedAreaListBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_selectedArea"/>
+						</MultiTextOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_selectedArea"/>
+					</Bitmap>
+					
+					<!-- HEIGHT/LENGTH/WIDTH AXIS DIRECTION -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickAreaMultiOption" onCreate="onCreateAxisDirection" id="lengthAxisDirectionListBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_loadArea_tooltip_lengthAxis"/>
+						</MultiTextOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_loadArea_lengthAxis"/>
+					</Bitmap>
+					
+					
+
+					<Text profile="fs25_settingsSectionHeader" name="sectionHeader" text="$l10n_ui_save_options_ual"/>
+					
+					<!-- SELECTED CONFIG -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickSelectedConfigs" onCreate="onCreateSelectedConfigSet" id="selectedConfigsListBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_selectedConfigSet"/>
+						</MultiTextOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_selectedConfigSet"/>
+					</Bitmap>
+					
+					<!-- USE CONFIG NAME -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickSelectedConfigs" onCreate="onCreateUseConfigName" id="useConfigNameListBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_useConfigName"/>
+						</MultiTextOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_useConfigName"/>
+					</Bitmap>
+					
+					<!-- USE CONFIG INDEX -->
+					<Bitmap profile="fs25_multiTextOptionContainer" id="settingsElementBox">
+						<MultiTextOption profile="fs25_settingsMultiTextOption" onClick="onClickSelectedConfigs" onCreate="onCreateUseConfigIndex" id="useConfigIndexListBox">
+							<Text profile="fs25_multiTextOptionTooltip" name="ignore" text="$l10n_ui_option_tooltip_useConfigIndex"/>
+						</MultiTextOption>
+						<Text profile="fs25_settingsMultiTextOptionTitle" text="$l10n_ui_option_useConfigIndex"/>
+					</Bitmap>
+
+				</ScrollingLayout>
+				<Bitmap profile="fs25_settingsTooltipSeparator"/>
+			</GuiElement>
+			
+			<ThreePartBitmap profile="fs25_sliderDockedBg">
+				<ThreePartBitmap profile="fs25_sliderDockedBox">
+					<Slider profile="fs25_sliderDocked" dataElementId="ualShopConfigSettingsLayout"/>
+				</ThreePartBitmap>
+			</ThreePartBitmap>
+		</GuiElement>
+		
+		<BoxLayout profile="fs25_dialogButtonBox" id="buttonsPanel">
+			<Button profile="buttonBuy" id="menuButtonSave" text="$l10n_ui_button_save_config_ual" onClick="onClickSave"/>
+			<Button profile="buttonBack" id="menuButtonClose" text="$l10n_button_close" onClick="onClickClose"/>
+		</BoxLayout>
+	</GuiElement>
+</GUI>

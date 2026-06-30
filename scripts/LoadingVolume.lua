@@ -50,21 +50,81 @@ function LoadingVolume:getVerticalAxis()
 
 		local _, p = self.boundingBox:getCubeFaces()
 		local ux, uy, uz, length = LoadingVolume.getNormalisedVector(p[3], p[4])
+
+		if self.vehicle and self.vehicle.spec_tensionBelts then
+			local linkNode = self.vehicle.spec_tensionBelts.linkNode
+			local linkNodeRotation = self.vehicle.spec_tensionBelts.linkNodeRotation or {0, 0, 0}
+			-- print("linkNode:", linkNode, unpack(linkNodeRotation))
+			if math.abs(linkNodeRotation[1]) > UniversalAutoload.DELTA then
+				local angle = linkNodeRotation[1]
+				local cosA = math.cos(angle)
+				local sinA = math.sin(angle)
+				local ry = uy * cosA - uz * sinA
+				local rz = uy * sinA + uz * cosA
+				ux, uy, uz = ux, ry, rz
+			end
+			if math.abs(linkNodeRotation[2]) > UniversalAutoload.DELTA then
+				local angle = linkNodeRotation[2]
+				local cosA = math.cos(angle)
+				local sinA = math.sin(angle)
+				local rx = ux * cosA + uz * sinA
+				local rz = -ux * sinA + uz * cosA
+				ux, uy, uz = rx, uy, rz
+			end
+			if math.abs(linkNodeRotation[3]) > UniversalAutoload.DELTA then
+				local angle = linkNodeRotation[3]
+				local cosA = math.cos(angle)
+				local sinA = math.sin(angle)
+				local rx = ux * cosA - uy * sinA
+				local ry = ux * sinA + uy * cosA
+				ux, uy, uz = rx, ry, uz
+			end
+		end
 		
 		return {ux, uy, uz}, length
 	end
 end
 
+function LoadingVolume:addBoundingBox()
+	if self.bbs and #self.bbs > 0 then
+		local bb0 = self.bbs[#self.bbs]
+		local centre, points, names = bb0:getCubeFaces()
+		
+		local bb1 = BoundingBox.new(self.rootNode)
+		bb1:addPoints(points, true)
+		bb1:getCubeFaces()
+		table.insert(self.bbs, bb1)
+		
+		local size = bb0:getSize()
+		local delta = size.z
+		bb0:moveFace(6, delta/2)
+		bb1:moveFace(5, -delta/2)
+	end
+end
+
+function LoadingVolume:removeBoundingBox()
+	if self.bbs and #self.bbs > 1 then
+		local bb0 = self.bbs[#self.bbs]
+		local bb1 = self.bbs[#self.bbs-1]
+		
+		local size = bb0:getSize()
+		local delta = size.z
+		bb1:moveFace(6, -delta)
+		
+		self.bbs[#self.bbs] = nil
+	end
+end
+
 function LoadingVolume:clearDebug()
 	if #self.debug.raycasts > 0 then
-		-- print("CLEARING RAYCASTS")
+		-- UniversalAutoload.debugPrint("CLEARING RAYCASTS")
 		for _, r in pairs(self.debug.raycasts) do
 			r = nil
 		end
 		self.debug.raycasts = {}
 	end
 	if #self.debug.points then
-		-- print("CLEARING POINTS")
+		-- UniversalAutoload.debugPrint("CLEARING POINTS")
 		for _, p in pairs(self.debug.points) do
 			p = nil
 		end
@@ -126,7 +186,11 @@ function LoadingVolume:draw(drawAll)
 	
 	if self.bbs then
 		for _, bb in ipairs(self.bbs) do
-			bb:draw(0, 1, 0)
+			if bb:isEmpty(0, false) then
+				bb:draw(0, 1, 0)
+			else
+				bb:draw(1, 0, 0)
+			end
 		end
 	end
 
@@ -136,22 +200,27 @@ function LoadingVolume:draw(drawAll)
 		if shopConfig and shopConfig.enableEditing then
 	
 			local hovered = shopConfig.hovered
-			local selected = shopConfig.selected	
+			local selected = shopConfig.selected
 			for n, bb in pairs(self.bbs) do
 				local centre, points, names = bb:getCubeFaces()
 				for i, p in pairs(points or {}) do
-					local r, g, b, a, solid = 1, 0, 1, 0.1, false
+					local r, g, b, a, solid = 1, 0, 1, 0.5, false
 					if selected and n==selected[1] and i==selected[2] then
 						r, g, b = 1, 1, 1
 						a, solid = 1, true
 					elseif hovered and n==hovered[1] and i==hovered[2] then
-						r, g, b = 1, 0, 1
+						r, g, b = 1, 0.025, 1
 						a, solid = 1, true
 					end
 					
 					drawDebugPoint(p[1], p[2], p[3], r, g, b, a, solid)
 				end
-
+				
+				local c = centre
+				Utils.renderTextAtWorldPosition(c[1], c[2], c[3], string.format("#%d", n), getCorrectTextSize(0.015), 0, {0,1,1})
+				
+				local size = bb:getSize()
+				renderText(0.4, 0.92-(n*0.035), 0.025, string.format("[#%d] W, H, L = %.3f, %.3f, %.3f", n, size.x, size.y, size.z))
 			end
 		end
 	end
@@ -203,10 +272,10 @@ function LoadingVolume:findSurface(a, b, showAll)
 				local CCT = getCCTCollisionFlags(hitObjectId)
 				local mask = getCollisionFilterMask(hitObjectId)
 				local group = getCollisionFilterGroup(hitObjectId)
-				-- print("--- findSurface ---")
-				-- print("CCT: " .. tostring(CCT))
-				-- print("mask: " .. tostring(mask))
-				-- print("group: " .. tostring(group))
+				-- UniversalAutoload.debugPrint("--- findSurface ---")
+				-- UniversalAutoload.debugPrint("CCT: " .. tostring(CCT))
+				-- UniversalAutoload.debugPrint("mask: " .. tostring(mask))
+				-- UniversalAutoload.debugPrint("group: " .. tostring(group))
 				-- DebugUtil.printTableRecursively(CollisionFlag.getFlagsFromMask(group), "--", 0, 1)
 			end
 		end
@@ -241,7 +310,7 @@ function LoadingVolume:findSurface(a, b, showAll)
 		return raycastResult
 
 	else
-		-- print("NO SURFACE FOUND")
+		-- UniversalAutoload.debugPrint("NO SURFACE FOUND")
 		if showAll then
 			table.insert(self.debug.raycasts, raycastResult)
 		end
@@ -278,7 +347,7 @@ function LoadingVolume:findTensionBelts()
 		
 		local candidatePairs = hitPairs
 		if #hitPairs < #originalPairs then
-			print("USING ORIGNAL PAIRS")
+			UniversalAutoload.debugPrint("USING ORIGNAL PAIRS")
 			candidatePairs = originalPairs
 		end
 		
@@ -347,7 +416,7 @@ function LoadingVolume:findTensionBelts()
 		end
 		
 		if #self.beltGroups == 0 then
-			print("NO BELT GORUPS")
+			UniversalAutoload.debugPrint("NO BELT GORUPS")
 			self.state = LoadingVolume.STATE.ERROR
 			return
 		end
@@ -361,12 +430,12 @@ function LoadingVolume:findLoadingSurface()
 	self:clearDebug()
 	
 	for n, group in ipairs(self.beltGroups) do
-		--print("GROUP " .. n)
+		--UniversalAutoload.debugPrint("GROUP " .. n)
 		local points = {}
 		local averageY = 0
 		local pointCount = 0
 		for i, point in ipairs(group) do
-			--print("point " .. i .. " = " .. point[2])
+			--UniversalAutoload.debugPrint("point " .. i .. " = " .. point[2])
 			averageY = averageY + point[2]
 			pointCount = pointCount + 1
 		end
@@ -447,13 +516,13 @@ function LoadingVolume:expandLoadingSurface()
 		local step3 = step2/5
 
 		for i = step1, range, step1 do
-			--print(i)
+			--UniversalAutoload.debugPrint(i)
 			if not expandPoint(bb, point, i, direction, offset) then
 				for j = step2-step1, 0, step2 do
-					--print(i+j)
+					--UniversalAutoload.debugPrint(i+j)
 					if not expandPoint(bb, point, i+j, direction, offset) then
 						for k = step3-step2, 0, step3 do
-							--print(i+j+k)
+							--UniversalAutoload.debugPrint(i+j+k)
 							if not expandPoint(bb, point, i+j+k, direction, offset) then
 								break
 							end
@@ -517,13 +586,19 @@ function LoadingVolume:expandLoadingSurface()
 		end
 
 		if not foundTop then
-			print("SET HEIGHT")
+			UniversalAutoload.debugPrint("SET HEIGHT")
 			local height = size.x
 			local point = LoadingVolume.offsetPoint(c, height, UY)
 			bb:addPoint(point, false)
 		end
 		
 		bb:evaluate()
+		
+		if not bb:isEmpty() then
+			UniversalAutoload.debugPrint("TRY TO RAISE BASE")
+			bb:adjustBoundingBox(offset.y, 0.5, 1, function(original, value) offset.y = original + value end)
+			original_dy = offset.y
+		end
 
 	end
 	

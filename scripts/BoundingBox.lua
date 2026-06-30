@@ -129,13 +129,13 @@ function BoundingBox:isEmpty(delta, drawAll)
 
 	function callbackTarget.testLocationOverlap_Callback(target, nodeId, subShapeIndex)
 		if subShapeIndex ~= -1 then
-			print("nodeId: " .. tostring(nodeId))
-			print("subShapeIndex: " .. tostring(subShapeIndex))
+			-- print("nodeId: " .. tostring(nodeId))
+			-- print("subShapeIndex: " .. tostring(subShapeIndex))
 			local rigidBodyType = getRigidBodyType(nodeId)
 			if rigidBodyType == RigidBodyType.DYNAMIC then
-				print("rigidBodyType DYNAMIC")
+				-- print("rigidBodyType DYNAMIC")
 			elseif rigidBodyType == RigidBodyType.KINEMATIC then
-				print("rigidBodyType KINEMATIC")
+				-- print("rigidBodyType KINEMATIC")
 			end
 		end
 				
@@ -159,13 +159,13 @@ function BoundingBox:isEmpty(delta, drawAll)
 						-- print("group: " .. tostring(group))
 					-- end
 				else
-					print("--- testLocationOverlap - EMPTY ---")
+					-- print("--- testLocationOverlap - EMPTY ---")
 				end
 			else
 				local object = g_currentMission:getNodeObject(nodeId)
 				if object ~= nil then
-					print("--- testLocationOverlap - OTHER ---")
-					DebugUtil.drawDebugNode(nodeId, getName(nodeId))
+					-- print("--- testLocationOverlap - OTHER ---")
+					-- DebugUtil.drawDebugNode(nodeId, getName(nodeId))
 					target.isVolumeEmpty = false
 				end
 			end
@@ -185,7 +185,7 @@ function BoundingBox:isEmpty(delta, drawAll)
 
 	local collisionMask = CollisionFlag.VEHICLE + CollisionFlag.DYNAMIC_OBJECT + CollisionFlag.TREE + CollisionFlag.PLAYER
 	
-	overlapBox(x+dx, y+dy, z+dz, rx, ry, rz, sizeX, sizeY, sizeZ, "testLocationOverlap_Callback", callbackTarget, collisionMask, true, false, true)
+	overlapBox(x+dx, y+dy, z+dz, rx, ry, rz, sizeX, sizeY, sizeZ, "testLocationOverlap_Callback", callbackTarget, collisionMask, true, true, true, true)
 
 	if drawAll then
 		local node, w, h, l, showCube, showAxis = rootNode, size.x, size.y, size.z, true, true
@@ -268,9 +268,10 @@ function BoundingBox:addPoints(points, doEvaluate)
 	end
 end
 
-function BoundingBox:evaluate(minSize)
+function BoundingBox:evaluate(minSize, delta)
 	if self.limits.min_x ~= math.huge and self.limits.max_x ~= -math.huge then
 		local minSize = minSize or 0
+		local delta = delta or UniversalAutoload.DELTA
 		local size = self:getSize()
 		local offset = self:getOffset()
 		size.x = math.max(math.abs(self.limits.max_x - self.limits.min_x), minSize)
@@ -279,18 +280,21 @@ function BoundingBox:evaluate(minSize)
 		offset.x = (self.limits.min_x + self.limits.max_x) / 2
 		offset.y = (self.limits.min_y + self.limits.max_y) / 2
 		offset.z = (self.limits.min_z + self.limits.max_z) / 2
+		offset.x = math.abs(offset.x) > delta and offset.x or 0
+		offset.y = math.abs(offset.y) > delta and offset.y or 0
+		offset.z = math.abs(offset.z) > delta and offset.z or 0
 		return true
 	end
 end
 
-function BoundingBox:draw(r, g, b, drawAll)
+function BoundingBox:draw(r, g, b, drawComponents)
 	
 	local rootNode = self:getRootNode()
 	if not rootNode or not entityExists(rootNode) then
 		return
 	end
 	
-	if drawAll then
+	if drawComponents then
 
 		if self.debug then
 			for _, bb in pairs(self.debug.components) do
@@ -312,9 +316,11 @@ function BoundingBox:draw(r, g, b, drawAll)
 		end
 	end
 
-	local size = self:getSize()
-	local offset = self:getOffset()
-	DebugUtil.drawDebugCube(rootNode, size.x, size.y, size.z, r or 1, b or 1, g or 1, offset.x, offset.y, offset.z)
+	if not (r==0 and b==0 and g==0) then
+		local size = self:getSize()
+		local offset = self:getOffset()
+		DebugUtil.drawDebugCube(rootNode, size.x, size.y, size.z, r or 1, b or 1, g or 1, offset.x, offset.y, offset.z)
+	end
 	
 end
 
@@ -423,7 +429,7 @@ function BoundingBox:addComponents(object, doEvaluate)
 			
 		local function findCollisionsForNode(node, N)
 			local sx, sy, sz, r = getShapeBoundingSphere(node)
-			local vertices, origin = BoundingBox.getCubeVertices(node, sx, sy, sz, r)
+			local vertices, origin = BoundingBox.getCubeVertices(node, sx, sy, sz, 1.1*r)
 			bb:addVertices(vertices, node, origin, N)
 		end
 		
@@ -434,7 +440,7 @@ function BoundingBox:addComponents(object, doEvaluate)
 			local size = bb:getSize()
 			local offset = bb:getOffset()
 		
-			DebugUtil.drawDebugCube(componentNode, size.x, size.y, size.z, 0, 1, 0, offset.x, offset.y, offset.z)
+			-- DebugUtil.drawDebugCube(componentNode, size.x, size.y, size.z, 0, 1, 0, offset.x, offset.y, offset.z)
 			
 			local vertices = BoundingBox.getCubeVertices(componentNode, offset.x, offset.y, offset.z, size.x/2, size.y/2, size.z/2)
 			if self:addVertices(vertices) then
@@ -739,7 +745,7 @@ function BoundingBox:getCubeFaces(doUpdate)
 		
 		return self.centre, self.points, self.names
 	else
-		print("NO ROOT NODE..")
+		-- print("NO ROOT NODE..")
 	end
 end
 
@@ -768,6 +774,7 @@ function BoundingBox:moveFace(pointIndex, delta)
 		"z", --back
 	}
 
+	local delta = delta or 0
 	local axis = axisLookup[pointIndex]
 	local sign = (pointIndex % 2 == 0) and -1 or 1
 	local size = self:getSize()
@@ -777,23 +784,47 @@ function BoundingBox:moveFace(pointIndex, delta)
 		
 		size[axis] = size[axis] + sign*delta
 		offset[axis] = offset[axis] + delta/2
+		
+		local rootNode = self:getRootNode()
+		local sx, sy, sz = offset.x, offset.y, offset.z
+		local x, y, z = localToWorld(rootNode, sx, sy, sz)
+		self.centre = {x, y, z}
 
-		local pointLookup = {
-			x = 1,
-			y = 2,
-			z = 3,
-		}
-		local axisIndex = pointLookup[axis]
-		self.points[pointIndex][axisIndex] = self.points[pointIndex][axisIndex] + delta
+		if self.points then
+			local pointLookup = {
+				x = 1,
+				y = 2,
+				z = 3,
+			}
+			local axisIndex = pointLookup[axis]
+			self.points[pointIndex][axisIndex] = self.points[pointIndex][axisIndex] + delta
 
-		local shiftLookup = {
-			x = {3,4,5,6},
-			y = {1,2,5,6},
-			z = {1,2,3,4},
-		}
-		local otherPointIndexes = shiftLookup[axis]
-		for _, otherPointIndex in pairs(otherPointIndexes) do
-			self.points[otherPointIndex][axisIndex] = self.points[otherPointIndex][axisIndex] + delta/2
+			local shiftLookup = {
+				x = {3,4,5,6},
+				y = {1,2,5,6},
+				z = {1,2,3,4},
+			}
+			local otherPointIndexes = shiftLookup[axis]
+			for _, otherPointIndex in pairs(otherPointIndexes) do
+				self.points[otherPointIndex][axisIndex] = self.points[otherPointIndex][axisIndex] + delta/2
+			end
+		end
+	end
+end
+
+function BoundingBox:adjustBoundingBox(original, range, sign, updateFn, delta, sigma)
+	local delta = delta or 0.005
+	local sigma = sigma or 0.001
+	for i = 1, range/delta do
+		local value = sign*i*delta
+		-- print(value)
+		updateFn(original, value)
+		if self:isEmpty() then
+			updateFn(original, value - sigma)
+			-- print(" ADJUSTED BY " .. value - sigma)
+			break
+		else
+			updateFn(original, 0)
 		end
 	end
 end

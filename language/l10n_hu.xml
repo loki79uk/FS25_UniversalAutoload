@@ -3,46 +3,204 @@
 	<texts>
 		<text name="shop_configuration_text" text="Autoload" />
 		<text name="configuration_universalAutoload" text="Universal Autoload" />
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Automatikus betöltés" />
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BALE_COLLECTION" text="Automata bálagyűjtű mód" />
-		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Kitöltés" />
-		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Kényszerített kitöltés" />
+		
+		<!-- TITLES -->
+		<text name="ui_local_settings_ual" text="Helyi beállítások"/>
+		<text name="ui_global_settings_ual" text="Általános beállítások"/>
+		<text name="ui_config_settings_ual" text="Autoload beállítások"/>
+		<text name="ui_vehicle_options_ual" text="Jármű opciók"/>
+		<text name="ui_loading_area_options_ual" text="Rakodási terület opciók"/>
+		<text name="ui_save_options_ual" text="Save Options"/>
+		<text name="ui_button_save_config_ual" text="Jármű beállítások mentése"/>
+		<text name="ui_confirm_save_config_ual" text="Felülírod a jármű alapértelmezett autoload beállításait?"/>
+		<text name="ui_confirm_save_config2_ual" text="(Purchase new vehicle or restart game to apply the new settings)"/>
+		
+		<!-- GLOBAL -->
+		<text name="ui_global_showDebug" text="Hibakeresési infók"/>
+		<text name="ui_global_highPriority" text="Magas prioritás"/>
+		<text name="ui_global_lowRefreshMode" text="Alacsony frissítési mód"/>
+		<text name="ui_global_disableAutoStrap" text="Automata feszítőövek"/>
+		<text name="ui_global_removePhysics" text="Eltávolítás a fizikai szimulációból"/>
+		<text name="ui_global_pricePerLog" text="Ár rönkönként"/>
+		<text name="ui_global_pricePerBale" text="Ár bálánként"/>
+		<text name="ui_global_pricePerPallet" text="Ár raklaponként"/>
+		<text name="ui_global_minLogLength" text="Minimum rönkhossz"/>
+		<text name="ui_global_loadingSpeed" text="Betöltési sebesség"/>
+		<text name="ui_global_objectSpacing" text="Objektumok közötti távolság"/>
+		
+		<text name="ui_global_tooltip_showDebug" text="Hibakeresési információk megjelenítése az összes járműre"/>
+		<text name="ui_global_tooltip_highPriority" text="Magas prioritás alkalmazása az összes UAL billentyűkombinációra az F1 menüben"/>
+		<text name="ui_global_tooltip_lowRefreshMode" text="Ritkább frissítés – engedélyezd ezt a beállítást, ha akadozást tapasztalsz automatikus betöltésnél"/>
+		<text name="ui_global_tooltip_disableAutoStrap" text="Feszítőövek automatikus használata rakodás vagy kirakodás után"/>
+		<text name="ui_global_tooltip_removePhysics" text="A feszítőövek alkalmazásakor a raklapok kikerülnek a fizikai szimulációból"/>
+		<text name="ui_global_tooltip_pricePerLog" text="Az automata rakodás ára rönkönként"/>
+		<text name="ui_global_tooltip_pricePerBale" text="Az automata rakodás ára bálánként"/>
+		<text name="ui_global_tooltip_pricePerPallet" text="Az automata rakodás ára raklaponként"/>
+		<text name="ui_global_tooltip_minLogLength" text="Az automatikusan felrakodható legkisebb rönk hossza"/>
+		<text name="ui_global_tooltip_loadingSpeed" text="Késleltetés az egyes objektumok betöltése között (ms)"/>
+		<text name="ui_global_tooltip_objectSpacing" text="További távolság a betöltött objektumok között (m)"/>
+
+		<!-- OPTIONS -->
+		<text name="ui_option_enableAutoload" text="Autoload engedélyezése"/>
+		<text name="ui_option_trailerType" text="Szállító típusa"/>
+		<text name="ui_option_unloadingType" text="Kirakodási pozíció"/>
+		<text name="ui_option_rearOnly" text="Csak hátsó"/>
+		<text name="ui_option_frontOnly" text="Csak első"/>
+		
+		<text name="ui_option_noLoadingFolded" text="Becsukott állapotban nincs rakodás"/>
+		<text name="ui_option_folded" text="Becsukott"/>
+		<text name="ui_option_unfolded" text="Kinyitott"/>
+		
+		<text name="ui_option_noLoadingCovered" text="Lefedett állapotban nincs rakodás"/>
+		<text name="ui_option_covered" text="Fedett"/>
+		<text name="ui_option_uncovered" text="Nyitott"/>
+
+		<text name="ui_option_isBoxTrailer" text="Dobozos"/>
+		<text name="ui_option_isLogTrailer" text="Rönkszállító"/>
+		<text name="ui_option_isBaleTrailer" text="Bálaszállító"/>
+		<text name="ui_option_isBaleProcessor" text="Bálafeldolgozó"/>
+		<text name="ui_option_isCurtainTrailer" text="Ponyvás"/>
+		<text name="ui_option_enableRearLoading" text="Hátsó rakodás engedélyezése"/>
+		<text name="ui_option_enableSideLoading" text="Oldalsó rakodás engedélyezése"/>
+		<text name="ui_option_extendPickupRange" text="Felvételi tartomány kiterjesztése"/>
+
+		<text name="ui_option_rearUnloadingOnly" text="Csak hátsó kirakodás"/>
+		<text name="ui_option_frontUnloadingOnly" text="Csak első kirakodás"/>
+		<text name="ui_option_horizontalLoading" text="Vízszintes rakodás"/>
+		<text name="ui_option_disableAutoStrap" text="Automata feszítőövek"/>
+		<text name="ui_option_disableHeightLimit" text="Rakodásmagasság korlátozása"/>
+		<text name="ui_option_zonesOverlap" text="Egymást fedő zónák"/>
+		<text name="ui_option_offsetRoot" text="Referencia pont"/>
+		<text name="ui_option_minLogLength" text="Minimum rönkhossz"/>
+		
+		<text name="ui_option_tooltip_enableAutoload" text="Engedélyezett-e az automata rakodás a járműre"/>
+		<text name="ui_option_tooltip_trailerType" text="A szállító típusa (pl. bálaszállító, rönkszállító, ponyvás)"/>
+		<text name="ui_option_tooltip_unloadingType" text="Kirakodási pozíció: első / hátsó"/>
+		<text name="ui_option_tooltip_noLoadingFolded" text="Rakodás tiltása becsukott / kinyitott állapotban"/>
+		<text name="ui_option_tooltip_noLoadingCovered" text="Rakodás tiltása fedett / nyitott állapotban"/>
+		
+		<text name="ui_option_tooltip_isBoxTrailer" text="Dobozos szállító hátsó ajtóval"/>
+		<text name="ui_option_tooltip_isLogTrailer" text="Rönkszállító - csak a fentről ráejtett rönköket rakodja automatikusan"/>
+		<text name="ui_option_tooltip_isBaleTrailer" text="A szállító használhatja az automata bálagyűjtő módot"/>	
+		<text name="ui_option_tooltip_isBaleProcessor" text="Bálafeldolgozó, például TTK keverő vagy szalmafúvó"/>
+		<text name="ui_option_tooltip_isCurtainTrailer" text="Automatikusan felismeri a rakodási oldalt (ha van ponyvás oldala)"/>
+		<text name="ui_option_tooltip_enableRearLoading" text="Hátsó rakodási trigger engedélyezése"/>
+		<text name="ui_option_tooltip_enableSideLoading" text="Oldalsó rakodási triggerek engedélyezése"/>
+		<text name="ui_option_tooltip_extendPickupRange" text="Növeli a rakodási triggerek érzékelési tartományát"/>
+
+		<text name="ui_option_tooltip_rearUnloadingOnly" text="Kizárólag a hátsó kirakodási zóna használata (oldalsók letiltva)"/>
+		<text name="ui_option_tooltip_frontUnloadingOnly" text="Kizárólag az első kirakodási zóna használata (oldalsók letiltva)"/>
+		<text name="ui_option_tooltip_horizontalLoading" text="Vízszintes rakodás legyen az alapértelmezett (billentyűkombinációval módosítható)"/>
+		<text name="ui_option_tooltip_disableAutoStrap" text="Feszítőövek automatikus használata rakodás vagy kirakodás után"/>
+		<text name="ui_option_tooltip_disableHeightLimit" text="Raklapok egymásra rakásának korlátozása sűrűségük alapján"/>
+		<text name="ui_option_tooltip_zonesOverlap" text="Jelzi, hogy a rakodási zónák fedik egymást"/>
+		<text name="ui_option_tooltip_offsetRoot" text="Jármű i3d csomópontja, amihez képest az eltolások értelmezettek"/>
+		<text name="ui_option_tooltip_minLogLength" text="Az automatikusan rakodható rönkök minimális hosszúsága"/>
+
+		<text name="ui_option_addRemoveAreas" text="Number of Loading Areas"/>
+		<text name="ui_option_selectedArea" text="Selected Area"/>
+		<text name="ui_option_tooltip_addRemoveAreas" text="Adjust value here to add or remove loading areas"/>
+		<text name="ui_option_tooltip_selectedArea" text="The area selected (to modify in the settings below)"/>
+		
+		<text name="ui_option_selectedConfigSet" text="Selected Configuration Set"/>
+		<text name="ui_option_useConfigName" text="Use Configuration Name"/>
+		<text name="ui_option_useConfigIndex" text="Use Configuration Index"/>
+		<text name="ui_option_tooltip_selectedConfigSet" text="The 'configuration set' to which the saved settings will apply"/>
+		<text name="ui_option_tooltip_useConfigName" text="The configuration to be indexed (optional)"/>
+		<text name="ui_option_tooltip_useConfigIndex" text="The index for the configuration (optional)"/>
+		
+		<!-- LOADING_AREA -->
+		<text name="ui_loadArea_offset" text="Eltolás"/>
+		<text name="ui_loadArea_offsetRoot" text="Referencia pont"/>
+		<text name="ui_loadArea_width" text="Szélesség"/>
+		<text name="ui_loadArea_length" text="Hosszúság"/>
+		<text name="ui_loadArea_height" text="Magasság"/>
+		<text name="ui_loadArea_baleHeight" text="Magasság bálák esetén"/>
+		<text name="ui_loadArea_widthAxis" text="Szélesség tengely"/>
+		<text name="ui_loadArea_lengthAxis" text="Hossztengely"/>
+		<text name="ui_loadArea_heightAxis" text="Magasság tengely"/>
+		<text name="ui_loadArea_offsetFrontAxis" text="Első eltolás tengely"/>
+		<text name="ui_loadArea_offsetRearAxis" text="Hátsó eltolás tengely"/>
+		<text name="ui_loadArea_reverseWidthAxis" text="Fordított szélesség tengely"/>
+		<text name="ui_loadArea_reverseLengthAxis" text="Fordított hossztengely"/>
+		<text name="ui_loadArea_reverseHeightAxis" text="Fordított magasság tengely"/>
+		<text name="ui_loadArea_noLoadingIfFolded" text="Becsukott állapotban nincs rakodás"/>
+		<text name="ui_loadArea_noLoadingIfUnfolded" text="Kinyitott állapotban nincs rakodás"/>
+		<text name="ui_loadArea_noLoadingIfCovered" text="Lefedett állapotban nincs rakodás"/>
+		<text name="ui_loadArea_noLoadingIfUncovered" text="Nyitott állapotban nincs rakodás"/>
+		
+		<text name="ui_loadArea_tooltip_offset" text="A rakodási terület középpontjának eltolása"/>
+		<text name="ui_loadArea_tooltip_offsetRoot" text="Jármű i3d csomópontja, amihez képest a rakodási terület eltolása értelmezett"/>
+		<text name="ui_loadArea_tooltip_width" text="Rakodási terület szélessége"/>
+		<text name="ui_loadArea_tooltip_length" text="Rakodási terület hosszúsága"/>
+		<text name="ui_loadArea_tooltip_height" text="Rakodási terület magassága"/>
+		<text name="ui_loadArea_tooltip_baleHeight" text="Rakodási terület magassága bálák esetén"/>
+		<text name="ui_loadArea_tooltip_widthAxis" text="Tengely neve a rakodási terület szélességének módosításához"/>
+		<text name="ui_loadArea_tooltip_lengthAxis" text="Tengely neve a rakodási terület hosszúságának módosításához"/>
+		<text name="ui_loadArea_tooltip_heightAxis" text="Tengely neve a rakodási terület magasságának módosításához"/>
+		<text name="ui_loadArea_tooltip_offsetFrontAxis" text="Tengely neve a rakodási terület elejének módosításához"/>
+		<text name="ui_loadArea_tooltip_offsetRearAxis" text="Tengely neve a rakodási terület hátuljának módosításához"/>
+		<text name="ui_loadArea_tooltip_reverseWidthAxis" text="Megfordítja a szélesség tengelyt, ha engedélyezett"/>
+		<text name="ui_loadArea_tooltip_reverseLengthAxis" text="Megfordítja a hossztengelyt, ha engedélyezett"/>
+		<text name="ui_loadArea_tooltip_reverseHeightAxis" text="Megfordítja a magasság tengelyt, ha engedélyezett"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfFolded" text="Becsukott állapotban nincs rakodás ezen a területen"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfUnfolded" text="Kinyitott állapotban nincs rakodás ezen a területen"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfCovered" text="Lefedett állapotban nincs rakodás ezen a területen"/>
+		<text name="ui_loadArea_tooltip_noLoadingIfUncovered" text="Nyitott állapotban nincs rakodás ezen a területen"/>
+
+		<!-- KEY BINDINGS -->
+		<text name="input_UNIVERSALAUTOLOAD_GLOBAL_MENU" text="Open global settings menu"/>
+		<text name="input_UNIVERSALAUTOLOAD_SHOP_CONFIG" text="Beállítási menü megnyitása (a boltban)"/>
+		<text name="input_UNIVERSALAUTOLOAD_SHOP_ADJUST" text="Rakodási terület szerkesztésének engedélyezése (a boltban)"/>
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_LOADING" text="Automatikus rakodás" />
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_COLLECTION" text="Automata gyűjtő mód" />
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL" text="Kirakodás" />
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_ALL_FORCE" text="Kényszerített kirakodás" />
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_POSITION" text="Kirakási pozíció beállítása"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_POSITION_LEFT" text="Kirakási pozíció balra mozgatása"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_POSITION_RIGHT" text="Kirakási pozíció jobbra mozgatása"/>
+		<text name="input_UNIVERSALAUTOLOAD_UNLOAD_POSITION_ROTATE" text="Kirakási pozíció forgatása"/>
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_TIPSIDE" text="Oldal választása" />
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_FILTER" text="Töltési szűrő" />
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Horizontális töltés" />
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Kiválasztott tárgy módosítása (következő)" />
-		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Kiválasztott tárgy módosítása (előző)" />
-		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Minden tárgy kiválasztása" />
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_HORIZONTAL" text="Vízszintes töltés" />
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_FW" text="Kiválasztott anyag módosítása (következő)" />
+		<text name="input_UNIVERSALAUTOLOAD_CYCLE_MATERIAL_BW" text="Kiválasztott anyag módosítása (előző)" />
+		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_MATERIALS" text="Minden anyag kiválasztása" />
 		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_FW" text="Kiválasztott tároló módosítása (következő)" />
 		<text name="input_UNIVERSALAUTOLOAD_CYCLE_CONTAINER_BW" text="Kiválasztott tároló módosítása (előző)" />
 		<text name="input_UNIVERSALAUTOLOAD_SELECT_ALL_CONTAINERS" text="Minden tároló kiválasztása" />
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_BELTS" text="Feszítőövek ki-/bekapcsolása" />
 		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_DOOR" text="Hátsó ajtó nyitása/zárása" />
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Függönyös oldal nyitása/zárása" />
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" text="Full debug mode" />
-		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" text="Simple debug mode" />
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_CURTAIN" text="Ponyva nyitása/zárása" />
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_DEBUG" text="Teljes hibakeresési mód" />
+		<text name="input_UNIVERSALAUTOLOAD_TOGGLE_SHOW_LOADING" text="Egyszerű hibakeresési mód" />
 
-		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="A kitöltési terület nem üres. Tisztítsa ki a kitöltési területet." />
+		<text name="warning_UNIVERSALAUTOLOAD_CLEAR_UNLOADING_AREA" text="A kirakodási terület nem üres. Tisztítsa ki a területet." />
 		<text name="warning_UNIVERSALAUTOLOAD_NO_OBJECTS_FOUND" text="Nem találhatő kompatibilis tárgy a fel-/letöltéshez." />
 		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT_FULL" text="Nem lehet több ilyen méretű tárgyat betölteni."/>
 		<text name="warning_UNIVERSALAUTOLOAD_UNABLE_TO_LOAD_OBJECT_EMPTY" text="Ez a tárgy túl nagy ehhez a járműhöz."/>
-		<text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY" text="Nem lehet mozgás közben betölteni." />
+		<text name="warning_UNIVERSALAUTOLOAD_NO_LOADING_UNLESS_STATIONARY" text="Nem lehet mozgás közben rakodni." />
 
-		<text name="universalAutoload_tipside" text="Kitöltési oldal" />
+		<text name="universalAutoload_tipside" text="Kirakodási oldal" />
 		<text name="universalAutoload_left" text="Bal" />
 		<text name="universalAutoload_right" text="Jobb" />
+		<text name="universalAutoload_front" text="Első" />
+		<text name="universalAutoload_rear" text="Hátsó" />
 		<text name="universalAutoload_none" text="Egyik sem" />
-		<text name="universalAutoload_loadingFilter" text="Pakolási szűrő" />
-		<text name="universalAutoload_loadingMethod" text="Pakolási metódus" />
+		<text name="universalAutoload_loadingFilter" text="Rakodási szűrő" />
+		<text name="universalAutoload_loadingMethod" text="Rakodási metódus" />
 		<text name="universalAutoload_layer" text="Réteg" />
 		<text name="universalAutoload_stack" text="Halom" />
 		<text name="universalAutoload_fullOnly" text="Csak teli" />
 		<text name="universalAutoload_loadAny" text="Bármelyik" />
-		<text name="universalAutoload_startLoading" text="Pakolás kezdése" />
-		<text name="universalAutoload_stopLoading" text="Pakolás befejezése" />
+		<text name="universalAutoload_startLoading" text="Rakodás kezdése" />
+		<text name="universalAutoload_stopLoading" text="Rakodás befejezése" />
 		<text name="universalAutoload_unloadAll" text="Kirakás" />
 		<text name="universalAutoload_unloadAllForce" text="Kirakás itt" />
-		<text name="universalAutoload_baleMode" text="Auto-Bála mód" />
+		<text name="universalAutoload_logMode" text="Rönkmód"/>
+		<text name="universalAutoload_baleMode" text="Bálamód"/>
+		<text name="universalAutoload_palletMode" text="Raklapmód"/>
+		<text name="universalAutoload_collectionMode" text="Gyűjtő mód"/>
 		<text name="universalAutoload_enabled" text="Engedélyezve" />
 		<text name="universalAutoload_disabled" text="Kikapcsolva" />
 		<text name="universalAutoload_activate" text="Aktiválás" />
