@@ -49,6 +49,9 @@ function PlayerTriggerEvent:run(connection)
 	if self.vehicle ~= nil and self.vehicle:getIsSynchronized() then
 		--print("PLAYER IN TRIGGER: "..tostring(self.inTrigger))
 		UniversalAutoload.updatePlayerTriggerState(self.vehicle, self.player, self.inTrigger, true)
+		if not connection:getIsServer() then
+			g_server:broadcastEvent(self, false, connection, self.vehicle)
+		end
 	end
 end
 

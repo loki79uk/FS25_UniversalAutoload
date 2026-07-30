@@ -31,6 +31,9 @@ end
 function SetFilterEvent:run(connection)
 	if self.vehicle ~= nil and self.vehicle:getIsSynchronized() then
 		UniversalAutoload.setLoadingFilter(self.vehicle, self.state, true)
+		if not connection:getIsServer() then
+			g_server:broadcastEvent(self, false, connection, self.vehicle)
+		end
 	end
 end
 
