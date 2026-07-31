@@ -39,6 +39,9 @@ function RaiseActiveEvent:run(connection)
 	if self.vehicle ~= nil and self.vehicle:getIsSynchronized() then
 		--print("RAISE ACTIVE "..tostring(self.inTrigger))
 		UniversalAutoload.forceRaiseActive(self.vehicle, self.state, true)
+		if not connection:getIsServer() then
+			g_server:broadcastEvent(self, false, connection, self.vehicle)
+		end
 	end
 end
 

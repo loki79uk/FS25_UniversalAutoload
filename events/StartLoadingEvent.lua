@@ -31,6 +31,9 @@ end
 function StartLoadingEvent:run(connection)
 	if self.vehicle ~= nil and self.vehicle:getIsSynchronized() then
 		UniversalAutoload.startLoading(self.vehicle, self.force, true)
+		if not connection:getIsServer() then
+			g_server:broadcastEvent(self, false, connection, self.vehicle)
+		end
 	end
 end
 

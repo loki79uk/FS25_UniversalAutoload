@@ -31,6 +31,9 @@ end
 function SetTipsideEvent:run(connection)
 	if self.vehicle ~= nil and self.vehicle:getIsSynchronized() then
 		UniversalAutoload.setCurrentTipside(self.vehicle, self.tipside, true)
+		if not connection:getIsServer() then
+			g_server:broadcastEvent(self, false, connection, self.vehicle)
+		end
 	end
 end
 
