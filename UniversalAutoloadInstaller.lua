@@ -1617,10 +1617,9 @@ function UniversalAutoloadManager.getIsTrainCarriage(vehicle)
 	if not vehicle then
 		return false
 	end
-
-	if vehicle:getFullName():find("Timber Wagon")
-	or vehicle:getFullName():find("Flatbed Wagon")
-	or vehicle:getFullName():find("Vehicle Wagon") then
+	
+	local configFileName = UniversalAutoloadManager.cleanConfigFileName(vehicle.configFileName)
+	if configFileName:find("/vehicles/train/") and UniversalAutoload.VEHICLE_CONFIGURATIONS[configFileName] then
 		return true
 	end
 end
